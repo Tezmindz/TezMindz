@@ -1,0 +1,18 @@
+{
+  "id": "fraction-pizza",
+  "name": "Pizza Fraction Challenge",
+  "version": "1.0.0",
+  "description": "Interactive visual fraction simulator slicing pizzas into equal parts to match target fractions.",
+  "author": "TezMindz Studios",
+  "entrypoint": "index.js",
+  "styles": "styles.css",
+  "category": "mathematics",
+  "supported_difficulties": ["easy", "medium", "hard"],
+  "content_types_supported": ["fraction_build", "fraction_match"],
+  "default_config": {
+    "total_units": 4,
+    "target": { "num": 1, "den": 4 },
+    "reward_xp": 15,
+    "reward_coins": 8
+  }
+}

@@ -1,0 +1,3277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tezz-Mindz — Olympiad Learning, Now More Fun!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <style>
+      :root {
+        --tm-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        --tm-ink: #0F172A;
+        --tm-slate: #334155;
+        --tm-muted: #64748B;
+        --tm-bg: #FAFAFC;
+        --tm-brand: #4F46E5;
+        --tm-brand-light: #6366F1;
+        --tm-brand-soft: #EEF2FF;
+        --tm-emerald: #059669;
+        --tm-emerald-soft: #ECFDF5;
+        --tm-purple: #7C3AED;
+        --tm-purple-soft: #FAF5FF;
+        --tm-rose: #E11D48;
+        --tm-rose-soft: #FFF1F2;
+        --tm-amber: #D97706;
+        --tm-amber-soft: #FFFBEB;
+        --tm-cyan: #0891B2;
+        --tm-cyan-soft: #ECFEFF;
+        --tm-card-radius: 22px;
+        --tm-shadow-sm: 0 4px 14px rgba(15, 23, 42, 0.04);
+        --tm-shadow-md: 0 12px 30px rgba(15, 23, 42, 0.06);
+        --tm-shadow-lg: 0 20px 40px rgba(15, 23, 42, 0.09);
+        --tm-border: #F1F5F9;
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body.page.landing {
+        background-color: var(--tm-bg);
+        font-family: var(--tm-font);
+        color: var(--tm-ink);
+        overflow-x: hidden;
+        margin: 0;
+        -webkit-font-smoothing: antialiased;
+      }
+
+
+      /* ── BACKGROUND ORBS ANIMATION ── */
+      .bg-ambient-orb {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .orb-top-right {
+        width: 480px;
+        height: 480px;
+        background: radial-gradient(circle, rgba(238, 220, 255, 0.75) 0%, rgba(224, 231, 255, 0.3) 60%, transparent 80%);
+        top: -120px;
+        right: -100px;
+        filter: blur(65px);
+        animation: floatOrbTop 12s ease-in-out infinite alternate;
+      }
+      .orb-mid-left {
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(circle, rgba(224, 242, 254, 0.85) 0%, rgba(254, 243, 199, 0.35) 60%, transparent 80%);
+        top: 550px;
+        left: -140px;
+        filter: blur(55px);
+        animation: floatOrbMid 14s ease-in-out infinite alternate;
+      }
+      @keyframes floatOrbTop {
+        0% { transform: translateY(0) scale(1); }
+        100% { transform: translateY(40px) scale(1.08); }
+      }
+      @keyframes floatOrbMid {
+        0% { transform: translateY(0) scale(1); }
+        100% { transform: translateY(-35px) scale(1.06); }
+      }
+
+      /* ── SCROLL REVEAL ANIMATIONS ── */
+      .reveal-init,
+      .scroll-reveal,
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(28px) scale(0.985);
+        transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+      .reveal-init.is-revealed,
+      .scroll-reveal.is-revealed,
+      [data-reveal].is-revealed {
+        opacity: 1 !important;
+        transform: translateY(0) scale(1) !important;
+      }
+      .reveal-slide-left {
+        opacity: 0;
+        transform: translateX(-32px);
+        transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+      .reveal-slide-left.is-revealed { opacity: 1 !important; transform: translateX(0) !important; }
+      .reveal-slide-right {
+        opacity: 0;
+        transform: translateX(32px);
+        transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+      .reveal-slide-right.is-revealed { opacity: 1 !important; transform: translateX(0) !important; }
+      .reveal-pop {
+        opacity: 0;
+        transform: scale(0.92);
+        transition: opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        will-change: opacity, transform;
+      }
+      .reveal-pop.is-revealed { opacity: 1 !important; transform: scale(1) !important; }
+      .reveal-delay-1 { transition-delay: 0.08s !important; }
+      .reveal-delay-2 { transition-delay: 0.16s !important; }
+      .reveal-delay-3 { transition-delay: 0.24s !important; }
+      .reveal-delay-4 { transition-delay: 0.32s !important; }
+      .reveal-delay-5 { transition-delay: 0.40s !important; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal-init, .scroll-reveal, .reveal-slide-left, .reveal-slide-right, .reveal-pop, [data-reveal] {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+      }
+
+      /* ── NAVBAR ── */
+      .public-nav-v2 {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        transition: all 0.25s ease;
+      }
+      .public-nav-v2.scrolled {
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+      }
+      .nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1260px;
+        margin: 0 auto;
+        padding: 16px 24px;
+      }
+      .landing-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .landing-logo-mark {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFFFFF;
+        box-shadow: 0 8px 18px rgba(99, 102, 241, 0.3);
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .landing-logo:hover .landing-logo-mark {
+        transform: scale(1.08) rotate(4deg);
+      }
+      .landing-logo-text strong {
+        display: block;
+        font-size: 1.38rem;
+        font-weight: 900;
+        color: var(--tm-ink);
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+      }
+      .landing-logo-text span {
+        font-size: 0.72rem;
+        font-weight: 800;
+        color: var(--tm-muted);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .landing-nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+      .landing-nav-links a {
+        text-decoration: none;
+        font-size: 0.98rem;
+        font-weight: 700;
+        color: var(--tm-slate);
+        transition: color 0.2s ease;
+        position: relative;
+        padding: 6px 0;
+      }
+      .landing-nav-links a:hover {
+        color: var(--tm-brand);
+      }
+      .landing-nav-links a.active {
+        color: var(--tm-brand);
+      }
+      .landing-nav-links a.active::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        border-radius: 99px;
+        background: var(--tm-brand);
+      }
+      .landing-nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .btn-nav-login {
+        border-radius: 99px;
+        padding: 10px 22px;
+        font-weight: 700;
+        font-size: 0.94rem;
+        border: 1.5px solid var(--tm-brand-light);
+        background: #FFFFFF;
+        color: var(--tm-brand);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+      }
+      .btn-nav-login:hover {
+        background: var(--tm-brand-soft);
+        transform: translateY(-1px);
+      }
+      .btn-nav-started {
+        border-radius: 99px;
+        padding: 10px 24px;
+        font-weight: 800;
+        font-size: 0.94rem;
+        background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+        color: #FFFFFF;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.25s ease;
+      }
+      .btn-nav-started::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -60%;
+        width: 40px;
+        height: 200%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(25deg);
+        transition: left 0.6s ease;
+      }
+      .btn-nav-started:hover::after {
+        left: 120%;
+      }
+      .btn-nav-started:hover {
+        box-shadow: 0 8px 22px rgba(99, 102, 241, 0.45);
+        transform: translateY(-2px);
+      }
+
+      /* Authenticated Student HUD */
+      .hud-profile-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 4px 8px 4px 14px;
+        background: #FFFFFF;
+        border: 1.5px solid #E2E8F0;
+        border-radius: 100px;
+        text-decoration: none;
+        color: inherit;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+        transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        flex-shrink: 0;
+      }
+      .hud-profile-pill:hover {
+        border-color: #A78BFA;
+        box-shadow: 0 4px 14px rgba(124, 58, 237, 0.14);
+        transform: translateY(-1px);
+      }
+      .hud-profile-meta {
+        text-align: right;
+        line-height: 1.15;
+      }
+      .hud-profile-meta strong {
+        display: block;
+        font-size: 0.84rem;
+        font-weight: 900;
+        color: #0F172A;
+        white-space: nowrap;
+        max-width: 110px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .hud-profile-meta small {
+        font-size: 0.66rem;
+        font-weight: 800;
+        color: #6366F1;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        white-space: nowrap;
+      }
+      .hud-avatar-circle {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #EEF2FF;
+        border: 1.5px solid #C7D2FE;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .hud-avatar-circle::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        right: -1px;
+        width: 8px;
+        height: 8px;
+        background: #10B981;
+        border: 1.5px solid #FFFFFF;
+        border-radius: 50%;
+      }
+
+      /* ── SECTION HEADING REUSABLE ── */
+      .section-heading-block {
+        text-align: center;
+        max-width: 720px;
+        margin: 0 auto 46px;
+      }
+      .section-tag-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--tm-brand-soft);
+        color: var(--tm-brand);
+        font-size: 0.82rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 6px 14px;
+        border-radius: 99px;
+        margin-bottom: 14px;
+        border: 1px solid #E0E7FF;
+      }
+      .section-heading-block h2 {
+        font-size: clamp(2rem, 3.5vw, 2.6rem);
+        font-weight: 900;
+        color: var(--tm-ink);
+        letter-spacing: -0.03em;
+        margin: 0 0 12px;
+        line-height: 1.2;
+      }
+      .section-heading-block p {
+        font-size: 1.12rem;
+        color: var(--tm-muted);
+        line-height: 1.6;
+        margin: 0;
+        font-weight: 500;
+      }
+
+      /* ── HERO SECTION ── */
+      .landing-hero-grid {
+        max-width: 1260px;
+        margin: 10px auto 60px;
+        padding: 30px 24px 40px;
+        display: grid;
+        grid-template-columns: 1.12fr 0.88fr;
+        align-items: center;
+        gap: 48px;
+        position: relative;
+        z-index: 10;
+      }
+      .hero-left-content {
+        max-width: 600px;
+      }
+
+      /* Hero Announcement Badge */
+      .hero-badge-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: #F3E8FF;
+        border: 1px solid #E9D5FF;
+        border-radius: 99px;
+        padding: 6px 18px 6px 8px;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 8px rgba(124, 58, 237, 0.08);
+        transition: transform 0.25s ease;
+      }
+      .hero-badge-pill:hover {
+        transform: scale(1.02);
+      }
+      .hero-badge-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: #FEF3C7;
+        color: #D97706;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 6px rgba(217, 119, 6, 0.2);
+      }
+      .hero-badge-text {
+        font-size: 0.88rem;
+        font-weight: 800;
+        color: #6B21A8;
+        letter-spacing: -0.01em;
+      }
+
+      /* Hero Main Title */
+      .hero-main-title {
+        font-size: clamp(2.6rem, 5vw, 3.8rem);
+        font-weight: 900;
+        color: var(--tm-ink);
+        line-height: 1.12;
+        letter-spacing: -0.035em;
+        margin: 0 0 20px;
+      }
+      .hero-highlight-fun {
+        color: #5B4DF5;
+        position: relative;
+        display: inline-block;
+      }
+      .hero-title-curve {
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 100%;
+        height: 14px;
+        pointer-events: none;
+      }
+
+      .hero-description {
+        font-size: 1.15rem;
+        color: #475569;
+        line-height: 1.7;
+        margin: 0 0 32px;
+        font-weight: 500;
+      }
+      .hero-description strong {
+        color: var(--tm-ink);
+        font-weight: 800;
+      }
+
+      /* Hero CTA Buttons */
+      .hero-cta-group {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 34px;
+      }
+      .btn-hero-primary {
+        background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+        color: #FFFFFF;
+        border-radius: 99px;
+        padding: 15px 36px;
+        font-size: 1.05rem;
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+        border: none;
+        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+        transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-hero-primary::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -60%;
+        width: 50px;
+        height: 200%;
+        background: rgba(255, 255, 255, 0.25);
+        transform: rotate(25deg);
+        transition: left 0.7s ease;
+      }
+      .btn-hero-primary:hover::after {
+        left: 130%;
+      }
+      .btn-hero-primary:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
+      }
+      .btn-hero-secondary {
+        background: #FFFFFF;
+        color: var(--tm-ink);
+        border: 1.5px solid var(--tm-brand-light);
+        border-radius: 99px;
+        padding: 14px 28px;
+        font-size: 1.02rem;
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+        box-shadow: var(--tm-shadow-sm);
+        transition: all 0.25s ease;
+      }
+      .btn-hero-secondary:hover {
+        background: var(--tm-brand-soft);
+        transform: translateY(-2px);
+      }
+
+      /* ── 4 BOTTOM FEATURE MINI-PILLS ROW ── */
+      .hero-features-bar {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        max-width: 580px;
+      }
+      .hero-mini-pill {
+        background: #FFFFFF;
+        border-radius: 14px;
+        padding: 10px 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid #F1F5F9;
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+      .hero-mini-pill:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+      }
+      .hero-mini-pill.f-pill-indigo { background: #EEF2FF; border-color: #E0E7FF; }
+      .hero-mini-pill.f-pill-rose { background: #FFF1F2; border-color: #FFE4E6; }
+      .hero-mini-pill.f-pill-emerald { background: #ECFDF5; border-color: #D1FAE5; }
+      .hero-mini-pill.f-pill-amber { background: #FFFBEB; border-color: #FEF3C7; }
+
+      .pill-icon-box {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .pill-text-block {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+        text-align: left;
+      }
+      .pill-text-block strong {
+        font-size: 0.76rem;
+        font-weight: 800;
+        color: #0F172A;
+      }
+      .pill-text-block span {
+        font-size: 0.70rem;
+        font-weight: 600;
+        color: #64748B;
+      }
+
+      /* ── HERO RIGHT ILLUSTRATION & FLOATING UI CHIPS ── */
+      .hero-right-illustration {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .hero-cloud-backdrop {
+        position: absolute;
+        width: 125%;
+        height: 125%;
+        background: radial-gradient(circle at 60% 50%, rgba(254, 215, 170, 0.42) 0%, rgba(224, 231, 255, 0.55) 45%, rgba(243, 232, 255, 0.45) 70%, transparent 85%);
+        filter: blur(30px);
+        z-index: 1;
+        pointer-events: none;
+      }
+      .hero-character-stage {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 540px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero-character-stage img {
+        width: 100%;
+        height: auto;
+        display: block;
+        mix-blend-mode: multiply;
+        -webkit-mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 70%, transparent 100%);
+        mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 70%, transparent 100%);
+        animation: heroFloat 5s ease-in-out infinite alternate;
+      }
+      @keyframes heroFloat {
+        0% { transform: translateY(0px); }
+        100% { transform: translateY(-10px); }
+      }
+
+
+      /* ── 5. CHOOSE YOUR CLASS SECTION ── */
+      .classes-section {
+        max-width: 1260px;
+        margin: 0 auto 90px;
+        padding: 0 24px;
+      }
+      .classes-grid-premium {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        margin-top: 36px;
+      }
+      .class-game-card {
+        background: #FFFFFF;
+        border: 1.8px solid var(--tm-border);
+        border-radius: 22px;
+        padding: 22px 20px 20px;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+        transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+        cursor: pointer;
+      }
+      .class-game-card:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 16px 36px rgba(15, 23, 42, 0.10);
+      }
+      
+      /* Card Top Row with Class Badge & Number */
+      .card-top-row {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+      .card-badge-pill {
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        padding: 4px 12px;
+        border-radius: 99px;
+        background: #F1F5F9;
+        color: var(--tm-slate);
+        border: 1px solid #E2E8F0;
+      }
+      .card-grade-num-badge {
+        font-size: 1.25rem;
+        font-weight: 900;
+        line-height: 1;
+        opacity: 0.45;
+      }
+
+      /* Center Educational Illustration Box */
+      .card-icon-wrapper {
+        width: 76px;
+        height: 76px;
+        border-radius: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 8px auto 14px;
+        transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .class-game-card:hover .card-icon-wrapper {
+        transform: scale(1.10) translateY(-2px);
+      }
+
+      /* Card Title & Subjects */
+      .card-info-wrap {
+        margin-bottom: 18px;
+        width: 100%;
+      }
+      .card-class-title {
+        font-size: 1.35rem;
+        font-weight: 900;
+        color: var(--tm-ink);
+        margin: 0 0 6px;
+        letter-spacing: -0.02em;
+      }
+      .card-subjects-badge {
+        display: inline-block;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #64748B;
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 99px;
+        padding: 4px 12px;
+        letter-spacing: 0.02em;
+      }
+
+      /* Start Learning Button */
+      .card-action-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 11px 16px;
+        border-radius: 14px;
+        font-size: 0.90rem;
+        font-weight: 800;
+        color: #FFFFFF;
+        transition: all 0.24s ease;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+      }
+      .card-action-arrow {
+        transition: transform 0.2s ease;
+      }
+      .class-game-card:hover .card-action-arrow {
+        transform: translateX(4px);
+      }
+
+      /* 8 Softer & Polished Class Color Themes */
+      /* Class 1 - Sky Cyan */
+      .card-c-1 { border-color: #E0F2FE; background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 55%); }
+      .card-c-1 .card-badge-pill { background: #E0F2FE; color: #0284C7; border-color: #BAE6FD; }
+      .card-c-1 .card-grade-num-badge { color: #0284C7; }
+      .card-c-1 .card-icon-wrapper { background: #E0F2FE; border: 1.5px solid #BAE6FD; }
+      .card-c-1 .card-action-btn { background: #0284C7; }
+      .card-c-1:hover { border-color: #0284C7; box-shadow: 0 16px 36px rgba(2, 132, 199, 0.15); }
+      .card-c-1:hover .card-action-btn { background: #0369A1; }
+
+      /* Class 2 - Royal Blue */
+      .card-c-2 { border-color: #DBEAFE; background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 55%); }
+      .card-c-2 .card-badge-pill { background: #DBEAFE; color: #2563EB; border-color: #BFDBFE; }
+      .card-c-2 .card-grade-num-badge { color: #2563EB; }
+      .card-c-2 .card-icon-wrapper { background: #DBEAFE; border: 1.5px solid #BFDBFE; }
+      .card-c-2 .card-action-btn { background: #2563EB; }
+      .card-c-2:hover { border-color: #2563EB; box-shadow: 0 16px 36px rgba(37, 99, 235, 0.15); }
+      .card-c-2:hover .card-action-btn { background: #1D4ED8; }
+
+      /* Class 3 - Pink / Rose */
+      .card-c-3 { border-color: #FCE7F3; background: linear-gradient(180deg, #FDF2F8 0%, #FFFFFF 55%); }
+      .card-c-3 .card-badge-pill { background: #FCE7F3; color: #DB2777; border-color: #FBCFE8; }
+      .card-c-3 .card-grade-num-badge { color: #DB2777; }
+      .card-c-3 .card-icon-wrapper { background: #FCE7F3; border: 1.5px solid #FBCFE8; }
+      .card-c-3 .card-action-btn { background: #DB2777; }
+      .card-c-3:hover { border-color: #DB2777; box-shadow: 0 16px 36px rgba(219, 39, 119, 0.15); }
+      .card-c-3:hover .card-action-btn { background: #BE185D; }
+
+      /* Class 4 - Amber / Gold */
+      .card-c-4 { border-color: #FEF3C7; background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 55%); }
+      .card-c-4 .card-badge-pill { background: #FEF3C7; color: #D97706; border-color: #FED7AA; }
+      .card-c-4 .card-grade-num-badge { color: #D97706; }
+      .card-c-4 .card-icon-wrapper { background: #FEF3C7; border: 1.5px solid #FED7AA; }
+      .card-c-4 .card-action-btn { background: #D97706; }
+      .card-c-4:hover { border-color: #D97706; box-shadow: 0 16px 36px rgba(217, 119, 6, 0.15); }
+      .card-c-4:hover .card-action-btn { background: #B45309; }
+
+      /* Class 5 - Purple / Violet */
+      .card-c-5 { border-color: #F3E8FF; background: linear-gradient(180deg, #FAF5FF 0%, #FFFFFF 55%); }
+      .card-c-5 .card-badge-pill { background: #F3E8FF; color: #7C3AED; border-color: #DDD6FE; }
+      .card-c-5 .card-grade-num-badge { color: #7C3AED; }
+      .card-c-5 .card-icon-wrapper { background: #F3E8FF; border: 1.5px solid #DDD6FE; }
+      .card-c-5 .card-action-btn { background: #7C3AED; }
+      .card-c-5:hover { border-color: #7C3AED; box-shadow: 0 16px 36px rgba(124, 58, 237, 0.15); }
+      .card-c-5:hover .card-action-btn { background: #6D28D9; }
+
+      /* Class 6 - Emerald / Mint */
+      .card-c-6 { border-color: #DCFCE7; background: linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 55%); }
+      .card-c-6 .card-badge-pill { background: #DCFCE7; color: #059669; border-color: #A7F3D0; }
+      .card-c-6 .card-grade-num-badge { color: #059669; }
+      .card-c-6 .card-icon-wrapper { background: #DCFCE7; border: 1.5px solid #A7F3D0; }
+      .card-c-6 .card-action-btn { background: #059669; }
+      .card-c-6:hover { border-color: #059669; box-shadow: 0 16px 36px rgba(5, 150, 105, 0.15); }
+      .card-c-6:hover .card-action-btn { background: #047857; }
+
+      /* Class 7 - Coral Sunset */
+      .card-c-7 { border-color: #FFE4E6; background: linear-gradient(180deg, #FFF1F2 0%, #FFFFFF 55%); }
+      .card-c-7 .card-badge-pill { background: #FFE4E6; color: #E11D48; border-color: #FECDD3; }
+      .card-c-7 .card-grade-num-badge { color: #E11D48; }
+      .card-c-7 .card-icon-wrapper { background: #FFE4E6; border: 1.5px solid #FECDD3; }
+      .card-c-7 .card-action-btn { background: #E11D48; }
+      .card-c-7:hover { border-color: #E11D48; box-shadow: 0 16px 36px rgba(225, 29, 72, 0.15); }
+      .card-c-7:hover .card-action-btn { background: #BE123C; }
+
+      /* Class 8 - Royal Indigo */
+      .card-c-8 { border-color: #E0E7FF; background: linear-gradient(180deg, #EEF2FF 0%, #FFFFFF 55%); }
+      .card-c-8 .card-badge-pill { background: #E0E7FF; color: #4F46E5; border-color: #C7D2FE; }
+      .card-c-8 .card-grade-num-badge { color: #4F46E5; }
+      .card-c-8 .card-icon-wrapper { background: #E0E7FF; border: 1.5px solid #C7D2FE; }
+      .card-c-8 .card-action-btn { background: #4F46E5; }
+      .card-c-8:hover { border-color: #4F46E5; box-shadow: 0 16px 36px rgba(79, 70, 229, 0.15); }
+      .card-c-8:hover .card-action-btn { background: #4338CA; }
+
+
+      /* ── 7. OUR RESULTS & ACHIEVERS (SIMPLE) ── */
+      .our-results-section {
+        max-width: 1260px;
+        margin: 0 auto 90px;
+        padding: 0 24px;
+      }
+      .results-metrics-bar {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        background: #FFFFFF;
+        border: 1.5px solid var(--tm-border);
+        border-radius: 20px;
+        padding: 24px 30px;
+        margin: 36px 0 44px;
+        box-shadow: var(--tm-shadow-sm);
+      }
+      .metric-stat-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        position: relative;
+      }
+      .metric-stat-box:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        right: -10px;
+        top: 15%;
+        bottom: 15%;
+        width: 1px;
+        background: #E2E8F0;
+      }
+      .metric-num {
+        font-size: 2.1rem;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        line-height: 1;
+        margin-bottom: 6px;
+      }
+      .metric-label {
+        font-size: 0.85rem;
+        color: var(--tm-muted);
+        font-weight: 600;
+      }
+      .achievers-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+      }
+      .achiever-card {
+        background: #FFFFFF;
+        border: 1.5px solid #E2E8F0;
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: var(--tm-shadow-sm);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .achiever-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--tm-shadow-md);
+      }
+      .achiever-img-container {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        background: #EEF2FF;
+      }
+      .achiever-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        transition: transform 0.4s ease;
+      }
+      .achiever-card:hover .achiever-img {
+        transform: scale(1.05);
+      }
+      .achiever-content-body {
+        padding: 18px 16px 20px;
+      }
+      .achiever-name {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--tm-ink);
+        margin: 0 0 4px;
+      }
+      .achiever-detail {
+        font-size: 0.82rem;
+        color: var(--tm-muted);
+        margin: 0 0 10px;
+        line-height: 1.4;
+      }
+      .achiever-achievement {
+        display: inline-block;
+        font-size: 0.8rem;
+        font-weight: 800;
+        padding: 5px 12px;
+        border-radius: 99px;
+      }
+
+      /* ── 7.5 SUBSCRIPTION PLANS SECTION ── */
+      .subscription-section {
+        max-width: 1260px;
+        margin: 0 auto 90px;
+        padding: 0 24px;
+        position: relative;
+      }
+      .pricing-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+        align-items: stretch;
+        margin-top: 48px;
+        position: relative;
+      }
+      .pricing-card {
+        border-radius: var(--tm-card-radius);
+        padding: 38px 28px 32px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+      }
+
+      /* 1. Starter Explorer Tier (Mint/Emerald Fresh BG) */
+      .pricing-card.card-plan-starter {
+        background: linear-gradient(180deg, #F0FDF4 0%, #F8FAFC 38%, #FFFFFF 100%);
+        border: 1.5px solid #BBF7D0;
+        box-shadow: 0 8px 24px rgba(34, 197, 94, 0.08);
+      }
+      .pricing-card.card-plan-starter:hover {
+        transform: translateY(-6px);
+        border-color: #4ADE80;
+        box-shadow: 0 16px 36px rgba(34, 197, 94, 0.16);
+      }
+      
+      /* 2. Olympiad Champion Pro (Radiant Indigo/Purple - Recommended Center) */
+      .pricing-card.card-plan-pro {
+        background: linear-gradient(180deg, #FAF5FF 0%, #EEF2FF 32%, #FFFFFF 100%);
+        border: 2.5px solid #7C3AED;
+        box-shadow: 0 20px 48px rgba(124, 58, 237, 0.2);
+        transform: scale(1.03);
+        z-index: 3;
+      }
+      .pricing-card.card-plan-pro:hover {
+        transform: scale(1.05) translateY(-6px);
+        box-shadow: 0 28px 56px rgba(124, 58, 237, 0.28);
+        border-color: #6D28D9;
+      }
+
+      /* 3. Master Mind Multi-Grade (Golden Amber / Premium VIP BG) */
+      .pricing-card.card-plan-premium {
+        background: linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 30%, #FFFFFF 100%);
+        border: 1.5px solid #FCD34D;
+        box-shadow: 0 12px 32px rgba(245, 158, 11, 0.14);
+      }
+      .pricing-card.card-plan-premium:hover {
+        transform: translateY(-6px);
+        border-color: #F59E0B;
+        box-shadow: 0 18px 42px rgba(245, 158, 11, 0.24);
+      }
+
+      .popular-badge-ribbon {
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+        color: #FFFFFF;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 6px 18px;
+        border-radius: 99px;
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+      }
+
+      .pricing-header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+      .plan-icon-wrap {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+      .icon-starter { background: #DCFCE7; color: #16A34A; border: 1px solid #BBF7D0; }
+      .icon-pro { background: #EDE9FE; color: #7C3AED; border: 1px solid #DDD6FE; }
+      .icon-master { background: #FEF3C7; color: #D97706; border: 1px solid #FDE68A; }
+
+      .plan-tier-pill {
+        font-size: 0.74rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 5px 14px;
+        border-radius: 99px;
+      }
+      .pill-starter { background: #DCFCE7; color: #15803D; border: 1px solid #86EFAC; }
+      .pill-pro { background: #EDE9FE; color: #6D28D9; border: 1.5px solid #C4B5FD; }
+      .pill-master { background: #FEF3C7; color: #B45309; border: 1px solid #FCD34D; }
+
+      .plan-name {
+        font-size: 1.38rem;
+        font-weight: 800;
+        color: var(--tm-ink);
+        margin: 0 0 6px;
+      }
+      .plan-desc {
+        font-size: 0.88rem;
+        color: var(--tm-muted);
+        line-height: 1.45;
+        margin: 0 0 20px;
+        min-height: 40px;
+      }
+
+      .price-box {
+        border-radius: 16px;
+        padding: 16px 20px;
+        margin-bottom: 24px;
+      }
+      .card-plan-starter .price-box {
+        background: #F0FDF4;
+        border: 1.5px solid #DCFCE7;
+      }
+      .card-plan-pro .price-box {
+        background: #FFFFFF;
+        border: 1.5px solid #DDD6FE;
+        box-shadow: 0 4px 16px rgba(124, 58, 237, 0.08);
+      }
+      .card-plan-premium .price-box {
+        background: #FFFBEB;
+        border: 1.5px solid #FDE68A;
+        box-shadow: 0 4px 14px rgba(217, 119, 6, 0.08);
+      }
+
+      .price-main-line {
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+      }
+      .price-currency {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: var(--tm-ink);
+      }
+      .price-figure {
+        font-size: 2.2rem;
+        font-weight: 900;
+        color: var(--tm-ink);
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+      .price-cadence {
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: var(--tm-muted);
+      }
+      .price-sub-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+      .savings-badge {
+        padding: 3px 10px;
+        border-radius: 99px;
+        font-size: 0.75rem;
+        font-weight: 800;
+      }
+      .card-plan-starter .savings-badge { background: #DCFCE7; color: #15803D; border: 1px solid #BBF7D0; }
+      .card-plan-pro .savings-badge { background: #EDE9FE; color: #6D28D9; border: 1px solid #C4B5FD; }
+      .card-plan-premium .savings-badge { background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; }
+      .price-equivalent {
+        color: var(--tm-muted);
+      }
+
+      .pricing-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex-grow: 1;
+      }
+      .pricing-feature-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 0.9rem;
+        color: var(--tm-slate);
+        line-height: 1.45;
+        font-weight: 500;
+      }
+      .pricing-feature-item.highlighted {
+        color: var(--tm-ink);
+        font-weight: 700;
+      }
+      .feature-check-icon {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.76rem;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .card-plan-starter .feature-check-icon { background: #DCFCE7; color: #16A34A; }
+      .card-plan-pro .feature-check-icon { background: #EDE9FE; color: #7C3AED; }
+      .card-plan-premium .feature-check-icon { background: #FEF3C7; color: #D97706; }
+
+      .btn-plan-select {
+        display: block;
+        width: 100%;
+        padding: 14px 20px;
+        border-radius: 14px;
+        font-size: 0.96rem;
+        font-weight: 800;
+        text-align: center;
+        text-decoration: none;
+        transition: all 0.25s ease;
+      }
+      /* Plan 1 Button (Mint outline to filled) */
+      .btn-plan-starter-action {
+        background: #FFFFFF;
+        color: #15803D;
+        border: 1.5px solid #86EFAC;
+        box-shadow: 0 4px 12px rgba(22, 163, 74, 0.08);
+      }
+      .btn-plan-starter-action:hover {
+        background: #16A34A;
+        color: #FFFFFF;
+        border-color: #16A34A;
+        box-shadow: 0 8px 20px rgba(22, 163, 74, 0.25);
+        transform: translateY(-2px);
+      }
+      /* Plan 2 Button (Radiant Indigo/Purple Gradient) */
+      .btn-plan-primary {
+        background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+        color: #FFFFFF;
+        box-shadow: 0 10px 24px rgba(79, 70, 229, 0.38);
+        border: none;
+      }
+      .btn-plan-primary:hover {
+        box-shadow: 0 14px 32px rgba(79, 70, 229, 0.52);
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, #4338CA 0%, #6D28D9 100%);
+      }
+      /* Plan 3 Button (Luxury Golden Amber Gradient) */
+      .btn-plan-premium-action {
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        color: #FFFFFF;
+        box-shadow: 0 8px 22px rgba(217, 119, 6, 0.32);
+        border: none;
+      }
+      .btn-plan-premium-action:hover {
+        box-shadow: 0 12px 28px rgba(217, 119, 6, 0.48);
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+      }
+
+      .pricing-trust-strip {
+        margin-top: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 28px;
+        padding: 18px 28px;
+        background: #FFFFFF;
+        border: 1px solid var(--tm-border);
+        border-radius: 16px;
+        box-shadow: var(--tm-shadow-sm);
+      }
+      .trust-item {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--tm-slate);
+      }
+      .trust-item svg {
+        width: 18px;
+        height: 18px;
+        color: var(--tm-brand);
+      }
+
+      /* ── 8. GAMES ARENA SECTION ── */
+      .games-arena-section {
+        max-width: 1260px;
+        margin: 0 auto 90px;
+        padding: 0 24px;
+      }
+
+      /* All 3 Game Cards in a uniform grid */
+      .games-showcase-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .game-card-v2 {
+        border-radius: 24px;
+        padding: 28px 24px 24px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        min-height: 320px;
+      }
+      .game-card-v2:hover {
+        transform: translateY(-8px);
+      }
+
+      /* Subject-specific card themes */
+      .game-card-math {
+        background: linear-gradient(160deg, #EEF2FF 0%, #E0E7FF 100%);
+        border: 1.5px solid #C7D2FE;
+        box-shadow: 0 6px 24px rgba(79, 70, 229, 0.1);
+      }
+      .game-card-math:hover {
+        box-shadow: 0 16px 40px rgba(79, 70, 229, 0.18);
+      }
+
+      .game-card-math-alt {
+        background: linear-gradient(160deg, #FEF3C7 0%, #FDE68A 100%);
+        border: 1.5px solid #FCD34D;
+        box-shadow: 0 6px 24px rgba(245, 158, 11, 0.1);
+      }
+      .game-card-math-alt:hover {
+        box-shadow: 0 16px 40px rgba(245, 158, 11, 0.18);
+      }
+
+      .game-card-science {
+        background: linear-gradient(160deg, #ECFDF5 0%, #D1FAE5 100%);
+        border: 1.5px solid #6EE7B7;
+        box-shadow: 0 6px 24px rgba(5, 150, 105, 0.1);
+      }
+      .game-card-science:hover {
+        box-shadow: 0 16px 40px rgba(5, 150, 105, 0.18);
+      }
+
+      .game-card-english {
+        background: linear-gradient(160deg, #FFF1F2 0%, #FFE4E6 100%);
+        border: 1.5px solid #FCA5A5;
+        box-shadow: 0 6px 24px rgba(225, 29, 72, 0.1);
+      }
+      .game-card-english:hover {
+        box-shadow: 0 16px 40px rgba(225, 29, 72, 0.18);
+      }
+
+      /* Card Internals */
+      .game-card-emoji-icon {
+        font-size: 2.6rem;
+        margin-bottom: 14px;
+        line-height: 1;
+        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
+      }
+
+      .game-card-badge-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+      .game-card-subject-badge {
+        font-size: 0.72rem;
+        font-weight: 800;
+        padding: 3px 10px;
+        border-radius: 99px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .badge-math { background: #4F46E5; color: #FFFFFF; }
+      .badge-math-alt { background: #D97706; color: #FFFFFF; }
+      .badge-science { background: #059669; color: #FFFFFF; }
+      .badge-english { background: #E11D48; color: #FFFFFF; }
+
+      .game-card-xp-tag {
+        font-size: 0.72rem;
+        font-weight: 800;
+        padding: 3px 10px;
+        border-radius: 99px;
+        background: rgba(255,255,255,0.85);
+        color: #334155;
+        border: 1px solid rgba(0,0,0,0.06);
+      }
+
+      .game-card-v2 h4 {
+        font-size: 1.18rem;
+        font-weight: 900;
+        color: var(--tm-ink);
+        margin: 0 0 8px;
+        line-height: 1.25;
+      }
+      .game-card-v2 .game-card-desc {
+        font-size: 0.86rem;
+        color: var(--tm-slate);
+        line-height: 1.5;
+        margin: 0;
+        flex-grow: 1;
+      }
+
+      .game-card-footer {
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(0,0,0,0.06);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .game-card-players {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--tm-muted);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .game-card-play-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 18px;
+        border-radius: 99px;
+        font-size: 0.84rem;
+        font-weight: 800;
+        text-decoration: none;
+        color: #FFFFFF;
+        transition: all 0.2s ease;
+      }
+      .game-card-play-btn:hover {
+        transform: scale(1.05);
+        filter: brightness(1.08);
+      }
+      .play-btn-math { background: #4F46E5; box-shadow: 0 4px 14px rgba(79,70,229,0.3); }
+      .play-btn-math-alt { background: #D97706; box-shadow: 0 4px 14px rgba(217,119,6,0.3); }
+      .play-btn-science { background: #059669; box-shadow: 0 4px 14px rgba(5,150,105,0.3); }
+      .play-btn-english { background: #E11D48; box-shadow: 0 4px 14px rgba(225,29,72,0.3); }
+
+      /* Flagship highlight glow ring */
+      .game-card-v2.flagship-card::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        border-radius: 24px;
+        background: linear-gradient(135deg, #F59E0B, #EF4444, #8B5CF6, #3B82F6);
+        z-index: -1;
+        opacity: 0.6;
+        filter: blur(6px);
+        transition: opacity 0.3s ease;
+      }
+      .game-card-v2.flagship-card:hover::before {
+        opacity: 0.85;
+      }
+      .game-card-v2.flagship-card {
+        border: none;
+        z-index: 1;
+      }
+      .flagship-crown {
+        position: absolute;
+        top: 12px;
+        right: 14px;
+        background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);
+        color: #78350F;
+        font-size: 0.68rem;
+        font-weight: 900;
+        padding: 4px 10px;
+        border-radius: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+      }
+
+      /* Games Arena CTA row */
+      .games-arena-cta {
+        text-align: center;
+        margin-top: 28px;
+      }
+      .btn-explore-all-games {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #F8FAFC;
+        color: var(--tm-ink);
+        padding: 14px 28px;
+        border-radius: 99px;
+        font-size: 0.95rem;
+        font-weight: 800;
+        text-decoration: none;
+        border: 1.5px solid #E2E8F0;
+        transition: all 0.2s ease;
+        box-shadow: var(--tm-shadow-sm);
+      }
+      .btn-explore-all-games:hover {
+        background: var(--tm-ink);
+        color: #FFFFFF;
+        border-color: var(--tm-ink);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
+      }
+
+      /* ── 9. ALL-INDIA CHAMPIONS LEADERBOARD SECTION ── */
+      .champions-leaderboard-section {
+        max-width: 1260px;
+        margin: 0 auto 90px;
+        padding: 0 24px;
+        position: relative;
+      }
+      .leaderboard-podium-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.1fr 1fr;
+        gap: 20px;
+        align-items: flex-end;
+        margin: 40px auto 32px;
+        max-width: 920px;
+      }
+      .podium-card {
+        background: #FFFFFF;
+        border: 1.5px solid var(--tm-border);
+        border-radius: 22px;
+        padding: 26px 20px;
+        text-align: center;
+        box-shadow: var(--tm-shadow-sm);
+        position: relative;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .podium-card:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--tm-shadow-md);
+      }
+      .podium-rank-1 {
+        background: linear-gradient(180deg, #FFFDF5 0%, #FFFFFF 100%);
+        border: 2.5px solid #FCD34D;
+        box-shadow: 0 16px 36px rgba(245, 158, 11, 0.18);
+        padding: 34px 24px 28px;
+        transform: scale(1.04);
+        z-index: 2;
+      }
+      .podium-rank-1:hover {
+        transform: scale(1.06) translateY(-6px);
+        box-shadow: 0 22px 48px rgba(245, 158, 11, 0.28);
+      }
+      .podium-crown-badge {
+        position: absolute;
+        top: -16px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        color: #FFFFFF;
+        font-size: 0.78rem;
+        font-weight: 800;
+        padding: 4px 14px;
+        border-radius: 99px;
+        box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        white-space: nowrap;
+      }
+      .podium-avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        margin: 0 auto 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        font-weight: 900;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      }
+      .podium-rank-1 .podium-avatar {
+        width: 76px;
+        height: 76px;
+        background: #FEF3C7;
+        color: #D97706;
+        border: 3px solid #FCD34D;
+      }
+      .podium-rank-2 .podium-avatar {
+        background: #F1F5F9;
+        color: #475569;
+        border: 2px solid #CBD5E1;
+      }
+      .podium-rank-3 .podium-avatar {
+        background: #FFEDD5;
+        color: #C2410C;
+        border: 2px solid #FDBA74;
+      }
+      .podium-name {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: var(--tm-ink);
+        margin: 0 0 4px;
+      }
+      .podium-school {
+        font-size: 0.8rem;
+        color: var(--tm-muted);
+        margin: 0 0 12px;
+      }
+      .podium-score-pill {
+        display: inline-block;
+        background: #EEF2FF;
+        color: #4F46E5;
+        font-size: 0.82rem;
+        font-weight: 800;
+        padding: 4px 12px;
+        border-radius: 99px;
+      }
+      .podium-rank-1 .podium-score-pill {
+        background: #FEF3C7;
+        color: #B45309;
+        font-size: 0.88rem;
+      }
+
+      .leaderboard-list-table {
+        background: #FFFFFF;
+        border: 1.5px solid var(--tm-border);
+        border-radius: 20px;
+        padding: 16px 20px;
+        max-width: 920px;
+        margin: 0 auto;
+        box-shadow: var(--tm-shadow-sm);
+      }
+      .leaderboard-row-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 18px;
+        border-radius: 12px;
+        background: #F8FAFC;
+        margin-bottom: 8px;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+      }
+      .leaderboard-row-item:last-child {
+        margin-bottom: 0;
+      }
+      .leaderboard-row-item:hover {
+        background: #F1F5F9;
+        transform: translateX(4px);
+      }
+      .leaderboard-row-item.highlight-me {
+        background: #EEF2FF;
+        border: 1.5px solid #C7D2FE;
+      }
+      .rank-user-info {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .rank-num-badge {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        font-weight: 900;
+      }
+      .rank-4-plus {
+        background: #E2E8F0;
+        color: var(--tm-slate);
+      }
+      .leaderboard-footer-action {
+        text-align: center;
+        margin-top: 24px;
+      }
+      .btn-leaderboard-full {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #F1F5F9;
+        color: var(--tm-ink);
+        padding: 12px 24px;
+        border-radius: 99px;
+        font-size: 0.92rem;
+        font-weight: 800;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        border: 1px solid #CBD5E1;
+      }
+      .btn-leaderboard-full:hover {
+        background: var(--tm-ink);
+        color: #FFFFFF;
+        transform: translateY(-2px);
+      }
+
+      /* ── 10. PARENT REVIEWS (SIMPLE) ── */
+      .parents-trust-feedback-section {
+        max-width: 1260px;
+        margin: 0 auto 90px;
+        padding: 0 24px;
+      }
+      .parent-reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .parent-review-card {
+        background: #FFFFFF;
+        border: 1.5px solid #E2E8F0;
+        border-radius: 22px;
+        padding: 28px 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: var(--tm-shadow-sm);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .parent-review-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--tm-shadow-md);
+      }
+      .review-stars {
+        color: #F59E0B;
+        font-size: 1rem;
+        letter-spacing: 2px;
+        margin-bottom: 16px;
+      }
+      .review-quote {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--tm-ink);
+        line-height: 1.55;
+        margin: 0 0 20px;
+        flex-grow: 1;
+      }
+      .review-author-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-top: 16px;
+        border-top: 1px solid #F1F5F9;
+      }
+      .review-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        color: #FFFFFF;
+        font-size: 0.85rem;
+        font-weight: 900;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .review-author-name {
+        font-size: 0.92rem;
+        font-weight: 800;
+        color: var(--tm-ink);
+        margin: 0;
+      }
+      .review-author-detail {
+        font-size: 0.78rem;
+        color: var(--tm-muted);
+        margin: 2px 0 0;
+      }
+
+      /* ── 11. FINAL CTA BANNER ── */
+      .final-cta-section {
+        max-width: 1260px;
+        margin: 0 auto 90px;
+        padding: 0 24px;
+      }
+      .final-cta-card {
+        background: linear-gradient(135deg, #4F46E5 0%, #6366F1 50%, #7C3AED 100%);
+        border-radius: 32px;
+        padding: 60px 40px;
+        text-align: center;
+        color: #FFFFFF;
+        box-shadow: 0 20px 50px rgba(79, 70, 229, 0.25);
+        position: relative;
+        overflow: hidden;
+      }
+      .final-cta-card h2 {
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        font-weight: 900;
+        margin: 0 0 14px;
+        letter-spacing: -0.025em;
+      }
+      .final-cta-card p {
+        font-size: 1.15rem;
+        color: #E0E7FF;
+        max-width: 600px;
+        margin: 0 auto 32px;
+        line-height: 1.6;
+      }
+      .final-cta-btn-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+      }
+      .btn-cta-white {
+        background: #FFFFFF;
+        color: var(--tm-brand);
+        border-radius: 99px;
+        padding: 15px 36px;
+        font-size: 1.05rem;
+        font-weight: 900;
+        text-decoration: none;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.25s ease;
+      }
+      .btn-cta-white:hover {
+        transform: translateY(-2px);
+      }
+      .btn-cta-outline {
+        background: transparent;
+        color: #FFFFFF;
+        border: 1.5px solid rgba(255, 255, 255, 0.6);
+        border-radius: 99px;
+        padding: 14px 30px;
+        font-size: 1.05rem;
+        font-weight: 800;
+        text-decoration: none;
+        transition: all 0.25s ease;
+      }
+      .btn-cta-outline:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: #FFFFFF;
+      }
+
+      /* ── FLOATING SCROLL-TO-TOP BUTTON ── */
+      .btn-back-to-top {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: #4F46E5;
+        color: #FFFFFF;
+        border: none;
+        box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(12px);
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        z-index: 990;
+      }
+      .btn-back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      .btn-back-to-top:hover {
+        background: #3730A3;
+        transform: translateY(-3px) scale(1.08);
+      }
+
+      /* ── 12. FOOTER ── */
+      .site-footer-v2 {
+        background: #FFFFFF;
+        border-top: 1px solid var(--tm-border);
+        padding: 60px 24px 30px;
+      }
+      .footer-inner-grid {
+        max-width: 1260px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+      .footer-col h5 {
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: var(--tm-ink);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin: 0 0 16px;
+      }
+      .footer-col a {
+        display: block;
+        color: var(--tm-muted);
+        text-decoration: none;
+        font-size: 0.92rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+        transition: color 0.2s ease;
+      }
+      .footer-col a:hover {
+        color: var(--tm-brand);
+      }
+      .footer-bottom-bar {
+        max-width: 1260px;
+        margin: 0 auto;
+        padding-top: 24px;
+        border-top: 1px solid #F1F5F9;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        color: var(--tm-muted);
+        font-weight: 600;
+      }
+
+      /* ── RESPONSIVE BREAKPOINTS ── */
+      @media (max-width: 1024px) {
+        .landing-hero-grid { grid-template-columns: 1fr; text-align: center; }
+        .hero-left-content { margin: 0 auto; }
+        .hero-cta-group { justify-content: center; }
+        .classes-grid-premium { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .results-metrics-bar { grid-template-columns: repeat(2, 1fr); gap: 24px; padding: 20px 24px; }
+        .achievers-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .pricing-cards-grid { grid-template-columns: 1fr; max-width: 520px; margin: 40px auto 0; gap: 32px; }
+        .pricing-card.card-plan-pro { transform: none; }
+        .pricing-card.card-plan-pro:hover { transform: translateY(-6px); }
+        .games-showcase-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; gap: 20px; }
+        .game-card-v2 { min-height: auto; }
+        .leaderboard-podium-grid { grid-template-columns: 1fr; gap: 16px; max-width: 480px; }
+        .podium-rank-1 { transform: none; }
+        .podium-rank-1:hover { transform: translateY(-6px); }
+        .parent-reviews-grid { grid-template-columns: 1fr; max-width: 540px; margin: 0 auto; }
+        .footer-inner-grid { grid-template-columns: 1fr 1fr; }
+      }
+      @media (max-width: 640px) {
+        .landing-nav-links { display: none; }
+        .classes-grid-premium { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .class-game-card { padding: 18px 12px 14px; border-radius: 18px; }
+        .card-icon-wrapper { width: 56px; height: 56px; margin: 4px auto 10px; }
+        .card-icon-wrapper svg { width: 28px; height: 28px; }
+        .card-class-title { font-size: 1.12rem; }
+        .card-subjects-badge { font-size: 0.68rem; padding: 3px 8px; }
+        .card-action-btn { padding: 9px 12px; font-size: 0.82rem; }
+        .results-metrics-bar { grid-template-columns: 1fr; gap: 16px; padding: 18px; }
+        .metric-stat-box:not(:last-child)::after { display: none; }
+        .achievers-cards-grid { grid-template-columns: 1fr; }
+        .pricing-card { padding: 30px 20px 24px; }
+        .pricing-trust-strip { flex-direction: column; gap: 14px; align-items: flex-start; padding: 18px 20px; }
+        .trust-summary-pill { font-size: 0.8rem; padding: 6px 14px; }
+        .games-showcase-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+        .game-card-v2 { min-height: auto; }
+        .hero-cta-group { flex-direction: column; width: 100%; }
+        .final-cta-btn-group { flex-direction: column; width: 100%; }
+        .footer-inner-grid { grid-template-columns: 1fr; }
+      }
+
+      /* ── WHATSAPP FLOATING BUTTON ── */
+      .whatsapp-float {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+      }
+      .whatsapp-chat-popup {
+        background: #FFFFFF;
+        border-radius: 18px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+        width: 320px;
+        overflow: hidden;
+        transform: scale(0.5) translateY(20px);
+        opacity: 0;
+        pointer-events: none;
+        transform-origin: bottom right;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .whatsapp-chat-popup.open {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .whatsapp-popup-header {
+        background: linear-gradient(135deg, #075E54 0%, #128C7E 100%);
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .whatsapp-popup-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+      }
+      .whatsapp-popup-header-text h4 {
+        color: #FFFFFF;
+        font-size: 1rem;
+        font-weight: 800;
+        margin: 0 0 2px;
+      }
+      .whatsapp-popup-header-text p {
+        color: rgba(255,255,255,0.8);
+        font-size: 0.78rem;
+        font-weight: 600;
+        margin: 0;
+      }
+      .whatsapp-popup-body {
+        padding: 16px 18px;
+        background: #ECE5DD;
+      }
+      .whatsapp-popup-msg {
+        background: #FFFFFF;
+        border-radius: 0 12px 12px 12px;
+        padding: 12px 14px;
+        font-size: 0.88rem;
+        color: #1A1A1A;
+        line-height: 1.5;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+        position: relative;
+        max-width: 260px;
+      }
+      .whatsapp-popup-msg::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -8px;
+        width: 0;
+        height: 0;
+        border-top: 8px solid #FFFFFF;
+        border-left: 8px solid transparent;
+      }
+      .whatsapp-popup-msg .msg-time {
+        display: block;
+        text-align: right;
+        font-size: 0.68rem;
+        color: #999;
+        margin-top: 4px;
+      }
+      .whatsapp-popup-footer {
+        padding: 14px 18px;
+        background: #FFFFFF;
+      }
+      .whatsapp-popup-footer a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: #25D366;
+        color: #FFFFFF;
+        padding: 12px 20px;
+        border-radius: 99px;
+        font-size: 0.92rem;
+        font-weight: 800;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+      }
+      .whatsapp-popup-footer a:hover {
+        background: #1EBE5D;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+      }
+      .whatsapp-btn {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #25D366;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+      }
+      .whatsapp-btn:hover {
+        transform: scale(1.08);
+        box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
+      }
+      .whatsapp-btn svg {
+        transition: transform 0.3s ease;
+      }
+      .whatsapp-btn.active svg {
+        transform: rotate(90deg);
+      }
+      .whatsapp-btn-pulse {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: #25D366;
+        animation: wa-pulse 2s ease-out infinite;
+        z-index: -1;
+      }
+      @keyframes wa-pulse {
+        0% { transform: scale(1); opacity: 0.5; }
+        100% { transform: scale(1.6); opacity: 0; }
+      }
+      @media (max-width: 640px) {
+        .whatsapp-float { bottom: 20px; right: 16px; }
+        .whatsapp-chat-popup { width: 290px; }
+        .whatsapp-btn { width: 54px; height: 54px; }
+      }
+    </style>
+  </head>
+  <body class="page landing">
+
+    <!-- Ambient glowing backdrop orbs -->
+    <div class="bg-ambient-orb orb-top-right"></div>
+    <div class="bg-ambient-orb orb-mid-left"></div>
+
+    <!-- 1. NAVBAR -->
+    <header class="public-nav-v2" id="main-navbar">
+      <div class="nav-container">
+        <!-- Logo -->
+        <a class="landing-logo" href="/">
+          <div class="landing-logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4.5 16.5c-1.5 1.5-2.5 3.5-2.5 5.5C4 22 6 21 7.5 19.5" />
+              <path d="M12 12l9-9-3 12-6 3-3-3-3-3 6-3z" />
+              <path d="M9 15l-3-3" />
+            </svg>
+          </div>
+          <div class="landing-logo-text">
+            <strong>Tezz-Mindz</strong>
+            <span>Learn • Play • Master</span>
+          </div>
+        </a>
+        
+        <!-- Center Nav Links -->
+        <nav class="landing-nav-links" aria-label="Main Navigation">
+          <a href="/" class="active">Home</a>
+          <a href="/subjects/">Subjects</a>
+          <a href="#results">Results</a>
+          <a href="#pricing">Plans</a>
+          <a href="/about/">About</a>
+        </nav>
+
+        <!-- Right Action Controls -->
+        <div class="landing-nav-actions">
+          {% if request.user.is_staff or request.user.is_superuser %}
+            <!-- Authenticated Administrator HUD & Console Access -->
+            <a class="hud-profile-pill" href="/admin/" title="Administrator: {{ request.user.username }} (Staff)">
+              <div class="hud-profile-meta">
+                <strong>{{ request.user.username }}</strong>
+                <small style="color:#6366F1; font-weight:800;">Staff Admin</small>
+              </div>
+              <div class="hud-avatar-circle" style="background:#4F46E5; display:grid; place-items:center;">
+                <span style="font-size:16px;">🛡️</span>
+              </div>
+            </a>
+            <a class="btn-nav-started" href="/admin/" style="background: linear-gradient(135deg, #4F46E5, #3730A3);">
+              <span>Admin Console</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a class="btn-nav-login" href="/logout/" style="color:#EF4444; border-color:#FCA5A5;">
+              <span>Logout</span>
+            </a>
+          {% elif request.user.is_authenticated and profile %}
+            <!-- Authenticated Student HUD & Go to Dashboard -->
+            <a class="hud-profile-pill" href="/profile/" title="{{ profile.display_name|default:request.user.first_name|default:request.user.username }} (Class {{ profile.grade.name }})">
+              <div class="hud-profile-meta">
+                <strong>{{ profile.display_name|default:request.user.first_name|default:request.user.username }}</strong>
+                <small>Class {{ profile.grade.name }}</small>
+              </div>
+              <div class="hud-avatar-circle">
+                <svg viewBox="0 0 36 36" width="30" height="30">
+                  <defs>
+                    <linearGradient id="hudAvatarBgHome" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#818CF8"/>
+                      <stop offset="100%" stop-color="#4F46E5"/>
+                    </linearGradient>
+                    <linearGradient id="hudVisorHome" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#38BDF8"/>
+                      <stop offset="100%" stop-color="#0284C7"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="18" cy="18" r="17" fill="url(#hudAvatarBgHome)"/>
+                  <ellipse cx="18" cy="19" rx="10" ry="11" fill="#FFFFFF"/>
+                  <path d="M10 16 C10 13 26 13 26 16 C26 19 23 20 18 20 C13 20 10 19 10 16 Z" fill="url(#hudVisorHome)"/>
+                  <ellipse cx="15" cy="15.5" rx="3" ry="1.2" fill="#FFFFFF" opacity="0.8"/>
+                  <path d="M11 28 C13 25 23 25 25 28 L27 34 C23 36 13 36 9 34 Z" fill="#312E81"/>
+                  <circle cx="18" cy="27" r="2" fill="#F59E0B"/>
+                </svg>
+              </div>
+            </a>
+            <a class="btn-nav-started" href="/dashboard/">
+              <span>Dashboard</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          {% else %}
+            <a class="btn-nav-login" href="/login/">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>Login</span>
+            </a>
+            <a class="btn-nav-started" href="/register/">
+              <span>Get Started</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. HERO SECTION -->
+    <section class="landing-hero-grid">
+      <div class="hero-left-content reveal-init is-revealed">
+        
+        <!-- Top Announcement Badge -->
+        <div class="hero-badge-pill">
+          <span class="hero-badge-icon">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#F59E0B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+              <path d="M4 22h16"></path>
+              <path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"></path>
+              <path d="M6 4h12a2 2 0 0 1 2 2v3a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6V6a2 2 0 0 1 2-2Z"></path>
+            </svg>
+          </span>
+          <span class="hero-badge-text">India's Next Gen Olympiad Learning Platform</span>
+        </div>
+
+        <!-- Headline with Curved Accent -->
+        <h1 class="hero-main-title">
+          Olympiad Learning,<br />
+          Now <span class="hero-highlight-fun">More Fun!
+            <svg class="hero-title-curve" viewBox="0 0 220 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 13C60 4 160 4 217 13" stroke="#F59E0B" stroke-width="5.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="hero-description">
+          {% if request.user.is_staff or request.user.is_superuser %}
+            Administrator access active for <strong>{{ request.user.username }}</strong>. Manage curriculum, subjects, learning worlds, telemetry, and platform settings via the Admin Console.
+          {% elif request.user.is_authenticated and profile %}
+            Welcome back, <strong>{{ profile.display_name|default:request.user.first_name|default:request.user.username }}</strong>! Continue mastering concepts, completing challenges, and earning trophies with <strong>Tezz-Mindz</strong>.
+          {% else %}
+            Learn concepts, play games, solve challenges and become an Olympiad Champion with <strong>Tezz-Mindz</strong>.
+          {% endif %}
+        </p>
+        
+        <!-- CTA Group -->
+        <div class="hero-cta-group">
+          {% if request.user.is_staff or request.user.is_superuser %}
+            <a class="btn-hero-primary" href="/admin/">
+              <span>Open Admin Console</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a class="btn-hero-secondary" href="/logout/">
+              <span>Log Out</span>
+            </a>
+          {% elif request.user.is_authenticated and profile %}
+            <a class="btn-hero-primary" href="/dashboard/">
+              <span>Continue Learning</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a class="btn-hero-secondary" href="/subjects/">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6366F1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+                <path d="M6 6h10"></path>
+                <path d="M6 10h10"></path>
+              </svg>
+              <span>Explore Classes</span>
+            </a>
+          {% else %}
+            <a class="btn-hero-primary" href="/register/">
+              <span>Start Free Practice</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a class="btn-hero-secondary" href="#results">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#6366F1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="7"></circle>
+                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+              </svg>
+              <span>Our Results</span>
+            </a>
+          {% endif %}
+        </div>
+
+        <!-- Bottom 4 Feature Mini-Pills Bar -->
+        <div class="hero-features-bar">
+          <!-- 1. Game Based Learning -->
+          <div class="hero-mini-pill f-pill-indigo">
+            <div class="pill-icon-box">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#4F46E5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="6" y1="12" x2="10" y2="12"></line>
+                <line x1="8" y1="10" x2="8" y2="14"></line>
+                <line x1="15" y1="13" x2="15.01" y2="13"></line>
+                <line x1="18" y1="11" x2="18.01" y2="11"></line>
+                <rect x="2" y="6" width="20" height="12" rx="6"></rect>
+              </svg>
+            </div>
+            <div class="pill-text-block">
+              <strong>Game Based</strong>
+              <span>Learning</span>
+            </div>
+          </div>
+
+          <!-- 2. Olympiad Focused -->
+          <div class="hero-mini-pill f-pill-rose">
+            <div class="pill-icon-box">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#E11D48" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="6" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+            </div>
+            <div class="pill-text-block">
+              <strong>Olympiad</strong>
+              <span>Focused</span>
+            </div>
+          </div>
+
+          <!-- 3. Progress Tracking -->
+          <div class="hero-mini-pill f-pill-emerald">
+            <div class="pill-icon-box">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18"></path>
+                <path d="m19 9-5 5-4-4-3 3"></path>
+              </svg>
+            </div>
+            <div class="pill-text-block">
+              <strong>Progress</strong>
+              <span>Tracking</span>
+            </div>
+          </div>
+
+          <!-- 4. Rewards & Certificates -->
+          <div class="hero-mini-pill f-pill-amber">
+            <div class="pill-icon-box">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="6"></circle>
+                <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+              </svg>
+            </div>
+            <div class="pill-text-block">
+              <strong>Rewards</strong>
+              <span>&amp; Certificates</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column Hero Illustration -->
+      <div class="hero-right-illustration reveal-init is-revealed">
+        <div class="hero-cloud-backdrop"></div>
+        <div class="hero-character-stage">
+          <img src="/static/media/hero_student.jpg" alt="Tezz-Mindz Student Learning with Laptop and Olympiad Trophies" />
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 4. CHOOSE YOUR CLASS SECTION -->
+    <section class="classes-section reveal-init" id="subjects">
+      <div class="section-heading-block">
+        <h2>Choose Your Class</h2>
+        <p>Choose your class and start your learning adventure.</p>
+      </div>
+
+      <div class="classes-grid-premium">
+        <!-- Class 1 -->
+        <a href="#" onclick="selectClass(event, 1)" class="class-game-card card-c-1" aria-label="Select Class 1">
+          <div class="card-top-row">
+            <span class="card-badge-pill">Class 1</span>
+            <span class="card-grade-num-badge">1</span>
+          </div>
+          <div class="card-icon-wrapper">
+            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
+              <rect x="6" y="22" width="16" height="16" rx="4" fill="#38BDF8" fill-opacity="0.25" stroke="#0284C7" stroke-width="2.5"/>
+              <text x="14" y="34" font-size="11" font-weight="900" fill="#0284C7" text-anchor="middle" font-family="sans-serif">A</text>
+              <rect x="26" y="22" width="16" height="16" rx="4" fill="#38BDF8" fill-opacity="0.25" stroke="#0284C7" stroke-width="2.5"/>
+              <text x="34" y="34" font-size="11" font-weight="900" fill="#0284C7" text-anchor="middle" font-family="sans-serif">1</text>
+              <rect x="16" y="8" width="16" height="16" rx="4" fill="#0284C7" fill-opacity="0.15" stroke="#0284C7" stroke-width="2.5"/>
+              <path d="M24 11l1.5 3.5 3.8.3-2.9 2.5.9 3.7L24 19.1l-3.3 1.9.9-3.7-2.9-2.5 3.8-.3z" fill="#F59E0B"/>
+            </svg>
+          </div>
+          <div class="card-info-wrap">
+            <h3 class="card-class-title">Class 1</h3>
+            <span class="card-subjects-badge">Maths • Science • English</span>
+          </div>
+          <div class="card-action-btn">
+            <span>Start Learning</span>
+            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Class 2 -->
+        <a href="#" onclick="selectClass(event, 2)" class="class-game-card card-c-2" aria-label="Select Class 2">
+          <div class="card-top-row">
+            <span class="card-badge-pill">Class 2</span>
+            <span class="card-grade-num-badge">2</span>
+          </div>
+          <div class="card-icon-wrapper">
+            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
+              <rect x="8" y="8" width="32" height="32" rx="8" fill="#60A5FA" fill-opacity="0.2" stroke="#2563EB" stroke-width="2.5"/>
+              <path d="M16 20h8M20 16v8" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+              <path d="M28 28h8M28 34h8" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="32" cy="18" r="2.5" fill="#3B82F6"/>
+              <circle cx="18" cy="30" r="2.5" fill="#3B82F6"/>
+            </svg>
+          </div>
+          <div class="card-info-wrap">
+            <h3 class="card-class-title">Class 2</h3>
+            <span class="card-subjects-badge">Maths • Science • English</span>
+          </div>
+          <div class="card-action-btn">
+            <span>Start Learning</span>
+            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Class 3 -->
+        <a href="#" onclick="selectClass(event, 3)" class="class-game-card card-c-3" aria-label="Select Class 3">
+          <div class="card-top-row">
+            <span class="card-badge-pill">Class 3</span>
+            <span class="card-grade-num-badge">3</span>
+          </div>
+          <div class="card-icon-wrapper">
+            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
+              <path d="M24 6C13.5 6 6 13.5 6 24c0 10.5 8 18 18 18 2 0 3.5-1.5 3.5-3.5 0-.9-.4-1.8-1-2.4-.6-.7-1-1.6-1-2.6 0-2 1.6-3.5 3.5-3.5H33c6 0 11-5 11-11 0-10.5-9-13-20-13z" fill="#F472B6" fill-opacity="0.2" stroke="#DB2777" stroke-width="2.5"/>
+              <circle cx="15" cy="17" r="2.5" fill="#DB2777"/>
+              <circle cx="23" cy="13" r="2.5" fill="#F59E0B"/>
+              <circle cx="31" cy="17" r="2.5" fill="#10B981"/>
+              <circle cx="35" cy="24" r="2.5" fill="#6366F1"/>
+              <circle cx="28" cy="33" r="3" fill="#DB2777" fill-opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="card-info-wrap">
+            <h3 class="card-class-title">Class 3</h3>
+            <span class="card-subjects-badge">Maths • Science • English</span>
+          </div>
+          <div class="card-action-btn">
+            <span>Start Learning</span>
+            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Class 4 -->
+        <a href="#" onclick="selectClass(event, 4)" class="class-game-card card-c-4" aria-label="Select Class 4">
+          <div class="card-top-row">
+            <span class="card-badge-pill">Class 4</span>
+            <span class="card-grade-num-badge">4</span>
+          </div>
+          <div class="card-icon-wrapper">
+            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
+              <path d="M24 7a13 13 0 0 0-8 23.3V34a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-3.7A13 13 0 0 0 24 7z" fill="#FBBF24" fill-opacity="0.2" stroke="#D97706" stroke-width="2.5"/>
+              <path d="M19 41h10M21 45h6" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M21 21a3 3 0 0 1 6 0c0 3-3 4-3 6" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="24" cy="31" r="1" fill="#D97706"/>
+              <path d="M6 16l3 1.5M42 16l-3 1.5M24 2v3" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="card-info-wrap">
+            <h3 class="card-class-title">Class 4</h3>
+            <span class="card-subjects-badge">Maths • Science • English</span>
+          </div>
+          <div class="card-action-btn">
+            <span>Start Learning</span>
+            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Class 5 -->
+        <a href="#" onclick="selectClass(event, 5)" class="class-game-card card-c-5" aria-label="Select Class 5">
+          <div class="card-top-row">
+            <span class="card-badge-pill">Class 5</span>
+            <span class="card-grade-num-badge">5</span>
+          </div>
+          <div class="card-icon-wrapper">
+            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
+              <path d="M24 6l16 9.2v18.6L24 43 8 33.8V15.2L24 6z" fill="#C084FC" fill-opacity="0.2" stroke="#7C3AED" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M24 6v18.5L8 15.2M24 24.5l16-9.3M24 24.5V43" stroke="#7C3AED" stroke-width="2.5" stroke-linejoin="round"/>
+              <circle cx="24" cy="24.5" r="3" fill="#7C3AED" fill-opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="card-info-wrap">
+            <h3 class="card-class-title">Class 5</h3>
+            <span class="card-subjects-badge">Maths • Science • English</span>
+          </div>
+          <div class="card-action-btn">
+            <span>Start Learning</span>
+            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Class 6 -->
+        <a href="#" onclick="selectClass(event, 6)" class="class-game-card card-c-6" aria-label="Select Class 6">
+          <div class="card-top-row">
+            <span class="card-badge-pill">Class 6</span>
+            <span class="card-grade-num-badge">6</span>
+          </div>
+          <div class="card-icon-wrapper">
+            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
+              <path d="M19 6h10M21 6v9l-11 21a3 3 0 0 0 2.6 4.4h22.8a3 3 0 0 0 2.6-4.4L27 15V6" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 31.5c4-2 7 2 11 0s6-2 10 0L37 36a2.5 2.5 0 0 1-2.2 3.6H13.2A2.5 2.5 0 0 1 11 36l2.5-4.5z" fill="#34D399" fill-opacity="0.3"/>
+              <circle cx="21" cy="33" r="2" fill="#059669"/>
+              <circle cx="27" cy="27" r="2.5" fill="#059669"/>
+              <circle cx="23" cy="21" r="1.5" fill="#059669"/>
+            </svg>
+          </div>
+          <div class="card-info-wrap">
+            <h3 class="card-class-title">Class 6</h3>
+            <span class="card-subjects-badge">Maths • Science • English</span>
+          </div>
+          <div class="card-action-btn">
+            <span>Start Learning</span>
+            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Class 7 -->
+        <a href="#" onclick="selectClass(event, 7)" class="class-game-card card-c-7" aria-label="Select Class 7">
+          <div class="card-top-row">
+            <span class="card-badge-pill">Class 7</span>
+            <span class="card-grade-num-badge">7</span>
+          </div>
+          <div class="card-icon-wrapper">
+            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
+              <polygon points="8 40 40 40 40 8 8 40" fill="#FDA4AF" fill-opacity="0.25" stroke="#E11D48" stroke-width="2.5" stroke-linejoin="round"/>
+              <polygon points="18 36 34 36 34 20 18 36" fill="#FFFFFF" stroke="#E11D48" stroke-width="2" stroke-linejoin="round"/>
+              <circle cx="28" cy="28" r="3" fill="#E11D48" fill-opacity="0.3"/>
+              <path d="M14 40v-3M20 40v-2M26 40v-3M32 40v-2M40 34h-3M40 28h-2M40 22h-3M40 16h-2" stroke="#E11D48" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="card-info-wrap">
+            <h3 class="card-class-title">Class 7</h3>
+            <span class="card-subjects-badge">Maths • Science • English</span>
+          </div>
+          <div class="card-action-btn">
+            <span>Start Learning</span>
+            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Class 8 -->
+        <a href="#" onclick="selectClass(event, 8)" class="class-game-card card-c-8" aria-label="Select Class 8">
+          <div class="card-top-row">
+            <span class="card-badge-pill">Class 8</span>
+            <span class="card-grade-num-badge">8</span>
+          </div>
+          <div class="card-icon-wrapper">
+            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
+              <path d="M14 10h20v14a10 10 0 0 1-20 0V10z" fill="#818CF8" fill-opacity="0.2" stroke="#4F46E5" stroke-width="2.5"/>
+              <path d="M14 14H8a4 4 0 0 0-4 4v2a6 6 0 0 0 6 6h4M34 14h6a4 4 0 0 1 4 4v2a6 6 0 0 1-6 6h-4" stroke="#4F46E5" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M24 24v11M16 41h16M19 35h10" stroke="#4F46E5" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M24 13.5l1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4z" fill="#F59E0B"/>
+            </svg>
+          </div>
+          <div class="card-info-wrap">
+            <h3 class="card-class-title">Class 8</h3>
+            <span class="card-subjects-badge">Maths • Science • English</span>
+          </div>
+          <div class="card-action-btn">
+            <span>Start Learning</span>
+            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 5. OUR RESULTS & ACHIEVERS -->
+    <section class="our-results-section reveal-init" id="results">
+      <div class="section-heading-block">
+        <span class="section-tag-pill">🏆 Our Achievers</span>
+        <h2>Students Who Made Us Proud</h2>
+        <p>Real students, real results — powered by TezMindz learning games.</p>
+      </div>
+
+      <!-- Stats Bar -->
+      <div class="results-metrics-bar">
+        <div class="metric-stat-box">
+          <div class="metric-num" style="color: #4F46E5;">98.6%</div>
+          <div class="metric-label">Qualification Rate</div>
+        </div>
+        <div class="metric-stat-box">
+          <div class="metric-num" style="color: #059669;">500+</div>
+          <div class="metric-label">Top Rankers</div>
+        </div>
+        <div class="metric-stat-box">
+          <div class="metric-num" style="color: #D97706;">15,000+</div>
+          <div class="metric-label">Active Students</div>
+        </div>
+        <div class="metric-stat-box">
+          <div class="metric-num" style="color: #7C3AED;">4.9 / 5 ⭐</div>
+          <div class="metric-label">Parent Rating</div>
+        </div>
+      </div>
+
+      <!-- Student Cards -->
+      <div class="achievers-cards-grid">
+        <div class="achiever-card">
+          <div class="achiever-img-container">
+            <img src="/static/media/student_topper_1.jpg" alt="Aanya Sharma" class="achiever-img" />
+          </div>
+          <div class="achiever-content-body">
+            <h3 class="achiever-name">Aanya Sharma</h3>
+            <p class="achiever-detail">Class 5 • New Delhi</p>
+            <span class="achiever-achievement" style="background: #EEF2FF; color: #4F46E5;">🥇 IMO Gold Medalist</span>
+          </div>
+        </div>
+
+        <div class="achiever-card">
+          <div class="achiever-img-container">
+            <img src="/static/media/student_topper_2.jpg" alt="Vihaan Patel" class="achiever-img" />
+          </div>
+          <div class="achiever-content-body">
+            <h3 class="achiever-name">Vihaan Patel</h3>
+            <p class="achiever-detail">Class 4 • Mumbai</p>
+            <span class="achiever-achievement" style="background: #ECFDF5; color: #059669;">🥈 NSO Silver Medalist</span>
+          </div>
+        </div>
+
+        <div class="achiever-card">
+          <div class="achiever-img-container">
+            <img src="/static/media/student_topper_3.jpg" alt="Rhea Deshmukh" class="achiever-img" />
+          </div>
+          <div class="achiever-content-body">
+            <h3 class="achiever-name">Rhea Deshmukh</h3>
+            <p class="achiever-detail">Class 6 • Bengaluru</p>
+            <span class="achiever-achievement" style="background: #FAF5FF; color: #7C3AED;">🏆 IEO Champion</span>
+          </div>
+        </div>
+
+        <div class="achiever-card">
+          <div class="achiever-img-container">
+            <img src="/static/media/student_topper_4.jpg" alt="Kabir Mehta" class="achiever-img" />
+          </div>
+          <div class="achiever-content-body">
+            <h3 class="achiever-name">Kabir Mehta</h3>
+            <p class="achiever-detail">Class 5 • Chennai</p>
+            <span class="achiever-achievement" style="background: #FFFBEB; color: #D97706;">🌟 UIEO Top Scorer</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5.5 SUBSCRIPTION PRICING SECTION -->
+    <section class="subscription-section reveal-init" id="pricing">
+      <div class="section-heading-block">
+        <span class="section-tag-pill">Flexible Learning Plans</span>
+        <h2>Choose Your Learning Adventure</h2>
+        <p>Simple, transparent pricing crafted for students and parents. Unlock interactive 3D games, Olympiad prep, and personalized AI tutoring.</p>
+      </div>
+
+      <div class="pricing-cards-grid">
+        <!-- 1. Starter Explorer Plan -->
+        <div class="pricing-card card-plan-starter">
+          <div class="pricing-card-body">
+            <div class="pricing-header-top">
+              <div class="plan-icon-wrap icon-starter">
+                <i class="bi bi-compass-fill"></i>
+              </div>
+              <span class="plan-tier-pill pill-starter">Starter</span>
+            </div>
+            <h3 class="plan-name">Starter Explorer</h3>
+            <p class="plan-desc">Essential curriculum concepts and quizzes for curious learners building strong fundamentals.</p>
+
+            <div class="price-box">
+              <div class="price-main-line">
+                <span class="price-currency">₹</span>
+                <span class="price-figure">499</span>
+                <span class="price-cadence">/ month</span>
+              </div>
+              <div class="price-sub-info">
+                <span class="savings-badge">Free 7-Day Trial</span>
+                <span class="price-equivalent">Billed monthly</span>
+              </div>
+            </div>
+
+            <ul class="pricing-features">
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>Access to all Class 1–8 Core Subjects (Maths, Science, English, Reasoning)</span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>500+ Chapter Explanations &amp; Visual Concept Notes</span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>Daily Chapter Quizzes &amp; Practice Questions</span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>Standard 2D Learning Games</span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>Weekly Student Performance Reports for Parents</span>
+              </li>
+            </ul>
+          </div>
+
+          <a href="/register/" class="btn-plan-select btn-plan-starter-action">
+            Start 7-Day Free Trial
+          </a>
+        </div>
+
+        <!-- 2. Olympiad Champion Pro (RECOMMENDED / CENTER) -->
+        <div class="pricing-card card-plan-pro">
+          <div class="popular-badge-ribbon">
+            <i class="bi bi-stars"></i> Most Popular • Best Value
+          </div>
+
+          <div class="pricing-card-body">
+            <div class="pricing-header-top">
+              <div class="plan-icon-wrap icon-pro">
+                <i class="bi bi-trophy-fill"></i>
+              </div>
+              <span class="plan-tier-pill pill-pro">Recommended</span>
+            </div>
+            <h3 class="plan-name">Olympiad Champion Pro</h3>
+            <p class="plan-desc">The complete package for high achievers and Olympiad aspirants seeking top ranks.</p>
+
+            <div class="price-box">
+              <div class="price-main-line">
+                <span class="price-currency">₹</span>
+                <span class="price-figure">2,499</span>
+                <span class="price-cadence">/ year</span>
+              </div>
+              <div class="price-sub-info">
+                <span class="savings-badge">⚡ Save 58%</span>
+                <span class="price-equivalent">Just ₹208 / month</span>
+              </div>
+            </div>
+
+            <ul class="pricing-features">
+              <li class="pricing-feature-item highlighted">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span><strong>Everything in Starter Explorer, plus:</strong></span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>Full Access to Flagship 3D Games (Dream House &amp; Fraction Quest)</span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>AI "Little Teacher" Voice Tutor for instant doubt solving</span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>Full Olympiad Mock Test Series (IMO, NSO, IEO, UIEO)</span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>Live Leaderboards, XP Multipliers &amp; Certified Badges</span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>Parent Analytics Portal &amp; Performance Heatmaps</span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>Printable Revision Worksheets &amp; Mindmaps</span>
+              </li>
+            </ul>
+          </div>
+
+          <a href="/register/" class="btn-plan-select btn-plan-primary">
+            Get Champion Pro &rarr;
+          </a>
+        </div>
+
+        <!-- 3. Master Mind Multi-Grade Plan (PREMIUM) -->
+        <div class="pricing-card card-plan-premium">
+          <div class="pricing-card-body">
+            <div class="pricing-header-top">
+              <div class="plan-icon-wrap icon-master">
+                <i class="bi bi-mortarboard-fill"></i>
+              </div>
+              <span class="plan-tier-pill pill-master">👑 Premium Family</span>
+            </div>
+            <h3 class="plan-name">Master Mind Multi-Grade</h3>
+            <p class="plan-desc">Comprehensive long-term academic excellence and sibling sharing across all classes.</p>
+
+            <div class="price-box">
+              <div class="price-main-line">
+                <span class="price-currency">₹</span>
+                <span class="price-figure">4,999</span>
+                <span class="price-cadence">/ 2-years</span>
+              </div>
+              <div class="price-sub-info">
+                <span class="savings-badge">🚀 All-Access</span>
+                <span class="price-equivalent">Up to 3 Sibling Profiles</span>
+              </div>
+            </div>
+
+            <ul class="pricing-features">
+              <li class="pricing-feature-item highlighted">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span><strong>All Pro Champion features, plus:</strong></span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>Multi-Grade Unlock — Switch freely between Class 1 to Class 8</span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>Family Plan: Up to 3 Student Profiles with separate progress</span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>VIP Early Access to upcoming 3D Game Worlds &amp; Science Labs</span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>Priority 1-on-1 Olympiad Guidance &amp; Strategy Webinars</span>
+              </li>
+              <li class="pricing-feature-item">
+                <span class="feature-check-icon"><i class="bi bi-check-lg"></i></span>
+                <span>Unlimited AI Voice Tutor Minutes &amp; Homework Solver</span>
+              </li>
+            </ul>
+          </div>
+
+          <a href="/register/" class="btn-plan-select btn-plan-premium-action">
+            Unlock Premium Pass
+          </a>
+        </div>
+      </div>
+
+      <!-- Trust Badges Bar -->
+      <div class="pricing-trust-strip">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span>100% Kid-Safe &amp; Ad-Free</span>
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>Instant Account Activation</span>
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+          </svg>
+          <span>Cancel or Switch Anytime</span>
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          <span>Dedicated Parent Support</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. GAMES ARENA SHOWCASE -->
+    <section class="games-arena-section reveal-init" id="games">
+      <div class="section-heading-block">
+        <span class="section-tag-pill">🎮 Play-Based Learning</span>
+        <h2>Games Arena</h2>
+        <p>Master every academic concept through vibrant, interactive 3D games — no boring textbooks, just pure learning fun.</p>
+      </div>
+
+      <div class="games-showcase-grid">
+
+        <!-- Game 1: Fraction Quest: Pizza Master (Mathematics • Flagship) -->
+        <div class="game-card-v2 game-card-math-alt flagship-card">
+          <span class="flagship-crown">⭐ Flagship</span>
+          <div class="game-card-emoji-icon">🍕</div>
+          <div class="game-card-badge-row">
+            <span class="game-card-subject-badge badge-math-alt">Mathematics</span>
+            <span class="game-card-xp-tag">+150 XP</span>
+          </div>
+          <h4>Fraction Quest: Pizza Master</h4>
+          <p class="game-card-desc">Slice and construct pizzas to visualize equivalent fractions, improper fractions, and decimals in real-time.</p>
+          <div class="game-card-footer">
+            <span class="game-card-players">👥 1,200+ Players</span>
+            <a href="/game/1/difficulty/" class="game-card-play-btn play-btn-math-alt">Play →</a>
+          </div>
+        </div>
+
+        <!-- Game 2: Bio-Reactor Lab (Science) -->
+        <div class="game-card-v2 game-card-science">
+          <div class="game-card-emoji-icon">🧪</div>
+          <div class="game-card-badge-row">
+            <span class="game-card-subject-badge badge-science">Science</span>
+            <span class="game-card-xp-tag">+160 XP</span>
+          </div>
+          <h4>Bio-Reactor Lab</h4>
+          <p class="game-card-desc">Combine sunlight photons, water molecules, and CO2 in chloroplast chambers to produce glucose.</p>
+          <div class="game-card-footer">
+            <span class="game-card-players">👥 750+ Players</span>
+            <a href="/subject/2/" class="game-card-play-btn play-btn-science">Explore →</a>
+          </div>
+        </div>
+
+        <!-- Game 3: Sentence Tokenizer (English) -->
+        <div class="game-card-v2 game-card-english">
+          <div class="game-card-emoji-icon">📝</div>
+          <div class="game-card-badge-row">
+            <span class="game-card-subject-badge badge-english">English</span>
+            <span class="game-card-xp-tag">+140 XP</span>
+          </div>
+          <h4>Sentence Tokenizer</h4>
+          <p class="game-card-desc">Deconstruct and classify dynamic sentence tokens into Nouns, Verbs, Adjectives, and Adverbs.</p>
+          <div class="game-card-footer">
+            <span class="game-card-players">👥 620+ Players</span>
+            <a href="/subject/3/" class="game-card-play-btn play-btn-english">Play →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="games-arena-cta">
+        <a href="/games/" class="btn-explore-all-games">
+          <span>Explore All 3D Games (Including Dream House Builder)</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- 7. ALL-INDIA CHAMPIONS LEADERBOARD -->
+    <section class="champions-leaderboard-section reveal-init" id="leaderboard">
+      <div class="section-heading-block">
+        <span class="section-tag-pill">🏆 Live Competition</span>
+        <h2>All-India Champions Leaderboard</h2>
+        <p>Compete with top students across 500+ schools, maintain daily streaks, and climb to the National Top 10.</p>
+      </div>
+
+      <!-- Top 3 Podium Cards Grid -->
+      <div class="leaderboard-podium-grid">
+        <!-- Rank 2: Silver -->
+        <div class="podium-card podium-rank-2">
+          <div class="podium-avatar">🥈</div>
+          <h4 class="podium-name">Vihaan Patel</h4>
+          <p class="podium-school">Class 4 • Cathedral, Mumbai</p>
+          <span class="podium-score-pill">🥈 1,380 XP • 30D Streak</span>
+        </div>
+
+        <!-- Rank 1: Gold (Center Elevated) -->
+        <div class="podium-card podium-rank-1">
+          <div class="podium-crown-badge">
+            <i class="bi bi-crown-fill"></i> #1 All-India Champion
+          </div>
+          <div class="podium-avatar">🥇</div>
+          <h3 class="podium-name" style="font-size: 1.3rem;">Aanya Sharma</h3>
+          <p class="podium-school">Class 5 • DPS R.K. Puram, New Delhi</p>
+          <span class="podium-score-pill">👑 1,650 XP • 45D Streak</span>
+        </div>
+
+        <!-- Rank 3: Bronze -->
+        <div class="podium-card podium-rank-3">
+          <div class="podium-avatar">🥉</div>
+          <h4 class="podium-name">Kabir Mehta</h4>
+          <p class="podium-school">Class 5 • DAV Boys, Chennai</p>
+          <span class="podium-score-pill">🥉 1,290 XP • 25D Streak</span>
+        </div>
+      </div>
+
+      <!-- Live Challengers Rank List -->
+      <div class="leaderboard-list-table">
+        <div class="leaderboard-row-item">
+          <div class="rank-user-info">
+            <span class="rank-num-badge rank-4-plus">4</span>
+            <div>
+              <div style="font-size: 0.95rem; color: var(--tm-ink);">Ishaan Sengupta</div>
+              <div style="font-size: 0.74rem; color: var(--tm-muted);">Class 4 • South Point High School, Kolkata</div>
+            </div>
+          </div>
+          <strong style="color: #4F46E5; font-size: 0.95rem;">1,210 XP 🔥 20D</strong>
+        </div>
+
+        <div class="leaderboard-row-item">
+          <div class="rank-user-info">
+            <span class="rank-num-badge rank-4-plus">5</span>
+            <div>
+              <div style="font-size: 0.95rem; color: var(--tm-ink);">Rhea Deshmukh</div>
+              <div style="font-size: 0.74rem; color: var(--tm-muted);">Class 6 • National Public School, Bengaluru</div>
+            </div>
+          </div>
+          <strong style="color: #4F46E5; font-size: 0.95rem;">1,180 XP 🔥 60D</strong>
+        </div>
+
+        <div class="leaderboard-row-item highlight-me">
+          <div class="rank-user-info">
+            <span class="rank-num-badge rank-4-plus" style="background: #4F46E5; color: #FFF;">6</span>
+            <div>
+              <div style="font-size: 0.95rem; color: #4F46E5; font-weight: 800;">Aarav (You)</div>
+              <div style="font-size: 0.74rem; color: #6366F1;">Class 5 • Active Streak 7D • +180 XP Today</div>
+            </div>
+          </div>
+          <strong style="color: #4F46E5; font-size: 0.95rem;">1,100 XP 🔥 7D</strong>
+        </div>
+      </div>
+
+      <div class="leaderboard-footer-action">
+        <a href="/leaderboard/" class="btn-leaderboard-full">
+          <span>View Full National Leaderboard</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- 8. PARENT REVIEWS -->
+    <section class="parents-trust-feedback-section reveal-init" id="parent-reviews">
+      <div class="section-heading-block">
+        <span class="section-tag-pill">💬 What Parents Say</span>
+        <h2>Loved by 10,000+ Parents</h2>
+        <p>Hear from real families whose children are learning and growing with TezMindz.</p>
+      </div>
+
+      <div class="parent-reviews-grid">
+        <!-- Review 1 -->
+        <div class="parent-review-card">
+          <div>
+            <div class="review-stars">★★★★★</div>
+            <p class="review-quote">"My son's math score jumped from 72% to 98% in just 3 weeks. He actually enjoys studying now — no more nagging!"</p>
+          </div>
+          <div class="review-author-row">
+            <div class="review-avatar" style="background: linear-gradient(135deg, #4F46E5, #7C3AED);">AS</div>
+            <div>
+              <h5 class="review-author-name">Ananya Sharma</h5>
+              <div class="review-author-detail">Parent of Class 5 student • Noida</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="parent-review-card">
+          <div>
+            <div class="review-stars">★★★★★</div>
+            <p class="review-quote">"She practices on her own every day without being told. The games make learning feel like play — best investment we made!"</p>
+          </div>
+          <div class="review-author-row">
+            <div class="review-avatar" style="background: linear-gradient(135deg, #059669, #0D9488);">RD</div>
+            <div>
+              <h5 class="review-author-name">Rajesh Deshmukh</h5>
+              <div class="review-author-detail">Parent of Class 6 student • Bengaluru</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="parent-review-card">
+          <div>
+            <div class="review-stars">★★★★★</div>
+            <p class="review-quote">"His school teacher asked what tuition he's taking! The confidence boost and speed improvement is remarkable."</p>
+          </div>
+          <div class="review-author-row">
+            <div class="review-avatar" style="background: linear-gradient(135deg, #D97706, #B45309);">MS</div>
+            <div>
+              <h5 class="review-author-name">Meera Sengupta</h5>
+              <div class="review-author-detail">Parent of Class 4 student • Kolkata</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. FINAL HIGH-CONVERSION CTA BANNER -->
+    <section class="final-cta-section reveal-init">
+      <div class="final-cta-card">
+        <h2>Ready to Make Learning More Fun?</h2>
+        <p>Join thousands of students across India who prepare for Math, Science, and English Olympiads through interactive 3D games and adaptive quizzes.</p>
+        
+        <div class="final-cta-btn-group">
+          {% if request.user.is_authenticated %}
+            <a class="btn-cta-white" href="/dashboard/">Go to Dashboard →</a>
+            <a class="btn-cta-outline" href="/subjects/">Explore Classes</a>
+          {% else %}
+            <a class="btn-cta-white" href="/register/">Start Free Practice →</a>
+            <a class="btn-cta-outline" href="/subjects/">Explore Classes</a>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <!-- Floating Back to Top Button -->
+    <button type="button" class="btn-back-to-top" id="backToTopBtn" onclick="scrollToTop()" title="Back to top" aria-label="Back to top">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="19" x2="12" y2="5"></line>
+        <polyline points="5 12 12 5 19 12"></polyline>
+      </svg>
+    </button>
+
+    <!-- 10. SITE FOOTER -->
+    <footer class="site-footer-v2" id="about">
+      <div class="footer-inner-grid">
+        <div class="footer-col">
+          <a class="landing-logo" href="/" style="margin-bottom: 14px;">
+            <div class="landing-logo-mark">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4.5 16.5c-1.5 1.5-2.5 3.5-2.5 5.5C4 22 6 21 7.5 19.5" />
+                <path d="M12 12l9-9-3 12-6 3-3-3-3-3 6-3z" />
+                <path d="M9 15l-3-3" />
+              </svg>
+            </div>
+            <div class="landing-logo-text">
+              <strong>Tezz-Mindz</strong>
+              <span>Learn • Play • Master</span>
+            </div>
+          </a>
+          <p style="font-size: 0.88rem; color: var(--tm-muted); line-height: 1.6; margin-top: 10px;">India's next-generation gamified Olympiad learning platform combining NCERT syllabus curriculum with interactive 3D games and adaptive quizzes.</p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Subjects</h5>
+          <a href="/subject/1/">Mathematics (IMO)</a>
+          <a href="/subject/2/">Science (NSO)</a>
+          <a href="/subject/3/">English (IEO)</a>
+          <a href="/games/dream-house-builder/">3D Games Arena</a>
+        </div>
+
+        <div class="footer-col">
+          <h5>Platform</h5>
+          <a href="/subjects/">Class 1 – Class 8</a>
+          <a href="/how-it-works/">How It Works</a>
+          <a href="/about/">About Us</a>
+          <a href="/leaderboard/">National Leaderboard</a>
+        </div>
+
+        <div class="footer-col">
+          <h5>Support &amp; Legal</h5>
+          <a href="/login/">Student Login</a>
+          <a href="/register/">Create Free Account</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <span>© 2026 Tezz-Mindz EdTech Platform. All rights reserved.</span>
+        <span>Built for Young Champions Across India</span>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+      {% if user_data_js %}
+      window.USER_DATA = {{ user_data_js|safe }};
+      {% endif %}
+
+      // Sticky navbar elevation & Back to Top button
+      window.addEventListener('scroll', function() {
+        var nav = document.getElementById('main-navbar');
+        var backToTopBtn = document.getElementById('backToTopBtn');
+
+        if (window.scrollY > 20) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+
+        if (window.scrollY > 400) {
+          backToTopBtn.classList.add('visible');
+        } else {
+          backToTopBtn.classList.remove('visible');
+        }
+      });
+
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    </script>
+    <script src="/static/js/scroll-reveal.js"></script>
+    <script>
+
+
+
+
+      function selectClass(e, classLevel) {
+        e.preventDefault();
+        var loggedIn = window.USER_DATA && window.USER_DATA.loggedIn;
+        if (loggedIn) {
+          fetch("/class/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({ classLevel: classLevel })
+          })
+          .then(function(res) {
+            if (res.ok) return res.json();
+            throw new Error("Failed to select class");
+          })
+          .then(function(data) {
+            if (data.success) {
+              location.href = "/dashboard/";
+            }
+          })
+          .catch(function(err) {
+            location.href = "/dashboard/";
+          });
+        } else {
+          fetch("/login/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({ email: "student", password: "password123" })
+          })
+          .then(function(res) {
+            if (res.ok) return res.json();
+            throw new Error("Demo login failed");
+          })
+          .then(function(data) {
+            if (data.success) {
+              fetch("/class/", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({ classLevel: classLevel })
+              })
+              .then(function() {
+                location.href = "/dashboard/";
+              });
+            }
+          })
+          .catch(function() {
+            location.href = "/login/";
+          });
+        }
+      }
+    </script>
+
+    <!-- ══ WHATSAPP FLOATING CHAT WIDGET ══ -->
+    <!-- ⚠️ REPLACE 918263986554 below with your real WhatsApp number (with country code, no + or spaces) -->
+    <div class="whatsapp-float" id="whatsappWidget">
+      <!-- Chat Popup -->
+      <div class="whatsapp-chat-popup" id="whatsappPopup">
+        <div class="whatsapp-popup-header">
+          <div class="whatsapp-popup-avatar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div class="whatsapp-popup-header-text">
+            <h4>Tezz-Mindz Support</h4>
+            <p>● Online | Replies within minutes</p>
+          </div>
+        </div>
+        <div class="whatsapp-popup-body">
+          <div class="whatsapp-popup-msg">
+            👋 Hi there! Welcome to <strong>Tezz-Mindz</strong>. How can we help you today? Ask us about courses, pricing, or anything else!
+            <span class="msg-time">just now</span>
+          </div>
+        </div>
+        <div class="whatsapp-popup-footer">
+          <a href="https://wa.me/918263986554?text=Hi%20Tezz-Mindz!%20I%20want%20to%20know%20more%20about%20your%20Olympiad%20learning%20platform." target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span>Start Chat</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Floating Button -->
+      <button class="whatsapp-btn" id="whatsappToggle" onclick="toggleWhatsApp()" aria-label="Chat on WhatsApp">
+        <div class="whatsapp-btn-pulse"></div>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#FFFFFF" id="waIcon"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </button>
+    </div>
+
+    <script>
+      function toggleWhatsApp() {
+        var popup = document.getElementById('whatsappPopup');
+        var btn = document.getElementById('whatsappToggle');
+        popup.classList.toggle('open');
+        btn.classList.toggle('active');
+      }
+      // Close popup when clicking outside
+      document.addEventListener('click', function(e) {
+        var widget = document.getElementById('whatsappWidget');
+        if (widget && !widget.contains(e.target)) {
+          document.getElementById('whatsappPopup').classList.remove('open');
+          document.getElementById('whatsappToggle').classList.remove('active');
+        }
+      });
+    </script>
+  </body>
+</html>

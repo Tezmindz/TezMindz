@@ -1,0 +1,16 @@
+{
+  "id": "geometry-challenge",
+  "name": "Geometry & Shapes Arena",
+  "version": "1.0.0",
+  "description": "Interactive polygon, perimeter, and symmetry exploration challenge for young learners.",
+  "author": "TezMindz Dev Team",
+  "entrypoint": "index.js",
+  "styles": "styles.css",
+  "category": "geometry",
+  "supported_difficulties": ["easy", "medium", "hard"],
+  "content_types_supported": ["shape_identify", "perimeter_calc", "symmetry_detect"],
+  "default_config": {
+    "total_rounds": 3,
+    "theme": "geometry_arena"
+  }
+}

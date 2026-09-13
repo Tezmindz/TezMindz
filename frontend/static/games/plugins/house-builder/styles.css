@@ -1,0 +1,155 @@
+/* House Builder 3D — Plugin Styles */
+.house-builder-wrapper {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 24px;
+  background: #0F172A;
+  color: #F8FAFC;
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  user-select: none;
+}
+
+.hb-header-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(30, 41, 59, 0.8);
+  padding: 14px 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+}
+.hb-stage-badge {
+  background: rgba(99, 102, 241, 0.2);
+  border: 1px solid #818CF8;
+  color: #C7D2FE;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 100px;
+  text-transform: uppercase;
+}
+.hb-house-progress-canvas {
+  width: 100%;
+  height: 180px;
+  background: radial-gradient(circle at center, #1E293B 0%, #0B0F19 100%);
+  border-radius: 18px;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.hb-house-art {
+  font-size: 4.5rem;
+  transition: transform 0.4s ease;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+}
+
+.hb-workstation-panel {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.hb-prompt-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+}
+
+.hb-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+@media (max-width: 640px) {
+  .hb-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.hb-option-tile {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+.hb-option-tile:hover {
+  border-color: #6366F1;
+  background: rgba(99, 102, 241, 0.15);
+  transform: translateY(-2px);
+}
+.hb-option-tile.selected {
+  border-color: #10B981;
+  background: rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.3);
+}
+
+.hb-action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn-hb-hint {
+  background: rgba(251, 191, 36, 0.15);
+  color: #FCD34D;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.btn-hb-submit {
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 28px;
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.3);
+  transition: all 0.2s ease;
+}
+.btn-hb-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.45);
+}
+.btn-hb-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.hb-feedback-banner {
+  display: none;
+  padding: 14px 18px;
+  border-radius: 14px;
+  margin-top: 16px;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.hb-feedback-banner.correct {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1.5px solid #10B981;
+  color: #6EE7B7;
+}
+.hb-feedback-banner.almost {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1.5px solid #EF4444;
+  color: #FCA5A5;
+}

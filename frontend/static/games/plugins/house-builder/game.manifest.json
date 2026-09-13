@@ -1,0 +1,16 @@
+{
+  "id": "house-builder",
+  "name": "Dream House Builder 3D",
+  "version": "1.0.0",
+  "description": "3D interactive house architect simulator teaching place-value, estimation, and budget verification.",
+  "author": "TezMindz Studios",
+  "entrypoint": "index.js",
+  "styles": "styles.css",
+  "category": "applied_mathematics",
+  "supported_difficulties": ["easy", "medium", "hard"],
+  "content_types_supported": ["read_number", "build_number", "place_value", "compare_order", "budget_verification"],
+  "default_config": {
+    "stages": 5,
+    "theme": "architectural_blueprint"
+  }
+}

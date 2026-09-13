@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ game.title }} — TezMindz{% endblock %}
+{% block nav_games %}active{% endblock %}
+{% block m_nav_games %}active{% endblock %}
+
+{% block extra_head %}
+<!-- Confetti library -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+  .shell-wrapper {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 10px 16px 40px;
+  }
+
+  /* ── SHELL TOP HUD ── */
+  .shell-hud {
+    background: #FFFFFF;
+    border: 1.5px solid #EEF2F6;
+    border-radius: 20px;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  }
+
+  .shell-hud-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .shell-breadcrumb {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .shell-breadcrumb a {
+    color: #6366F1;
+    text-decoration: none;
+  }
+  .shell-game-title {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #0F172A;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .shell-diff-pill {
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 100px;
+    text-transform: uppercase;
+  }
+  .shell-diff-pill.easy { background: #DCFCE7; color: #15803D; }
+  .shell-diff-pill.medium { background: #FEF3C7; color: #B45309; }
+  .shell-diff-pill.hard { background: #FEE2E2; color: #B91C1C; }
+
+  .shell-hud-stats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .shell-stat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 800;
+  }
+  .shell-stat-chip.timer {
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    color: #334155;
+  }
+  .shell-stat-chip.score {
+    background: #EFF6FF;
+    border: 1.5px solid #BFDBFE;
+    color: #1D4ED8;
+  }
+  .shell-stat-chip.stage {
+    background: #FAF5FF;
+    border: 1.5px solid #E9D5FF;
+    color: #7E22CE;
+  }
+
+  .shell-btn {
+    border: 1.5px solid #CBD5E1;
+    background: #FFFFFF;
+    color: #475569;
+    border-radius: 12px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+  }
+  .shell-btn:hover {
+    background: #F8FAFC;
+    border-color: #94A3B8;
+  }
+  .shell-btn.exit {
+    background: #FFF1F2;
+    border-color: #FECDD3;
+    color: #BE123C;
+  }
+  .shell-btn.exit:hover {
+    background: #FFE4E6;
+  }
+
+  /* ── GAME MOUNT POINT ── */
+  #game-runner-viewport {
+    width: 100%;
+    min-height: 520px;
+    position: relative;
+  }
+
+  /* ── VICTORY CELEBRATION MODAL ── */
+  .shell-victory-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .shell-victory-card {
+    background: #FFFFFF;
+    border-radius: 28px;
+    padding: 36px 32px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+    animation: popModal 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  @keyframes popModal {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .victory-trophy {
+    font-size: 3.8rem;
+    margin-bottom: 12px;
+  }
+  .victory-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin-bottom: 8px;
+  }
+  .victory-sub {
+    font-size: 0.95rem;
+    color: #64748B;
+    margin-bottom: 24px;
+  }
+  .victory-rewards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .reward-pill {
+    background: #F8FAFC;
+    border: 2px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 14px 10px;
+  }
+  .reward-pill-val {
+    font-size: 1.4rem;
+    font-weight: 900;
+  }
+  .reward-pill-val.xp { color: #8B5CF6; }
+  .reward-pill-val.coins { color: #F59E0B; }
+  .reward-pill-lbl {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #64748B;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .btn-victory-continue {
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 16px;
+    padding: 14px 32px;
+    font-size: 1.05rem;
+    font-weight: 900;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+    transition: all 0.2s;
+  }
+  .btn-victory-continue:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(16, 185, 129, 0.4);
+  }
+
+  .shell-toast-error {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #FEF2F2;
+    border: 1.5px solid #FCA5A5;
+    color: #991B1B;
+    padding: 12px 20px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    z-index: 1000;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="shell-wrapper">
+  <!-- ── 1. UNIFIED HUD ── -->
+  <div class="shell-hud">
+    <div class="shell-hud-left">
+      <div class="shell-breadcrumb">
+        {% if game.concept and game.concept.topic %}
+          <a href="{% url 'common:learn' %}">{{ game.concept.topic.subject.name }}</a>
+          <span>›</span>
+          <a href="{% url 'common:chapter' game.concept.topic.id %}">{{ game.concept.topic.title }}</a>
+          <span>›</span>
+          <a href="{% url 'common:concept' game.concept.id %}">{{ game.concept.title }}</a>
+        {% else %}
+          <a href="{% url 'common:games' %}">Games</a>
+          <span>›</span>
+          <span>{{ game.title }}</span>
+        {% endif %}
+      </div>
+      <div class="shell-game-title">
+        <span>{{ game.title }}</span>
+        <span class="shell-diff-pill {{ game.difficulty|default:'easy' }}">{{ game.difficulty|title|default:'Easy' }}</span>
+      </div>
+    </div>
+
+    <div class="shell-hud-stats">
+      <div class="shell-stat-chip stage" id="shell-hud-stage">Ready</div>
+      <div class="shell-stat-chip score">⭐ <span id="shell-hud-score">0</span></div>
+      <div class="shell-stat-chip timer">⏱️ <span id="shell-hud-timer">0:00</span></div>
+      <button type="button" class="shell-btn" id="shell-audio-toggle">🔊 Sound: ON</button>
+      {% if game.concept %}
+        <a href="{% url 'common:concept' game.concept.id %}" class="shell-btn exit">✕ Exit</a>
+      {% else %}
+        <a href="{% url 'common:games' %}" class="shell-btn exit">✕ Exit</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- ── 2. PLUG-AND-PLAY MOUNT CONTAINER ── -->
+  <div id="game-runner-viewport">
+    <div style="padding: 40px; text-align: center; color: #64748B;">
+      <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem; margin-bottom: 12px;"></div>
+      <div>Loading game template...</div>
+    </div>
+  </div>
+
+  <!-- ── 3. VICTORY MODAL ── -->
+  <div class="shell-victory-backdrop" id="shell-victory-modal">
+    <div class="shell-victory-card">
+      <div class="victory-trophy">🏆</div>
+      <h2 class="victory-title">Challenge Completed!</h2>
+      <p class="victory-sub">Fantastic effort! You mastered this challenge and earned verified rewards.</p>
+
+      <div class="victory-rewards-grid">
+        <div class="reward-pill">
+          <div class="reward-pill-val xp" id="shell-modal-xp">+15 XP</div>
+          <div class="reward-pill-lbl">Experience Points</div>
+        </div>
+        <div class="reward-pill">
+          <div class="reward-pill-val coins" id="shell-modal-coins">+5 Coins</div>
+          <div class="reward-pill-lbl">Adventure Coins</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px; font-size: 0.9rem; color: #475569; display: flex; justify-content: space-around;">
+        <span>Score: <strong id="shell-modal-score">100 PTS</strong></span>
+        <span>Time: <strong id="shell-modal-time">0s</strong></span>
+      </div>
+
+      {% if game.concept %}
+        <a href="{% url 'common:concept' game.concept.id %}" class="btn-victory-continue">
+          Continue Learning Journey →
+        </a>
+      {% else %}
+        <a href="{% url 'common:games' %}" class="btn-victory-continue">
+          Back to Games Arena →
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="shell-toast-error" id="shell-toast-error"></div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Serialized Game Context with Dynamic Questions -->
+<script>
+  window.GAME_CONTEXT = {{ game_context_json|safe }};
+</script>
+<script src="{% static 'games/js/game-shell.js' %}"></script>
+{% endblock %}

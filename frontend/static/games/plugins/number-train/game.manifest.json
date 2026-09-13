@@ -1,0 +1,18 @@
+{
+  "id": "number-train",
+  "name": "Number Train Adventure",
+  "version": "1.0.0",
+  "description": "Place-value compartment train game teaching Indian and international number systems.",
+  "author": "TezMindz Studios",
+  "entrypoint": "index.js",
+  "styles": "styles.css",
+  "category": "mathematics",
+  "supported_difficulties": ["easy", "medium", "hard"],
+  "content_types_supported": ["place_value", "number_train", "ordering"],
+  "default_config": {
+    "target_number": "375420",
+    "target_words": "Three Lakh Seventy-Five Thousand Four Hundred Twenty",
+    "digit_pool": ["3", "7", "5", "4", "2", "0"],
+    "compartments": ["Lakhs", "Ten Thousands", "Thousands", "Hundreds", "Tens", "Ones"]
+  }
+}

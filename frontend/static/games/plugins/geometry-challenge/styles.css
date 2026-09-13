@@ -1,0 +1,155 @@
+/* Geometry Challenge — Standard Plugin Styles */
+.geometry-arena-wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 28px;
+  background: #FFFFFF;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+  user-select: none;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.geom-mission-banner {
+  background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+  border: 2px solid #C7D2FE;
+  border-radius: 20px;
+  padding: 20px 24px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.geom-mission-banner h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #3730A3;
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.geom-mission-banner p {
+  font-size: 0.95rem;
+  color: #4338CA;
+  margin: 0;
+  font-weight: 600;
+}
+
+.geom-visual-stage {
+  background: #F8FAFC;
+  border: 2px dashed #CBD5E1;
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+.geom-shape-display {
+  font-size: 5rem;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.1));
+  transition: transform 0.2s ease;
+}
+.geom-shape-display:hover {
+  transform: scale(1.08) rotate(3deg);
+}
+
+.geom-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+@media (max-width: 640px) {
+  .geom-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.geom-option-btn {
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1E293B;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.18s ease;
+}
+.geom-option-btn:hover {
+  border-color: #6366F1;
+  transform: translateY(-2px);
+  color: #4F46E5;
+}
+.geom-option-btn.selected {
+  border-color: #10B981;
+  background: #ECFDF5;
+  color: #065F46;
+}
+
+.geom-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn-geom-hint {
+  background: #FEF3C7;
+  color: #92400E;
+  border: 1.5px solid #FDE68A;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.btn-geom-submit {
+  background: linear-gradient(135deg, #4F46E5, #4338CA);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 28px;
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.25);
+  transition: all 0.18s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-geom-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.35);
+}
+.btn-geom-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.geom-feedback-toast {
+  display: none;
+  padding: 14px 18px;
+  border-radius: 14px;
+  margin-top: 18px;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+.geom-feedback-toast.correct {
+  background: #ECFDF5;
+  border: 1.5px solid #6EE7B7;
+  color: #065F46;
+}
+.geom-feedback-toast.almost {
+  background: #FEF2F2;
+  border: 1.5px solid #FCA5A5;
+  color: #991B1B;
+}
