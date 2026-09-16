@@ -66,6 +66,9 @@
       return "Good evening";
     },
     apiCall: async function (endpoint, options = {}) {
+      const targetUrl = (window.TM_CONFIG && window.TM_CONFIG.apiUrl)
+        ? window.TM_CONFIG.apiUrl(endpoint)
+        : endpoint;
       const access = localStorage.getItem("tm_access");
       const headers = Object.assign({
         "Content-Type": "application/json",
@@ -77,14 +80,17 @@
       
       const config = Object.assign({}, options, { headers });
       
-      let res = await fetch(endpoint, config);
+      let res = await fetch(targetUrl, config);
       
       // If unauthorized, try to refresh
       if (res.status === 401) {
         const refresh = localStorage.getItem("tm_refresh");
         if (refresh) {
           try {
-            const refreshRes = await fetch("/api/auth/jwt/refresh/", {
+            const refreshUrl = (window.TM_CONFIG && window.TM_CONFIG.apiUrl)
+              ? window.TM_CONFIG.apiUrl("/api/auth/jwt/refresh/")
+              : "/api/auth/jwt/refresh/";
+            const refreshRes = await fetch(refreshUrl, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ refresh })
@@ -95,7 +101,7 @@
               localStorage.setItem("tm_access", data.access);
               headers["Authorization"] = "Bearer " + data.access;
               // Retry the original request
-              res = await fetch(endpoint, Object.assign({}, config, { headers }));
+              res = await fetch(targetUrl, Object.assign({}, config, { headers }));
             } else {
               // Refresh failed, logout
               localStorage.removeItem("tm_access");

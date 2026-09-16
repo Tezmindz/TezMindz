@@ -619,6 +619,31 @@ def register_page(request):
     user = user_model.objects.create_user(username=username, email=email, password=password)
     user.first_name = (payload.get("name") or "").strip()
     user.save(update_fields=["first_name"])
+
+    # Create associated StudentProfile with selected Grade
+    from apps.accounts.models import StudentProfile
+    from apps.curriculum.models import Grade
+
+    class_level = payload.get("classLevel")
+    grade_obj = None
+    if class_level:
+        try:
+            level_int = int(class_level)
+            grade_obj = Grade.objects.filter(order=level_int).first() or Grade.objects.filter(name=str(level_int)).first()
+        except (ValueError, TypeError):
+            pass
+    if not grade_obj:
+        grade_obj = Grade.objects.first()
+
+    if grade_obj:
+        StudentProfile.objects.get_or_create(
+            user=user,
+            defaults={
+                "display_name": user.first_name or user.username,
+                "grade": grade_obj,
+            }
+        )
+
     login(request, user)
     
     # Generate JWT tokens for API usage
@@ -628,7 +653,8 @@ def register_page(request):
     return JsonResponse({
         "success": True, 
         "access": str(refresh.access_token),
-        "refresh": str(refresh)
+        "refresh": str(refresh),
+        "redirect_url": "/dashboard/"
     })
 
 
@@ -681,3 +707,40 @@ def tezadmin_hub_page(request):
     if not (request.user.is_staff or request.user.is_superuser):
         return redirect("/dashboard/")
     return redirect("/admin/")
+
+
+@require_http_methods(["POST"])
+def learn_complete_api_view(request):
+    """
+    Mark concept learning completed by updating TopicProgress.last_activity_at.
+    """
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return JsonResponse({"success": False, "message": "Authentication required."}, status=401)
+        
+    if not hasattr(request.user, 'student_profile'):
+        return JsonResponse({"success": False, "message": "Student profile required."}, status=403)
+        
+    try:
+        payload = json.loads(request.body or "{}")
+    except json.JSONDecodeError:
+        return JsonResponse({"success": False, "message": "Invalid JSON."}, status=400)
+        
+    concept_id = payload.get("concept_id")
+    if not concept_id:
+        return JsonResponse({"success": False, "message": "concept_id is required."}, status=400)
+        
+    from apps.curriculum.models import Concept
+    from apps.progress.models import TopicProgress
+    from django.utils import timezone
+    
+    concept = Concept.objects.filter(id=concept_id).select_related('topic').first()
+    if not concept:
+        return JsonResponse({"success": False, "message": "Concept not found."}, status=404)
+        
+    student = request.user.student_profile
+    tp, created = TopicProgress.objects.get_or_create(student=student, topic=concept.topic)
+    tp.last_activity_at = timezone.now()
+    tp.save()
+    
+    return JsonResponse({"success": True, "message": "Lesson completed successfully."})
+

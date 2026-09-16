@@ -870,7 +870,8 @@
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || getCookie('csrftoken');
 
     try {
-      const res = await fetch('/api/learn/complete/', {
+      const learnUrl = (window.TM_CONFIG && window.TM_CONFIG.apiUrl) ? window.TM_CONFIG.apiUrl('/api/learn/complete/') : '/api/learn/complete/';
+      const res = await fetch(learnUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="api-base-url" content="{{ request.scheme }}://{{ request.get_host }}" />
   <title>{% block title %}Tezz-Mindz — Learn, Play &amp; Master{% endblock %}</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/css/styles.css" />
@@ -782,6 +783,7 @@
       }
     }
   </script>
+  <script src="/static/js/api-config.js"></script>
   <script src="/static/js/store.js"></script>
   <script src="/static/js/scroll-reveal.js"></script>
   {% block extra_js %}{% endblock %}

@@ -1,6 +1,6 @@
 # TezMindz — Game Template Plugin Architecture & Integration Guide
 
-This guide describes how to build, integrate, and configure plug-and-play game templates for the TezMindz learning platform.
+This guide describes how to build, integrate, and configure plug-and-play game templates for the TezMindz learning platform. 
 
 ---
 

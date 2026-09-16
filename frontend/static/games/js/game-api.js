@@ -3,7 +3,7 @@
  */
 class GameAPI {
   constructor(baseUrl = '') {
-    this.baseUrl = baseUrl;
+    this.baseUrl = baseUrl || (typeof window !== 'undefined' && window.TM_CONFIG ? window.TM_CONFIG.API_BASE_URL : '');
   }
 
   getCsrfToken() {
@@ -20,7 +20,11 @@ class GameAPI {
       ...(options.headers || {})
     };
 
-    const res = await fetch(this.baseUrl + endpoint, {
+    const targetUrl = (typeof window !== 'undefined' && window.TM_CONFIG && window.TM_CONFIG.apiUrl)
+      ? window.TM_CONFIG.apiUrl(endpoint)
+      : (this.baseUrl + endpoint);
+
+    const res = await fetch(targetUrl, {
       ...options,
       headers
     });

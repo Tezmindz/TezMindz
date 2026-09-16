@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="api-base-url" content="{{ request.scheme }}://{{ request.get_host }}" />
     <title>Login — Tezz-Mindz</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/static/css/styles.css" />
@@ -585,6 +586,7 @@
       window.USER_DATA = {{ user_data_js|safe }};
       {% endif %}
     </script>
+    <script src="/static/js/api-config.js"></script>
     <script src="/static/js/store.js"></script>
     <script>
       // Toggle password visibility
@@ -621,7 +623,8 @@
         btn.disabled = true;
         btn.innerHTML = '<span style="opacity:0.75;">Signing in…</span>';
 
-        fetch("/login/", {
+        var loginUrl = (window.TM_CONFIG && window.TM_CONFIG.apiUrl) ? window.TM_CONFIG.apiUrl("/login/") : "/login/";
+        fetch(loginUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -657,7 +660,8 @@
         btn.disabled = true;
         btn.innerHTML = '<span style="opacity:0.75;">Loading demo…</span>';
 
-        fetch("/login/", {
+        var demoUrl = (window.TM_CONFIG && window.TM_CONFIG.apiUrl) ? window.TM_CONFIG.apiUrl("/login/") : "/login/";
+        fetch(demoUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -701,11 +705,13 @@
         btn.disabled = true;
         btn.textContent = 'Sending...';
         
-        fetch('/api/auth/forgot-password/', {
+        var otpUrl = (window.TM_CONFIG && window.TM_CONFIG.apiUrl) ? window.TM_CONFIG.apiUrl('/api/auth/forgot-password/') : '/api/auth/forgot-password/';
+        fetch(otpUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email })
-        }).then(res => res.json()).then(data => {
+        })
+        .then(res => res.json()).then(data => {
           btn.disabled = false;
           btn.textContent = 'Send OTP';
           if(data.success) {
@@ -734,11 +740,13 @@
         btn.disabled = true;
         btn.textContent = 'Verifying...';
         
-        fetch('/api/auth/forgot-password/verify/', {
+        var verifyUrl = (window.TM_CONFIG && window.TM_CONFIG.apiUrl) ? window.TM_CONFIG.apiUrl('/api/auth/forgot-password/verify/') : '/api/auth/forgot-password/verify/';
+        fetch(verifyUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email, otp: otp, new_password: newPass })
-        }).then(res => res.json()).then(data => {
+        })
+        .then(res => res.json()).then(data => {
           btn.disabled = false;
           btn.textContent = 'Reset Password';
           if(data.success) {

@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="api-base-url" content="{{ request.scheme }}://{{ request.get_host }}" />
     <title>Tezz-Mindz — Olympiad Learning, Now More Fun!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -3157,6 +3158,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     </script>
+    <script src="/static/js/api-config.js"></script>
     <script src="/static/js/scroll-reveal.js"></script>
     <script>
 
@@ -3166,8 +3168,11 @@
       function selectClass(e, classLevel) {
         e.preventDefault();
         var loggedIn = window.USER_DATA && window.USER_DATA.loggedIn;
+        var classUrl = (window.TM_CONFIG && window.TM_CONFIG.apiUrl) ? window.TM_CONFIG.apiUrl("/class/") : "/class/";
+        var loginUrl = (window.TM_CONFIG && window.TM_CONFIG.apiUrl) ? window.TM_CONFIG.apiUrl("/login/") : "/login/";
+
         if (loggedIn) {
-          fetch("/class/", {
+          fetch(classUrl, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -3188,7 +3193,7 @@
             location.href = "/dashboard/";
           });
         } else {
-          fetch("/login/", {
+          fetch(loginUrl, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -3202,7 +3207,7 @@
           })
           .then(function(data) {
             if (data.success) {
-              fetch("/class/", {
+              fetch(classUrl, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
