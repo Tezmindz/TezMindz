@@ -12,6 +12,9 @@ from decouple import Csv, config
 
 # settings/base.py -> settings/ -> config/ -> project root
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+FRONTEND_DIR = BASE_DIR.parent / "frontend"
+if not FRONTEND_DIR.exists():
+    FRONTEND_DIR = BASE_DIR / "frontend"
 
 SECRET_KEY = config("SECRET_KEY", default="dev-insecure-secret-key-change-in-prod")
 DEBUG = config("DEBUG", default=False, cast=bool)
@@ -44,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     # Reject oversized request bodies before any view reads them.
     "common.middleware.RequestSizeLimitMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -62,7 +66,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR.parent / "frontend" / "templates"],
+        "DIRS": [FRONTEND_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -106,11 +110,20 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR.parent / "frontend" / "static"]
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [FRONTEND_DIR / "static"] if (FRONTEND_DIR / "static").exists() else []
 STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

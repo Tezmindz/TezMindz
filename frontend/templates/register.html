@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="api-base-url" content="{{ request.scheme }}://{{ request.get_host }}" />
     <title>Create Account — Tezz-Mindz</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/static/css/styles.css" />
@@ -657,6 +658,7 @@
       window.USER_DATA = {{ user_data_js|safe }};
       {% endif %}
     </script>
+    <script src="/static/js/api-config.js"></script>
     <script src="/static/js/store.js"></script>
     <script>
       function showError(msg) {
@@ -744,7 +746,8 @@
         btn.disabled = true;
         btn.innerHTML = '<span style="opacity:0.7;">Creating Account…</span>';
 
-        fetch("/register/", {
+        var regUrl = (window.TM_CONFIG && window.TM_CONFIG.apiUrl) ? window.TM_CONFIG.apiUrl("/register/") : "/register/";
+        fetch(regUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

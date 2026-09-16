@@ -558,6 +558,7 @@ function finishAndSubmitQuiz() {
       hints_used: totalHints
     })
   })
+  .then(res => res.json())
   .then(data => {
     if(data.success) {
       window.location.href = `/quiz/result/${data.attempt_id}/`;
