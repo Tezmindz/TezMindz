@@ -256,7 +256,7 @@
       <!-- Progress -->
       <div class="ch-progress-wrap">
         <div class="ch-progress-meta">
-          <span>{{ ch.done_concepts|default:0 }} of {{ ch.total_concepts|default:0 }} Chapters Mastered</span>
+          <span>{{ ch.done_concepts|default:0 }} of {{ ch.total_concepts|default:0 }} Concepts Mastered</span>
           <span style="color:#4F46E5;font-weight:900;">{{ ch.progress_pct|default:0 }}%</span>
         </div>
         <div class="ch-bar-container">
@@ -264,7 +264,7 @@
         </div>
       </div>
 
-      <!-- Chapters Pills Preview -->
+      <!-- Concepts Pills Preview -->
       <div class="ch-topics-preview-row">
         {% for concept in ch.concepts.all|slice:":6" %}
         <span class="ch-topic-pill">
@@ -279,11 +279,11 @@
 
     <div class="ch-card-action-footer">
       <span style="font-size:0.82rem;font-weight:800;color:#64748B;display:flex;align-items:center;gap:6px;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path></svg>
-        {{ ch.concepts.count }} Chapters
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        {{ ch.concepts.count }} Concept Missions
       </span>
-      <div class="btn-primary" style="padding:8px 18px;font-size:0.85rem;display:inline-flex;align-items:center;gap:6px;">
-        <span>{% if ch.progress_pct > 0 %}Continue{% else %}Start{% endif %}</span>
+      <div class="tm-btn tm-btn-primary" style="padding:8px 18px;font-size:0.85rem;display:inline-flex;align-items:center;gap:6px;">
+        <span>{% if ch.progress_pct > 0 %}Continue{% else %}Explore Chapter{% endif %}</span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </div>
     </div>

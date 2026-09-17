@@ -750,12 +750,12 @@
         Play the educational challenge to reinforce your skills and earn bonus XP!
       </p>
       {% if first_game %}
-        <a class="btn-primary" href="/game/{{ first_game.id }}/play/" style="background:linear-gradient(135deg,#6366F1,#4F46E5);padding:12px 26px;" title="Play Educational Game 🚀">
-          <span>Play Game</span> <i class="bi bi-controller"></i>
+        <a class="tm-btn tm-btn-primary" href="/game/{{ first_game.id }}/play/" title="Play Educational Game 🚀">
+          <span>Play Game Challenge</span> <i class="bi bi-controller"></i>
         </a>
       {% else %}
-        <a class="btn-primary" href="/games/" style="padding:12px 24px;">
-          Browse Game Arena <i class="bi bi-arrow-right"></i>
+        <a class="tm-btn tm-btn-secondary" href="/games/">
+          <span>Browse Game Arena</span> <i class="bi bi-arrow-right"></i>
         </a>
       {% endif %}
     </div>
@@ -787,8 +787,8 @@
         {% endif %}
       </p>
       {% if first_quiz %}
-      <a class="btn-primary" href="/quiz/{{ first_quiz.id }}/" style="background:linear-gradient(135deg,#2563EB,#1D4ED8);padding:12px 24px;">
-        Start Mastery Quiz <i class="bi bi-arrow-right"></i>
+      <a class="tm-btn tm-btn-primary" href="/quiz/{{ first_quiz.id }}/" style="background:linear-gradient(135deg,#2563EB,#1D4ED8);">
+        <span>Start Mastery Quiz</span> <i class="bi bi-arrow-right"></i>
       </a>
       {% else %}
       <span class="badge-pill" style="background:#F1F5F9;color:#64748B;padding:10px 18px;">

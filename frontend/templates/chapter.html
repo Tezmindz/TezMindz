@@ -249,21 +249,24 @@
       <div class="step-info-col">
         <h3>Mission {{ concept.order }}: {{ concept.title|default:concept.name }}</h3>
         <p>{{ concept.content_body|default:concept.description|truncatewords:18 }}</p>
-        {% if concept.progress.is_mastered or concept.progress.quiz_completed or concept.progress.game_completed %}
         <div class="step-badges-row">
           {% if concept.progress.is_mastered %}
-            <span class="badge-pill" style="background:#ECFDF5;color:#047857;"><i class="bi bi-trophy-fill"></i> Mastered (100%)</span>
-          {% elif concept.progress.quiz_completed %}
-            <span class="badge-pill" style="background:#EFF6FF;color:#2563EB;"><i class="bi bi-patch-check-fill"></i> Quiz Complete</span>
-          {% elif concept.progress.game_completed %}
-            <span class="badge-pill" style="background:#FEF3C7;color:#D97706;"><i class="bi bi-controller"></i> Game Complete</span>
+            <span class="tm-pill tm-pill-success"><i class="bi bi-trophy-fill"></i> Chapter Mastered</span>
           {% endif %}
+          <span class="tm-pill {% if concept.progress.learn_completed %}tm-pill-success{% else %}tm-pill-primary{% endif %}">
+            📖 Learn {% if concept.progress.learn_completed %}✓{% endif %}
+          </span>
+          <span class="tm-pill {% if concept.progress.game_completed %}tm-pill-amber{% else %}tm-pill-slate{% endif %}">
+            🎮 Game {% if concept.progress.game_completed %}✓{% endif %}
+          </span>
+          <span class="tm-pill {% if concept.progress.quiz_completed %}tm-pill-success{% else %}tm-pill-slate{% endif %}">
+            📝 Quiz {% if concept.progress.quiz_completed %}✓{% endif %}
+          </span>
         </div>
-        {% endif %}
       </div>
 
       <div class="step-action-col">
-        <div class="btn-primary" style="padding:10px 22px;font-size:0.88rem;">
+        <div class="tm-btn tm-btn-primary" style="padding:10px 22px;font-size:0.88rem;">
           {% if concept.progress.is_mastered %}
             Review Mission <i class="bi bi-arrow-right"></i>
           {% else %}
