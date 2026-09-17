@@ -131,8 +131,13 @@
   /* ── GAME MOUNT POINT ── */
   #game-runner-viewport {
     width: 100%;
-    min-height: 520px;
+    min-height: 540px;
     position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
   }
 
   /* ── VICTORY CELEBRATION MODAL ── */
@@ -143,7 +148,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(15, 23, 42, 0.8);
+    background: rgba(15, 23, 42, 0.75);
     backdrop-filter: blur(8px);
     z-index: 9999;
     align-items: center;
@@ -153,8 +158,8 @@
   .shell-victory-card {
     background: #FFFFFF;
     border-radius: 28px;
-    padding: 36px 32px;
-    max-width: 500px;
+    padding: 38px 34px;
+    max-width: 480px;
     width: 100%;
     text-align: center;
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);

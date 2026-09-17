@@ -2610,3 +2610,169 @@ input:focus-visible,
 .class-card-v2:hover .card-content-wrap {
   transform: translateY(-16px);
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   TEZMINDZ MODERN DESIGN SYSTEM UTILITIES & ENHANCEMENTS
+   ══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --tm-primary: #6366F1;
+  --tm-primary-hover: #4F46E5;
+  --tm-primary-light: #EEF2FF;
+  --tm-primary-glow: rgba(99, 102, 241, 0.22);
+  --tm-accent-purple: #8B5CF6;
+  --tm-accent-emerald: #10B981;
+  --tm-accent-amber: #F59E0B;
+  --tm-accent-rose: #F43F5E;
+  --tm-accent-sky: #0EA5E9;
+  --tm-surface: #FFFFFF;
+  --tm-surface-subtle: #F8FAFC;
+  --tm-border-light: #E2E8F0;
+  --tm-border-glow: #CBD5E1;
+  --tm-text-heading: #0F172A;
+  --tm-text-body: #334155;
+  --tm-text-muted: #64748B;
+  --tm-card-radius: 22px;
+  --tm-pill-radius: 100px;
+  --tm-shadow-soft: 0 4px 20px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02);
+  --tm-shadow-hover: 0 16px 36px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.04);
+  --tm-shadow-glow: 0 12px 30px rgba(99, 102, 241, 0.18);
+}
+
+/* Modern Card Primitive */
+.tm-card {
+  background: var(--tm-surface);
+  border: 1.5px solid var(--tm-border-light);
+  border-radius: var(--tm-card-radius);
+  padding: 24px;
+  box-shadow: var(--tm-shadow-soft);
+  transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.24s ease, border-color 0.24s ease;
+  position: relative;
+  overflow: hidden;
+}
+.tm-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--tm-shadow-hover);
+  border-color: #CBD5E1;
+}
+
+/* Modern Button System */
+.tm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+}
+.tm-btn:hover {
+  transform: translateY(-2px);
+}
+.tm-btn:active {
+  transform: translateY(0);
+}
+.tm-btn-primary {
+  background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.28);
+}
+.tm-btn-primary:hover {
+  background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%);
+  box-shadow: 0 8px 22px rgba(79, 70, 229, 0.38);
+  color: #FFFFFF;
+}
+.tm-btn-secondary {
+  background: #F8FAFC;
+  color: var(--tm-text-heading);
+  border-color: var(--tm-border-light);
+}
+.tm-btn-secondary:hover {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+  color: var(--tm-text-heading);
+}
+.tm-btn-success {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.28);
+}
+.tm-btn-success:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 8px 22px rgba(16, 185, 129, 0.38);
+  color: #FFFFFF;
+}
+.tm-btn-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: var(--tm-text-heading);
+}
+.tm-btn-glass:hover {
+  background: #FFFFFF;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Badge & Status Pills */
+.tm-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--tm-pill-radius);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.tm-pill-primary {
+  background: #EEF2FF;
+  color: #4F46E5;
+  border: 1px solid #C7D2FE;
+}
+.tm-pill-success {
+  background: #ECFDF5;
+  color: #059669;
+  border: 1px solid #A7F3D0;
+}
+.tm-pill-amber {
+  background: #FFFBEB;
+  color: #D97706;
+  border: 1px solid #FDE68A;
+}
+.tm-pill-rose {
+  background: #FFF1F2;
+  color: #E11D48;
+  border: 1px solid #FECDD3;
+}
+.tm-pill-slate {
+  background: #F8FAFC;
+  color: #64748B;
+  border: 1px solid #E2E8F0;
+}
+
+/* Progress Bar Components */
+.tm-progress-track {
+  height: 8px;
+  background: #F1F5F9;
+  border-radius: 100px;
+  overflow: hidden;
+  position: relative;
+}
+.tm-progress-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--tm-primary), #8B5CF6);
+  transition: width 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.tm-progress-fill.success {
+  background: linear-gradient(90deg, #10B981, #059669);
+}
+

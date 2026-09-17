@@ -1,0 +1,175 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | {{ site_title|default:"TezMindz Admin" }}{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+<style>
+  :root {
+    --tm-admin-primary: #4F46E5;
+    --tm-admin-primary-hover: #4338CA;
+    --tm-admin-bg: #F8FAFC;
+    --tm-admin-card: #FFFFFF;
+    --tm-admin-border: #E2E8F0;
+    --tm-admin-text: #0F172A;
+    --tm-admin-muted: #64748B;
+    --tm-admin-sidebar: #0F172A;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    background: var(--tm-admin-bg) !important;
+    color: var(--tm-admin-text) !important;
+  }
+
+  /* Header Branding */
+  #header {
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 14px 28px !important;
+  }
+  #header #branding h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 1.25rem !important;
+    letter-spacing: -0.02em !important;
+  }
+  #header #branding h1 a {
+    color: #FFFFFF !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  #user-tools {
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+  }
+  #user-tools a {
+    color: #A5B4FC !important;
+    border-bottom: none !important;
+    padding: 4px 10px !important;
+    border-radius: 8px !important;
+    transition: background 0.15s !important;
+  }
+  #user-tools a:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #FFFFFF !important;
+  }
+
+  /* Breadcrumbs */
+  div.breadcrumbs {
+    background: #FFFFFF !important;
+    border-bottom: 1.5px solid var(--tm-admin-border) !important;
+    color: var(--tm-admin-muted) !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    padding: 12px 28px !important;
+  }
+  div.breadcrumbs a {
+    color: var(--tm-admin-primary) !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+  }
+
+  /* Content area */
+  #content {
+    padding: 24px 28px !important;
+  }
+
+  /* Buttons */
+  .button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: var(--tm-admin-primary) !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 8px 18px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 0.86rem !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25) !important;
+    transition: all 0.15s ease !important;
+    cursor: pointer !important;
+  }
+  .button:hover, input[type=submit]:hover, .submit-row input:hover {
+    background: var(--tm-admin-primary-hover) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35) !important;
+  }
+  .button.default, input[type=submit].default, .submit-row input.default {
+    background: #10B981 !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25) !important;
+  }
+  .button.default:hover {
+    background: #059669 !important;
+  }
+
+  /* Tables in Changelist */
+  #changelist table {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    border: 1.5px solid var(--tm-admin-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03) !important;
+  }
+  #changelist table thead th {
+    background: #F8FAFC !important;
+    color: var(--tm-admin-muted) !important;
+    font-size: 0.74rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    padding: 12px 16px !important;
+    border-bottom: 2px solid var(--tm-admin-border) !important;
+  }
+  #changelist table tbody td, #changelist table tbody th {
+    padding: 12px 16px !important;
+    border-bottom: 1px solid #F1F5F9 !important;
+    font-size: 0.88rem !important;
+  }
+  #changelist table tbody tr:hover td, #changelist table tbody tr:hover th {
+    background: #F8FAFC !important;
+  }
+
+  /* Form Modules & Fieldsets */
+  .module {
+    background: #FFFFFF !important;
+    border: 1.5px solid var(--tm-admin-border) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03) !important;
+    margin-bottom: 20px !important;
+    overflow: hidden !important;
+  }
+  .module h2 {
+    background: #F8FAFC !important;
+    color: var(--tm-admin-text) !important;
+    font-size: 0.95rem !important;
+    font-weight: 900 !important;
+    padding: 12px 18px !important;
+    border-bottom: 1.5px solid var(--tm-admin-border) !important;
+  }
+</style>
+{% endblock %}
+
+{% block branding %}
+<div id="branding">
+  <h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+      <span style="display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#FFF;font-size:1rem;">🛡️</span>
+      <span>TezMindz Admin</span>
+    </a>
+  </h1>
+</div>
+{% endblock %}
+
+{% block nav-global %}
+<div style="float:right;margin-top:4px;margin-right:20px;">
+  <a href="/dashboard/" target="_blank" style="color:#A5B4FC;font-size:0.82rem;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);padding:5px 12px;border-radius:100px;">
+    <span>Open Student Site ↗</span>
+  </a>
+</div>
+{% endblock %}

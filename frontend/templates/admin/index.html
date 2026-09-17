@@ -1,0 +1,659 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  /* ══════════════════════════════════════════════════════════════════════════
+     TEZMINDZ MODERN ADMIN DASHBOARD STYLES
+     ══════════════════════════════════════════════════════════════════════════ */
+  .tm-admin-shell {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  @media (max-width: 1024px) {
+    .tm-admin-shell { flex-direction: column; }
+  }
+
+  /* ── SIDEBAR NAVIGATION ── */
+  .tm-admin-nav-sidebar {
+    width: 260px;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 18px 14px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+    flex-shrink: 0;
+    position: sticky;
+    top: 20px;
+  }
+  @media (max-width: 1024px) {
+    .tm-admin-nav-sidebar { width: 100%; position: static; }
+  }
+  .admin-nav-heading {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 10px 12px 4px;
+  }
+  .admin-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 12px;
+    color: #334155;
+    text-decoration: none;
+    font-size: 0.86rem;
+    font-weight: 700;
+    transition: all 0.15s ease;
+  }
+  .admin-nav-item i { font-size: 1.05rem; width: 20px; color: #64748B; }
+  .admin-nav-item:hover {
+    background: #F8FAFC;
+    color: #4F46E5;
+    transform: translateX(3px);
+  }
+  .admin-nav-item:hover i { color: #4F46E5; }
+  .admin-nav-item.active {
+    background: #EEF2FF;
+    color: #4F46E5;
+  }
+  .admin-nav-item.active i { color: #4F46E5; }
+
+  /* ── MAIN DASHBOARD STAGE ── */
+  .tm-admin-stage {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Hero Welcome Bar */
+  .admin-welcome-hero {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 24px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .welcome-title-group h2 {
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0 0 4px;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .welcome-title-group p {
+    font-size: 0.88rem;
+    color: #64748B;
+    margin: 0;
+    font-weight: 600;
+  }
+  .admin-status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #334155;
+  }
+
+  /* ── QUICK ACTIONS BANNER ── */
+  .admin-actions-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+  }
+  .admin-section-title {
+    font-size: 1rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .action-buttons-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .admin-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-size: 0.84rem;
+    font-weight: 800;
+    color: #1E293B;
+    text-decoration: none;
+    transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .admin-action-btn:hover {
+    background: #EEF2FF;
+    border-color: #C7D2FE;
+    color: #4F46E5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.12);
+  }
+  .admin-action-btn i { font-size: 0.95rem; }
+
+  /* ── KPI METRICS GRID ── */
+  .admin-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .kpi-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    border-color: #CBD5E1;
+  }
+  .kpi-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .kpi-icon-box {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-size: 1.15rem;
+  }
+  .kpi-icon-box.purple { background: #FAF5FF; color: #7C3AED; }
+  .kpi-icon-box.blue { background: #EFF6FF; color: #2563EB; }
+  .kpi-icon-box.emerald { background: #ECFDF5; color: #059669; }
+  .kpi-icon-box.amber { background: #FFFBEB; color: #D97706; }
+  .kpi-icon-box.indigo { background: #EEF2FF; color: #4F46E5; }
+
+  .kpi-card-label {
+    font-size: 0.74rem;
+    font-weight: 800;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .kpi-card-value {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin-top: 4px;
+    letter-spacing: -0.02em;
+  }
+  .kpi-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid #F1F5F9;
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #4F46E5;
+  }
+
+  /* ── CURRICULUM PIPELINE PIPELINE TRACK ── */
+  .curriculum-flow-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 22px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+  }
+  .curriculum-flow-steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 10px 0;
+  }
+  .flow-step-node {
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 14px 18px;
+    text-align: center;
+    flex: 1;
+    min-width: 130px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+  }
+  .flow-step-node:hover {
+    background: #EEF2FF;
+    border-color: #C7D2FE;
+    transform: translateY(-2px);
+  }
+  .flow-step-node strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin-bottom: 2px;
+  }
+  .flow-step-node small {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #64748B;
+    text-transform: uppercase;
+  }
+  .flow-connector-arrow {
+    color: #CBD5E1;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  /* ── DJANGO ADMIN APPS TABLE ── */
+  .app-list-table-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+  }
+  .app-group {
+    margin-bottom: 24px;
+  }
+  .app-group:last-child { margin-bottom: 0; }
+  .app-group-header {
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #4F46E5;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .model-rows-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px;
+  }
+  .model-entry-row {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.15s ease;
+  }
+  .model-entry-row:hover {
+    background: #FFFFFF;
+    border-color: #CBD5E1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+  .model-name-link {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0F172A;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .model-name-link:hover { color: #4F46E5; }
+  .model-add-link {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #4F46E5;
+    background: #EEF2FF;
+    border-radius: 8px;
+    padding: 3px 10px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .model-add-link:hover {
+    background: #4F46E5;
+    color: #FFFFFF;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="tm-admin-shell">
+
+  <!-- ── SIDEBAR NAVIGATION ── -->
+  <aside class="tm-admin-nav-sidebar">
+    <div class="admin-nav-heading">Mission Control</div>
+    <a href="{% url 'admin:index' %}" class="admin-nav-item active">
+      <i class="bi bi-speedometer2"></i>
+      <span>Dashboard</span>
+    </a>
+
+    <div class="admin-nav-heading">Academic Hierarchy</div>
+    <a href="/admin/curriculum/grade/" class="admin-nav-item">
+      <i class="bi bi-layers-fill"></i>
+      <span>Grades</span>
+    </a>
+    <a href="/admin/curriculum/subject/" class="admin-nav-item">
+      <i class="bi bi-compass-fill"></i>
+      <span>Learning Worlds</span>
+    </a>
+    <a href="/admin/curriculum/topic/" class="admin-nav-item">
+      <i class="bi bi-book-half"></i>
+      <span>Chapters</span>
+    </a>
+    <a href="/admin/curriculum/concept/" class="admin-nav-item">
+      <i class="bi bi-lightbulb-fill"></i>
+      <span>Concepts</span>
+    </a>
+
+    <div class="admin-nav-heading">Educational Content</div>
+    <a href="/admin/games/game/" class="admin-nav-item">
+      <i class="bi bi-controller"></i>
+      <span>Game Library</span>
+    </a>
+    <a href="/admin/assessments/quiz/" class="admin-nav-item">
+      <i class="bi bi-patch-question-fill"></i>
+      <span>Quizzes</span>
+    </a>
+
+    <div class="admin-nav-heading">Students &amp; Gamification</div>
+    <a href="/admin/accounts/studentprofile/" class="admin-nav-item">
+      <i class="bi bi-people-fill"></i>
+      <span>Students</span>
+    </a>
+    <a href="/admin/gamification/badge/" class="admin-nav-item">
+      <i class="bi bi-trophy-fill"></i>
+      <span>Badges &amp; Rewards</span>
+    </a>
+    <a href="/admin/gamification/xpaccount/" class="admin-nav-item">
+      <i class="bi bi-lightning-charge-fill"></i>
+      <span>Gamification Accounts</span>
+    </a>
+
+    <div class="admin-nav-heading">Live Platform</div>
+    <a href="/dashboard/" class="admin-nav-item" target="_blank" style="color:#4F46E5;">
+      <i class="bi bi-box-arrow-up-right" style="color:#4F46E5;"></i>
+      <span>Student Platform ↗</span>
+    </a>
+  </aside>
+
+  <!-- ── MAIN STAGE ── -->
+  <section class="tm-admin-stage">
+
+    <!-- 1. Hero Welcome Header -->
+    <div class="admin-welcome-hero">
+      <div class="welcome-title-group">
+        <h2>
+          <span>🛡️ TezMindz Admin Dashboard</span>
+        </h2>
+        <p>Curriculum management, educational game engine, and student ecosystem.</p>
+      </div>
+      <div class="admin-status-chip">
+        <span style="width:8px;height:8px;border-radius:50%;background:#10B981;display:inline-block;"></span>
+        <span>Administrator: {{ request.user.username }}</span>
+      </div>
+    </div>
+
+    <!-- 2. Quick Actions Bar -->
+    <div class="admin-actions-card">
+      <div class="admin-section-title">
+        <i class="bi bi-lightning-fill" style="color:#F59E0B;"></i>
+        <span>Quick Content Creation Shortcuts</span>
+      </div>
+      <div class="action-buttons-grid">
+        <a href="/admin/curriculum/grade/add/" class="admin-action-btn">
+          <i class="bi bi-plus-circle" style="color:#4F46E5;"></i>
+          <span>+ Add Grade</span>
+        </a>
+        <a href="/admin/curriculum/subject/add/" class="admin-action-btn">
+          <i class="bi bi-plus-circle" style="color:#2563EB;"></i>
+          <span>+ Add Subject</span>
+        </a>
+        <a href="/admin/curriculum/topic/add/" class="admin-action-btn">
+          <i class="bi bi-plus-circle" style="color:#7C3AED;"></i>
+          <span>+ Add Chapter</span>
+        </a>
+        <a href="/admin/curriculum/concept/add/" class="admin-action-btn">
+          <i class="bi bi-plus-circle" style="color:#059669;"></i>
+          <span>+ Add Concept</span>
+        </a>
+        <a href="/admin/games/game/add/" class="admin-action-btn">
+          <i class="bi bi-plus-circle" style="color:#D97706;"></i>
+          <span>+ Add Game</span>
+        </a>
+        <a href="/admin/assessments/quiz/add/" class="admin-action-btn">
+          <i class="bi bi-plus-circle" style="color:#DB2777;"></i>
+          <span>+ Add Quiz</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 3. Summary KPI Cards -->
+    <div class="admin-kpi-grid">
+      <!-- Students -->
+      <a href="/admin/accounts/studentprofile/" class="kpi-card">
+        <div>
+          <div class="kpi-card-header">
+            <span class="kpi-card-label">Learners</span>
+            <div class="kpi-icon-box indigo"><i class="bi bi-people-fill"></i></div>
+          </div>
+          <div class="kpi-card-value">Student Profiles</div>
+        </div>
+        <div class="kpi-card-footer">
+          <span>Manage Students</span>
+          <i class="bi bi-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- Grades -->
+      <a href="/admin/curriculum/grade/" class="kpi-card">
+        <div>
+          <div class="kpi-card-header">
+            <span class="kpi-card-label">Classes</span>
+            <div class="kpi-icon-box blue"><i class="bi bi-layers-fill"></i></div>
+          </div>
+          <div class="kpi-card-value">Grades</div>
+        </div>
+        <div class="kpi-card-footer">
+          <span>Manage Grades</span>
+          <i class="bi bi-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- Subjects -->
+      <a href="/admin/curriculum/subject/" class="kpi-card">
+        <div>
+          <div class="kpi-card-header">
+            <span class="kpi-card-label">Curriculum</span>
+            <div class="kpi-icon-box purple"><i class="bi bi-compass-fill"></i></div>
+          </div>
+          <div class="kpi-card-value">Learning Worlds</div>
+        </div>
+        <div class="kpi-card-footer">
+          <span>Manage Worlds</span>
+          <i class="bi bi-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- Chapters -->
+      <a href="/admin/curriculum/topic/" class="kpi-card">
+        <div>
+          <div class="kpi-card-header">
+            <span class="kpi-card-label">Hierarchy</span>
+            <div class="kpi-icon-box emerald"><i class="bi bi-book-half"></i></div>
+          </div>
+          <div class="kpi-card-value">Chapters</div>
+        </div>
+        <div class="kpi-card-footer">
+          <span>Manage Chapters</span>
+          <i class="bi bi-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- Concepts -->
+      <a href="/admin/curriculum/concept/" class="kpi-card">
+        <div>
+          <div class="kpi-card-header">
+            <span class="kpi-card-label">Missions</span>
+            <div class="kpi-icon-box amber"><i class="bi bi-lightbulb-fill"></i></div>
+          </div>
+          <div class="kpi-card-value">Concepts</div>
+        </div>
+        <div class="kpi-card-footer">
+          <span>Manage Concepts</span>
+          <i class="bi bi-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- Games -->
+      <a href="/admin/games/game/" class="kpi-card">
+        <div>
+          <div class="kpi-card-header">
+            <span class="kpi-card-label">Engine</span>
+            <div class="kpi-icon-box amber"><i class="bi bi-controller"></i></div>
+          </div>
+          <div class="kpi-card-value">Games Library</div>
+        </div>
+        <div class="kpi-card-footer">
+          <span>Manage Games</span>
+          <i class="bi bi-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- Quizzes -->
+      <a href="/admin/assessments/quiz/" class="kpi-card">
+        <div>
+          <div class="kpi-card-header">
+            <span class="kpi-card-label">Assessments</span>
+            <div class="kpi-icon-box blue"><i class="bi bi-patch-question-fill"></i></div>
+          </div>
+          <div class="kpi-card-value">Quizzes</div>
+        </div>
+        <div class="kpi-card-footer">
+          <span>Manage Quizzes</span>
+          <i class="bi bi-arrow-right"></i>
+        </div>
+      </a>
+    </div>
+
+    <!-- 4. Curriculum Hierarchy Overview Flow -->
+    <div class="curriculum-flow-card">
+      <div class="admin-section-title">
+        <i class="bi bi-diagram-3-fill" style="color:#4F46E5;"></i>
+        <span>Canonical Curriculum Architecture</span>
+      </div>
+      <div class="curriculum-flow-steps">
+        <a href="/admin/curriculum/grade/" class="flow-step-node">
+          <small>Level 1</small>
+          <strong>Grade</strong>
+          <span style="font-size:0.75rem;color:#64748B;">Class Placement</span>
+        </a>
+        <span class="flow-connector-arrow">➔</span>
+        <a href="/admin/curriculum/subject/" class="flow-step-node">
+          <small>Level 2</small>
+          <strong>Subject</strong>
+          <span style="font-size:0.75rem;color:#64748B;">Learning World</span>
+        </a>
+        <span class="flow-connector-arrow">➔</span>
+        <a href="/admin/curriculum/topic/" class="flow-step-node">
+          <small>Level 3</small>
+          <strong>Chapter</strong>
+          <span style="font-size:0.75rem;color:#64748B;">Topic Unit</span>
+        </a>
+        <span class="flow-connector-arrow">➔</span>
+        <a href="/admin/curriculum/concept/" class="flow-step-node">
+          <small>Level 4</small>
+          <strong>Concept</strong>
+          <span style="font-size:0.75rem;color:#64748B;">Learn Lesson</span>
+        </a>
+        <span class="flow-connector-arrow">➔</span>
+        <a href="/admin/games/game/" class="flow-step-node">
+          <small>Level 5</small>
+          <strong>Game &amp; Quiz</strong>
+          <span style="font-size:0.75rem;color:#64748B;">Practice Arena</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 5. All Django Admin Registered Apps & Models -->
+    <div class="app-list-table-card">
+      <div class="admin-section-title">
+        <i class="bi bi-database-fill" style="color:#4F46E5;"></i>
+        <span>All System Applications &amp; Registered Models</span>
+      </div>
+
+      {% if app_list %}
+        {% for app in app_list %}
+          <div class="app-group">
+            <div class="app-group-header">
+              <i class="bi bi-folder2-open"></i>
+              <span>{{ app.name }}</span>
+            </div>
+            <div class="model-rows-grid">
+              {% for model in app.models %}
+                <div class="model-entry-row">
+                  {% if model.admin_url %}
+                    <a href="{{ model.admin_url }}" class="model-name-link">
+                      <i class="bi bi-table" style="color:#94A3B8;"></i>
+                      <span>{{ model.name }}</span>
+                    </a>
+                  {% else %}
+                    <span class="model-name-link" style="color:#64748B;">{{ model.name }}</span>
+                  {% endif %}
+
+                  {% if model.add_url %}
+                    <a href="{{ model.add_url }}" class="model-add-link" title="Add {{ model.name }}">
+                      <i class="bi bi-plus"></i> Add
+                    </a>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p style="color:#64748B;margin:0;">No administration privileges available.</p>
+      {% endif %}
+    </div>
+
+  </section>
+</div>
+{% endblock %}

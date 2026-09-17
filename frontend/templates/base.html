@@ -326,6 +326,7 @@
     @media (max-width: 680px) {
       .hud-profile-meta { display: none; }
       .hud-profile-pill { padding: 2px; border: none; background: transparent; box-shadow: none; }
+      .tm-nav-hud-tokens { display: none !important; }
     }
 
     /* Mobile Hamburger / Menu Button */
@@ -653,6 +654,16 @@
             </div>
           </a>
         {% elif request.user.is_authenticated and profile %}
+          <!-- Student Quick Badges (XP & Coins) -->
+          <div class="tm-nav-hud-tokens" style="display:flex;align-items:center;gap:8px;">
+            <span class="tm-pill tm-pill-primary" title="Experience Points" style="padding:5px 12px;font-size:0.78rem;font-weight:900;">
+              ⚡ {{ global_xp|default:profile.xp_points|default:0 }} XP
+            </span>
+            <span class="tm-pill tm-pill-amber" title="Adventure Coins" style="padding:5px 12px;font-size:0.78rem;font-weight:900;">
+              🪙 {{ global_coins|default:profile.adventure_coins|default:0 }}
+            </span>
+          </div>
+
           <a class="hud-profile-pill" href="/profile/" title="{{ profile.display_name|default:request.user.first_name|default:request.user.username }}">
             <div class="hud-profile-meta">
               <strong>{{ profile.display_name|default:request.user.first_name|default:request.user.username }}</strong>
