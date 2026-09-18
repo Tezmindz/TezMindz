@@ -1,0 +1,57 @@
+{
+  "name": "Pattern Machine",
+  "slug": "pattern-machine",
+  "version": "1.0.0",
+  "description": "Data-driven sequence, geometric pattern, and progression game. Players inspect an interactive conveyor of symbols/numbers and deduce the missing element.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Logical Reasoning",
+  "supportedMechanics": [
+    "SEQUENCE_COMPLETION",
+    "ROTATION_PATTERN",
+    "GEOMETRIC_PROGRESSION",
+    "MISSING_MATRIX_CELL"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "sequence", "missingIndex", "options", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "prompt": { "type": "string" },
+      "patternType": {
+        "type": "string",
+        "enum": ["NUMERIC", "SHAPES", "COLORS", "ROTATION"]
+      },
+      "sequence": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Array of elements in order; missing slot denoted by '?' or null"
+      },
+      "missingIndex": { "type": "number" },
+      "options": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "hint": { "type": "string" }
+    }
+  },
+  "config": {
+    "animationSpeed": "normal",
+    "theme": "light",
+    "soundEnabled": true
+  },
+  "sampleData": {
+    "questionId": "pat-001",
+    "prompt": "Identify the missing number that completes the gear sequence according to the rule.",
+    "patternType": "NUMERIC",
+    "sequence": ["3", "7", "15", "31", "?", "127"],
+    "missingIndex": 4,
+    "options": ["47", "55", "63", "65"],
+    "correctAnswer": "63",
+    "explanation": "The rule is (Previous × 2) + 1. Specifically: (3×2)+1=7, (7×2)+1=15, (15×2)+1=31, (31×2)+1=63, (63×2)+1=127.",
+    "hint": "Notice how each term is roughly double the previous term. What must you add after multiplying by 2?"
+  }
+}

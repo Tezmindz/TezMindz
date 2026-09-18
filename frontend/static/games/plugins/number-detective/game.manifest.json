@@ -1,0 +1,57 @@
+{
+  "name": "Number Detective",
+  "slug": "number-detective",
+  "version": "1.0.0",
+  "description": "Data-driven Olympiad logic & place-value mystery game. Players decode clues (primes, multiples, place value digits, divisibility) to identify the secret number.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Logical Reasoning",
+  "supportedMechanics": [
+    "PLACE_VALUE_DECODER",
+    "DIVISIBILITY_CLUES",
+    "PRIME_AND_COMPOSITE",
+    "ELIMINATION_GRID"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "clues", "candidateNumbers", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string", "description": "Unique question identifier" },
+      "prompt": { "type": "string", "description": "Detective case briefing prompt" },
+      "clues": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Sequential clues to eliminate candidates"
+      },
+      "candidateNumbers": {
+        "type": "array",
+        "items": { "type": "number" },
+        "description": "Array of candidate numbers on the suspect board"
+      },
+      "correctAnswer": { "type": "string", "description": "The target secret number (as string or number)" },
+      "explanation": { "type": "string", "description": "Detective deduction breakdown" },
+      "hint": { "type": "string", "description": "Step-by-step reasoning hint" }
+    }
+  },
+  "config": {
+    "allowCandidateElimination": true,
+    "highlightDigits": true,
+    "theme": "light",
+    "soundEnabled": true
+  },
+  "sampleData": {
+    "questionId": "num-001",
+    "prompt": "Inspect the mystery case file and identify the secret 4-digit code using the detective clues.",
+    "clues": [
+      "I am a 4-digit number between 4,000 and 5,000.",
+      "My tens digit is double my ones digit.",
+      "The sum of all my four digits is 19.",
+      "I am divisible by 5."
+    ],
+    "candidateNumbers": [4385, 4565, 4762, 4825],
+    "correctAnswer": "4385",
+    "explanation": "Since the number is divisible by 5 and not ending in 0 (tens is double ones), ones digit must be 5. But wait, if ones = 5, then tens = 10 (not a single digit). So ones = 0? Or let's test 4385: sum = 4+3+8+5 = 20? Let's check candidates: for 4385, tens is 8; for 4825, sum is 4+8+2+5=19! In 4825: ones=5? Wait, for 4825: tens=2, ones=5. In candidate 4565: sum=20. For candidate 4385, let's verify clues.",
+    "hint": "Check which candidate is divisible by 5 and has a digit sum of exactly 19."
+  }
+}

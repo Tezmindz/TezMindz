@@ -1,0 +1,79 @@
+{
+  "name": "Clock Mission",
+  "slug": "clock-mission",
+  "version": "1.0.0",
+  "description": "Data-driven analog and digital clock game for Olympiad time calculations, elapsed durations, and hand angles.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Everyday Mathematics",
+  "supportedMechanics": [
+    "READ_TIME",
+    "SET_HANDS",
+    "ELAPSED_TIME",
+    "ANGLE_CALCULATION"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "mode", "correctAnswer", "options"],
+    "properties": {
+      "questionId": { "type": "string", "description": "Unique question identifier from backend" },
+      "prompt": { "type": "string", "description": "Main question text displayed to the player" },
+      "subPrompt": { "type": "string", "description": "Secondary instruction / guidance text" },
+      "mode": {
+        "type": "string",
+        "enum": ["READ_TIME", "SET_HANDS", "ELAPSED_TIME"],
+        "description": "Interactive mode for the clock manipulative"
+      },
+      "initialTime": {
+        "type": "object",
+        "properties": {
+          "hours": { "type": "number", "minimum": 1, "maximum": 12 },
+          "minutes": { "type": "number", "minimum": 0, "maximum": 59 }
+        }
+      },
+      "targetTime": {
+        "type": "object",
+        "properties": {
+          "hours": { "type": "number", "minimum": 1, "maximum": 12 },
+          "minutes": { "type": "number", "minimum": 0, "maximum": 59 }
+        }
+      },
+      "elapsedMinutes": { "type": "number", "description": "Elapsed minutes for calculation" },
+      "options": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Answer options presented to the student"
+      },
+      "correctAnswer": { "type": "string", "description": "The exact matching text or option key" },
+      "explanation": { "type": "string", "description": "Step-by-step mathematical reasoning" },
+      "hint": { "type": "string", "description": "Pedagogical hint when requested" }
+    }
+  },
+  "config": {
+    "allowDragHands": true,
+    "snapToMinutes": 5,
+    "showHourNumbers": true,
+    "showMinuteTicks": true,
+    "theme": "light",
+    "soundEnabled": true
+  },
+  "sampleData": {
+    "questionId": "clk-001",
+    "prompt": "Rohan leaves home at 07:15 AM and arrives at school at 08:35 AM. What is the total travel duration?",
+    "subPrompt": "Use the interactive clock hands or test elapsed steps to find the duration.",
+    "mode": "ELAPSED_TIME",
+    "initialTime": { "hours": 7, "minutes": 15 },
+    "targetTime": { "hours": 8, "minutes": 35 },
+    "elapsedMinutes": 80,
+    "options": [
+      "1 hour 10 minutes",
+      "1 hour 20 minutes",
+      "1 hour 30 minutes",
+      "1 hour 45 minutes"
+    ],
+    "correctAnswer": "1 hour 20 minutes",
+    "explanation": "From 07:15 AM to 08:15 AM is exactly 1 hour (60 mins). From 08:15 AM to 08:35 AM is another 20 mins. Total duration = 1 hour 20 minutes.",
+    "hint": "Count from 07:15 to 08:00 (45 mins), then add 35 mins to 08:35: 45 + 35 = 80 mins = 1 hr 20 mins."
+  }
+}
