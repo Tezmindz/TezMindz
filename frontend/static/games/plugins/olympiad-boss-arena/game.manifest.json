@@ -1,0 +1,119 @@
+{
+  "name": "Olympiad Boss Arena - High-Order Multi-Step Battle",
+  "slug": "olympiad-boss-arena",
+  "version": "2.0.0",
+  "description": "Culminating arena engine for complex multi-concept Grade 5 Olympiad Achievers section problems, integrating simultaneous logic, algebraic balance, spatial constraints, and multi-step deduction across the 5-stage mastery model.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Olympiad Boss Arena",
+  "conceptCluster": "Achievers Section & Integrated Multi-Step Reasoning",
+  "pedagogyModel": {
+    "framework": "Tezmindz Simulation-Based Concept Mastery",
+    "stages": [
+      { "id": "STAGE_A", "name": "Concept Discovery", "focus": "Inspect integrated multi-constraint challenges, break complex questions into 2-3 manageable sub-goals" },
+      { "id": "STAGE_B", "name": "Guided Simulation", "focus": "Step-by-step boss counter-attacks, scaffolded multi-tier hints with sub-problem intermediate checks" },
+      { "id": "STAGE_C", "name": "Rule Discovery", "focus": "Formulate Olympiad heuristics: Work Backwards, Invariant Quantities, Pigeonhole Partition" },
+      { "id": "STAGE_D", "name": "Controlled Practice", "focus": "Dynamic high-order variations with randomised variables and changing battle conditions" },
+      { "id": "STAGE_E", "name": "Anti-Memorisation Assessment", "focus": "Unseen boss challenge with context inversion to verify conceptual mastery over rote tricks" }
+    ]
+  },
+  "supportedMechanics": [
+    "BOSS_BATTLE_HUD",
+    "MULTI_STEP_STRATEGY_BOARD",
+    "HP_REDUCTION_ENGINE",
+    "PROGRESSIVE_4_STEP_HINTS",
+    "RULE_FORMULATION_BUILDER"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "options", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "conceptId": { "type": "string", "default": "OLYMPIAD_ACHIEVERS_BOSS" },
+      "currentStage": { "type": "string", "enum": ["STAGE_A", "STAGE_B", "STAGE_C", "STAGE_D", "STAGE_E"], "default": "STAGE_B" },
+      "prompt": { "type": "string" },
+      "subPrompt": { "type": "string" },
+      "bossData": {
+        "type": "object",
+        "properties": {
+          "bossName": { "type": "string" },
+          "avatar": { "type": "string" },
+          "maxHp": { "type": "number", "default": 100 },
+          "currentHp": { "type": "number", "default": 100 },
+          "themeColor": { "type": "string", "default": "#dc2626" }
+        }
+      },
+      "strategySteps": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "progressiveHints": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "ruleDiscovery": {
+        "type": "object",
+        "properties": {
+          "statementPrompt": { "type": "string" },
+          "ruleOptions": { "type": "array", "items": { "type": "string" } },
+          "correctRule": { "type": "string" }
+        }
+      },
+      "options": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "antiMemorisation": {
+        "type": "object",
+        "properties": {
+          "format": { "type": "string", "enum": ["FRESH_VARIABLES", "REVERSED_GOAL", "CONTEXT_SHIFT"] },
+          "hideHud": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  },
+  "sampleData": {
+    "questionId": "boss-arena-001",
+    "conceptId": "OLYMPIAD_ACHIEVERS_SIMULTANEOUS",
+    "currentStage": "STAGE_B",
+    "prompt": "The Olympiad Dragon guards 3 chests. 2 Gold + 1 Silver = 190 kg. 1 Gold + 2 Silver = 170 kg. How heavy is one Gold chest?",
+    "subPrompt": "Combine both equations or isolate one chest type to pierce the Dragon's armor.",
+    "bossData": {
+      "bossName": "Algebraic Chrono-Dragon",
+      "avatar": "🐉",
+      "maxHp": 100,
+      "currentHp": 100,
+      "themeColor": "#e11d48"
+    },
+    "strategySteps": [
+      "Step 1: Add both statements together: (2G + 1S) + (1G + 2S) = 3G + 3S = 360 kg.",
+      "Step 2: Divide by 3 to find (1 Gold + 1 Silver) = 360 ÷ 3 = 120 kg.",
+      "Step 3: Subtract (1G + 1S = 120 kg) from (2G + 1S = 190 kg) to isolate 1 Gold chest."
+    ],
+    "progressiveHints": [
+      "Level 1 (Attention): Look at what happens if you combine everything on both scales: 3 Gold + 3 Silver chests.",
+      "Level 2 (Reasoning): 3 Gold + 3 Silver = 190 + 170 = 360 kg. Therefore, 1 Gold + 1 Silver = 360 ÷ 3 = 120 kg.",
+      "Level 3 (Demonstration): The first scale had (1 Gold + 1 Gold + 1 Silver) = 190 kg. Replace (1 Gold + 1 Silver) with 120 kg.",
+      "Level 4 (Full Solution): 1 Gold + 120 = 190 kg. So 1 Gold = 190 - 120 = 70 kg. The Gold chest weighs 70 kg."
+    ],
+    "ruleDiscovery": {
+      "statementPrompt": "Complete the Master Heuristic for Simultaneous Systems:",
+      "ruleOptions": [
+        "Summing identical pairs of items allows finding the unit combination (1 of each) by division",
+        "Always guess and test random prime numbers until it matches",
+        "Multiply the two total weights together"
+      ],
+      "correctRule": "Summing identical pairs of items allows finding the unit combination (1 of each) by division"
+    },
+    "options": ["50 kg", "60 kg", "70 kg", "85 kg"],
+    "correctAnswer": "70 kg",
+    "explanation": "3 Gold + 3 Silver = 360 kg => 1 Gold + 1 Silver = 120 kg. 1 Gold = (2G + 1S) - (1G + 1S) = 190 - 120 = 70 kg.",
+    "antiMemorisation": {
+      "format": "FRESH_VARIABLES",
+      "hideHud": false
+    }
+  }
+}

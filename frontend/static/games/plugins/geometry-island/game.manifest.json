@@ -1,0 +1,111 @@
+{
+  "name": "Geometry Island - Shapes, Symmetry & Spatial Lab",
+  "slug": "geometry-island",
+  "version": "2.0.0",
+  "description": "Interactive spatial lab for perimeter calculation, unit square grid area counting, lines of symmetry, 3D cube stacks, and angle exploration across the 5-stage mastery model.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Geometry & Spatial Reasoning",
+  "conceptCluster": "Spatial Understanding, Perimeter & Area",
+  "pedagogyModel": {
+    "framework": "Tezmindz Simulation-Based Concept Mastery",
+    "stages": [
+      { "id": "STAGE_A", "name": "Concept Discovery", "focus": "Walk along polygon boundaries and tile unit squares, observe perimeter vs. area distinction" },
+      { "id": "STAGE_B", "name": "Guided Simulation", "focus": "Calculate unknown perimeter, side length, or symmetry line with 4-tier hints" },
+      { "id": "STAGE_C", "name": "Rule Discovery", "focus": "Formulate perimeter formulas: Rectangle P = 2(L + B), Square P = 4S" },
+      { "id": "STAGE_D", "name": "Controlled Practice", "focus": "Dynamic variations across rectangles, triangles, L-shaped composite figures, and grids" },
+      { "id": "STAGE_E", "name": "Anti-Memorisation Assessment", "focus": "Unseen word problem about boundary fencing or carpet tiling without canvas visual" }
+    ]
+  },
+  "supportedMechanics": [
+    "SHAPE_EXPLORER",
+    "PERIMETER_WALKER",
+    "GRID_AREA_COUNTER",
+    "SYMMETRY_RADAR",
+    "PROGRESSIVE_4_STEP_HINTS",
+    "RULE_FORMULATION_BUILDER"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "options", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "conceptId": { "type": "string", "default": "GEOMETRY_PERIMETER_AREA" },
+      "currentStage": { "type": "string", "enum": ["STAGE_A", "STAGE_B", "STAGE_C", "STAGE_D", "STAGE_E"], "default": "STAGE_B" },
+      "prompt": { "type": "string" },
+      "subPrompt": { "type": "string" },
+      "shapeData": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "enum": ["RECTANGLE", "SQUARE", "TRIANGLE", "COMPOSITE", "GRID"] },
+          "width": { "type": "number" },
+          "height": { "type": "number" },
+          "sides": { "type": "array", "items": { "type": "number" } },
+          "unit": { "type": "string", "default": "cm" }
+        }
+      },
+      "progressiveHints": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "ruleDiscovery": {
+        "type": "object",
+        "properties": {
+          "statementPrompt": { "type": "string" },
+          "ruleOptions": { "type": "array", "items": { "type": "string" } },
+          "correctRule": { "type": "string" }
+        }
+      },
+      "options": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "antiMemorisation": {
+        "type": "object",
+        "properties": {
+          "format": { "type": "string", "enum": ["FRESH_VARIABLES", "REVERSED_GOAL", "CONTEXT_SHIFT"] },
+          "hideShape": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  },
+  "sampleData": {
+    "questionId": "geo-isl-001",
+    "conceptId": "GEOMETRY_PERIMETER_RECTANGLE",
+    "currentStage": "STAGE_B",
+    "prompt": "An architect on Geometry Island is enclosing a park with length 16 m and breadth 7 m. What is the total perimeter fence needed?",
+    "subPrompt": "Trace all four boundary sides of the rectangle.",
+    "shapeData": {
+      "type": "RECTANGLE",
+      "width": 16,
+      "height": 7,
+      "unit": "m",
+      "sides": [16, 7, 16, 7]
+    },
+    "progressiveHints": [
+      "Level 1 (Attention): Perimeter is the total continuous path around the boundary of the 2D polygon.",
+      "Level 2 (Reasoning): A rectangle has 2 equal lengths (16 m each) and 2 equal widths (7 m each).",
+      "Level 3 (Demonstration): Total boundary = 16 + 7 + 16 + 7 = 2 × (16 + 7) m.",
+      "Level 4 (Full Solution): 16 + 7 = 23. 2 × 23 = 46 m. The perimeter fence required is 46 m."
+    ],
+    "ruleDiscovery": {
+      "statementPrompt": "Complete the formula for perimeter of any rectangle:",
+      "ruleOptions": [
+        "Perimeter = 2 × (Length + Breadth)",
+        "Perimeter = Length × Breadth",
+        "Perimeter = 4 × Length"
+      ],
+      "correctRule": "Perimeter = 2 × (Length + Breadth)"
+    },
+    "options": ["23 m", "39 m", "46 m", "112 m"],
+    "correctAnswer": "46 m",
+    "explanation": "Perimeter = 2 × (Length + Breadth) = 2 × (16 + 7) = 2 × 23 = 46 m.",
+    "antiMemorisation": {
+      "format": "FRESH_VARIABLES",
+      "hideShape": false
+    }
+  }
+}

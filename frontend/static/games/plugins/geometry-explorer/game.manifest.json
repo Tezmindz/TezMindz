@@ -1,0 +1,99 @@
+{
+  "name": "Geometry Explorer Simulator",
+  "slug": "geometry-explorer",
+  "version": "2.0.0",
+  "description": "Simulation engine for perimeter calculation, area counting, regular polygons, composite shapes, and lines of symmetry across the 5-stage mastery model.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Mathematical Reasoning",
+  "conceptCluster": "Spatial Understanding, Perimeter & Area",
+  "pedagogyModel": {
+    "framework": "Tezmindz Simulation-Based Concept Mastery",
+    "stages": [
+      { "id": "STAGE_A", "name": "Concept Discovery", "focus": "Walk along boundary edges of polygons, observe perimeter = sum of all outer boundaries" },
+      { "id": "STAGE_B", "name": "Guided Simulation", "focus": "Calculate perimeter/area with 4-tier progressive hints" },
+      { "id": "STAGE_C", "name": "Rule Discovery", "focus": "Formulate perimeter formula: 'Rectangle Perimeter = 2 × (Length + Breadth)'" },
+      { "id": "STAGE_D", "name": "Controlled Practice", "focus": "Dynamic variations across triangles, rectangles, hexagons, and L-shaped composite figures" },
+      { "id": "STAGE_E", "name": "Anti-Memorisation Assessment", "focus": "Unseen word problem about fencing a rectangular field without visual diagram" }
+    ]
+  },
+  "supportedMechanics": [
+    "PERIMETER_CALCULATION",
+    "AREA_COUNTING",
+    "LINES_OF_SYMMETRY",
+    "POLYGON_PROPERTIES",
+    "PROGRESSIVE_4_STEP_HINTS",
+    "RULE_FORMULATION_BUILDER"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "shape", "options", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "conceptId": { "type": "string", "default": "PERIMETER_RECTANGLE" },
+      "currentStage": { "type": "string", "enum": ["STAGE_A", "STAGE_B", "STAGE_C", "STAGE_D", "STAGE_E"], "default": "STAGE_B" },
+      "prompt": { "type": "string" },
+      "shape": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "enum": ["RECTANGLE", "TRIANGLE", "HEXAGON", "COMPOSITE"] },
+          "dimensions": { "type": "object" },
+          "measurements": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "progressiveHints": { "type": "array", "items": { "type": "string" } },
+      "ruleDiscovery": {
+        "type": "object",
+        "properties": {
+          "statementPrompt": { "type": "string" },
+          "ruleOptions": { "type": "array", "items": { "type": "string" } },
+          "correctRule": { "type": "string" }
+        }
+      },
+      "options": { "type": "array", "items": { "type": "string" } },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "antiMemorisation": {
+        "type": "object",
+        "properties": {
+          "format": { "type": "string", "enum": ["FRESH_VARIABLES", "REVERSED_GOAL", "CONTEXT_SHIFT"] },
+          "hideShape": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  },
+  "sampleData": {
+    "questionId": "geo-sim-001",
+    "conceptId": "PERIMETER_RECTANGLE",
+    "currentStage": "STAGE_B",
+    "prompt": "Find the total perimeter of a rectangle with length 14 cm and breadth 9 cm.",
+    "shape": {
+      "type": "RECTANGLE",
+      "dimensions": { "width": 14, "height": 9 },
+      "measurements": ["Length = 14 cm", "Breadth = 9 cm"]
+    },
+    "progressiveHints": [
+      "Level 1 (Attention): Perimeter means the total distance around the outside edge of the shape.",
+      "Level 2 (Reasoning): A rectangle has 4 sides: two equal lengths (14 cm each) and two equal breadths (9 cm each).",
+      "Level 3 (Demonstration): Total perimeter = 14 + 9 + 14 + 9 = 2 × (14 + 9).",
+      "Level 4 (Full Solution): 14 + 9 = 23 cm. 2 × 23 = 46 cm. The perimeter is 46 cm."
+    ],
+    "ruleDiscovery": {
+      "statementPrompt": "Complete the formula for the perimeter of a rectangle:",
+      "ruleOptions": [
+        "Perimeter = 2 × (Length + Breadth)",
+        "Perimeter = Length × Breadth",
+        "Perimeter = 4 × (Length + Breadth)"
+      ],
+      "correctRule": "Perimeter = 2 × (Length + Breadth)"
+    },
+    "options": ["23 cm", "42 cm", "46 cm", "126 cm"],
+    "correctAnswer": "46 cm",
+    "explanation": "Perimeter = 2 × (Length + Breadth) = 2 × (14 + 9) = 2 × 23 = 46 cm.",
+    "antiMemorisation": {
+      "format": "FRESH_VARIABLES",
+      "hideShape": false
+    }
+  }
+}

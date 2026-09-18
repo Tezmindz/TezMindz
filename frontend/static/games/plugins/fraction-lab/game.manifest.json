@@ -1,0 +1,89 @@
+{
+  "name": "Fraction Lab Simulator",
+  "slug": "fraction-lab",
+  "version": "2.0.0",
+  "description": "Simulation engine for fraction visualization, numerator/denominator understanding, equivalent fractions, and mixed numbers across the 5-stage mastery model.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Mathematical Reasoning",
+  "conceptCluster": "Fractions, Decimals & Proportional Reasoning",
+  "pedagogyModel": {
+    "framework": "Tezmindz Simulation-Based Concept Mastery",
+    "stages": [
+      { "id": "STAGE_A", "name": "Concept Discovery", "focus": "Slice circular pizzas into equal parts, shade slices, observe denominator = total equal parts" },
+      { "id": "STAGE_B", "name": "Guided Simulation", "focus": "Identify fraction representation with 4-tier progressive hints" },
+      { "id": "STAGE_C", "name": "Rule Discovery", "focus": "State the rule: 'Numerator = parts chosen, Denominator = total equal parts in the whole'" },
+      { "id": "STAGE_D", "name": "Controlled Practice", "focus": "Dynamic variations across fraction bars, sets of objects, and equivalent forms" },
+      { "id": "STAGE_E", "name": "Anti-Memorisation Assessment", "focus": "Unseen word problem involving shared pizza/cake portions without visual circle" }
+    ]
+  },
+  "supportedMechanics": [
+    "SHADED_FRACTIONS",
+    "EQUIVALENT_FRACTIONS",
+    "PARTITION_SLICER",
+    "PROGRESSIVE_4_STEP_HINTS",
+    "RULE_FORMULATION_BUILDER"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "numerator", "denominator", "options", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "conceptId": { "type": "string", "default": "FRACTIONS_PARTS_OF_WHOLE" },
+      "currentStage": { "type": "string", "enum": ["STAGE_A", "STAGE_B", "STAGE_C", "STAGE_D", "STAGE_E"], "default": "STAGE_B" },
+      "prompt": { "type": "string" },
+      "numerator": { "type": "number" },
+      "denominator": { "type": "number" },
+      "progressiveHints": { "type": "array", "items": { "type": "string" } },
+      "ruleDiscovery": {
+        "type": "object",
+        "properties": {
+          "statementPrompt": { "type": "string" },
+          "ruleOptions": { "type": "array", "items": { "type": "string" } },
+          "correctRule": { "type": "string" }
+        }
+      },
+      "options": { "type": "array", "items": { "type": "string" } },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "antiMemorisation": {
+        "type": "object",
+        "properties": {
+          "format": { "type": "string", "enum": ["FRESH_VARIABLES", "REVERSED_GOAL", "CONTEXT_SHIFT"] },
+          "hideVisual": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  },
+  "sampleData": {
+    "questionId": "frac-sim-001",
+    "conceptId": "FRACTIONS_PARTS_OF_WHOLE",
+    "currentStage": "STAGE_B",
+    "prompt": "Look at the circular pizza diagram. What fraction of the total shape is shaded pink?",
+    "numerator": 3,
+    "denominator": 8,
+    "progressiveHints": [
+      "Level 1 (Attention): First, count how many total equal slices the pizza is divided into.",
+      "Level 2 (Reasoning): There are 8 equal slices in total. The total number of equal parts always forms the Denominator (bottom number).",
+      "Level 3 (Demonstration): Now count how many slices are shaded pink. Exactly 3 slices are shaded. Shaded parts form the Numerator (top number).",
+      "Level 4 (Full Solution): The fraction is (Shaded Slices) / (Total Slices) = 3 / 8."
+    ],
+    "ruleDiscovery": {
+      "statementPrompt": "Complete the rule defining a fraction:",
+      "ruleOptions": [
+        "Fraction = (Number of shaded equal parts) / (Total number of equal parts in the whole)",
+        "Fraction = Total parts divided by unshaded parts",
+        "Fraction = Numerator plus Denominator"
+      ],
+      "correctRule": "Fraction = (Number of shaded equal parts) / (Total number of equal parts in the whole)"
+    },
+    "options": ["1/4", "3/8", "1/2", "5/8"],
+    "correctAnswer": "3/8",
+    "explanation": "The circle is divided into 8 equal sectors, and 3 are shaded pink. Thus, the fraction is 3/8.",
+    "antiMemorisation": {
+      "format": "FRESH_VARIABLES",
+      "hideVisual": false
+    }
+  }
+}

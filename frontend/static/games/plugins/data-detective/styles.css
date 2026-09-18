@@ -1,0 +1,147 @@
+/* Data Detective Styles */
+.tm-game-chart {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1e293b;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  max-width: 680px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.tm-game-chart .tm-header {
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 0.75rem;
+}
+
+.tm-game-chart .tm-badge {
+  display: inline-flex;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  background: #f0fdfa;
+  color: #0d9488;
+  border: 1px solid #99f6e4;
+}
+
+.tm-game-chart .tm-prompt {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 0.65rem;
+  line-height: 1.4;
+}
+
+.tm-game-chart .tm-chart-stage {
+  padding: 1.5rem;
+  background: #f8fafc;
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  margin: 1.25rem 0;
+}
+
+.tm-game-chart .tm-chart-unit {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748b;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.tm-game-chart .tm-chart-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 160px;
+  border-bottom: 2px solid #cbd5e1;
+  padding-bottom: 0.25rem;
+}
+
+.tm-game-chart .tm-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 55px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.tm-game-chart .tm-bar-val {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+.tm-game-chart .tm-bar-track {
+  width: 32px;
+  height: 120px;
+  background: #e2e8f0;
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.tm-game-chart .tm-bar-fill {
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  transition: height 0.4s ease;
+}
+
+.tm-game-chart .tm-bar-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-top: 8px;
+}
+
+.tm-game-chart .tm-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.tm-game-chart .tm-option-btn {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-chart .tm-option-btn:hover {
+  border-color: #0d9488;
+  background: #f0fdfa;
+  transform: translateY(-2px);
+}
+
+.tm-game-chart .tm-feedback {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.tm-game-chart .tm-feedback-correct {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.tm-game-chart .tm-feedback-wrong {
+  background: #fff1f2;
+  color: #9f1239;
+  border: 1px solid #fecdd3;
+}

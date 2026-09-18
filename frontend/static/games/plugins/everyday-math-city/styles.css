@@ -1,0 +1,400 @@
+/**
+ * Scoped styles for Everyday Math City Game Template
+ */
+.tm-game-everyday-math {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #1e293b;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  background: #ffffff;
+  border-radius: 1rem;
+}
+
+.tm-game-everyday-math .tm-stage-nav {
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.tm-game-everyday-math .tm-stage-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-everyday-math .tm-stage-pill.active {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #0369a1;
+  box-shadow: 0 1px 3px rgba(2, 132, 199, 0.25);
+}
+
+.tm-game-everyday-math .tm-header {
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 0.75rem;
+}
+
+.tm-game-everyday-math .tm-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #0369a1;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  margin-bottom: 0.5rem;
+}
+
+.tm-game-everyday-math .tm-prompt {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.4;
+  margin: 0 0 0.35rem 0;
+}
+
+.tm-game-everyday-math .tm-subprompt {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.tm-game-everyday-math .tm-discovery-card {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 0.85rem;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.tm-game-everyday-math .tm-discovery-title {
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: #0369a1;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-everyday-math .tm-discovery-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.8rem;
+  color: #075985;
+  line-height: 1.4;
+}
+
+.tm-game-everyday-math .tm-discovery-sub {
+  font-size: 0.75rem;
+  color: #0284c7;
+  font-style: italic;
+  margin-top: 0.35rem;
+}
+
+.tm-game-everyday-math .tm-abstract-notice {
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.tm-game-everyday-math .tm-abstract-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.tm-game-everyday-math .tm-abstract-title {
+  font-weight: 800;
+  font-size: 1rem;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.tm-game-everyday-math .tm-rule-box {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 0.85rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tm-game-everyday-math .tm-rule-prompt {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #0c4a6e;
+  margin-bottom: 0.65rem;
+}
+
+.tm-game-everyday-math .tm-rule-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tm-game-everyday-math .tm-rule-opt-btn {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.6rem;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1e293b;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-everyday-math .tm-rule-opt-btn:hover {
+  background: #f0f9ff;
+  border-color: #0ea5e9;
+}
+
+.tm-game-everyday-math .tm-hint-section {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.tm-game-everyday-math .tm-hint-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #475569;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-everyday-math .tm-next-hint-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+}
+
+.tm-game-everyday-math .tm-hint-body {
+  font-size: 0.8rem;
+  color: #334155;
+  line-height: 1.4;
+}
+
+/* Playground */
+.tm-game-everyday-math .tm-playground {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Market Register */
+.tm-game-everyday-math .tm-receipt-card {
+  background: #ffffff;
+  border: 1px solid #e0f2fe;
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.tm-game-everyday-math .tm-receipt-header {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #0369a1;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  border-bottom: 1px dashed #cbd5e1;
+  padding-bottom: 0.35rem;
+}
+
+.tm-game-everyday-math .tm-receipt-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tm-game-everyday-math .tm-receipt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #334155;
+}
+
+.tm-game-everyday-math .tm-receipt-cost {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.tm-game-everyday-math .tm-receipt-divider {
+  height: 1px;
+  border-top: 1px dashed #cbd5e1;
+  margin: 0.5rem 0;
+}
+
+.tm-game-everyday-math .tm-receipt-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #0f172a;
+}
+
+.tm-game-everyday-math .tm-receipt-paid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #0284c7;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+/* Timeline */
+.tm-game-everyday-math .tm-timeline-box {
+  background: #ffffff;
+  border: 1px solid #bae6fd;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.tm-game-everyday-math .tm-timeline-header {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #0284c7;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-everyday-math .tm-timeline-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+.tm-game-everyday-math .tm-timeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tm-game-everyday-math .tm-node-label {
+  font-size: 0.65rem;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.tm-game-everyday-math .tm-node-val {
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.tm-game-everyday-math .tm-timeline-line {
+  color: #0ea5e9;
+  font-weight: bold;
+}
+
+.tm-game-everyday-math .tm-timeline-duration {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #0369a1;
+  margin-top: 0.25rem;
+}
+
+/* Options */
+.tm-game-everyday-math .tm-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.tm-game-everyday-math .tm-option-btn {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-everyday-math .tm-option-btn:hover {
+  background: #f0f9ff;
+  border-color: #0284c7;
+}
+
+.tm-game-everyday-math .tm-option-correct {
+  background: #ecfdf5 !important;
+  border-color: #10b981 !important;
+  color: #065f46 !important;
+}
+
+.tm-game-everyday-math .tm-option-wrong {
+  background: #fff1f2 !important;
+  border-color: #f43f5e !important;
+  color: #9f1239 !important;
+}
+
+/* Feedback */
+.tm-game-everyday-math .tm-feedback-panel {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+}
+
+.tm-game-everyday-math .tm-feedback-correct {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+.tm-game-everyday-math .tm-feedback-wrong {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #9f1239;
+}
+
+.tm-game-everyday-math .tm-feedback-title {
+  font-weight: 800;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.tm-game-everyday-math .tm-feedback-text {
+  font-size: 0.85rem;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-everyday-math .tm-feedback-explanation {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  border-top: 1px dashed rgba(0,0,0,0.15);
+  padding-top: 0.35rem;
+}

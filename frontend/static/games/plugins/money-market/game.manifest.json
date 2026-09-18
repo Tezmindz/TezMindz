@@ -1,0 +1,59 @@
+{
+  "name": "Money Market",
+  "slug": "money-market",
+  "version": "1.0.0",
+  "description": "Data-driven currency, shopping transactions, notes & coins change calculation game for Olympiad mathematics.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Everyday Mathematics",
+  "supportedMechanics": [
+    "CHANGE_CALCULATION",
+    "UNIT_PRICE_PURCHASE",
+    "CURRENCY_CONVERSION",
+    "BUDGETING"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "items", "amountPaid", "options", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "prompt": { "type": "string" },
+      "currencySymbol": { "type": "string", "default": "₹" },
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "price": { "type": "number" },
+            "quantity": { "type": "number" }
+          }
+        }
+      },
+      "amountPaid": { "type": "number" },
+      "options": { "type": "array", "items": { "type": "string" } },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "hint": { "type": "string" }
+    }
+  },
+  "config": {
+    "currency": "INR",
+    "theme": "light"
+  },
+  "sampleData": {
+    "questionId": "mon-001",
+    "prompt": "Priya buys 3 notebooks at ₹45 each and 2 pens at ₹20 each. She pays with a ₹500 note. What change should she receive?",
+    "currencySymbol": "₹",
+    "items": [
+      { "name": "3 Notebooks", "price": 45, "quantity": 3 },
+      { "name": "2 Pens", "price": 20, "quantity": 2 }
+    ],
+    "amountPaid": 500,
+    "options": ["₹315", "₹325", "₹335", "₹345"],
+    "correctAnswer": "₹325",
+    "explanation": "Total spent = (3 × 45) + (2 × 20) = 135 + 40 = ₹175. Change = ₹500 - ₹175 = ₹325.",
+    "hint": "First calculate the cost of notebooks and pens combined, then subtract from ₹500."
+  }
+}
