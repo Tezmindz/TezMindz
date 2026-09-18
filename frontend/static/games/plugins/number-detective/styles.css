@@ -1,0 +1,211 @@
+/* ==========================================================================
+   Number Detective Game Template Styles
+   Scoped under .tm-game-detective
+   ========================================================================== */
+
+.tm-game-detective {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1e293b;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+  max-width: 680px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.tm-game-detective * {
+  box-sizing: border-box;
+}
+
+.tm-game-detective .tm-header {
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 1rem;
+}
+
+.tm-game-detective .tm-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.tm-game-detective .tm-prompt {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 0.65rem;
+  line-height: 1.5;
+}
+
+/* Clue Board */
+.tm-game-detective .tm-clue-board {
+  background: #fffbeb;
+  border: 1.5px dashed #fcd34d;
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.tm-game-detective .tm-clue-badge {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #92400e;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tm-game-detective .tm-clue-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.tm-game-detective .tm-clue-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  font-size: 0.9rem;
+  color: #78350f;
+  line-height: 1.4;
+}
+
+.tm-game-detective .tm-clue-marker {
+  font-size: 0.7rem;
+  font-family: ui-monospace, monospace;
+  font-weight: 800;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.35rem;
+  white-space: nowrap;
+}
+
+/* Suspect Cards Grid */
+.tm-game-detective .tm-suspect-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .tm-game-detective .tm-suspect-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.tm-game-detective .tm-suspect-card {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1rem 0.75rem;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.tm-game-detective .tm-suspect-card:hover {
+  border-color: #6366f1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px -4px rgba(99, 102, 241, 0.2);
+}
+
+.tm-game-detective .tm-suspect-stamp {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #94a3b8;
+  margin-bottom: 0.25rem;
+}
+
+.tm-game-detective .tm-suspect-number {
+  font-family: ui-monospace, monospace;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.75rem;
+}
+
+.tm-game-detective .tm-suspect-pick-btn {
+  background: #f1f5f9;
+  border: none;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #475569;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  width: 100%;
+}
+
+.tm-game-detective .tm-suspect-card:hover .tm-suspect-pick-btn {
+  background: #6366f1;
+  color: #ffffff;
+}
+
+/* Card states */
+.tm-game-detective .tm-card-correct {
+  border-color: #10b981 !important;
+  background: #ecfdf5 !important;
+}
+
+.tm-game-detective .tm-card-wrong {
+  border-color: #f43f5e !important;
+  background: #fff1f2 !important;
+}
+
+.tm-game-detective .tm-card-eliminated {
+  opacity: 0.45;
+  filter: grayscale(0.8);
+  pointer-events: none;
+}
+
+/* Feedback panel */
+.tm-game-detective .tm-feedback-panel {
+  margin-top: 1.25rem;
+  border-radius: 0.85rem;
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.tm-game-detective .tm-hidden {
+  display: none !important;
+}
+
+.tm-game-detective .tm-feedback-success {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+
+.tm-game-detective .tm-feedback-error {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #9f1239;
+}
+
+.tm-game-detective .tm-feedback-hint {
+  background: #fefce8;
+  border: 1px solid #fef08a;
+  color: #854d0e;
+}
