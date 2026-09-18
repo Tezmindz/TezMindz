@@ -1,0 +1,349 @@
+<!-- ── TEZMINDZ REUSABLE AUTHENTICATION MODALS COMPONENT ── -->
+<div class="tm-auth-backdrop" id="tmAuthBackdrop" aria-hidden="true">
+  <div class="tm-auth-modal-wrapper" id="tmAuthWrapper">
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- 1. LOGIN MODAL -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div class="tm-auth-card" id="tmLoginModal" role="dialog" aria-modal="true" aria-labelledby="tmLoginHeading" style="display: none;">
+      <button type="button" class="tm-auth-close-btn" onclick="TMAuthModal.close()" aria-label="Close Login Modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="tm-auth-header">
+        <div class="tm-auth-badge">
+          <span>🚀</span>
+          <strong>Welcome Back!</strong>
+        </div>
+        <h2 id="tmLoginHeading" class="tm-auth-title">Welcome Back!</h2>
+        <p class="tm-auth-subtitle">Login to continue your TezMindz learning journey.</p>
+      </div>
+
+      <!-- Error Alert Box -->
+      <div class="tm-auth-error-box" id="tmLoginError" style="display: none;" role="alert">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="tmLoginErrorMsg">Invalid email or password.</span>
+      </div>
+
+      <!-- Login Form -->
+      <form id="tmLoginForm" onsubmit="TMAuthModal.handleLogin(event)" novalidate>
+        <div class="tm-auth-field">
+          <label for="tmLoginEmail">Email or Username</label>
+          <div class="tm-auth-input-wrap">
+            <svg class="tm-auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+            </svg>
+            <input type="text" id="tmLoginEmail" name="username" placeholder="Enter your email or username" autocomplete="username" required />
+          </div>
+        </div>
+
+        <div class="tm-auth-field">
+          <label for="tmLoginPassword">Password</label>
+          <div class="tm-auth-input-wrap">
+            <svg class="tm-auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <input type="password" id="tmLoginPassword" name="password" placeholder="Enter your password" autocomplete="current-password" required />
+            <button type="button" class="tm-auth-toggle-pass" onclick="TMAuthModal.togglePasswordVisibility('tmLoginPassword', this)" aria-label="Toggle password visibility">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="tm-auth-forgot-row">
+          <button type="button" class="tm-auth-link-btn" onclick="TMAuthModal.openForgot()">Forgot Password?</button>
+        </div>
+
+        <button type="submit" class="tm-auth-btn-primary" id="tmLoginBtn">
+          <span>Login</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </form>
+
+
+
+      <!-- Switch to Register -->
+      <div class="tm-auth-footer-switch">
+        <span>Don't have an account?</span>
+        <button type="button" class="tm-auth-switch-link" onclick="TMAuthModal.switchToRegister()">Register</button>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- 2. REGISTER MODAL -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div class="tm-auth-card" id="tmRegisterModal" role="dialog" aria-modal="true" aria-labelledby="tmRegisterHeading" style="display: none;">
+      <button type="button" class="tm-auth-close-btn" onclick="TMAuthModal.close()" aria-label="Close Register Modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="tm-auth-header">
+        <div class="tm-auth-badge tm-badge-green">
+          <span>✨</span>
+          <strong>Join Tezz-Mindz</strong>
+        </div>
+        <h2 id="tmRegisterHeading" class="tm-auth-title">Create Your Account</h2>
+        <p class="tm-auth-subtitle">Start your learning journey with TezMindz.</p>
+      </div>
+
+      <!-- Pending Plan Alert Pill (if coming from pricing enroll) -->
+      <div class="tm-auth-plan-banner" id="tmRegisterPlanBanner" style="display: none;">
+        <span class="tm-plan-banner-icon">⭐</span>
+        <div class="tm-plan-banner-text">
+          <strong id="tmRegisterPlanName">Selected Plan Reserved</strong>
+          <small>Complete registration to activate your learning journey</small>
+        </div>
+      </div>
+
+      <!-- Error Alert Box -->
+      <div class="tm-auth-error-box" id="tmRegisterError" style="display: none;" role="alert">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="tmRegisterErrorMsg">Please check all required fields.</span>
+      </div>
+
+      <!-- Register Form -->
+      <form id="tmRegisterForm" onsubmit="TMAuthModal.handleRegister(event)" novalidate>
+        <div class="tm-auth-row-2">
+          <!-- Full Name -->
+          <div class="tm-auth-field">
+            <label for="tmRegFullName">Full Name</label>
+            <div class="tm-auth-input-wrap">
+              <svg class="tm-auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" id="tmRegFullName" name="name" placeholder="Enter your full name" autocomplete="name" required />
+            </div>
+          </div>
+
+          <!-- Username -->
+          <div class="tm-auth-field">
+            <label for="tmRegUsername">Username</label>
+            <div class="tm-auth-input-wrap">
+              <svg class="tm-auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path>
+              </svg>
+              <input type="text" id="tmRegUsername" name="username" placeholder="Choose username" autocomplete="username" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="tm-auth-row-2">
+          <!-- Email -->
+          <div class="tm-auth-field">
+            <label for="tmRegEmail">Email Address</label>
+            <div class="tm-auth-input-wrap">
+              <svg class="tm-auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+              <input type="email" id="tmRegEmail" name="email" placeholder="Enter your email" autocomplete="email" required />
+            </div>
+          </div>
+
+          <!-- Class Level -->
+          <div class="tm-auth-field">
+            <label for="tmRegClassLevel">Class / Grade</label>
+            <div class="tm-auth-input-wrap">
+              <svg class="tm-auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+              </svg>
+              <select id="tmRegClassLevel" name="classLevel" required>
+                <option value="" disabled selected>Select Class ▼</option>
+                <option value="1">Class 1 (Grade 1)</option>
+                <option value="2">Class 2 (Grade 2)</option>
+                <option value="3">Class 3 (Grade 3)</option>
+                <option value="4">Class 4 (Grade 4)</option>
+                <option value="5">Class 5 (Grade 5)</option>
+                <option value="6">Class 6 (Grade 6)</option>
+                <option value="7">Class 7 (Grade 7)</option>
+                <option value="8">Class 8 (Grade 8)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="tm-auth-row-2">
+          <!-- Password -->
+          <div class="tm-auth-field">
+            <label for="tmRegPassword">Password</label>
+            <div class="tm-auth-input-wrap">
+              <svg class="tm-auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input type="password" id="tmRegPassword" name="password" placeholder="Create password (min 6)" autocomplete="new-password" required />
+            </div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="tm-auth-field">
+            <label for="tmRegConfirmPassword">Confirm Password</label>
+            <div class="tm-auth-input-wrap">
+              <svg class="tm-auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 12 2 2 4-4"></path>
+                <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+              </svg>
+              <input type="password" id="tmRegConfirmPassword" name="confirmPassword" placeholder="Re-enter password" autocomplete="new-password" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- Agreement -->
+        <div class="tm-auth-agree-wrap">
+          <label class="tm-auth-checkbox-label">
+            <input type="checkbox" id="tmRegAgree" required checked />
+            <span class="tm-auth-custom-check"></span>
+            <span class="tm-auth-agree-text">
+              I agree to the <a href="/terms/" target="_blank">Terms of Service</a> and <a href="/privacy/" target="_blank">Privacy Policy</a> of TezMindz.
+            </span>
+          </label>
+        </div>
+
+        <button type="submit" class="tm-auth-btn-primary tm-btn-create" id="tmRegisterBtn">
+          <span>Create Account</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 14 4-4-4-4"></path>
+            <path d="M3 10h13"></path>
+            <path d="M21 20V4"></path>
+          </svg>
+        </button>
+      </form>
+
+      <!-- Switch to Login -->
+      <div class="tm-auth-footer-switch">
+        <span>Already have an account?</span>
+        <button type="button" class="tm-auth-switch-link" onclick="TMAuthModal.switchToLogin()">Login</button>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- 3. FORGOT PASSWORD MODAL -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div class="tm-auth-card" id="tmForgotModal" role="dialog" aria-modal="true" aria-labelledby="tmForgotHeading" style="display: none;">
+      <button type="button" class="tm-auth-close-btn" onclick="TMAuthModal.close()" aria-label="Close Modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Step 1: Send OTP -->
+      <div id="tmForgotStep1">
+        <div class="tm-auth-header">
+          <div class="tm-auth-badge tm-badge-amber">
+            <span>🔑</span>
+            <strong>Password Reset</strong>
+          </div>
+          <h2 id="tmForgotHeading" class="tm-auth-title">Reset Password</h2>
+          <p class="tm-auth-subtitle">Enter your registered email address to receive a 6-digit security OTP.</p>
+        </div>
+
+        <div class="tm-auth-error-box" id="tmForgotError1" style="display: none;" role="alert">
+          <span id="tmForgotErrorMsg1"></span>
+        </div>
+
+        <form onsubmit="TMAuthModal.handleRequestOTP(event)">
+          <div class="tm-auth-field">
+            <label for="tmForgotEmail">Email Address</label>
+            <div class="tm-auth-input-wrap">
+              <svg class="tm-auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+              <input type="email" id="tmForgotEmail" placeholder="Enter your email address" required />
+            </div>
+          </div>
+
+          <button type="submit" class="tm-auth-btn-primary" id="tmBtnRequestOTP">
+            <span>Send OTP</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </form>
+
+        <div class="tm-auth-footer-switch">
+          <span>Remember your password?</span>
+          <button type="button" class="tm-auth-switch-link" onclick="TMAuthModal.switchToLogin()">Back to Login</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Verify OTP & New Password -->
+      <div id="tmForgotStep2" style="display: none;">
+        <div class="tm-auth-header">
+          <div class="tm-auth-badge tm-badge-green">
+            <span>🛡️</span>
+            <strong>OTP Verification</strong>
+          </div>
+          <h2 class="tm-auth-title">Enter Verification Code</h2>
+          <p class="tm-auth-subtitle">Enter the 6-digit OTP code sent to your email along with your new password.</p>
+        </div>
+
+        <div class="tm-auth-error-box" id="tmForgotError2" style="display: none;" role="alert">
+          <span id="tmForgotErrorMsg2"></span>
+        </div>
+
+        <form onsubmit="TMAuthModal.handleVerifyOTP(event)">
+          <div class="tm-auth-field">
+            <label for="tmForgotOTP">6-Digit OTP</label>
+            <div class="tm-auth-input-wrap">
+              <input type="text" id="tmForgotOTP" placeholder="e.g. 123456" maxlength="8" required style="letter-spacing: 0.25em; font-size: 1.15rem; font-weight: 800; text-align: center; padding-left: 14px;" />
+            </div>
+          </div>
+
+          <div class="tm-auth-field">
+            <label for="tmForgotNewPass">New Password</label>
+            <div class="tm-auth-input-wrap">
+              <svg class="tm-auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input type="password" id="tmForgotNewPass" placeholder="Enter new password (min 6 chars)" minlength="6" required />
+            </div>
+          </div>
+
+          <button type="submit" class="tm-auth-btn-primary" id="tmBtnVerifyOTP">
+            <span>Reset Password &amp; Login</span>
+          </button>
+        </form>
+
+        <div class="tm-auth-footer-switch">
+          <button type="button" class="tm-auth-switch-link" onclick="TMAuthModal.openForgotStep1()">← Change Email Address</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- CSRF Token Carrier for JavaScript Fetch -->
+<input type="hidden" id="tmCsrfCarrier" value="{{ csrf_token }}" />

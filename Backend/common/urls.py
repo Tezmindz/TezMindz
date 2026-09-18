@@ -6,6 +6,9 @@ app_name = "common"
 
 urlpatterns = [
     path("", views.template_page("index.html"), name="home"),
+    path("about/", views.template_page("about.html"), name="about"),
+    path("how-it-works/", views.template_page("how_it_works.html"), name="how_it_works"),
+    path("subjects/", views.template_page("subjects.html"), name="subjects"),
     path("dashboard/", views.dashboard_page, name="dashboard"),
     path("login/", views.login_page, name="login"),
     path("tezadmin/", views.tezadmin_hub_page, name="tezadmin_hub"),

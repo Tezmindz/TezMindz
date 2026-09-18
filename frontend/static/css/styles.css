@@ -2492,7 +2492,7 @@ input:focus-visible,
 .classes-section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 24px;
+  padding: 40px 20px;
   text-align: center;
 }
 .classes-row-label {
@@ -2501,14 +2501,14 @@ input:focus-visible,
   color: var(--brand);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin: 28px 0 16px;
+  margin: 20px 0 14px;
   display: block;
 }
 .classes-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 @media (min-width: 768px) {
   .classes-grid {
@@ -2518,15 +2518,14 @@ input:focus-visible,
 .class-card-v2 {
   background: #fff;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 24px;
+  border-radius: var(--radius-sm);
+  padding: 18px 16px;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: 200px;
   text-decoration: none;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
@@ -2775,4 +2774,640 @@ input:focus-visible,
 .tm-progress-fill.success {
   background: linear-gradient(90deg, #10B981, #059669);
 }
+
+/* ══════════════════════════════════════════════════════════════════ */
+/* ── ULTRA-PREMIUM TEZMINDZ AUTHENTICATION MODAL POPUP SYSTEM ── */
+/* ══════════════════════════════════════════════════════════════════ */
+
+/* Prevent background scroll when modal is active */
+body.tm-modal-open {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+/* Fixed Backdrop Overlay */
+.tm-auth-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tm-auth-backdrop.active {
+  opacity: 1;
+}
+
+/* Centered Modal Wrapper */
+.tm-auth-modal-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Popup Card */
+.tm-auth-card {
+  position: relative;
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 36px 32px;
+  box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(226, 232, 240, 0.8);
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #0F172A;
+  transform: scale(0.94) translateY(12px);
+  opacity: 0;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+}
+
+/* Modal Scrollbar Styling */
+.tm-auth-card::-webkit-scrollbar {
+  width: 6px;
+}
+.tm-auth-card::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tm-auth-card::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 10px;
+}
+
+/* Modal Entrance Animation */
+.tm-auth-backdrop.active .tm-auth-card,
+.tm-auth-card.tm-modal-enter {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Close 'X' Button */
+.tm-auth-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #F1F5F9;
+  background: #F8FAFC;
+  color: #64748B;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 0;
+  z-index: 10;
+}
+
+.tm-auth-close-btn:hover {
+  background: #FEE2E2;
+  border-color: #FECDD3;
+  color: #EF4444;
+  transform: rotate(90deg) scale(1.05);
+}
+
+.tm-auth-close-btn:focus-visible {
+  outline: 2px solid #4F46E5;
+  outline-offset: 2px;
+}
+
+/* Header & Typography */
+.tm-auth-header {
+  text-align: center;
+  margin-bottom: 22px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.tm-auth-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: #EEF2FF;
+  border: 1px solid #C7D2FE;
+  border-radius: 100px;
+  margin-bottom: 12px;
+}
+
+.tm-auth-badge strong {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #4F46E5;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.tm-auth-badge.tm-badge-green {
+  background: #ECFDF5;
+  border-color: #A7F3D0;
+}
+.tm-auth-badge.tm-badge-green strong {
+  color: #059669;
+}
+
+.tm-auth-badge.tm-badge-amber {
+  background: #FFFBEB;
+  border-color: #FDE68A;
+}
+.tm-auth-badge.tm-badge-amber strong {
+  color: #D97706;
+}
+
+.tm-auth-title {
+  font-size: 1.65rem;
+  font-weight: 900;
+  color: #0F172A;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin: 0 0 6px 0;
+}
+
+.tm-auth-subtitle {
+  font-size: 0.88rem;
+  color: #64748B;
+  font-weight: 500;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Pending Plan Reserved Banner */
+.tm-auth-plan-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #FAF5FF 0%, #EEF2FF 100%);
+  border: 1.5px solid #DDD6FE;
+  border-radius: 14px;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+}
+
+.tm-plan-banner-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.tm-plan-banner-text strong {
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #6B21A8;
+}
+
+.tm-plan-banner-text small {
+  font-size: 0.72rem;
+  color: #7C3AED;
+  font-weight: 600;
+}
+
+/* In-Modal Error Alert Box */
+.tm-auth-error-box {
+  background: #FEF2F2;
+  border: 1.5px solid #FECACA;
+  color: #B91C1C;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.35;
+  animation: tm-error-shake 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes tm-error-shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+  40%, 60% { transform: translate3d(3px, 0, 0); }
+}
+
+.tm-auth-error-box svg {
+  flex-shrink: 0;
+}
+
+/* Form Fields */
+.tm-auth-field {
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.tm-auth-field label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.tm-auth-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.tm-auth-input-icon {
+  position: absolute;
+  left: 14px;
+  color: #94A3B8;
+  pointer-events: none;
+  transition: color 0.18s;
+  flex-shrink: 0;
+}
+
+.tm-auth-input-wrap input,
+.tm-auth-input-wrap select {
+  width: 100%;
+  height: 48px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 0 42px 0 42px;
+  font-size: 0.92rem;
+  font-family: inherit;
+  color: #0F172A;
+  background: #F8FAFC;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tm-auth-input-wrap select {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748B' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.tm-auth-input-wrap input:hover,
+.tm-auth-input-wrap select:hover {
+  border-color: #CBD5E1;
+  background: #FFFFFF;
+}
+
+.tm-auth-input-wrap input:focus,
+.tm-auth-input-wrap select:focus {
+  border-color: #4F46E5;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3.5px rgba(79, 70, 229, 0.14);
+}
+
+.tm-auth-input-wrap:focus-within .tm-auth-input-icon {
+  color: #4F46E5;
+}
+
+/* Password Toggle Eye Button */
+.tm-auth-toggle-pass {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  padding: 6px;
+  color: #94A3B8;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  transition: color 0.18s, background 0.18s;
+}
+
+.tm-auth-toggle-pass:hover {
+  color: #4F46E5;
+  background: #EEF2FF;
+}
+
+/* 2-Column Responsive Row in Register Form */
+.tm-auth-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 480px) {
+  .tm-auth-row-2 {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+/* Forgot Password Link Row */
+.tm-auth-forgot-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -4px;
+  margin-bottom: 18px;
+}
+
+.tm-auth-link-btn {
+  background: none;
+  border: none;
+  padding: 2px 0;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #4F46E5;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.15s, text-decoration 0.15s;
+}
+
+.tm-auth-link-btn:hover {
+  color: #4338CA;
+  text-decoration: underline;
+}
+
+/* Terms Agreement Checkbox */
+.tm-auth-agree-wrap {
+  margin: 8px 0 18px 0;
+}
+
+.tm-auth-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tm-auth-checkbox-label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tm-auth-custom-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  border: 1.5px solid #CBD5E1;
+  background: #F8FAFC;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: all 0.18s ease;
+}
+
+.tm-auth-checkbox-label input[type="checkbox"]:checked ~ .tm-auth-custom-check {
+  background: #4F46E5;
+  border-color: #4F46E5;
+}
+
+.tm-auth-checkbox-label input[type="checkbox"]:checked ~ .tm-auth-custom-check::after {
+  content: "";
+  width: 4px;
+  height: 8px;
+  border: solid #FFFFFF;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+.tm-auth-agree-text {
+  font-size: 0.78rem;
+  color: #64748B;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.tm-auth-agree-text a {
+  color: #4F46E5;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.tm-auth-agree-text a:hover {
+  text-decoration: underline;
+}
+
+/* Primary Action Buttons */
+.tm-auth-btn-primary {
+  width: 100%;
+  height: 48px;
+  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 14px;
+  font-size: 0.96rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tm-auth-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.45);
+}
+
+.tm-auth-btn-primary:active {
+  transform: translateY(0);
+}
+
+.tm-auth-btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.tm-btn-create {
+  background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+}
+
+.tm-btn-create:hover {
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.45);
+}
+
+/* Loading Spinner */
+.tm-auth-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: tm-spin 0.7s linear infinite;
+}
+
+@keyframes tm-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Divider */
+.tm-auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 14px 0;
+}
+
+.tm-auth-divider::before,
+.tm-auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #E2E8F0;
+}
+
+.tm-auth-divider span {
+  font-size: 0.74rem;
+  color: #94A3B8;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+/* Demo Access Badge */
+.tm-auth-demo-badge {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #F0FDF4;
+  border: 1.5px solid #BBF7D0;
+  border-radius: 14px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: left;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.tm-auth-demo-badge:hover {
+  background: #DCFCE7;
+  border-color: #86EFAC;
+  transform: translateY(-1px);
+}
+
+.tm-auth-demo-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #16A34A;
+  display: grid;
+  place-items: center;
+  color: #FFFFFF;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.tm-auth-demo-text strong {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #15803D;
+  line-height: 1.2;
+}
+
+.tm-auth-demo-text span {
+  font-size: 0.70rem;
+  color: #16A34A;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Footer Switcher */
+.tm-auth-footer-switch {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 0.85rem;
+  color: #64748B;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tm-auth-switch-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #4F46E5;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.15s, text-decoration 0.15s;
+}
+
+.tm-auth-switch-link:hover {
+  color: #4338CA;
+  text-decoration: underline;
+}
+
+/* ══════════════════════════════════════════════ */
+/* RESPONSIVE MEDIA QUERIES FOR AUTH MODALS */
+/* ══════════════════════════════════════════════ */
+
+/* Mobile (320px - 600px) */
+@media (max-width: 600px) {
+  .tm-auth-card {
+    padding: 26px 18px;
+    border-radius: 20px;
+    max-height: 94vh;
+  }
+
+  .tm-auth-title {
+    font-size: 1.45rem;
+  }
+
+  .tm-auth-subtitle {
+    font-size: 0.82rem;
+  }
+
+  .tm-auth-header {
+    margin-bottom: 18px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .tm-auth-input-wrap input,
+  .tm-auth-input-wrap select {
+    height: 44px;
+    font-size: 0.88rem;
+  }
+
+  .tm-auth-btn-primary {
+    height: 46px;
+    font-size: 0.92rem;
+  }
+}
+
+/* Tablet & Desktop (768px+) */
+@media (min-width: 768px) {
+  .tm-auth-modal-wrapper {
+    max-width: 480px;
+  }
+}
+
 
