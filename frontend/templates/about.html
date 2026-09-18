@@ -756,8 +756,8 @@
             </a>
             <a class="btn-nav-register" href="/dashboard/">Dashboard →</a>
           {% else %}
-            <a class="btn-nav-login" href="/login/">Student Login</a>
-            <a class="btn-nav-register" href="/register/">Start Free</a>
+            <a class="btn-nav-login" href="javascript:void(0)" onclick="TMAuthModal.openLogin()" data-open-modal="login">Student Login</a>
+            <a class="btn-nav-register" href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">Start Free</a>
           {% endif %}
         </div>
       </div>
@@ -976,7 +976,7 @@
         <h2>Ready to Empower Your Child's Journey?</h2>
         <p>Join thousands of ambitious students, parents, and educators across India mastering Olympiads through play.</p>
         <div class="cta-btn-row">
-          <a class="btn-cta-white" href="/register/">Create Free Account →</a>
+          <a class="btn-cta-white" href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">Create Free Account →</a>
           <a class="btn-cta-outline" href="/subjects/">Explore Subjects</a>
         </div>
       </div>
@@ -1022,8 +1022,8 @@
 
         <div class="footer-col">
           <h5>Support &amp; Legal</h5>
-          <a href="/login/">Student Login</a>
-          <a href="/register/">Create Free Account</a>
+          <a href="javascript:void(0)" onclick="TMAuthModal.openLogin()" data-open-modal="login">Student Login</a>
+          <a href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">Create Free Account</a>
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>
         </div>
@@ -1050,6 +1050,9 @@
         }
       });
     </script>
+    <script src="/static/js/api-config.js"></script>
     <script src="/static/js/scroll-reveal.js"></script>
+    <script src="/static/js/auth-modal.js"></script>
+    {% include "auth_modals.html" %}
   </body>
 </html>

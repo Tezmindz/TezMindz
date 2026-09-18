@@ -698,7 +698,7 @@
             </div>
           </a>
         {% else %}
-          <a class="btn-primary" href="/login/" style="padding:8px 18px;font-size:0.85rem;">Login</a>
+          <a class="btn-primary" href="javascript:void(0)" onclick="TMAuthModal.openLogin()" data-open-modal="login" style="padding:8px 18px;font-size:0.85rem;">Login</a>
         {% endif %}
 
         <!-- Mobile Drawer Toggle -->
@@ -758,6 +758,12 @@
         <span>Admin Control Center 🛡️</span>
       </a>
       {% endif %}
+      {% if not request.user.is_authenticated %}
+      <a class="tm-drawer-card" href="javascript:void(0)" onclick="toggleMobileDrawer(); TMAuthModal.openLogin();" style="background: rgba(79, 70, 229, 0.08); border-color: #C7D2FE; font-weight: 800; color: #4F46E5;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        <span>Student Login / Register 🚀</span>
+      </a>
+      {% endif %}
       <a class="tm-drawer-card" href="/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> <span>Main Website (Home)</span></a>
       <a class="tm-drawer-card" href="/progress/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#06B6D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="m19 9-5 5-4-4-3 3"></path></svg> <span>Progress &amp; Mastery</span></a>
       <a class="tm-drawer-card" href="/achievements/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"></path><path d="M6 4h12a2 2 0 0 1 2 2v3a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6V6a2 2 0 0 1 2-2Z"></path></svg> <span>Achievements</span></a>
@@ -767,9 +773,13 @@
       <a class="tm-drawer-card" href="/learn/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> <span>Mock Tests</span></a>
       <a class="tm-drawer-card" href="/subscription/" style="background: rgba(124, 58, 237, 0.08); border-color: #DDD6FE; font-weight: 800; color: #7C3AED;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> <span>My Subscription ⭐</span></a>
       <a class="tm-drawer-card" href="/profile/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> <span>Settings</span></a>
+      {% if request.user.is_authenticated %}
       <a class="tm-drawer-card" href="/logout/" style="color:#DC2626;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> <span>Log Out</span></a>
+      {% endif %}
     </div>
   </div>
+
+  {% include "auth_modals.html" %}
 
   <script>
     {% if user_data_js %}window.USER_DATA = {{ user_data_js|safe }};{% endif %}
@@ -802,6 +812,7 @@
   <script src="/static/js/api-config.js"></script>
   <script src="/static/js/store.js"></script>
   <script src="/static/js/scroll-reveal.js"></script>
+  <script src="/static/js/auth-modal.js"></script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -749,8 +749,8 @@
             </a>
             <a class="btn-nav-register" href="/dashboard/">Dashboard →</a>
           {% else %}
-            <a class="btn-nav-login" href="/login/">Student Login</a>
-            <a class="btn-nav-register" href="/register/">Start Free</a>
+            <a class="btn-nav-login" href="javascript:void(0)" onclick="TMAuthModal.openLogin()" data-open-modal="login">Student Login</a>
+            <a class="btn-nav-register" href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">Start Free</a>
           {% endif %}
         </div>
       </div>
@@ -1062,8 +1062,8 @@
 
         <div class="footer-col">
           <h5>Support &amp; Legal</h5>
-          <a href="/login/">Student Login</a>
-          <a href="/register/">Create Free Account</a>
+          <a href="javascript:void(0)" onclick="TMAuthModal.openLogin()" data-open-modal="login">Student Login</a>
+          <a href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">Create Free Account</a>
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>
         </div>
@@ -1095,6 +1095,9 @@
         item.classList.toggle('active');
       }
     </script>
+    <script src="/static/js/api-config.js"></script>
     <script src="/static/js/scroll-reveal.js"></script>
+    <script src="/static/js/auth-modal.js"></script>
+    {% include "auth_modals.html" %}
   </body>
 </html>

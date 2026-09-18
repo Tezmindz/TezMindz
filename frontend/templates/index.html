@@ -687,189 +687,185 @@
       }
 
 
-      /* ── 5. CHOOSE YOUR CLASS SECTION ── */
+      /* ── 5. CHOOSE YOUR CLASS SECTION (HORIZONTAL MODERN PILL CARDS) ── */
       .classes-section {
-        max-width: 1260px;
-        margin: 0 auto 90px;
-        padding: 0 24px;
+        max-width: 1240px;
+        margin: 0 auto 52px;
+        padding: 0 20px;
       }
-      .classes-grid-premium {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
-        margin-top: 36px;
-      }
-      .class-game-card {
-        background: #FFFFFF;
-        border: 1.8px solid var(--tm-border);
-        border-radius: 22px;
-        padding: 22px 20px 20px;
-        text-decoration: none;
-        color: inherit;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
+      .classes-section .section-heading-block {
         text-align: center;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
-        transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease, border-color 0.28s ease;
-        cursor: pointer;
+        max-width: 600px;
+        margin: 0 auto 24px;
       }
-      .class-game-card:hover {
-        transform: translateY(-6px) scale(1.02);
-        box-shadow: 0 16px 36px rgba(15, 23, 42, 0.10);
-      }
-      
-      /* Card Top Row with Class Badge & Number */
-      .card-top-row {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 8px;
-      }
-      .card-badge-pill {
-        font-size: 0.78rem;
-        font-weight: 800;
-        letter-spacing: 0.04em;
-        padding: 4px 12px;
-        border-radius: 99px;
-        background: #F1F5F9;
-        color: var(--tm-slate);
-        border: 1px solid #E2E8F0;
-      }
-      .card-grade-num-badge {
-        font-size: 1.25rem;
-        font-weight: 900;
-        line-height: 1;
-        opacity: 0.45;
-      }
-
-      /* Center Educational Illustration Box */
-      .card-icon-wrapper {
-        width: 76px;
-        height: 76px;
-        border-radius: 22px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 8px auto 14px;
-        transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-      .class-game-card:hover .card-icon-wrapper {
-        transform: scale(1.10) translateY(-2px);
-      }
-
-      /* Card Title & Subjects */
-      .card-info-wrap {
-        margin-bottom: 18px;
-        width: 100%;
-      }
-      .card-class-title {
-        font-size: 1.35rem;
+      .classes-section .section-heading-block h2 {
+        font-size: 2.1rem;
         font-weight: 900;
         color: var(--tm-ink);
+        letter-spacing: -0.03em;
         margin: 0 0 6px;
-        letter-spacing: -0.02em;
       }
-      .card-subjects-badge {
-        display: inline-block;
-        font-size: 0.78rem;
-        font-weight: 700;
-        color: #64748B;
-        background: #F8FAFC;
-        border: 1px solid #E2E8F0;
-        border-radius: 99px;
-        padding: 4px 12px;
-        letter-spacing: 0.02em;
+      .classes-section .section-heading-block p {
+        font-size: 0.95rem;
+        color: var(--tm-muted);
+        font-weight: 600;
+        margin: 0;
+      }
+      
+      .tm-classes-row-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-top: 20px;
       }
 
-      /* Start Learning Button */
-      .card-action-btn {
-        width: 100%;
+      .tm-class-tile {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 18px;
+        border-radius: 20px;
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+        overflow: hidden;
+        border: 1.5px solid transparent;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+        transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+        cursor: pointer;
+        user-select: none;
+      }
+      .tm-class-tile:hover {
+        transform: translateY(-4px) scale(1.015);
+      }
+
+      /* 3D Icon Disc on Left */
+      .tm-class-icon-disc {
+        width: 56px;
+        height: 56px;
+        border-radius: 18px;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        padding: 11px 16px;
-        border-radius: var(--tm-radius-md);
-        font-size: var(--tm-text-sm);
-        font-weight: 800;
-        color: #FFFFFF;
-        background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
-        transition: all 0.24s ease;
-        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+        flex-shrink: 0;
+        box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.9), 0 4px 12px rgba(0, 0, 0, 0.06);
+        transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
-      .card-action-arrow {
+      .tm-class-icon-disc svg {
+        width: 40px;
+        height: 40px;
+        display: block;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+      }
+      .tm-class-tile:hover .tm-class-icon-disc {
+        transform: scale(1.08) rotate(-2deg);
+      }
+
+      /* Content Area on Right */
+      .tm-class-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 6px;
+        flex: 1;
+        min-width: 0;
+      }
+      .tm-class-title {
+        font-size: 1.18rem;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        margin: 0;
+        line-height: 1.2;
+      }
+
+      /* Pill Button */
+      .tm-class-pill-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: 99px;
+        font-size: 0.80rem;
+        font-weight: 800;
+        text-decoration: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        transition: all 0.22s ease;
+        white-space: nowrap;
+      }
+      .tm-class-pill-btn .tm-btn-arrow {
         transition: transform 0.2s ease;
       }
-      .class-game-card:hover .card-action-arrow {
-        transform: translateX(4px);
-      }
-      .class-game-card:hover .card-action-btn {
-        background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%);
-        box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35);
-        transform: translateY(-1px);
+      .tm-class-tile:hover .tm-btn-arrow {
+        transform: translateX(3px);
       }
 
-      /* 8 Subtle Class Card Accents (Pills & Icons maintain grade identity) */
-      /* Class 1 - Sky Cyan */
-      .card-c-1 { border-color: #E0F2FE; background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 55%); }
-      .card-c-1 .card-badge-pill { background: #E0F2FE; color: #0284C7; border-color: #BAE6FD; }
-      .card-c-1 .card-grade-num-badge { color: #0284C7; }
-      .card-c-1 .card-icon-wrapper { background: #E0F2FE; border: 1.5px solid #BAE6FD; }
-      .card-c-1:hover { border-color: #0284C7; box-shadow: 0 16px 36px rgba(2, 132, 199, 0.15); }
+      /* Distinctive Card Color Schemes */
+      /* Class 1 (Sky Blue) */
+      .tm-c1 { background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%); border-color: #BAE6FD; }
+      .tm-c1 .tm-class-icon-disc { background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%); }
+      .tm-c1 .tm-class-title { color: #0284C7; }
+      .tm-c1 .tm-class-pill-btn { background: #FFFFFF; color: #0284C7; border: 1px solid #BAE6FD; }
+      .tm-c1:hover { border-color: #0284C7; box-shadow: 0 14px 30px rgba(2, 132, 199, 0.18); }
+      .tm-c1:hover .tm-class-pill-btn { background: #0284C7; color: #FFFFFF; border-color: #0284C7; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35); }
 
-      /* Class 2 - Royal Blue */
-      .card-c-2 { border-color: #DBEAFE; background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 55%); }
-      .card-c-2 .card-badge-pill { background: #DBEAFE; color: #2563EB; border-color: #BFDBFE; }
-      .card-c-2 .card-grade-num-badge { color: #2563EB; }
-      .card-c-2 .card-icon-wrapper { background: #DBEAFE; border: 1.5px solid #BFDBFE; }
-      .card-c-2:hover { border-color: #2563EB; box-shadow: 0 16px 36px rgba(37, 99, 235, 0.15); }
+      /* Class 2 (Royal Purple / Violet) */
+      .tm-c2 { background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); border-color: #DDD6FE; }
+      .tm-c2 .tm-class-icon-disc { background: linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 100%); }
+      .tm-c2 .tm-class-title { color: #5B21B6; }
+      .tm-c2 .tm-class-pill-btn { background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%); color: #FFFFFF; border: none; box-shadow: 0 3px 10px rgba(79, 70, 229, 0.28); }
+      .tm-c2:hover { border-color: #7C3AED; box-shadow: 0 14px 30px rgba(124, 58, 237, 0.2); }
+      .tm-c2:hover .tm-class-pill-btn { background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%); box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4); }
 
-      /* Class 3 - Pink / Rose */
-      .card-c-3 { border-color: #FCE7F3; background: linear-gradient(180deg, #FDF2F8 0%, #FFFFFF 55%); }
-      .card-c-3 .card-badge-pill { background: #FCE7F3; color: #DB2777; border-color: #FBCFE8; }
-      .card-c-3 .card-grade-num-badge { color: #DB2777; }
-      .card-c-3 .card-icon-wrapper { background: #FCE7F3; border: 1.5px solid #FBCFE8; }
-      .card-c-3:hover { border-color: #DB2777; box-shadow: 0 16px 36px rgba(219, 39, 119, 0.15); }
+      /* Class 3 (Rose / Pink) */
+      .tm-c3 { background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%); border-color: #FECDD3; }
+      .tm-c3 .tm-class-icon-disc { background: linear-gradient(135deg, #FFE4E6 0%, #FECDD3 100%); }
+      .tm-c3 .tm-class-title { color: #E11D48; }
+      .tm-c3 .tm-class-pill-btn { background: #FFFFFF; color: #E11D48; border: 1px solid #FECDD3; }
+      .tm-c3:hover { border-color: #E11D48; box-shadow: 0 14px 30px rgba(225, 29, 72, 0.18); }
+      .tm-c3:hover .tm-class-pill-btn { background: #E11D48; color: #FFFFFF; border-color: #E11D48; box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35); }
 
-      /* Class 4 - Amber / Gold */
-      .card-c-4 { border-color: #FEF3C7; background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 55%); }
-      .card-c-4 .card-badge-pill { background: #FEF3C7; color: #D97706; border-color: #FED7AA; }
-      .card-c-4 .card-grade-num-badge { color: #D97706; }
-      .card-c-4 .card-icon-wrapper { background: #FEF3C7; border: 1.5px solid #FED7AA; }
-      .card-c-4:hover { border-color: #D97706; box-shadow: 0 16px 36px rgba(217, 119, 6, 0.15); }
+      /* Class 4 (Amber / Golden Sun) */
+      .tm-c4 { background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border-color: #FED7AA; }
+      .tm-c4 .tm-class-icon-disc { background: linear-gradient(135deg, #FEF3C7 0%, #FED7AA 100%); }
+      .tm-c4 .tm-class-title { color: #D97706; }
+      .tm-c4 .tm-class-pill-btn { background: #FFFFFF; color: #D97706; border: 1px solid #FED7AA; }
+      .tm-c4:hover { border-color: #D97706; box-shadow: 0 14px 30px rgba(217, 119, 6, 0.18); }
+      .tm-c4:hover .tm-class-pill-btn { background: #D97706; color: #FFFFFF; border-color: #D97706; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35); }
 
-      /* Class 5 - Purple / Violet */
-      .card-c-5 { border-color: #F3E8FF; background: linear-gradient(180deg, #FAF5FF 0%, #FFFFFF 55%); }
-      .card-c-5 .card-badge-pill { background: #F3E8FF; color: #7C3AED; border-color: #DDD6FE; }
-      .card-c-5 .card-grade-num-badge { color: #7C3AED; }
-      .card-c-5 .card-icon-wrapper { background: #F3E8FF; border: 1.5px solid #DDD6FE; }
-      .card-c-5:hover { border-color: #7C3AED; box-shadow: 0 16px 36px rgba(124, 58, 237, 0.15); }
+      /* Class 5 (Amethyst / Deep Violet) */
+      .tm-c5 { background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%); border-color: #E9D5FF; }
+      .tm-c5 .tm-class-icon-disc { background: linear-gradient(135deg, #F3E8FF 0%, #E9D5FF 100%); }
+      .tm-c5 .tm-class-title { color: #7C3AED; }
+      .tm-c5 .tm-class-pill-btn { background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%); color: #FFFFFF; border: none; box-shadow: 0 3px 10px rgba(124, 58, 237, 0.28); }
+      .tm-c5:hover { border-color: #7C3AED; box-shadow: 0 14px 30px rgba(124, 58, 237, 0.2); }
+      .tm-c5:hover .tm-class-pill-btn { background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%); box-shadow: 0 6px 16px rgba(124, 58, 237, 0.4); }
 
-      /* Class 6 - Emerald / Mint */
-      .card-c-6 { border-color: #DCFCE7; background: linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 55%); }
-      .card-c-6 .card-badge-pill { background: #DCFCE7; color: #059669; border-color: #A7F3D0; }
-      .card-c-6 .card-grade-num-badge { color: #059669; }
-      .card-c-6 .card-icon-wrapper { background: #DCFCE7; border: 1.5px solid #A7F3D0; }
-      .card-c-6:hover { border-color: #059669; box-shadow: 0 16px 36px rgba(5, 150, 105, 0.15); }
+      /* Class 6 (Emerald / Mint) */
+      .tm-c6 { background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%); border-color: #A7F3D0; }
+      .tm-c6 .tm-class-icon-disc { background: linear-gradient(135deg, #DCFCE7 0%, #A7F3D0 100%); }
+      .tm-c6 .tm-class-title { color: #059669; }
+      .tm-c6 .tm-class-pill-btn { background: #FFFFFF; color: #059669; border: 1px solid #A7F3D0; }
+      .tm-c6:hover { border-color: #059669; box-shadow: 0 14px 30px rgba(5, 150, 105, 0.18); }
+      .tm-c6:hover .tm-class-pill-btn { background: #059669; color: #FFFFFF; border-color: #059669; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35); }
 
-      /* Class 7 - Coral Sunset */
-      .card-c-7 { border-color: #FFE4E6; background: linear-gradient(180deg, #FFF1F2 0%, #FFFFFF 55%); }
-      .card-c-7 .card-badge-pill { background: #FFE4E6; color: #E11D48; border-color: #FECDD3; }
-      .card-c-7 .card-grade-num-badge { color: #E11D48; }
-      .card-c-7 .card-icon-wrapper { background: #FFE4E6; border: 1.5px solid #FECDD3; }
-      .card-c-7:hover { border-color: #E11D48; box-shadow: 0 16px 36px rgba(225, 29, 72, 0.15); }
+      /* Class 7 (Magenta / Crimson) */
+      .tm-c7 { background: linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 100%); border-color: #FBCFE8; }
+      .tm-c7 .tm-class-icon-disc { background: linear-gradient(135deg, #FCE7F3 0%, #FBCFE8 100%); }
+      .tm-c7 .tm-class-title { color: #DB2777; }
+      .tm-c7 .tm-class-pill-btn { background: #FFFFFF; color: #DB2777; border: 1px solid #FBCFE8; }
+      .tm-c7:hover { border-color: #DB2777; box-shadow: 0 14px 30px rgba(219, 39, 119, 0.18); }
+      .tm-c7:hover .tm-class-pill-btn { background: #DB2777; color: #FFFFFF; border-color: #DB2777; box-shadow: 0 4px 12px rgba(219, 39, 119, 0.35); }
 
-      /* Class 8 - Royal Indigo */
-      .card-c-8 { border-color: #E0E7FF; background: linear-gradient(180deg, #EEF2FF 0%, #FFFFFF 55%); }
-      .card-c-8 .card-badge-pill { background: #E0E7FF; color: #4F46E5; border-color: #C7D2FE; }
-      .card-c-8 .card-grade-num-badge { color: #4F46E5; }
-      .card-c-8 .card-icon-wrapper { background: #E0E7FF; border: 1.5px solid #C7D2FE; }
-      .card-c-8:hover { border-color: #4F46E5; box-shadow: 0 16px 36px rgba(79, 70, 229, 0.15); }
+      /* Class 8 (Royal Indigo) */
+      .tm-c8 { background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%); border-color: #C7D2FE; }
+      .tm-c8 .tm-class-icon-disc { background: linear-gradient(135deg, #E0E7FF 0%, #C7D2FE 100%); }
+      .tm-c8 .tm-class-title { color: #4338CA; }
+      .tm-c8 .tm-class-pill-btn { background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%); color: #FFFFFF; border: none; box-shadow: 0 3px 10px rgba(79, 70, 229, 0.28); }
+      .tm-c8:hover { border-color: #4F46E5; box-shadow: 0 14px 30px rgba(79, 70, 229, 0.2); }
+      .tm-c8:hover .tm-class-pill-btn { background: linear-gradient(135deg, #4338CA 0%, #312E81 100%); box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4); }
+
+
 
 
       /* ── 7. OUR RESULTS & ACHIEVERS (SIMPLE) ── */
@@ -1265,103 +1261,7 @@
         background: linear-gradient(135deg, #4338CA 0%, #6D28D9 100%);
       }
 
-      /* ── EXECUTIVE PRICING MATRIX TABLE ── */
-      .pricing-table-wrapper {
-        margin-top: 50px;
-        background: #FFFFFF;
-        border-radius: var(--tm-card-radius);
-        border: 1.5px solid #E2E8F0;
-        box-shadow: var(--tm-shadow-md);
-        overflow: hidden;
-      }
-      .pricing-table-header {
-        padding: 22px 28px;
-        background: linear-gradient(90deg, #F8FAFC 0%, #EEF2FF 100%);
-        border-bottom: 1.5px solid #E2E8F0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-      .pricing-table-header h4 {
-        margin: 0;
-        font-size: 1.15rem;
-        font-weight: 800;
-        color: var(--tm-ink);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .pricing-table-header span {
-        font-size: 0.84rem;
-        color: var(--tm-muted);
-        font-weight: 600;
-      }
-      .pricing-table-scroll {
-        overflow-x: auto;
-      }
-      .pricing-matrix-table {
-        width: 100%;
-        border-collapse: collapse;
-        text-align: left;
-        font-family: var(--tm-font);
-      }
-      .pricing-matrix-table th {
-        padding: 18px 28px;
-        background: #F8FAFC;
-        font-size: 0.96rem;
-        font-weight: 800;
-        color: var(--tm-ink);
-        border-bottom: 2px solid #E2E8F0;
-        letter-spacing: -0.01em;
-        transition: background-color 0.25s ease, color 0.25s ease;
-      }
-      .pricing-matrix-table td {
-        padding: 22px 28px;
-        border-bottom: 1px solid #F1F5F9;
-        font-size: 1.05rem;
-        color: var(--tm-slate);
-        vertical-align: middle;
-        transition: background-color 0.25s ease;
-      }
-      .pricing-matrix-table tr:last-child td {
-        border-bottom: none;
-      }
-      .pricing-matrix-table tr:hover td {
-        background: #FAF5FF;
-      }
-      .pricing-matrix-table .tier-name-cell {
-        font-weight: 800;
-        color: var(--tm-ink);
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-      .pricing-matrix-table .tier-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        display: inline-block;
-        flex-shrink: 0;
-      }
-      .tier-dot-online { background: #4F46E5; box-shadow: 0 0 8px rgba(79, 70, 229, 0.4); }
-      .tier-dot-hybrid { background: #7C3AED; box-shadow: 0 0 8px rgba(124, 58, 237, 0.4); }
-      .price-cell-val {
-        font-size: 1.4rem;
-        font-weight: 900;
-        color: var(--tm-ink);
-        font-family: var(--tm-font);
-      }
-      .col-g14.highlight-col,
-      .col-g58.highlight-col {
-        background: rgba(79, 70, 229, 0.04);
-      }
-      .pricing-matrix-table th.col-g14.highlight-col,
-      .pricing-matrix-table th.col-g58.highlight-col {
-        background: #EEF2FF;
-        color: var(--tm-brand);
-      }
+
 
       .pricing-trust-strip {
         margin-top: 36px;
@@ -2177,7 +2077,7 @@
         .hero-left-content { margin: 0 auto; max-width: 640px; }
         .hero-cta-group { justify-content: center; }
         .hero-features-bar { margin: 0 auto; grid-template-columns: repeat(2, 1fr); max-width: 520px; }
-        .classes-grid-premium { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+        .classes-grid-premium, .tm-classes-row-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 16px; }
         .results-metrics-bar { grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 22px; }
         .achievers-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
         .pricing-cards-grid-v2 { grid-template-columns: 1fr 1fr; max-width: 100%; gap: 20px; }
@@ -2203,7 +2103,11 @@
         .hero-features-bar { grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; max-width: 100%; }
         .hero-mini-pill { padding: 8px 10px; }
 
-        .classes-section,
+        .classes-section {
+          padding: 0 14px;
+          margin-bottom: 44px;
+        }
+
         .our-results-section,
         .subscription-section,
         .games-arena-section,
@@ -2214,16 +2118,15 @@
           margin-bottom: 60px;
         }
 
-        .section-heading-block { margin-bottom: 28px; }
-        .section-heading-block h2 { font-size: 1.75rem; }
+        .section-heading-block { margin-bottom: 20px; }
+        .section-heading-block h2 { font-size: 1.65rem; }
 
-        .classes-grid-premium { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .class-game-card { padding: 16px 10px 12px; border-radius: var(--tm-radius-md); }
-        .card-icon-wrapper { width: 52px; height: 52px; margin: 4px auto 8px; }
-        .card-icon-wrapper svg { width: 26px; height: 26px; }
-        .card-class-title { font-size: 1.05rem; }
-        .card-subjects-badge { font-size: 0.65rem; padding: 2px 6px; }
-        .card-action-btn { padding: 8px 10px; font-size: 0.78rem; min-height: 40px; }
+        .classes-grid-premium, .tm-classes-row-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
+        .tm-class-tile { padding: 12px 14px; border-radius: 16px; gap: 14px; }
+        .tm-class-icon-disc { width: 48px; height: 48px; border-radius: 14px; }
+        .tm-class-icon-disc svg { width: 34px; height: 34px; }
+        .tm-class-title { font-size: 1.06rem; }
+        .tm-class-pill-btn { padding: 5px 12px; font-size: 0.76rem; }
 
         .results-metrics-bar { grid-template-columns: 1fr; gap: 14px; padding: 16px; }
         .metric-stat-box:not(:last-child)::after { display: none; }
@@ -2511,14 +2414,14 @@
               </svg>
             </a>
           {% else %}
-            <a class="btn-nav-login" href="/login/">
+            <a class="btn-nav-login" href="javascript:void(0)" onclick="TMAuthModal.openLogin()" data-open-modal="login">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
               <span>Login</span>
             </a>
-            <a class="btn-nav-started" href="/register/">
+            <a class="btn-nav-started" href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">
               <span>Get Started</span>
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -2583,8 +2486,8 @@
           <a href="/dashboard/" class="btn-drawer-primary">Go to Dashboard 🚀</a>
           <a href="/logout/" class="btn-drawer-outline" style="color:#DC2626;border-color:#FCA5A5;">Logout</a>
         {% else %}
-          <a href="/register/" class="btn-drawer-primary">Start Free Practice →</a>
-          <a href="/login/" class="btn-drawer-outline">Student Login</a>
+          <a href="javascript:void(0)" onclick="togglePublicMobileDrawer(); TMAuthModal.openRegister();" class="btn-drawer-primary">Start Free Practice →</a>
+          <a href="javascript:void(0)" onclick="togglePublicMobileDrawer(); TMAuthModal.openLogin();" class="btn-drawer-outline">Student Login</a>
         {% endif %}
       </div>
     </div>
@@ -2660,7 +2563,7 @@
               <span>Explore Classes</span>
             </a>
           {% else %}
-            <a class="btn-hero-primary" href="/register/">
+            <a class="btn-hero-primary" href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">
               <span>Start Free Practice</span>
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -2752,234 +2655,249 @@
     </section>
 
 
-    <!-- 4. CHOOSE YOUR CLASS SECTION -->
+    <!-- 4. CHOOSE YOUR CLASS SECTION (INTERACTIVE 3D PILL CARDS) -->
     <section class="classes-section reveal-init" id="classes">
       <div id="subjects" style="position:relative;top:-70px;visibility:hidden;"></div>
       <div class="section-heading-block">
+        <span class="section-tag-pill">🚀 Interactive Olympiad Prep</span>
         <h2>Choose Your Class</h2>
         <p>Choose your class and start your learning adventure.</p>
       </div>
 
-      <div class="classes-grid-premium">
+      <div class="tm-classes-row-grid">
         <!-- Class 1 -->
-        <a href="#" onclick="selectClass(event, 1)" class="class-game-card card-c-1" aria-label="Select Class 1">
-          <div class="card-top-row">
-            <span class="card-badge-pill">Class 1</span>
-            <span class="card-grade-num-badge">1</span>
-          </div>
-          <div class="card-icon-wrapper">
-            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
-              <rect x="6" y="22" width="16" height="16" rx="4" fill="#38BDF8" fill-opacity="0.25" stroke="#0284C7" stroke-width="2.5"/>
-              <text x="14" y="34" font-size="11" font-weight="900" fill="#0284C7" text-anchor="middle" font-family="sans-serif">A</text>
-              <rect x="26" y="22" width="16" height="16" rx="4" fill="#38BDF8" fill-opacity="0.25" stroke="#0284C7" stroke-width="2.5"/>
-              <text x="34" y="34" font-size="11" font-weight="900" fill="#0284C7" text-anchor="middle" font-family="sans-serif">1</text>
-              <rect x="16" y="8" width="16" height="16" rx="4" fill="#0284C7" fill-opacity="0.15" stroke="#0284C7" stroke-width="2.5"/>
-              <path d="M24 11l1.5 3.5 3.8.3-2.9 2.5.9 3.7L24 19.1l-3.3 1.9.9-3.7-2.9-2.5 3.8-.3z" fill="#F59E0B"/>
+        <a href="#" onclick="selectClass(event, 1)" class="tm-class-tile tm-c1" aria-label="Select Class 1">
+          <div class="tm-class-icon-disc">
+            <svg viewBox="0 0 48 48" fill="none">
+              <defs>
+                <linearGradient id="c1BookGrad" x1="8" y1="12" x2="40" y2="38" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#38BDF8"/>
+                  <stop offset="1" stop-color="#0284C7"/>
+                </linearGradient>
+                <linearGradient id="c1PageGrad" x1="12" y1="14" x2="36" y2="34" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#FFFFFF"/>
+                  <stop offset="1" stop-color="#E0F2FE"/>
+                </linearGradient>
+              </defs>
+              <ellipse cx="24" cy="40" rx="16" ry="3" fill="#0284C7" fill-opacity="0.15"/>
+              <path d="M8 16C16 13 24 16 24 34C16 31 8 34 8 34V16Z" fill="url(#c1BookGrad)"/>
+              <path d="M40 16C32 13 24 16 24 34C32 31 40 34 40 34V16Z" fill="url(#c1BookGrad)"/>
+              <path d="M10 17C17 14.5 23 17 23 32C17 29.5 10 32 10 32V17Z" fill="url(#c1PageGrad)"/>
+              <path d="M38 17C31 14.5 25 17 25 32C31 29.5 38 32 38 32V17Z" fill="url(#c1PageGrad)"/>
+              <path d="M24 16V34" stroke="#0369A1" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M24 16L27 21L24 23" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-          <div class="card-info-wrap">
-            <h3 class="card-class-title">Class 1</h3>
-            <span class="card-subjects-badge">Maths • Science • English</span>
-          </div>
-          <div class="card-action-btn">
-            <span>Start Learning</span>
-            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
+          <div class="tm-class-content">
+            <h3 class="tm-class-title">Class 1</h3>
+            <span class="tm-class-pill-btn">
+              <span>Start Learning</span>
+              <svg class="tm-btn-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
           </div>
         </a>
 
         <!-- Class 2 -->
-        <a href="#" onclick="selectClass(event, 2)" class="class-game-card card-c-2" aria-label="Select Class 2">
-          <div class="card-top-row">
-            <span class="card-badge-pill">Class 2</span>
-            <span class="card-grade-num-badge">2</span>
-          </div>
-          <div class="card-icon-wrapper">
-            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
-              <rect x="8" y="8" width="32" height="32" rx="8" fill="#60A5FA" fill-opacity="0.2" stroke="#2563EB" stroke-width="2.5"/>
-              <path d="M16 20h8M20 16v8" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
-              <path d="M28 28h8M28 34h8" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="32" cy="18" r="2.5" fill="#3B82F6"/>
-              <circle cx="18" cy="30" r="2.5" fill="#3B82F6"/>
+        <a href="#" onclick="selectClass(event, 2)" class="tm-class-tile tm-c2" aria-label="Select Class 2">
+          <div class="tm-class-icon-disc">
+            <svg viewBox="0 0 48 48" fill="none">
+              <defs>
+                <linearGradient id="c2Globe" x1="12" y1="8" x2="36" y2="32" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#60A5FA"/>
+                  <stop offset="1" stop-color="#2563EB"/>
+                </linearGradient>
+                <linearGradient id="c2Base" x1="10" y1="32" x2="38" y2="42" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#FCD34D"/>
+                  <stop offset="1" stop-color="#F59E0B"/>
+                </linearGradient>
+              </defs>
+              <ellipse cx="24" cy="42" rx="16" ry="3" fill="#4338CA" fill-opacity="0.18"/>
+              <!-- Book Base -->
+              <rect x="11" y="34" width="26" height="5" rx="2" fill="url(#c2Base)"/>
+              <rect x="13" y="39" width="22" height="3" rx="1.5" fill="#DC2626"/>
+              <!-- Globe Stand -->
+              <path d="M24 28V34M18 34H30" stroke="#64748B" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M14 18C14 24 18.5 28 24 28C29.5 28 34 24 34 18" stroke="#64748B" stroke-width="2.2" stroke-linecap="round"/>
+              <!-- Globe Sphere -->
+              <circle cx="24" cy="18" r="10" fill="url(#c2Globe)"/>
+              <path d="M18 15C20 13 23 14 24 16C25 18 28 17 30 19M16 20C18 22 21 21 23 23C24 24 27 23 31 22" stroke="#34D399" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
-          <div class="card-info-wrap">
-            <h3 class="card-class-title">Class 2</h3>
-            <span class="card-subjects-badge">Maths • Science • English</span>
-          </div>
-          <div class="card-action-btn">
-            <span>Start Learning</span>
-            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
+          <div class="tm-class-content">
+            <h3 class="tm-class-title">Class 2</h3>
+            <span class="tm-class-pill-btn">
+              <span>Start Learning</span>
+              <svg class="tm-btn-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
           </div>
         </a>
 
         <!-- Class 3 -->
-        <a href="#" onclick="selectClass(event, 3)" class="class-game-card card-c-3" aria-label="Select Class 3">
-          <div class="card-top-row">
-            <span class="card-badge-pill">Class 3</span>
-            <span class="card-grade-num-badge">3</span>
-          </div>
-          <div class="card-icon-wrapper">
-            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
-              <path d="M24 6C13.5 6 6 13.5 6 24c0 10.5 8 18 18 18 2 0 3.5-1.5 3.5-3.5 0-.9-.4-1.8-1-2.4-.6-.7-1-1.6-1-2.6 0-2 1.6-3.5 3.5-3.5H33c6 0 11-5 11-11 0-10.5-9-13-20-13z" fill="#F472B6" fill-opacity="0.2" stroke="#DB2777" stroke-width="2.5"/>
-              <circle cx="15" cy="17" r="2.5" fill="#DB2777"/>
-              <circle cx="23" cy="13" r="2.5" fill="#F59E0B"/>
-              <circle cx="31" cy="17" r="2.5" fill="#10B981"/>
-              <circle cx="35" cy="24" r="2.5" fill="#6366F1"/>
-              <circle cx="28" cy="33" r="3" fill="#DB2777" fill-opacity="0.3"/>
+        <a href="#" onclick="selectClass(event, 3)" class="tm-class-tile tm-c3" aria-label="Select Class 3">
+          <div class="tm-class-icon-disc">
+            <svg viewBox="0 0 48 48" fill="none">
+              <defs>
+                <linearGradient id="c3Flask" x1="14" y1="12" x2="34" y2="40" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#FB7185"/>
+                  <stop offset="1" stop-color="#E11D48"/>
+                </linearGradient>
+              </defs>
+              <ellipse cx="24" cy="41" rx="14" ry="3" fill="#E11D48" fill-opacity="0.16"/>
+              <path d="M21 10H27M22 10V18L13 34C11.5 36.5 13.5 40 16.5 40H31.5C34.5 40 36.5 36.5 35 34L26 18V10" stroke="#E11D48" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 32L21 23H27L32 32C30 34 26 35 24 33C22 31 18 34 16 32Z" fill="url(#c3Flask)" fill-opacity="0.85"/>
+              <circle cx="21" cy="27" r="1.8" fill="#FFFFFF"/>
+              <circle cx="27" cy="31" r="2.2" fill="#FFFFFF"/>
+              <circle cx="24" cy="12" r="1.5" fill="#FDA4AF"/>
             </svg>
           </div>
-          <div class="card-info-wrap">
-            <h3 class="card-class-title">Class 3</h3>
-            <span class="card-subjects-badge">Maths • Science • English</span>
-          </div>
-          <div class="card-action-btn">
-            <span>Start Learning</span>
-            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
+          <div class="tm-class-content">
+            <h3 class="tm-class-title">Class 3</h3>
+            <span class="tm-class-pill-btn">
+              <span>Start Learning</span>
+              <svg class="tm-btn-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
           </div>
         </a>
 
         <!-- Class 4 -->
-        <a href="#" onclick="selectClass(event, 4)" class="class-game-card card-c-4" aria-label="Select Class 4">
-          <div class="card-top-row">
-            <span class="card-badge-pill">Class 4</span>
-            <span class="card-grade-num-badge">4</span>
-          </div>
-          <div class="card-icon-wrapper">
-            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
-              <path d="M24 7a13 13 0 0 0-8 23.3V34a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-3.7A13 13 0 0 0 24 7z" fill="#FBBF24" fill-opacity="0.2" stroke="#D97706" stroke-width="2.5"/>
-              <path d="M19 41h10M21 45h6" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M21 21a3 3 0 0 1 6 0c0 3-3 4-3 6" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/>
-              <circle cx="24" cy="31" r="1" fill="#D97706"/>
-              <path d="M6 16l3 1.5M42 16l-3 1.5M24 2v3" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+        <a href="#" onclick="selectClass(event, 4)" class="tm-class-tile tm-c4" aria-label="Select Class 4">
+          <div class="tm-class-icon-disc">
+            <svg viewBox="0 0 48 48" fill="none">
+              <defs>
+                <linearGradient id="c4Bulb" x1="16" y1="8" x2="32" y2="30" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#FDE047"/>
+                  <stop offset="1" stop-color="#F59E0B"/>
+                </linearGradient>
+              </defs>
+              <ellipse cx="24" cy="41" rx="12" ry="2.5" fill="#D97706" fill-opacity="0.16"/>
+              <path d="M24 8C18.5 8 14 12.5 14 18C14 21.5 16 24.5 18 27V31C18 32 19 33 20 33H28C29 33 30 32 30 31V27C32 24.5 34 21.5 34 18C34 12.5 29.5 8 24 8Z" fill="url(#c4Bulb)" stroke="#D97706" stroke-width="2"/>
+              <path d="M20 33V36C20 37 21 38 22 38H26C27 38 28 37 28 36V33" stroke="#92400E" stroke-width="2" stroke-linecap="round"/>
+              <path d="M22 17C22 15 23 13 25 13" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+              <path d="M24 3V5M11 11L13 13M37 11L35 13" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
-          <div class="card-info-wrap">
-            <h3 class="card-class-title">Class 4</h3>
-            <span class="card-subjects-badge">Maths • Science • English</span>
-          </div>
-          <div class="card-action-btn">
-            <span>Start Learning</span>
-            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
+          <div class="tm-class-content">
+            <h3 class="tm-class-title">Class 4</h3>
+            <span class="tm-class-pill-btn">
+              <span>Start Learning</span>
+              <svg class="tm-btn-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
           </div>
         </a>
 
         <!-- Class 5 -->
-        <a href="#" onclick="selectClass(event, 5)" class="class-game-card card-c-5" aria-label="Select Class 5">
-          <div class="card-top-row">
-            <span class="card-badge-pill">Class 5</span>
-            <span class="card-grade-num-badge">5</span>
-          </div>
-          <div class="card-icon-wrapper">
-            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
-              <path d="M24 6l16 9.2v18.6L24 43 8 33.8V15.2L24 6z" fill="#C084FC" fill-opacity="0.2" stroke="#7C3AED" stroke-width="2.5" stroke-linejoin="round"/>
-              <path d="M24 6v18.5L8 15.2M24 24.5l16-9.3M24 24.5V43" stroke="#7C3AED" stroke-width="2.5" stroke-linejoin="round"/>
-              <circle cx="24" cy="24.5" r="3" fill="#7C3AED" fill-opacity="0.4"/>
+        <a href="#" onclick="selectClass(event, 5)" class="tm-class-tile tm-c5" aria-label="Select Class 5">
+          <div class="tm-class-icon-disc">
+            <svg viewBox="0 0 48 48" fill="none">
+              <defs>
+                <linearGradient id="c5CubeTop" x1="12" y1="8" x2="36" y2="24" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#C084FC"/>
+                  <stop offset="1" stop-color="#A855F7"/>
+                </linearGradient>
+                <linearGradient id="c5CubeLeft" x1="10" y1="20" x2="24" y2="40" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#9333EA"/>
+                  <stop offset="1" stop-color="#7E22CE"/>
+                </linearGradient>
+                <linearGradient id="c5CubeRight" x1="24" y1="20" x2="38" y2="40" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#7C3AED"/>
+                  <stop offset="1" stop-color="#6B21A8"/>
+                </linearGradient>
+              </defs>
+              <ellipse cx="24" cy="41" rx="14" ry="3" fill="#7C3AED" fill-opacity="0.18"/>
+              <polygon points="24,8 38,16 24,24 10,16" fill="url(#c5CubeTop)"/>
+              <polygon points="10,16 24,24 24,40 10,32" fill="url(#c5CubeLeft)"/>
+              <polygon points="24,24 38,16 38,32 24,40" fill="url(#c5CubeRight)"/>
+              <circle cx="24" cy="16" r="2" fill="#FFFFFF" fill-opacity="0.8"/>
+              <circle cx="17" cy="28" r="1.8" fill="#E9D5FF"/>
+              <circle cx="31" cy="28" r="1.8" fill="#E9D5FF"/>
             </svg>
           </div>
-          <div class="card-info-wrap">
-            <h3 class="card-class-title">Class 5</h3>
-            <span class="card-subjects-badge">Maths • Science • English</span>
-          </div>
-          <div class="card-action-btn">
-            <span>Start Learning</span>
-            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
+          <div class="tm-class-content">
+            <h3 class="tm-class-title">Class 5</h3>
+            <span class="tm-class-pill-btn">
+              <span>Start Learning</span>
+              <svg class="tm-btn-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
           </div>
         </a>
 
         <!-- Class 6 -->
-        <a href="#" onclick="selectClass(event, 6)" class="class-game-card card-c-6" aria-label="Select Class 6">
-          <div class="card-top-row">
-            <span class="card-badge-pill">Class 6</span>
-            <span class="card-grade-num-badge">6</span>
-          </div>
-          <div class="card-icon-wrapper">
-            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
-              <path d="M19 6h10M21 6v9l-11 21a3 3 0 0 0 2.6 4.4h22.8a3 3 0 0 0 2.6-4.4L27 15V6" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M13.5 31.5c4-2 7 2 11 0s6-2 10 0L37 36a2.5 2.5 0 0 1-2.2 3.6H13.2A2.5 2.5 0 0 1 11 36l2.5-4.5z" fill="#34D399" fill-opacity="0.3"/>
-              <circle cx="21" cy="33" r="2" fill="#059669"/>
-              <circle cx="27" cy="27" r="2.5" fill="#059669"/>
-              <circle cx="23" cy="21" r="1.5" fill="#059669"/>
+        <a href="#" onclick="selectClass(event, 6)" class="tm-class-tile tm-c6" aria-label="Select Class 6">
+          <div class="tm-class-icon-disc">
+            <svg viewBox="0 0 48 48" fill="none">
+              <defs>
+                <linearGradient id="c6Micro" x1="12" y1="10" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#34D399"/>
+                  <stop offset="1" stop-color="#059669"/>
+                </linearGradient>
+              </defs>
+              <ellipse cx="24" cy="42" rx="15" ry="3" fill="#059669" fill-opacity="0.16"/>
+              <rect x="14" y="38" width="20" height="4" rx="2" fill="#047857"/>
+              <path d="M24 38V26M24 26C28 26 31 22 31 17C31 12 28 8 24 8" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="24" cy="8" r="4" fill="url(#c6Micro)"/>
+              <rect x="15" y="24" width="18" height="4" rx="2" fill="#6EE7B7"/>
+              <path d="M19 14L23 20" stroke="#047857" stroke-width="3" stroke-linecap="round"/>
             </svg>
           </div>
-          <div class="card-info-wrap">
-            <h3 class="card-class-title">Class 6</h3>
-            <span class="card-subjects-badge">Maths • Science • English</span>
-          </div>
-          <div class="card-action-btn">
-            <span>Start Learning</span>
-            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
+          <div class="tm-class-content">
+            <h3 class="tm-class-title">Class 6</h3>
+            <span class="tm-class-pill-btn">
+              <span>Start Learning</span>
+              <svg class="tm-btn-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
           </div>
         </a>
 
         <!-- Class 7 -->
-        <a href="#" onclick="selectClass(event, 7)" class="class-game-card card-c-7" aria-label="Select Class 7">
-          <div class="card-top-row">
-            <span class="card-badge-pill">Class 7</span>
-            <span class="card-grade-num-badge">7</span>
-          </div>
-          <div class="card-icon-wrapper">
-            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
-              <polygon points="8 40 40 40 40 8 8 40" fill="#FDA4AF" fill-opacity="0.25" stroke="#E11D48" stroke-width="2.5" stroke-linejoin="round"/>
-              <polygon points="18 36 34 36 34 20 18 36" fill="#FFFFFF" stroke="#E11D48" stroke-width="2" stroke-linejoin="round"/>
-              <circle cx="28" cy="28" r="3" fill="#E11D48" fill-opacity="0.3"/>
-              <path d="M14 40v-3M20 40v-2M26 40v-3M32 40v-2M40 34h-3M40 28h-2M40 22h-3M40 16h-2" stroke="#E11D48" stroke-width="2" stroke-linecap="round"/>
+        <a href="#" onclick="selectClass(event, 7)" class="tm-class-tile tm-c7" aria-label="Select Class 7">
+          <div class="tm-class-icon-disc">
+            <svg viewBox="0 0 48 48" fill="none">
+              <defs>
+                <linearGradient id="c7Grad" x1="8" y1="10" x2="40" y2="38" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#F472B6"/>
+                  <stop offset="1" stop-color="#DB2777"/>
+                </linearGradient>
+              </defs>
+              <ellipse cx="24" cy="41" rx="14" ry="3" fill="#DB2777" fill-opacity="0.16"/>
+              <polygon points="10,38 38,38 38,10 10,38" fill="url(#c7Grad)" stroke="#BE185D" stroke-width="2" stroke-linejoin="round"/>
+              <polygon points="20,33 33,33 33,20 20,33" fill="#FFFFFF" stroke="#BE185D" stroke-width="1.5"/>
+              <circle cx="28" cy="27" r="2.5" fill="#F472B6"/>
+              <path d="M16 38V35M22 38V34M28 38V35M34 38V34M38 32H35M38 26H34M38 20H35" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
             </svg>
           </div>
-          <div class="card-info-wrap">
-            <h3 class="card-class-title">Class 7</h3>
-            <span class="card-subjects-badge">Maths • Science • English</span>
-          </div>
-          <div class="card-action-btn">
-            <span>Start Learning</span>
-            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
+          <div class="tm-class-content">
+            <h3 class="tm-class-title">Class 7</h3>
+            <span class="tm-class-pill-btn">
+              <span>Start Learning</span>
+              <svg class="tm-btn-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
           </div>
         </a>
 
         <!-- Class 8 -->
-        <a href="#" onclick="selectClass(event, 8)" class="class-game-card card-c-8" aria-label="Select Class 8">
-          <div class="card-top-row">
-            <span class="card-badge-pill">Class 8</span>
-            <span class="card-grade-num-badge">8</span>
-          </div>
-          <div class="card-icon-wrapper">
-            <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
-              <path d="M14 10h20v14a10 10 0 0 1-20 0V10z" fill="#818CF8" fill-opacity="0.2" stroke="#4F46E5" stroke-width="2.5"/>
-              <path d="M14 14H8a4 4 0 0 0-4 4v2a6 6 0 0 0 6 6h4M34 14h6a4 4 0 0 1 4 4v2a6 6 0 0 1-6 6h-4" stroke="#4F46E5" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M24 24v11M16 41h16M19 35h10" stroke="#4F46E5" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M24 13.5l1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4z" fill="#F59E0B"/>
+        <a href="#" onclick="selectClass(event, 8)" class="tm-class-tile tm-c8" aria-label="Select Class 8">
+          <div class="tm-class-icon-disc">
+            <svg viewBox="0 0 48 48" fill="none">
+              <defs>
+                <linearGradient id="c8Trophy" x1="14" y1="8" x2="34" y2="30" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#FBBF24"/>
+                  <stop offset="1" stop-color="#D97706"/>
+                </linearGradient>
+              </defs>
+              <ellipse cx="24" cy="41" rx="14" ry="3" fill="#4F46E5" fill-opacity="0.18"/>
+              <path d="M16 10H32V20C32 24.4 28.4 28 24 28C19.6 28 16 24.4 16 20V10Z" fill="url(#c8Trophy)"/>
+              <path d="M16 14H10C8.9 14 8 14.9 8 16V18C8 21.3 10.7 24 14 24H16" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/>
+              <path d="M32 14H38C39.1 14 40 14.9 40 16V18C40 21.3 37.3 24 34 24H32" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/>
+              <path d="M24 28V35M18 39H30M20 35H28" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/>
+              <polygon points="24,13 25.5,17 29.5,17.5 26.5,20 27.5,24 24,21.8 20.5,24 21.5,20 18.5,17.5 22.5,17" fill="#FFFFFF"/>
             </svg>
           </div>
-          <div class="card-info-wrap">
-            <h3 class="card-class-title">Class 8</h3>
-            <span class="card-subjects-badge">Maths • Science • English</span>
-          </div>
-          <div class="card-action-btn">
-            <span>Start Learning</span>
-            <svg class="card-action-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
+          <div class="tm-class-content">
+            <h3 class="tm-class-title">Class 8</h3>
+            <span class="tm-class-pill-btn">
+              <span>Start Learning</span>
+              <svg class="tm-btn-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
           </div>
         </a>
       </div>
@@ -3208,60 +3126,7 @@
         </div>
       </div>
 
-      <!-- Executive Pricing Comparison Table matching requested screenshot -->
-      <div class="pricing-table-wrapper">
-        <div class="pricing-table-header">
-          <h4>
-            <i class="bi bi-table" style="color: var(--tm-brand);"></i>
-            <span>Fee Structure by Tier &amp; Grade</span>
-          </h4>
-          <span>Transparent pricing • No hidden fees</span>
-        </div>
-        <div class="pricing-table-scroll">
-          <table class="pricing-matrix-table" aria-label="Fee Structure by Tier and Grade">
-            <thead>
-              <tr>
-                <th style="width: 44%;">Tier</th>
-                <th class="col-g14 highlight-col" style="width: 28%; text-align: right;">Grade 1-4</th>
-                <th class="col-g58" style="width: 28%; text-align: right;">Grade 5-8</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <div class="tier-name-cell">
-                    <span class="tier-dot tier-dot-online"></span>
-                    <strong>Online only</strong>
-                  </div>
-                </td>
-                <td class="col-g14 highlight-col" style="text-align: right;">
-                  <span class="price-cell-val">₹299</span>
-                </td>
-                <td class="col-g58" style="text-align: right;">
-                  <span class="price-cell-val">₹399</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="tier-name-cell">
-                    <span class="tier-dot tier-dot-hybrid"></span>
-                    <div>
-                      <strong>Physical Centre + Online</strong>
-                      <small style="display: block; font-size: 0.78rem; color: #7C3AED; font-weight: 700;">Blended In-Person + Digital</small>
-                    </div>
-                  </div>
-                </td>
-                <td class="col-g14 highlight-col" style="text-align: right;">
-                  <span class="price-cell-val" style="color: #7C3AED;">₹999</span>
-                </td>
-                <td class="col-g58" style="text-align: right;">
-                  <span class="price-cell-val" style="color: #7C3AED;">₹1,299</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+
 
       <!-- Trust Badges Bar -->
       <div class="pricing-trust-strip">
@@ -3514,7 +3379,7 @@
             <a class="btn-cta-white" href="/dashboard/">Go to Dashboard →</a>
             <a class="btn-cta-outline" href="#classes">Explore Classes</a>
           {% else %}
-            <a class="btn-cta-white" href="/register/">Start Free Practice →</a>
+            <a class="btn-cta-white" href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">Start Free Practice →</a>
             <a class="btn-cta-outline" href="#classes">Explore Classes</a>
           {% endif %}
         </div>
@@ -3567,8 +3432,8 @@
 
         <div class="footer-col">
           <h5>Support &amp; Legal</h5>
-          <a href="/login/">Student Login</a>
-          <a href="/register/">Create Free Account</a>
+          <a href="javascript:void(0)" onclick="TMAuthModal.openLogin()" data-open-modal="login">Student Login</a>
+          <a href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">Create Free Account</a>
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>
         </div>
@@ -3649,8 +3514,6 @@
         var priceHybrid = document.getElementById('priceValHybrid');
         var gradeLabelOnline = document.getElementById('gradeLabelOnline');
         var gradeLabelHybrid = document.getElementById('gradeLabelHybrid');
-        var colG1 = document.querySelectorAll('.col-g14');
-        var colG2 = document.querySelectorAll('.col-g58');
 
         if (gradeRange === '1-4') {
           if (btn1) { btn1.classList.add('active'); btn1.setAttribute('aria-selected', 'true'); }
@@ -3659,8 +3522,6 @@
           if (priceHybrid) priceHybrid.textContent = '999';
           if (gradeLabelOnline) gradeLabelOnline.textContent = 'For Grade 1–4';
           if (gradeLabelHybrid) gradeLabelHybrid.textContent = 'For Grade 1–4';
-          colG1.forEach(function(el) { el.classList.add('highlight-col'); });
-          colG2.forEach(function(el) { el.classList.remove('highlight-col'); });
         } else {
           if (btn1) { btn1.classList.remove('active'); btn1.setAttribute('aria-selected', 'false'); }
           if (btn2) { btn2.classList.add('active'); btn2.setAttribute('aria-selected', 'true'); }
@@ -3668,8 +3529,6 @@
           if (priceHybrid) priceHybrid.textContent = '1,299';
           if (gradeLabelOnline) gradeLabelOnline.textContent = 'For Grade 5–8';
           if (gradeLabelHybrid) gradeLabelHybrid.textContent = 'For Grade 5–8';
-          colG1.forEach(function(el) { el.classList.remove('highlight-col'); });
-          colG2.forEach(function(el) { el.classList.add('highlight-col'); });
         }
       }
 
@@ -3691,22 +3550,26 @@
         if (loggedIn) {
           location.href = '/subscription/checkout/?plan=' + planId;
         } else {
-          location.href = '/register/?plan=' + planId;
+          if (window.TMAuthModal) {
+            window.TMAuthModal.openRegister(planId);
+          } else {
+            location.href = '/register/?plan=' + planId;
+          }
         }
       }
     </script>
     <script src="/static/js/api-config.js"></script>
     <script src="/static/js/scroll-reveal.js"></script>
+    <script src="/static/js/auth-modal.js"></script>
     <script>
 
 
 
 
       function selectClass(e, classLevel) {
-        e.preventDefault();
-        var loggedIn = window.USER_DATA && window.USER_DATA.loggedIn;
+        if (e && e.preventDefault) e.preventDefault();
+        var loggedIn = (window.USER_DATA && window.USER_DATA.loggedIn) || {% if request.user.is_authenticated %}true{% else %}false{% endif %};
         var classUrl = (window.TM_CONFIG && window.TM_CONFIG.apiUrl) ? window.TM_CONFIG.apiUrl("/class/") : "/class/";
-        var loginUrl = (window.TM_CONFIG && window.TM_CONFIG.apiUrl) ? window.TM_CONFIG.apiUrl("/login/") : "/login/";
 
         if (loggedIn) {
           fetch(classUrl, {
@@ -3722,44 +3585,17 @@
             throw new Error("Failed to select class");
           })
           .then(function(data) {
-            if (data.success) {
-              location.href = "/dashboard/";
-            }
+            location.href = "/dashboard/";
           })
           .catch(function(err) {
             location.href = "/dashboard/";
           });
         } else {
-          fetch(loginUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRFToken": "{{ csrf_token }}"
-            },
-            body: JSON.stringify({ email: "student", password: "password123" })
-          })
-          .then(function(res) {
-            if (res.ok) return res.json();
-            throw new Error("Demo login failed");
-          })
-          .then(function(data) {
-            if (data.success) {
-              fetch(classUrl, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  "X-CSRFToken": "{{ csrf_token }}"
-                },
-                body: JSON.stringify({ classLevel: classLevel })
-              })
-              .then(function() {
-                location.href = "/dashboard/";
-              });
-            }
-          })
-          .catch(function() {
-            location.href = "/login/";
-          });
+          if (window.TMAuthModal && typeof window.TMAuthModal.openRegister === "function") {
+            window.TMAuthModal.openRegister(classLevel);
+          } else {
+            location.href = "/register/?class=" + classLevel;
+          }
         }
       }
     </script>
@@ -3815,5 +3651,7 @@
         }
       });
     </script>
+
+    {% include "auth_modals.html" %}
   </body>
 </html>
