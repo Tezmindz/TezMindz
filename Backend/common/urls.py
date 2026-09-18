@@ -29,6 +29,8 @@ urlpatterns = [
     path("game/<int:game_id>/difficulty/", views.game_difficulty_page, name="difficulty"),
     path("game/<int:game_id>/play/", views.game_play_page, name="game_play"),
     path("result/", views.template_page("result.html"), name="result"),
+    path("subscription/", views.subscription_page, name="subscription"),
+    path("subscription/checkout/", views.subscription_checkout_page, name="subscription_checkout"),
     path("api/learn/complete/", views.learn_complete_api_view, name="learn_complete"),
 ]
 

@@ -769,7 +769,14 @@
           if (data.success) {
             if (data.access) localStorage.setItem("tm_access", data.access);
             if (data.refresh) localStorage.setItem("tm_refresh", data.refresh);
-            location.href = "/dashboard/";
+            
+            var urlParams = new URLSearchParams(window.location.search);
+            var pendingPlan = urlParams.get("plan") || urlParams.get("plan_id") || localStorage.getItem("tm_pending_plan_id");
+            if (pendingPlan) {
+              location.href = "/subscription/checkout/?plan=" + pendingPlan;
+            } else {
+              location.href = "/dashboard/";
+            }
           } else {
             btn.disabled = false;
             btn.innerHTML = 'Create Account <i class="bi bi-rocket-takeoff-fill"></i>';
@@ -782,6 +789,18 @@
           showError(err.message || "Registration failed. Email or username may already be taken.");
         });
       }
+
+      // Preserve plan query param in links if present
+      document.addEventListener("DOMContentLoaded", function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var plan = urlParams.get("plan") || urlParams.get("plan_id");
+        if (plan) {
+          localStorage.setItem("tm_pending_plan_id", plan);
+          document.querySelectorAll('a[href^="/login/"]').forEach(function(a) {
+            a.href = "/login/?plan=" + plan;
+          });
+        }
+      });
     </script>
   </body>
 </html>

@@ -1,0 +1,654 @@
+{% extends "base.html" %}
+{% block title %}My Subscription — Tezz-Mindz{% endblock %}
+{% block nav_subscription %}active{% endblock %}
+{% block m_nav_subscription %}active{% endblock %}
+
+{% block extra_head %}
+<style>
+  .sub-container {
+    max-width: 1080px;
+    margin: 0 auto 60px;
+    padding: 0 16px;
+  }
+  
+  .sub-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1.5px solid #E2E8F0;
+  }
+  .sub-header-bar h1 {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sub-header-bar p {
+    font-size: 0.94rem;
+    color: #64748B;
+    margin: 0;
+  }
+
+  /* Active Plan Hero Card */
+  .active-plan-card {
+    border-radius: 24px;
+    padding: 36px 32px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .active-plan-card.plan-active-state {
+    background: linear-gradient(135deg, #FAF5FF 0%, #EEF2FF 50%, #FFFFFF 100%);
+    border: 2px solid #7C3AED;
+    box-shadow: 0 16px 40px rgba(124, 58, 237, 0.12);
+  }
+  .active-plan-card.plan-free-state {
+    background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%);
+    border: 2px dashed #CBD5E1;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+  }
+
+  .active-plan-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .plan-title-block h2 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .plan-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 99px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .status-active { background: #DCFCE7; color: #15803D; border: 1px solid #86EFAC; }
+  .status-cancelled { background: #FEF3C7; color: #B45309; border: 1px solid #FCD34D; }
+  .status-free { background: #F1F5F9; color: #475569; border: 1px solid #CBD5E1; }
+
+  .plan-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    background: #FFFFFF;
+    border-radius: 18px;
+    padding: 20px 24px;
+    border: 1px solid #E2E8F0;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 768px) {
+    .plan-meta-grid { grid-template-columns: 1fr; }
+  }
+  .meta-item strong {
+    display: block;
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #64748B;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .meta-item span {
+    font-size: 1.18rem;
+    font-weight: 900;
+    color: #0F172A;
+  }
+
+  /* Feature Checklist */
+  .sub-features-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 24px;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px;
+  }
+  @media (max-width: 640px) {
+    .sub-features-list { grid-template-columns: 1fr; }
+  }
+  .sub-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.92rem;
+    color: #334155;
+    font-weight: 600;
+  }
+  .sub-check-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #EDE9FE;
+    color: #7C3AED;
+    display: grid;
+    place-items: center;
+    font-size: 0.82rem;
+    flex-shrink: 0;
+  }
+
+  /* Action Buttons */
+  .sub-actions-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn-sub-upgrade {
+    background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+  }
+  .btn-sub-upgrade:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(79, 70, 229, 0.45);
+  }
+  .btn-sub-cancel {
+    background: #FFFFFF;
+    color: #EF4444;
+    border: 1.5px solid #FCA5A5;
+    padding: 11px 22px;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }
+  .btn-sub-cancel:hover {
+    background: #FEF2F2;
+    border-color: #EF4444;
+  }
+  .btn-sub-enroll {
+    background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    color: #FFFFFF;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 800;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.3);
+  }
+
+  /* History Card & Table */
+  .sub-section-card {
+    background: #FFFFFF;
+    border-radius: 20px;
+    border: 1.5px solid #E2E8F0;
+    padding: 28px 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  }
+  .sub-section-card h3 {
+    margin: 0 0 16px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0F172A;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .history-table-wrap {
+    overflow-x: auto;
+  }
+  .history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+  .history-table th {
+    padding: 12px 16px;
+    background: #F8FAFC;
+    color: #64748B;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid #E2E8F0;
+    text-align: left;
+  }
+  .history-table td {
+    padding: 16px;
+    border-bottom: 1px solid #F1F5F9;
+    color: #334155;
+    font-weight: 600;
+  }
+  .history-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* Modals */
+  .tm-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(6px);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .tm-modal-box {
+    background: #FFFFFF;
+    border-radius: 24px;
+    max-width: 580px;
+    width: 100%;
+    padding: 32px;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.2);
+    position: relative;
+    animation: modalPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .tm-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #F1F5F9;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #64748B;
+  }
+  .tm-modal-close:hover { background: #E2E8F0; color: #0F172A; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="sub-container">
+  <!-- Header -->
+  <div class="sub-header-bar">
+    <div>
+      <h1>
+        <i class="bi bi-shield-check" style="color:#7C3AED;"></i>
+        <span>My Subscription</span>
+      </h1>
+      <p>Manage your active plan, upgrade features, or review billing history.</p>
+    </div>
+    {% if not active_subscription %}
+    <a href="/#pricing" class="btn-sub-enroll">
+      <i class="bi bi-stars"></i> Browse All Plans
+    </a>
+    {% endif %}
+  </div>
+
+  <!-- Active Plan Hero -->
+  {% if active_subscription %}
+  <div class="active-plan-card plan-active-state">
+    <div class="active-plan-top">
+      <div class="plan-title-block">
+        <h2>
+          <span>{{ active_subscription.plan.name }}</span>
+          {% if active_subscription.status == 'active' and active_subscription.auto_renew %}
+          <span class="plan-status-pill status-active"><i class="bi bi-check-circle-fill"></i> Active</span>
+          {% elif active_subscription.status == 'cancelled' or not active_subscription.auto_renew %}
+          <span class="plan-status-pill status-cancelled"><i class="bi bi-exclamation-triangle-fill"></i> Cancelled (Access until {{ active_subscription.end_date|date:"d M Y" }})</span>
+          {% else %}
+          <span class="plan-status-pill status-free">{{ active_subscription.status|title }}</span>
+          {% endif %}
+        </h2>
+        <p style="color:#64748B; margin:0; font-size:0.95rem;">
+          {{ active_subscription.plan.features.tier_name|default:active_subscription.plan.name }} • Full Platform &amp; Game Entitlement Active
+        </p>
+      </div>
+
+      <div style="text-align: right;">
+        <span style="font-size:1.8rem; font-weight:900; color:#0F172A;">₹{{ active_subscription.plan.price|floatformat:0 }}</span>
+        <span style="font-size:0.85rem; color:#64748B; font-weight:700;">/ {{ active_subscription.plan.billing_period }}</span>
+      </div>
+    </div>
+
+    <!-- Meta Details Grid -->
+    <div class="plan-meta-grid">
+      <div class="meta-item">
+        <strong>Billing Cycle</strong>
+        <span>{{ active_subscription.plan.billing_period|title }}</span>
+      </div>
+      <div class="meta-item">
+        <strong>Start Date</strong>
+        <span>{{ active_subscription.start_date|date:"d M Y" }}</span>
+      </div>
+      <div class="meta-item">
+        <strong>Valid Until</strong>
+        <span>{{ active_subscription.end_date|date:"d M Y" }}</span>
+      </div>
+    </div>
+
+    <!-- Included Features Checklist -->
+    <ul class="sub-features-list">
+      {% for feat in active_subscription.plan.features.bullet_points %}
+      <li class="sub-feature-item">
+        <span class="sub-check-icon"><i class="bi bi-check-lg"></i></span>
+        <span>{{ feat }}</span>
+      </li>
+      {% empty %}
+      <li class="sub-feature-item">
+        <span class="sub-check-icon"><i class="bi bi-check-lg"></i></span>
+        <span>Full 3D &amp; 2D Learning Games Arena Access</span>
+      </li>
+      <li class="sub-feature-item">
+        <span class="sub-check-icon"><i class="bi bi-check-lg"></i></span>
+        <span>Daily Olympiad Quizzes &amp; Instant Progress Sync</span>
+      </li>
+      <li class="sub-feature-item">
+        <span class="sub-check-icon"><i class="bi bi-check-lg"></i></span>
+        <span>AI Teacher Guidance &amp; Live Telemetry Streaks</span>
+      </li>
+      <li class="sub-feature-item">
+        <span class="sub-check-icon"><i class="bi bi-check-lg"></i></span>
+        <span>Weekly Progress Heatmaps &amp; Badge Rewards</span>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <!-- Actions -->
+    <div class="sub-actions-row">
+      <button type="button" class="btn-sub-upgrade" onclick="openUpgradeModal()">
+        <i class="bi bi-arrow-up-circle-fill"></i> Upgrade Plan
+      </button>
+      {% if active_subscription.status == 'active' and active_subscription.auto_renew %}
+      <button type="button" class="btn-sub-cancel" onclick="openCancelModal()">
+        <i class="bi bi-x-circle"></i> Cancel Subscription
+      </button>
+      {% endif %}
+    </div>
+  </div>
+
+  {% else %}
+  <!-- Free State Card -->
+  <div class="active-plan-card plan-free-state">
+    <div class="active-plan-top">
+      <div class="plan-title-block">
+        <h2>
+          <span>Free Explorer Account</span>
+          <span class="plan-status-pill status-free">Trial Mode</span>
+        </h2>
+        <p style="color:#64748B; margin:0;">
+          You are currently on the free preview tier (limited to 3 free trial games and standard quizzes).
+        </p>
+      </div>
+    </div>
+
+    <div style="margin-top: 18px;">
+      <a href="/#pricing" class="btn-sub-enroll">
+        <i class="bi bi-lightning-charge-fill"></i> Upgrade to Premium Plan →
+      </a>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Available Plans -->
+  <div class="sub-section-card">
+    <h3>
+      <i class="bi bi-grid-fill" style="color:#4F46E5;"></i>
+      <span>Available Subscription Plans</span>
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+      {% for plan in all_plans %}
+      <div style="border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 22px; background: {% if active_subscription and active_subscription.plan.id == plan.id %}#FAF5FF{% else %}#FFFFFF{% endif %}; position: relative;">
+        {% if active_subscription and active_subscription.plan.id == plan.id %}
+        <span style="position: absolute; top: 12px; right: 12px; background: #7C3AED; color: #fff; font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 99px;">Current Plan</span>
+        {% endif %}
+        <h4 style="margin: 0 0 6px; font-size: 1.15rem; font-weight: 800; color: #0F172A;">{{ plan.name }}</h4>
+        <div style="margin: 12px 0 16px;">
+          <span style="font-size: 1.6rem; font-weight: 900; color: #0F172A;">₹{{ plan.price|floatformat:0 }}</span>
+          <span style="font-size: 0.85rem; color: #64748B; font-weight: 700;">/ {{ plan.billing_period }}</span>
+        </div>
+        <p style="font-size: 0.86rem; color: #64748B; margin: 0 0 18px; line-height: 1.45;">
+          {{ plan.features.badge|default:"Full Access" }} • {{ plan.features.grade_band|default:"All Grades" }}
+        </p>
+        {% if active_subscription and active_subscription.plan.id == plan.id %}
+        <button disabled style="width: 100%; padding: 10px; border-radius: 10px; background: #EDE9FE; color: #7C3AED; border: none; font-weight: 800;">
+          Subscribed
+        </button>
+        {% else %}
+        <a href="/subscription/checkout/?plan={{ plan.id }}" style="display: block; text-align: center; width: 100%; padding: 10px; border-radius: 10px; background: #4F46E5; color: #fff; text-decoration: none; font-weight: 800;">
+          {% if active_subscription %}Switch to this Plan{% else %}Enroll Now →{% endif %}
+        </a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Payment & Billing History -->
+  <div class="sub-section-card">
+    <h3>
+      <i class="bi bi-clock-history" style="color:#059669;"></i>
+      <span>Payment &amp; Billing History</span>
+    </h3>
+
+    {% if payments_history %}
+    <div class="history-table-wrap">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Plan / Description</th>
+            <th>Reference ID</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pay in payments_history %}
+          <tr>
+            <td>{{ pay.created_at|date:"d M Y, h:i A" }}</td>
+            <td>
+              <strong>{{ pay.subscription.plan.name|default:"Subscription Fee" }}</strong>
+            </td>
+            <td><code style="font-size:0.8rem; background:#F1F5F9; padding:2px 6px; border-radius:4px;">{{ pay.provider_reference }}</code></td>
+            <td>₹{{ pay.amount|floatformat:2 }}</td>
+            <td>
+              <span class="plan-status-pill status-active" style="padding:3px 10px; font-size:0.75rem;">
+                <i class="bi bi-check-circle-fill"></i> {{ pay.status|title }}
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p style="color:#94A3B8; font-size:0.92rem; margin:0;">No previous payments recorded for this student account.</p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- UPGRADE PLAN MODAL -->
+<div class="tm-modal-backdrop" id="upgradeModal">
+  <div class="tm-modal-box">
+    <button type="button" class="tm-modal-close" onclick="closeUpgradeModal()">&times;</button>
+    <h3 style="margin: 0 0 8px; font-size: 1.4rem; font-weight: 900; color: #0F172A;">
+      <i class="bi bi-stars" style="color: #7C3AED;"></i> Upgrade Your Plan
+    </h3>
+    <p style="color: #64748B; font-size: 0.92rem; margin: 0 0 20px;">
+      Select an upgrade tier below to unlock physical coaching, personalized mentorship, and extra resources.
+    </p>
+
+    <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+      {% for plan in all_plans %}
+      {% if not active_subscription or active_subscription.plan.id != plan.id %}
+      <label style="border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s ease;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <input type="radio" name="upgradePlanRadio" value="{{ plan.id }}" style="accent-color: #7C3AED; width: 18px; height: 18px;" />
+          <div>
+            <strong style="display: block; color: #0F172A; font-size: 0.98rem;">{{ plan.name }}</strong>
+            <small style="color: #64748B;">{{ plan.features.badge|default:"Full Access" }}</small>
+          </div>
+        </div>
+        <div style="text-align: right;">
+          <strong style="color: #7C3AED; font-size: 1.15rem;">₹{{ plan.price|floatformat:0 }}</strong>
+          <small style="display: block; color: #64748B; font-size: 0.76rem;">/ {{ plan.billing_period }}</small>
+        </div>
+      </label>
+      {% endif %}
+      {% endfor %}
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 12px;">
+      <button type="button" onclick="closeUpgradeModal()" style="background: #F1F5F9; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 800; color: #475569; cursor: pointer;">
+        Cancel
+      </button>
+      <button type="button" onclick="confirmUpgrade()" id="btnConfirmUpgrade" style="background: linear-gradient(135deg, #4F46E5, #7C3AED); color: #fff; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 800; cursor: pointer;">
+        Confirm Upgrade
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- CANCEL SUBSCRIPTION MODAL -->
+<div class="tm-modal-backdrop" id="cancelModal">
+  <div class="tm-modal-box">
+    <button type="button" class="tm-modal-close" onclick="closeCancelModal()">&times;</button>
+    <div style="width: 52px; height: 52px; border-radius: 50%; background: #FEE2E2; color: #EF4444; display: grid; place-items: center; font-size: 1.6rem; margin-bottom: 16px;">
+      <i class="bi bi-exclamation-octagon-fill"></i>
+    </div>
+    <h3 style="margin: 0 0 8px; font-size: 1.35rem; font-weight: 900; color: #0F172A;">
+      Cancel Subscription?
+    </h3>
+    <p style="color: #64748B; font-size: 0.92rem; line-height: 1.5; margin: 0 0 24px;">
+      Are you sure you want to cancel? You will keep full access to all interactive 3D games, chapter notes, and quiz leaderboards until the end of your current period on <strong>{{ active_subscription.end_date|date:"d M Y" }}</strong>.
+    </p>
+
+    <div style="display: flex; justify-content: flex-end; gap: 12px;">
+      <button type="button" onclick="closeCancelModal()" style="background: #F1F5F9; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 800; color: #475569; cursor: pointer;">
+        Keep Subscription
+      </button>
+      <button type="button" onclick="confirmCancellation()" id="btnConfirmCancel" style="background: #EF4444; color: #fff; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 800; cursor: pointer;">
+        Confirm Cancellation
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openUpgradeModal() {
+    document.getElementById("upgradeModal").style.display = "flex";
+  }
+  function closeUpgradeModal() {
+    document.getElementById("upgradeModal").style.display = "none";
+  }
+
+  function openCancelModal() {
+    document.getElementById("cancelModal").style.display = "flex";
+  }
+  function closeCancelModal() {
+    document.getElementById("cancelModal").style.display = "none";
+  }
+
+  function confirmUpgrade() {
+    var selected = document.querySelector('input[name="upgradePlanRadio"]:checked');
+    if (!selected) {
+      alert("Please select a target plan to upgrade.");
+      return;
+    }
+    var planId = selected.value;
+    var btn = document.getElementById("btnConfirmUpgrade");
+    btn.disabled = true;
+    btn.textContent = "Processing...";
+
+    fetch("/api/subscriptions/upgrade/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": "{{ csrf_token }}"
+      },
+      body: JSON.stringify({ new_plan_id: planId })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      btn.disabled = false;
+      btn.textContent = "Confirm Upgrade";
+      if (data.success) {
+        alert(data.message || "Upgrade successful!");
+        location.reload();
+      } else {
+        alert(data.message || "Upgrade failed.");
+      }
+    })
+    .catch(function(err) {
+      btn.disabled = false;
+      btn.textContent = "Confirm Upgrade";
+      alert("Network error during upgrade.");
+    });
+  }
+
+  function confirmCancellation() {
+    var btn = document.getElementById("btnConfirmCancel");
+    btn.disabled = true;
+    btn.textContent = "Cancelling...";
+
+    fetch("/api/subscriptions/cancel/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": "{{ csrf_token }}"
+      },
+      body: JSON.stringify({})
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      btn.disabled = false;
+      btn.textContent = "Confirm Cancellation";
+      if (data.success) {
+        alert(data.message || "Subscription cancelled.");
+        location.reload();
+      } else {
+        alert(data.message || "Cancellation failed.");
+      }
+    })
+    .catch(function(err) {
+      btn.disabled = false;
+      btn.textContent = "Confirm Cancellation";
+      alert("Network error during cancellation.");
+    });
+  }
+</script>
+{% endblock %}
