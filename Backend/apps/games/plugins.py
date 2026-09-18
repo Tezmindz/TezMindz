@@ -10,15 +10,19 @@ def get_plugins_directory() -> Path:
     """
     Returns the absolute path to the frontend/static/games/plugins directory.
     """
-    # BASE_DIR is Backend, parent is project root
+    if hasattr(settings, "FRONTEND_DIR") and (settings.FRONTEND_DIR / "static" / "games" / "plugins").exists():
+        return settings.FRONTEND_DIR / "static" / "games" / "plugins"
     plugins_dir = settings.BASE_DIR.parent / "frontend" / "static" / "games" / "plugins"
+    if not plugins_dir.exists():
+        plugins_dir = settings.BASE_DIR / "frontend" / "static" / "games" / "plugins"
     return plugins_dir
 
 
 def discover_game_plugins():
     """
     Auto-discovers all game plugins by scanning frontend/static/games/plugins/
-    for subdirectories containing game.manifest.json.
+    for subdirectories. If game.manifest.json exists, reads metadata; otherwise
+    generates a fallback descriptor from the directory name.
 
     Returns a dict mapping plugin_id -> manifest dict.
     """
@@ -29,7 +33,7 @@ def discover_game_plugins():
         return discovered
 
     for entry in plugins_dir.iterdir():
-        if entry.is_dir():
+        if entry.is_dir() and not entry.name.startswith("."):
             manifest_file = entry / "game.manifest.json"
             if manifest_file.exists() and manifest_file.is_file():
                 try:
@@ -41,6 +45,15 @@ def discover_game_plugins():
                         discovered[plugin_id] = manifest
                 except Exception as e:
                     logger.warning("Failed to load plugin manifest at %s: %s", manifest_file, e)
+            else:
+                plugin_id = entry.name
+                discovered[plugin_id] = {
+                    "id": plugin_id,
+                    "name": entry.name.replace("-", " ").replace("_", " ").title(),
+                    "directory": entry.name,
+                    "entrypoint": "index.js",
+                    "styles": "styles.css" if (entry / "styles.css").exists() else None,
+                }
 
     return discovered
 

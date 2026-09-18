@@ -34,6 +34,13 @@ class GameAdminForm(forms.ModelForm):
         label="Chapter",
         help_text="Step 3: Select Chapter belonging to the selected Grade and Subject."
     )
+    game_type = forms.ChoiceField(
+        choices=get_plugin_choices,
+        required=True,
+        label="Game Type / Template",
+        help_text="Select a game plugin template from frontend/static/games/plugins/.",
+        widget=forms.Select(attrs={"class": "vSelectField", "style": "min-width: 320px;"})
+    )
 
     class Meta:
         model = Game
@@ -60,7 +67,16 @@ class GameAdminForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["game_type"].choices = get_plugin_choices()
+        plugin_choices = list(get_plugin_choices())
+        choices_list = [("", "--------- Select Game Template ---------")] + plugin_choices
+
+        # If editing an existing game whose type is custom/legacy, preserve it in choices
+        if self.instance and self.instance.pk and self.instance.game_type:
+            current_type = self.instance.game_type
+            if not any(c[0] == current_type for c in plugin_choices):
+                choices_list.append((current_type, f"{current_type} (Custom / Legacy)"))
+
+        self.fields["game_type"].choices = choices_list
         self.fields["concept"].queryset = Concept.objects.all()
 
         # In edit mode, pre-populate Grade, Subject, Chapter from the existing Concept
