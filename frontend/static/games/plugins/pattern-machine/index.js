@@ -155,4 +155,10 @@ if (typeof window !== 'undefined') {
     initGame,
     PatternMachineGame
   };
+  window.TezMindzGameRegistry = window.TezMindzGameRegistry || {};
+  window.TezMindzGameRegistry['pattern-machine'] = {
+    id: 'pattern-machine',
+    initGame: initGame
+  };
+  window.TezMindzGameRegistry['pattern_machine'] = window.TezMindzGameRegistry['pattern-machine'];
 }

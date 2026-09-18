@@ -145,4 +145,10 @@ if (typeof window !== 'undefined') {
     initGame,
     NumberDetectiveGame
   };
+  window.TezMindzGameRegistry = window.TezMindzGameRegistry || {};
+  window.TezMindzGameRegistry['number-detective'] = {
+    id: 'number-detective',
+    initGame: initGame
+  };
+  window.TezMindzGameRegistry['number_detective'] = window.TezMindzGameRegistry['number-detective'];
 }

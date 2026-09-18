@@ -225,4 +225,10 @@ if (typeof window !== 'undefined') {
     initGame,
     ClockMissionGame
   };
+  window.TezMindzGameRegistry = window.TezMindzGameRegistry || {};
+  window.TezMindzGameRegistry['clock-mission'] = {
+    id: 'clock-mission',
+    initGame: initGame
+  };
+  window.TezMindzGameRegistry['clock_mission'] = window.TezMindzGameRegistry['clock-mission'];
 }
