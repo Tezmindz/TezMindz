@@ -744,3 +744,112 @@ def learn_complete_api_view(request):
     
     return JsonResponse({"success": True, "message": "Lesson completed successfully."})
 
+
+def subscription_page(request):
+    if not hasattr(request, "user") or not request.user.is_authenticated:
+        return redirect("/login/?next=/subscription/")
+
+    profile = getattr(request.user, "student_profile", None)
+    student_class = profile.grade if profile else None
+
+    from apps.subscriptions.models import Plan, Subscription, Payment
+    from django.utils import timezone
+
+    today = timezone.now().date()
+    active_subscription = None
+    subscription_history = []
+    payments_history = []
+    all_plans = list(Plan.objects.filter(is_active=True).order_by("price"))
+
+    if profile:
+        active_subscription = (
+            Subscription.objects.filter(
+                student=profile,
+                status=Subscription.Status.ACTIVE,
+                end_date__gte=today,
+            )
+            .select_related("plan")
+            .order_by("-end_date")
+            .first()
+        )
+        subscription_history = list(
+            Subscription.objects.filter(student=profile)
+            .select_related("plan")
+            .order_by("-start_date")
+        )
+        payments_history = list(
+            Payment.objects.filter(student=profile)
+            .select_related("subscription", "subscription__plan")
+            .order_by("-created_at")
+        )
+
+    return render(
+        request,
+        "subscription.html",
+        {
+            "profile": profile,
+            "student_class": student_class,
+            "active_subscription": active_subscription,
+            "all_plans": all_plans,
+            "subscription_history": subscription_history,
+            "payments_history": payments_history,
+            "today": today,
+        },
+    )
+
+
+def subscription_checkout_page(request):
+    plan_id = request.GET.get("plan") or request.GET.get("plan_id")
+    plan_code = request.GET.get("code") or request.GET.get("plan_code")
+
+    if not hasattr(request, "user") or not request.user.is_authenticated:
+        target_param = f"plan={plan_id}" if plan_id else (f"code={plan_code}" if plan_code else "")
+        redirect_url = f"/register/?{target_param}" if target_param else "/register/"
+        return redirect(redirect_url)
+
+    profile = getattr(request.user, "student_profile", None)
+    student_class = profile.grade if profile else None
+
+    from apps.subscriptions.models import Plan, Subscription
+    from django.utils import timezone
+
+    today = timezone.now().date()
+    selected_plan = None
+    if plan_id:
+        if plan_id.isdigit():
+            selected_plan = Plan.objects.filter(id=int(plan_id), is_active=True).first()
+        else:
+            selected_plan = Plan.objects.filter(code=plan_id, is_active=True).first()
+    elif plan_code:
+        selected_plan = Plan.objects.filter(code=plan_code, is_active=True).first()
+
+    if not selected_plan:
+        selected_plan = Plan.objects.filter(is_active=True).order_by("price").first()
+
+    active_subscription = None
+    if profile:
+        active_subscription = (
+            Subscription.objects.filter(
+                student=profile,
+                status=Subscription.Status.ACTIVE,
+                end_date__gte=today,
+            )
+            .select_related("plan")
+            .first()
+        )
+
+    all_plans = list(Plan.objects.filter(is_active=True).order_by("price"))
+
+    return render(
+        request,
+        "subscription_checkout.html",
+        {
+            "profile": profile,
+            "student_class": student_class,
+            "selected_plan": selected_plan,
+            "active_subscription": active_subscription,
+            "all_plans": all_plans,
+        },
+    )
+
+

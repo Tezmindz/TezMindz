@@ -1,0 +1,716 @@
+{% extends "base.html" %}
+{% block title %}Checkout &amp; Plan Activation — Tezz-Mindz{% endblock %}
+{% block nav_subscription %}active{% endblock %}
+
+{% block extra_head %}
+<style>
+  .checkout-shell {
+    max-width: 1040px;
+    margin: 0 auto 60px;
+    padding: 0 16px;
+  }
+
+  .checkout-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .checkout-header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #EEF2FF;
+    border: 1px solid #E0E7FF;
+    color: #4F46E5;
+    font-size: 0.82rem;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 99px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .checkout-header h1 {
+    font-size: 2.1rem;
+    font-weight: 900;
+    color: #0F172A;
+    letter-spacing: -0.03em;
+    margin: 0 0 8px;
+  }
+  .checkout-header p {
+    font-size: 0.98rem;
+    color: #64748B;
+    margin: 0;
+  }
+
+  /* Two Column Grid */
+  .checkout-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 28px;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .checkout-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Cards */
+  .checkout-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 26px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+    margin-bottom: 24px;
+  }
+  .checkout-card h3 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Plan Switcher Pills */
+  .plan-select-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 480px) {
+    .plan-select-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .plan-option-card {
+    border: 2px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 14px;
+    cursor: pointer;
+    background: #F8FAFC;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+  }
+  .plan-option-card:hover {
+    border-color: #A5B4FC;
+    background: #F5F3FF;
+    transform: translateY(-2px);
+  }
+  .plan-option-card.selected {
+    border-color: #6366F1;
+    background: #EEF2FF;
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.12);
+  }
+  .plan-option-card .plan-opt-radio {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #CBD5E1;
+    display: grid;
+    place-items: center;
+  }
+  .plan-option-card.selected .plan-opt-radio {
+    border-color: #4F46E5;
+    background: #4F46E5;
+  }
+  .plan-option-card.selected .plan-opt-radio::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #FFFFFF;
+  }
+  .plan-opt-title {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin-bottom: 4px;
+    padding-right: 24px;
+  }
+  .plan-opt-price {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #4F46E5;
+  }
+  .plan-opt-cadence {
+    font-size: 0.76rem;
+    color: #64748B;
+    font-weight: 600;
+  }
+
+  /* Payment Method Selector */
+  .payment-method-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .pm-tab-btn {
+    flex: 1;
+    padding: 10px 14px;
+    background: #F1F5F9;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 12px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    color: #475569;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }
+  .pm-tab-btn.active {
+    background: #4F46E5;
+    border-color: #4F46E5;
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+  }
+
+  .pm-form-box {
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 18px;
+  }
+  .input-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .tm-input-field {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #CBD5E1;
+    font-family: inherit;
+    font-size: 0.92rem;
+    color: #0F172A;
+    background: #FFFFFF;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .tm-input-field:focus {
+    border-color: #6366F1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  }
+
+  /* Order Summary Right Panel */
+  .order-summary-box {
+    background: linear-gradient(135deg, #FAF5FF 0%, #EEF2FF 100%);
+    border: 1.5px solid #C7D2FE;
+    border-radius: 20px;
+    padding: 28px;
+    position: sticky;
+    top: 90px;
+  }
+  .order-summary-box h3 {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0 0 16px;
+  }
+  .order-plan-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #7C3AED;
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 99px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .order-plan-name {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0 0 4px;
+  }
+  .order-plan-desc {
+    font-size: 0.86rem;
+    color: #64748B;
+    line-height: 1.4;
+    margin: 0 0 20px;
+  }
+
+  .price-calc-table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-top: 1px dashed #CBD5E1;
+    border-bottom: 1px dashed #CBD5E1;
+    padding: 14px 0;
+  }
+  .price-calc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 0.9rem;
+    color: #475569;
+    font-weight: 600;
+  }
+  .price-calc-row.total-row {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #0F172A;
+    padding-top: 10px;
+    border-top: 1px solid #E2E8F0;
+  }
+  .price-calc-row.total-row strong {
+    color: #4F46E5;
+  }
+
+  .order-benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .order-benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: #334155;
+    font-weight: 700;
+  }
+  .order-benefit-item i {
+    color: #10B981;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .btn-complete-pay {
+    width: 100%;
+    background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 14px;
+    padding: 16px 20px;
+    font-size: 1.05rem;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(79, 70, 229, 0.35);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .btn-complete-pay:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
+  }
+  .btn-complete-pay:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .checkout-guarantee-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 16px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #64748B;
+  }
+
+  /* Success Modal */
+  .success-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: none;
+    place-items: center;
+    padding: 20px;
+  }
+  .success-overlay.show {
+    display: grid;
+  }
+  .success-modal-card {
+    background: #FFFFFF;
+    border-radius: 24px;
+    padding: 40px 32px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+    animation: successPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes successPop {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .success-icon-wrap {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: #FFFFFF;
+    display: grid;
+    place-items: center;
+    font-size: 2.2rem;
+    margin: 0 auto 20px;
+    box-shadow: 0 10px 24px rgba(16, 185, 129, 0.35);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="checkout-shell">
+  <!-- Header -->
+  <div class="checkout-header">
+    <div class="checkout-header-badge">
+      <i class="bi bi-shield-lock-fill"></i> Secure SSL Checkout
+    </div>
+    <h1>Complete Plan Enrollment</h1>
+    <p>Unlock all 3D Olympiad games, interactive mock tests, and smart learning features.</p>
+  </div>
+
+  <div class="checkout-grid">
+    <!-- Left Column: Plan Selection & Payment Method -->
+    <div class="checkout-left">
+
+      <!-- Step 1: Confirm Plan -->
+      <div class="checkout-card">
+        <h3>
+          <i class="bi bi-1-circle-fill" style="color: #4F46E5;"></i>
+          <span>Choose / Confirm Your Plan</span>
+        </h3>
+
+        <div class="plan-select-grid" id="planSelectGrid">
+          {% for p in all_plans %}
+          <div class="plan-option-card {% if selected_plan and selected_plan.id == p.id %}selected{% endif %}"
+               onclick="selectPlanItem({{ p.id }}, '{{ p.name|escapejs }}', {{ p.price|floatformat:0 }}, '{{ p.billing_period|escapejs }}', '{{ p.features.badge|default:"Full Access"|escapejs }}')"
+               id="plan-opt-{{ p.id }}">
+            <div class="plan-opt-radio"></div>
+            <div class="plan-opt-title">{{ p.name }}</div>
+            <div class="plan-opt-price">₹{{ p.price|floatformat:0 }} <span class="plan-opt-cadence">/ {{ p.billing_period }}</span></div>
+            <div style="font-size: 0.74rem; color: #64748B; margin-top: 4px; font-weight: 700;">
+              {{ p.features.grade_band|default:"All Grades" }}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Step 2: Student Account Verification -->
+      <div class="checkout-card">
+        <h3>
+          <i class="bi bi-2-circle-fill" style="color: #4F46E5;"></i>
+          <span>Student Account Details</span>
+        </h3>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px; padding: 16px;">
+          <div>
+            <span style="font-size: 0.74rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Student Name</span>
+            <strong style="display: block; font-size: 0.95rem; color: #0F172A;">{{ profile.display_name|default:request.user.first_name|default:request.user.username }}</strong>
+          </div>
+          <div>
+            <span style="font-size: 0.74rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Enrolled Class</span>
+            <strong style="display: block; font-size: 0.95rem; color: #4F46E5;">Class {{ profile.grade.name }}</strong>
+          </div>
+          <div>
+            <span style="font-size: 0.74rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Email / Username</span>
+            <span style="display: block; font-size: 0.88rem; color: #334155;">{{ request.user.email|default:request.user.username }}</span>
+          </div>
+          <div>
+            <span style="font-size: 0.74rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Current Plan Status</span>
+            <span style="display: inline-block; font-size: 0.78rem; font-weight: 800; color: #059669; background: #ECFDF5; padding: 2px 8px; border-radius: 99px;">
+              {% if active_subscription %}{{ active_subscription.plan.name }}{% else %}Free Explorer{% endif %}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Payment Method -->
+      <div class="checkout-card">
+        <h3>
+          <i class="bi bi-3-circle-fill" style="color: #4F46E5;"></i>
+          <span>Select Payment Method</span>
+        </h3>
+
+        <div class="payment-method-tabs">
+          <button type="button" class="pm-tab-btn active" id="pmTabUpi" onclick="setPaymentMethod('UPI')">
+            <i class="bi bi-qr-code"></i> UPI / QR
+          </button>
+          <button type="button" class="pm-tab-btn" id="pmTabCard" onclick="setPaymentMethod('CARD')">
+            <i class="bi bi-credit-card"></i> Card
+          </button>
+          <button type="button" class="pm-tab-btn" id="pmTabNet" onclick="setPaymentMethod('NETBANKING')">
+            <i class="bi bi-bank"></i> Net Banking
+          </button>
+        </div>
+
+        <!-- UPI Form -->
+        <div class="pm-form-box" id="pmBoxUpi">
+          <label class="input-label" for="upiIdInput">Enter UPI ID (VPA)</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="upiIdInput" class="tm-input-field" placeholder="username@okhdfcbank / mobile@paytm" value="parent@upi" />
+            <button type="button" style="padding: 0 16px; background: #4F46E5; color: #FFF; border: none; border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer;">Verify</button>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-top: 12px; font-size: 0.8rem; color: #64748B;">
+            <span>Supported apps:</span>
+            <strong>GPay</strong> • <strong>PhonePe</strong> • <strong>Paytm</strong> • <strong>BHIM</strong>
+          </div>
+        </div>
+
+        <!-- Card Form -->
+        <div class="pm-form-box" id="pmBoxCard" style="display: none;">
+          <div style="margin-bottom: 12px;">
+            <label class="input-label">Card Number</label>
+            <input type="text" class="tm-input-field" placeholder="4532 •••• •••• 8892" value="4532 8901 2345 6789" />
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label class="input-label">Expiry MM/YY</label>
+              <input type="text" class="tm-input-field" placeholder="MM/YY" value="12/28" />
+            </div>
+            <div>
+              <label class="input-label">CVV / CVC</label>
+              <input type="password" maxlength="4" class="tm-input-field" placeholder="•••" value="888" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Net Banking Form -->
+        <div class="pm-form-box" id="pmBoxNet" style="display: none;">
+          <label class="input-label">Select Popular Bank</label>
+          <select class="tm-input-field">
+            <option>HDFC Bank</option>
+            <option>State Bank of India (SBI)</option>
+            <option>ICICI Bank</option>
+            <option>Axis Bank</option>
+            <option>Kotak Mahindra Bank</option>
+          </select>
+        </div>
+
+        <!-- Auto-renew checkbox -->
+        <div style="display: flex; align-items: center; gap: 10px; margin-top: 14px;">
+          <input type="checkbox" id="autoRenewCheck" checked style="width: 18px; height: 18px; accent-color: #4F46E5; cursor: pointer;" />
+          <label for="autoRenewCheck" style="font-size: 0.88rem; color: #334155; font-weight: 700; cursor: pointer;">
+            Enable automatic monthly renewal (Cancel anytime with 1-click)
+          </label>
+        </div>
+
+        <div id="checkoutErrorBox" style="display: none; background: #FEF2F2; border: 1.5px solid #F87171; border-radius: 12px; padding: 12px 16px; margin-top: 16px; color: #991B1B; font-size: 0.88rem; font-weight: 700;">
+          <i class="bi bi-exclamation-triangle-fill"></i> <span id="checkoutErrorMsg"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Order Summary & Pay Button -->
+    <div class="checkout-right">
+      <div class="order-summary-box">
+        <span class="order-plan-badge" id="orderBadge">{{ selected_plan.features.badge|default:"Full Access" }}</span>
+        <h2 class="order-plan-name" id="orderPlanName">{{ selected_plan.name|default:"Online Only (Grade 1–4)" }}</h2>
+        <p class="order-plan-desc" id="orderPlanDesc">Complete digital Olympiad suite, 3D gamified worlds, and adaptive skill tests.</p>
+
+        <ul class="order-benefits-list">
+          <li class="order-benefit-item">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>All 3D Games (Dream House Builder, Pizza Master)</span>
+          </li>
+          <li class="order-benefit-item">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Interactive NCERT &amp; Olympiad Concept Notes</span>
+          </li>
+          <li class="order-benefit-item">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Adaptive Quizzes &amp; AI Explanations</span>
+          </li>
+          <li class="order-benefit-item">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Parent Mastery Heatmap &amp; National Leaderboards</span>
+          </li>
+        </ul>
+
+        <div class="price-calc-table">
+          <div class="price-calc-row">
+            <span>Base Subscription Fee</span>
+            <span id="calcBasePrice">₹{{ selected_plan.price|floatformat:0|default:"299" }}</span>
+          </div>
+          <div class="price-calc-row">
+            <span>Platform &amp; Server Fees</span>
+            <span style="color: #059669;">₹0 (Free)</span>
+          </div>
+          <div class="price-calc-row">
+            <span>GST / Taxes</span>
+            <span style="color: #059669;">Included</span>
+          </div>
+          <div class="price-calc-row total-row">
+            <span>Total Payable Today</span>
+            <strong id="calcTotalPrice">₹{{ selected_plan.price|floatformat:0|default:"299" }}</strong>
+          </div>
+        </div>
+
+        <button type="button" class="btn-complete-pay" id="btnPayNow" onclick="executeSubscription()">
+          <i class="bi bi-lock-fill"></i>
+          <span id="btnPayText">Pay ₹{{ selected_plan.price|floatformat:0|default:"299" }} &amp; Activate Plan</span>
+        </button>
+
+        <div class="checkout-guarantee-row">
+          <span><i class="bi bi-patch-check-fill" style="color:#10B981;"></i> 100% Kid Safe</span>
+          <span><i class="bi bi-shield-check" style="color:#4F46E5;"></i> 256-Bit Encrypted</span>
+          <span><i class="bi bi-arrow-repeat" style="color:#7C3AED;"></i> Cancel Anytime</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal Overlay -->
+<div class="success-overlay" id="successModal">
+  <div class="success-modal-card">
+    <div class="success-icon-wrap">
+      <i class="bi bi-check-lg"></i>
+    </div>
+    <h2 style="font-size: 1.6rem; font-weight: 900; color: #0F172A; margin: 0 0 8px;">Subscription Activated! 🎉</h2>
+    <p style="color: #64748B; font-size: 0.95rem; margin: 0 0 24px; line-height: 1.5;">
+      Your payment has been verified and your account is now upgraded to <strong id="successPlanName" style="color: #4F46E5;">{{ selected_plan.name }}</strong>. All 3D games &amp; learning worlds are fully unlocked!
+    </p>
+
+    <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 14px; margin-bottom: 24px; text-align: left; font-size: 0.85rem; color: #334155;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+        <span>Reference Number:</span>
+        <strong id="successRefNo">TXN-882910</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <span>Next Billing Date:</span>
+        <strong id="successNextDate">In 30 days</strong>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 12px;">
+      <a href="/subscription/" style="flex: 1; padding: 14px; background: #EEF2FF; color: #4F46E5; border-radius: 12px; font-weight: 800; text-decoration: none; font-size: 0.92rem;">
+        View Subscription
+      </a>
+      <a href="/dashboard/" style="flex: 1; padding: 14px; background: #4F46E5; color: #FFFFFF; border-radius: 12px; font-weight: 800; text-decoration: none; font-size: 0.92rem; box-shadow: 0 6px 18px rgba(79,70,229,0.3);">
+        Start Learning 🚀
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  var currentPlanId = {{ selected_plan.id|default:1 }};
+  var currentPlanPrice = {{ selected_plan.price|floatformat:0|default:299 }};
+  var currentPaymentMethod = 'UPI';
+
+  function selectPlanItem(id, name, price, cadence, badge) {
+    currentPlanId = id;
+    currentPlanPrice = price;
+
+    document.querySelectorAll('.plan-option-card').forEach(function(el) {
+      el.classList.remove('selected');
+    });
+    var selectedEl = document.getElementById('plan-opt-' + id);
+    if (selectedEl) selectedEl.classList.add('selected');
+
+    document.getElementById('orderBadge').textContent = badge || 'Full Access';
+    document.getElementById('orderPlanName').textContent = name;
+    document.getElementById('calcBasePrice').textContent = '₹' + price;
+    document.getElementById('calcTotalPrice').textContent = '₹' + price;
+    document.getElementById('btnPayText').textContent = 'Pay ₹' + price + ' & Activate Plan';
+  }
+
+  function setPaymentMethod(method) {
+    currentPaymentMethod = method;
+    document.getElementById('pmTabUpi').classList.toggle('active', method === 'UPI');
+    document.getElementById('pmTabCard').classList.toggle('active', method === 'CARD');
+    document.getElementById('pmTabNet').classList.toggle('active', method === 'NETBANKING');
+
+    document.getElementById('pmBoxUpi').style.display = (method === 'UPI') ? 'block' : 'none';
+    document.getElementById('pmBoxCard').style.display = (method === 'CARD') ? 'block' : 'none';
+    document.getElementById('pmBoxNet').style.display = (method === 'NETBANKING') ? 'block' : 'none';
+  }
+
+  function executeSubscription() {
+    var btn = document.getElementById('btnPayNow');
+    var btnText = document.getElementById('btnPayText');
+    var errBox = document.getElementById('checkoutErrorBox');
+    var errMsg = document.getElementById('checkoutErrorMsg');
+
+    errBox.style.display = 'none';
+    btn.disabled = true;
+    btnText.innerHTML = '<span style="opacity:0.8;">Processing Secure Payment…</span>';
+
+    var autoRenew = document.getElementById('autoRenewCheck').checked;
+    var subscribeUrl = (window.TM_CONFIG && window.TM_CONFIG.apiUrl) ? window.TM_CONFIG.apiUrl('/api/subscriptions/subscribe/') : '/api/subscriptions/subscribe/';
+
+    fetch(subscribeUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      body: JSON.stringify({
+        plan_id: currentPlanId,
+        payment_method: currentPaymentMethod,
+        auto_renew: autoRenew
+      })
+    })
+    .then(function(res) {
+      if (res.ok) return res.json();
+      return res.json().then(function(err) { throw err; });
+    })
+    .then(function(data) {
+      // Clear pending plan in localStorage
+      localStorage.removeItem('tm_pending_plan_id');
+      localStorage.removeItem('tm_pending_plan_code');
+
+      // Show success modal
+      document.getElementById('successPlanName').textContent = data.subscription.plan.name;
+      document.getElementById('successRefNo').textContent = data.payment.reference_id || 'TXN-' + Math.floor(100000 + Math.random() * 900000);
+      document.getElementById('successNextDate').textContent = data.subscription.end_date;
+      document.getElementById('successModal').classList.add('show');
+    })
+    .catch(function(err) {
+      btn.disabled = false;
+      btnText.textContent = 'Pay ₹' + currentPlanPrice + ' & Activate Plan';
+      errMsg.textContent = err.detail || err.error || err.message || 'Payment processing failed. Please try again.';
+      errBox.style.display = 'block';
+      errBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
+
+  // Check URL or localStorage on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var planFromUrl = urlParams.get('plan') || urlParams.get('plan_id') || localStorage.getItem('tm_pending_plan_id');
+    if (planFromUrl) {
+      var targetCard = document.getElementById('plan-opt-' + planFromUrl);
+      if (targetCard) {
+        targetCard.click();
+      }
+    }
+  });
+</script>
+{% endblock %}

@@ -32,8 +32,7 @@ def seed():
     # 2. Grades
     grades = {}
     for i in range(1, 6):
-        g, _ = Grade.objects.get_or_create(name=f"Class {i}", defaults={"order": i})
-        # also alias "5" if needed
+        g, _ = Grade.objects.get_or_create(order=i, defaults={"name": f"Class {i}"})
         grades[i] = g
     g5 = grades[5]
 
@@ -155,19 +154,19 @@ def seed():
     ]
 
     for g_info in games_data:
-        gm, _ = Game.objects.get_or_create(
-            title=g_info["title"],
-            defaults={
-                "concept": g_info["concept"],
-                "game_type": g_info["game_type"],
-                "difficulty": g_info["difficulty"],
-                "description": g_info["description"],
-                "status": "published",
-                "access_tier": AccessTier.FREE,
-                "config": g_info["config"],
-            }
-        )
-        if gm.concept != g_info["concept"]:
+        gm = Game.objects.filter(title=g_info["title"]).first()
+        if not gm:
+            gm = Game.objects.create(
+                title=g_info["title"],
+                concept=g_info["concept"],
+                game_type=g_info["game_type"],
+                difficulty=g_info["difficulty"],
+                description=g_info["description"],
+                status="published",
+                access_tier=AccessTier.FREE,
+                config=g_info["config"],
+            )
+        else:
             gm.concept = g_info["concept"]
             gm.status = "published"
             gm.save()
@@ -237,20 +236,113 @@ def seed():
             "daily_streak": 4,
         }
     )
-    student_profile.grade = g5
-    student_profile.save()
+    # 10. Subscription Plans
+    from apps.subscriptions.models import Plan
+    plans_data = [
+        {
+            "code": "online-g14",
+            "name": "Online only (Grade 1–4)",
+            "price": "299.00",
+            "billing_period": Plan.BillingPeriod.MONTHLY,
+            "features": {
+                "tier": "online",
+                "tier_name": "Online only",
+                "grade_band": "Grade 1–4",
+                "badge": "Junior Wing",
+                "bullet_points": [
+                    "100% Full Online Platform Access",
+                    "Full Access to All 3D Gamified Worlds (Dream House, Fraction Pizza, Number Train)",
+                    "Interactive Concept Notes & Visual Notes for Core Subjects",
+                    "Adaptive Olympiad Quizzes with Instant Explanations & Hints",
+                    "AI Doubt Assistant & Live Telemetry Streak Tracking",
+                    "Weekly Parent Progress Reports & Skill Mastery Heatmaps"
+                ]
+            }
+        },
+        {
+            "code": "online-g58",
+            "name": "Online only (Grade 5–8)",
+            "price": "399.00",
+            "billing_period": Plan.BillingPeriod.MONTHLY,
+            "features": {
+                "tier": "online",
+                "tier_name": "Online only",
+                "grade_band": "Grade 5–8",
+                "badge": "Senior Wing",
+                "bullet_points": [
+                    "100% Full Online Platform Access",
+                    "Full Access to All 3D Gamified Worlds (Dream House, Fraction Pizza, Number Train)",
+                    "Interactive Concept Notes & Visual Notes for Core Subjects",
+                    "Adaptive Olympiad Quizzes with Instant Explanations & Hints",
+                    "AI Doubt Assistant & Live Telemetry Streak Tracking",
+                    "Weekly Parent Progress Reports & Skill Mastery Heatmaps"
+                ]
+            }
+        },
+        {
+            "code": "hybrid-g14",
+            "name": "Physical Centre + Online (Grade 1–4)",
+            "price": "999.00",
+            "billing_period": Plan.BillingPeriod.MONTHLY,
+            "features": {
+                "tier": "hybrid",
+                "tier_name": "Physical Centre + Online",
+                "grade_band": "Grade 1–4",
+                "badge": "Most Popular • Hybrid",
+                "bullet_points": [
+                    "Everything in Online Only",
+                    "Weekly Physical Classroom Sessions at TezMindz Learning Centres",
+                    "Dedicated 1-on-1 Certified Olympiad Faculty Mentorship",
+                    "Physical Mock Olympiad Exam Series with Simulated OMR Grading",
+                    "Hands-on Science & Math Activity Kits for Centre Labs",
+                    "Printed Revision Workbooks, Summary Mindmaps & Formula Sheets",
+                    "In-person Parent-Teacher Review & Olympiad Strategy Consultations"
+                ]
+            }
+        },
+        {
+            "code": "hybrid-g58",
+            "name": "Physical Centre + Online (Grade 5–8)",
+            "price": "1299.00",
+            "billing_period": Plan.BillingPeriod.MONTHLY,
+            "features": {
+                "tier": "hybrid",
+                "tier_name": "Physical Centre + Online",
+                "grade_band": "Grade 5–8",
+                "badge": "Most Popular • Hybrid",
+                "bullet_points": [
+                    "Everything in Online Only",
+                    "Weekly Physical Classroom Sessions at TezMindz Learning Centres",
+                    "Dedicated 1-on-1 Certified Olympiad Faculty Mentorship",
+                    "Physical Mock Olympiad Exam Series with Simulated OMR Grading",
+                    "Hands-on Science & Math Activity Kits for Centre Labs",
+                    "Printed Revision Workbooks, Summary Mindmaps & Formula Sheets",
+                    "In-person Parent-Teacher Review & Olympiad Strategy Consultations"
+                ]
+            }
+        },
+    ]
 
-    # XP & Credit accounts
-    xp_acc, _ = XPAccount.objects.get_or_create(
-        student=student_profile,
-        defaults={"total_xp": 350, "current_level": 3}
-    )
-    credit_acc, _ = CreditAccount.objects.get_or_create(
-        student=student_profile,
-        defaults={"balance": 120}
-    )
+    for pdata in plans_data:
+        p, created = Plan.objects.get_or_create(
+            code=pdata["code"],
+            defaults={
+                "name": pdata["name"],
+                "price": pdata["price"],
+                "billing_period": pdata["billing_period"],
+                "features": pdata["features"],
+                "is_active": True
+            }
+        )
+        if not created:
+            p.name = pdata["name"]
+            p.price = pdata["price"]
+            p.billing_period = pdata["billing_period"]
+            p.features = pdata["features"]
+            p.is_active = True
+            p.save()
 
-    print(" Database seeded successfully!")
+    print(" Database seeded successfully with curriculum, users, and subscription plans!")
     print("--------------------------------------------------")
     print(" Superuser:  username='admin'   password='admin123'")
     print(" Student:    username='student' password='student123'")

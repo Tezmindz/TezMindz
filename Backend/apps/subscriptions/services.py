@@ -7,8 +7,19 @@ def can_student_access_game(student, game):
     """
     Return True if the student is entitled to access the game.
     """
+    if not student:
+        return False
 
-    # Free games are available to authenticated students.
+    # Active subscribers have unrestricted access to all games
+    has_active_sub = Subscription.objects.filter(
+        student=student,
+        status=Subscription.Status.ACTIVE,
+        end_date__gte=timezone.now().date(),
+    ).exists()
+    if has_active_sub:
+        return True
+
+    # Free games are available to all students
     if game.access_tier == "free":
         return True
 
@@ -31,11 +42,8 @@ def can_student_access_game(student, game):
 
         return trial_games_used < 3
 
-    # Premium games require an active subscription.
+    # Premium games require an active subscription
     if game.access_tier == "premium":
-        return Subscription.objects.filter(
-            student=student,
-            status="active",
-        ).exists()
+        return False
 
     return False
