@@ -1,0 +1,222 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  .tm-upload-shell {
+    max-width: 760px;
+    margin: 20px auto 40px;
+  }
+  .tm-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #64748B;
+  }
+  .tm-breadcrumb a {
+    color: #4F46E5;
+    text-decoration: none;
+  }
+  .tm-upload-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 24px;
+    padding: 36px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+  }
+  .upload-header h1 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .upload-header p {
+    font-size: 0.92rem;
+    color: #64748B;
+    margin: 0 0 24px;
+  }
+  .instruction-box {
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 28px;
+  }
+  .instruction-box h4 {
+    font-size: 0.88rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #334155;
+    margin: 0 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .instruction-box ol {
+    margin: 0;
+    padding-left: 20px;
+    color: #475569;
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .drag-drop-area {
+    border: 2px dashed #CBD5E1;
+    border-radius: 18px;
+    padding: 40px 24px;
+    text-align: center;
+    background: #FAFAFA;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    margin-bottom: 24px;
+  }
+  .drag-drop-area:hover, .drag-drop-area.dragover {
+    border-color: #4F46E5;
+    background: #EEF2FF;
+  }
+  .drag-drop-area i {
+    font-size: 2.5rem;
+    color: #4F46E5;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .file-input {
+    display: none;
+  }
+  .selected-file-info {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #059669;
+    display: none;
+  }
+  .btn-submit-upload {
+    width: 100%;
+    background: #4F46E5;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 14px;
+    padding: 14px 20px;
+    font-size: 0.96rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-submit-upload:hover {
+    background: #4338CA;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+  }
+  .template-reminder {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.86rem;
+    color: #64748B;
+  }
+  .template-reminder a {
+    color: #4F46E5;
+    font-weight: 700;
+    text-decoration: none;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="tm-upload-shell">
+  <div class="tm-breadcrumb">
+    <a href="{% url 'bulk_import:hub' %}"><i class="bi bi-arrow-left"></i> Bulk Import Hub</a>
+    <span>/</span>
+    <span>{{ meta.title }}</span>
+  </div>
+
+  <div class="tm-upload-card">
+    <div class="upload-header">
+      <h1><i class="bi {{ meta.icon }}" style="color: #4F46E5;"></i> {{ meta.title }}</h1>
+      <p>{{ meta.description }}</p>
+    </div>
+
+    <!-- Instruction Box -->
+    <div class="instruction-box">
+      <h4><i class="bi bi-info-circle-fill" style="color: #2563EB;"></i> How it works</h4>
+      <ol>
+        <li>Download the official template below to ensure column headers match the models.</li>
+        <li>Fill in your educational content. All relationships (Grade → Subject → Chapter → Concept) will be strictly verified.</li>
+        <li>Upload your <code>.xlsx</code> file. The system will inspect every row and show a comprehensive <strong>Validation Preview</strong>.</li>
+        <li>Only once all errors are resolved will you be prompted to <strong>Confirm &amp; Import</strong> atomically.</li>
+      </ol>
+    </div>
+
+    <!-- Upload Form -->
+    <form method="post" enctype="multipart/form-data" id="upload-form">
+      {% csrf_token %}
+      <div class="drag-drop-area" id="drop-zone" onclick="document.getElementById('excel-file-input').click();">
+        <i class="bi bi-cloud-arrow-up"></i>
+        <strong style="display:block; font-size: 1.05rem; color: #1E293B; margin-bottom: 4px;">
+          Choose an Excel (.xlsx) file or drag &amp; drop it here
+        </strong>
+        <span style="font-size: 0.82rem; color: #94A3B8;">Maximum file size: 15 MB</span>
+        <input type="file" name="excel_file" id="excel-file-input" class="file-input" accept=".xlsx" required />
+        <div class="selected-file-info" id="file-info">
+          <i class="bi bi-check-circle-fill"></i> <span id="file-name"></span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit-upload" id="submit-btn">
+        <i class="bi bi-shield-check"></i> Upload &amp; Validate Spreadsheet
+      </button>
+    </form>
+
+    <div class="template-reminder">
+      Need the blank template?
+      <a href="{% url 'bulk_import:download_template' import_type=import_type %}">
+        <i class="bi bi-download"></i> Download {{ meta.title }} Template (.xlsx)
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const dropZone = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('excel-file-input');
+  const fileInfo = document.getElementById('file-info');
+  const fileName = document.getElementById('file-name');
+
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files.length > 0) {
+      fileName.textContent = fileInput.files[0].name + " (" + (fileInput.files[0].size / 1024).toFixed(1) + " KB)";
+      fileInfo.style.display = 'block';
+    }
+  });
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    if (e.dataTransfer.files.length > 0) {
+      fileInput.files = e.dataTransfer.files;
+      fileName.textContent = fileInput.files[0].name + " (" + (fileInput.files[0].size / 1024).toFixed(1) + " KB)";
+      fileInfo.style.display = 'block';
+    }
+  });
+</script>
+{% endblock %}

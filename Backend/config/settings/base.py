@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "apps.progress",
     "apps.subscriptions",
     "apps.analytics",
+    "apps.bulk_import",
 ]
 
 MIDDLEWARE = [
