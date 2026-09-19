@@ -17,8 +17,8 @@
     // Grid and container selectors whose child cards should automatically stagger
     var staggerSelectors = [
       '.classes-grid-premium',
-      '.results-metrics-bar',
-      '.achievers-cards-grid',
+      '.benefits-cards-grid',
+      '.mentors-cards-grid',
       '.pricing-cards-grid',
       '.parent-reviews-grid',
       '.parent-reassurance-bar',

@@ -868,112 +868,171 @@
 
 
 
-      /* ── 7. OUR RESULTS & ACHIEVERS (SIMPLE) ── */
-      .our-results-section {
-        max-width: 1260px;
-        margin: 0 auto 90px;
-        padding: 0 24px;
+      /* ── 7. LEARNING BENEFITS & MENTORS SECTION ── */
+      .tm-benefits-mentors-section {
+        max-width: 1040px;
+        margin: 0 auto 70px;
+        padding: 0 20px;
       }
-      .results-metrics-bar {
+      .benefits-header-wrap {
+        text-align: center;
+        max-width: 640px;
+        margin: 0 auto 30px;
+      }
+      .benefits-cards-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        background: #FFFFFF;
-        border: 1.5px solid var(--tm-border);
-        border-radius: 20px;
-        padding: 24px 30px;
-        margin: 36px 0 44px;
-        box-shadow: var(--tm-shadow-sm);
+        gap: 16px;
+        margin-bottom: 44px;
       }
-      .metric-stat-box {
+      .benefit-feature-card {
+        background: #FFFFFF;
+        border: 1.5px solid #1E293B;
+        border-radius: 18px;
+        padding: 20px 16px 18px;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease;
+        box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
         position: relative;
       }
-      .metric-stat-box:not(:last-child)::after {
-        content: '';
-        position: absolute;
-        right: -10px;
-        top: 15%;
-        bottom: 15%;
-        width: 1px;
-        background: #E2E8F0;
+      /* Asymmetrical playful rounded corners inspired by reference design */
+      .benefit-feature-card:nth-child(1) {
+        border-top-right-radius: 38px;
       }
-      .metric-num {
-        font-size: 2.1rem;
-        font-weight: 900;
-        letter-spacing: -0.02em;
-        line-height: 1;
-        margin-bottom: 6px;
+      .benefit-feature-card:nth-child(2) {
+        border-radius: 18px;
       }
-      .metric-label {
-        font-size: 0.85rem;
-        color: var(--tm-muted);
-        font-weight: 600;
+      .benefit-feature-card:nth-child(3) {
+        border-top-right-radius: 38px;
+        border-bottom-right-radius: 38px;
       }
-      .achievers-cards-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
+      .benefit-feature-card:nth-child(4) {
+        border-top-right-radius: 38px;
       }
-      .achiever-card {
-        background: #FFFFFF;
-        border: 1.5px solid #E2E8F0;
-        border-radius: 22px;
-        overflow: hidden;
-        box-shadow: var(--tm-shadow-sm);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      .benefit-feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.1);
+        border-color: var(--tm-brand);
       }
-      .achiever-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--tm-shadow-md);
+      .benefit-icon-box {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 12px;
+        color: #0F172A;
       }
-      .achiever-img-container {
-        width: 100%;
-        height: 200px;
-        overflow: hidden;
-        background: #EEF2FF;
+      .benefit-icon-box svg {
+        width: 28px;
+        height: 28px;
       }
-      .achiever-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: top center;
-        transition: transform 0.4s ease;
-      }
-      .achiever-card:hover .achiever-img {
-        transform: scale(1.05);
-      }
-      .achiever-content-body {
-        padding: 18px 16px 20px;
-      }
-      .achiever-name {
-        font-size: 1.1rem;
+      .benefit-card-title {
+        font-size: 1.05rem;
         font-weight: 800;
-        color: var(--tm-ink);
+        color: #0F172A;
+        margin: 0 0 6px;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+      }
+      .benefit-card-desc {
+        font-size: 0.82rem;
+        color: #475569;
+        line-height: 1.5;
+        margin: 0;
+        font-weight: 450;
+      }
+
+      /* Mentors Sub-Section */
+      .mentors-sub-block {
+        margin-top: 8px;
+      }
+      .mentors-heading-wrap {
+        margin-bottom: 20px;
+      }
+      .mentors-subheading {
+        font-size: clamp(1.25rem, 2vw, 1.55rem);
+        font-weight: 900;
+        color: #0F172A;
+        letter-spacing: -0.02em;
         margin: 0 0 4px;
       }
-      .achiever-detail {
-        font-size: 0.82rem;
-        color: var(--tm-muted);
-        margin: 0 0 10px;
-        line-height: 1.4;
+      .mentors-subtitle {
+        font-size: 0.88rem;
+        color: #64748B;
+        margin: 0;
+        line-height: 1.45;
       }
-      .achiever-achievement {
-        display: inline-block;
-        font-size: 0.8rem;
-        font-weight: 800;
-        padding: 5px 12px;
+      .mentors-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+      .mentor-info-card {
+        background: #FFFFFF;
+        border: 1.5px solid #1E293B;
+        border-radius: 18px;
+        padding: 18px 16px 18px;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease;
+        box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+      }
+      .mentor-info-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.1);
+        border-color: var(--tm-brand);
+      }
+      .mentor-card-top {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .mentor-subject-icon {
+        width: 24px;
+        height: 24px;
+        color: #0F172A;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .mentor-subject-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 10px;
         border-radius: 99px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.01em;
+      }
+      .pill-science { background: #DCFCE7; color: #15803D; }
+      .pill-english { background: #FFE4E6; color: #BE123C; }
+      .pill-math { background: #FEF3C7; color: #B45309; }
+      .pill-lead { background: #1E1B4B; color: #FFFFFF; }
+
+      .mentor-name {
+        font-size: 1.04rem;
+        font-weight: 800;
+        color: #0F172A;
+        margin: 0 0 6px;
+        line-height: 1.3;
+      }
+      .mentor-qual-text {
+        font-size: 0.8rem;
+        color: #475569;
+        line-height: 1.5;
+        margin: 0;
+        font-weight: 450;
       }
 
       /* ── 7.5 SUBSCRIPTION PLANS & TIERS SECTION ── */
       .subscription-section {
-        max-width: 1180px;
-        margin: 0 auto 90px;
-        padding: 0 24px;
+        max-width: 960px;
+        margin: 0 auto 64px;
+        padding: 0 20px;
         position: relative;
       }
       
@@ -981,30 +1040,30 @@
       .pricing-grade-switcher-wrapper {
         display: flex;
         justify-content: center;
-        margin: 32px auto 0;
+        margin: 24px auto 0;
       }
       .pricing-grade-switcher {
         display: inline-flex;
         background: #F1F5F9;
-        padding: 6px;
+        padding: 5px;
         border-radius: 99px;
         border: 1px solid #E2E8F0;
-        gap: 6px;
+        gap: 4px;
       }
       .pricing-grade-btn {
         border: none;
         background: transparent;
-        padding: 10px 24px;
+        padding: 8px 18px;
         border-radius: 99px;
         font-family: var(--tm-font);
-        font-size: 0.94rem;
+        font-size: 0.88rem;
         font-weight: 700;
         color: var(--tm-muted);
         cursor: pointer;
         transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
       }
       .pricing-grade-btn:hover {
         color: var(--tm-ink);
@@ -1012,11 +1071,11 @@
       .pricing-grade-btn.active {
         background: #FFFFFF;
         color: var(--tm-brand);
-        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.12);
+        box-shadow: 0 3px 10px rgba(79, 70, 229, 0.12);
       }
       .pricing-grade-btn .grade-badge {
-        font-size: 0.72rem;
-        padding: 2px 8px;
+        font-size: 0.68rem;
+        padding: 2px 7px;
         border-radius: 99px;
         background: rgba(79, 70, 229, 0.08);
         color: var(--tm-brand);
@@ -1027,14 +1086,15 @@
       .pricing-cards-grid-v2 {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 32px;
+        gap: 20px;
+        max-width: 880px;
+        margin: 28px auto 0;
         align-items: stretch;
-        margin-top: 36px;
         position: relative;
       }
       .pricing-card-v2 {
-        border-radius: var(--tm-card-radius);
-        padding: 40px 32px 34px;
+        border-radius: 20px;
+        padding: 28px 24px 22px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1045,45 +1105,45 @@
       /* 1. Online Only Card */
       .pricing-card-v2.card-plan-online {
         background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
-        border: 2px solid #E2E8F0;
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+        border: 1.5px solid #E2E8F0;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
       }
       .pricing-card-v2.card-plan-online:hover {
-        transform: translateY(-6px);
+        transform: translateY(-4px);
         border-color: #6366F1;
-        box-shadow: 0 20px 42px rgba(99, 102, 241, 0.14);
+        box-shadow: 0 14px 30px rgba(99, 102, 241, 0.12);
       }
 
       /* 2. Physical Centre + Online Card (Featured) */
       .pricing-card-v2.card-plan-hybrid {
         background: linear-gradient(180deg, #FAF5FF 0%, #EEF2FF 28%, #FFFFFF 100%);
-        border: 2.5px solid #7C3AED;
-        box-shadow: 0 20px 48px rgba(124, 58, 237, 0.18);
+        border: 2px solid #7C3AED;
+        box-shadow: 0 12px 32px rgba(124, 58, 237, 0.12);
         position: relative;
       }
       .pricing-card-v2.card-plan-hybrid:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 28px 56px rgba(124, 58, 237, 0.26);
+        transform: translateY(-4px);
+        box-shadow: 0 18px 40px rgba(124, 58, 237, 0.2);
         border-color: #6D28D9;
       }
 
       .popular-badge-ribbon {
         position: absolute;
-        top: -14px;
+        top: -12px;
         left: 50%;
         transform: translateX(-50%);
         background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
         color: #FFFFFF;
-        font-size: 0.76rem;
+        font-size: 0.7rem;
         font-weight: 800;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.05em;
         text-transform: uppercase;
-        padding: 6px 18px;
+        padding: 4px 14px;
         border-radius: 99px;
-        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+        box-shadow: 0 3px 10px rgba(79, 70, 229, 0.3);
         display: inline-flex;
         align-items: center;
-        gap: 6px;
+        gap: 5px;
         white-space: nowrap;
       }
 
@@ -1091,73 +1151,73 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 16px;
+        margin-bottom: 12px;
       }
       .plan-icon-wrap {
-        width: 54px;
-        height: 54px;
-        border-radius: 16px;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.55rem;
+        font-size: 1.25rem;
       }
       .icon-online { background: #EEF2FF; color: #4F46E5; border: 1px solid #C7D2FE; }
       .icon-hybrid { background: #EDE9FE; color: #7C3AED; border: 1px solid #DDD6FE; }
 
       .plan-tier-pill {
-        font-size: 0.76rem;
+        font-size: 0.72rem;
         font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        padding: 6px 14px;
+        letter-spacing: 0.04em;
+        padding: 4px 12px;
         border-radius: 99px;
       }
       .pill-online { background: #EEF2FF; color: #4F46E5; border: 1px solid #C7D2FE; }
       .pill-hybrid { background: #EDE9FE; color: #6D28D9; border: 1.5px solid #C4B5FD; }
 
       .plan-name {
-        font-size: 1.48rem;
+        font-size: 1.28rem;
         font-weight: 900;
         color: var(--tm-ink);
-        margin: 0 0 8px;
+        margin: 0 0 6px;
         letter-spacing: -0.02em;
       }
       .plan-desc {
-        font-size: 0.92rem;
+        font-size: 0.84rem;
         color: var(--tm-muted);
-        line-height: 1.5;
-        margin: 0 0 20px;
-        min-height: 44px;
+        line-height: 1.45;
+        margin: 0 0 14px;
+        min-height: 38px;
       }
 
       .price-box {
-        border-radius: 18px;
-        padding: 18px 22px;
-        margin-bottom: 24px;
+        border-radius: 14px;
+        padding: 14px 18px;
+        margin-bottom: 18px;
       }
       .card-plan-online .price-box {
         background: #F8FAFC;
-        border: 1.5px solid #E2E8F0;
+        border: 1px solid #E2E8F0;
       }
       .card-plan-hybrid .price-box {
         background: #FFFFFF;
-        border: 1.5px solid #DDD6FE;
-        box-shadow: 0 4px 16px rgba(124, 58, 237, 0.08);
+        border: 1px solid #DDD6FE;
+        box-shadow: 0 3px 12px rgba(124, 58, 237, 0.06);
       }
 
       .price-main-line {
         display: flex;
         align-items: baseline;
-        gap: 4px;
+        gap: 3px;
       }
       .price-currency {
-        font-size: 1.45rem;
+        font-size: 1.25rem;
         font-weight: 800;
         color: var(--tm-ink);
       }
       .price-figure {
-        font-size: 2.5rem;
+        font-size: 2.1rem;
         font-weight: 900;
         color: var(--tm-ink);
         line-height: 1;
@@ -1165,22 +1225,22 @@
         transition: all 0.3s ease;
       }
       .price-cadence {
-        font-size: 0.94rem;
+        font-size: 0.85rem;
         font-weight: 700;
         color: var(--tm-muted);
       }
       .price-sub-info {
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin-top: 8px;
-        font-size: 0.84rem;
+        gap: 6px;
+        margin-top: 6px;
+        font-size: 0.78rem;
         font-weight: 700;
       }
       .savings-badge {
-        padding: 3px 10px;
+        padding: 2px 8px;
         border-radius: 99px;
-        font-size: 0.75rem;
+        font-size: 0.72rem;
         font-weight: 800;
       }
       .card-plan-online .savings-badge { background: #EEF2FF; color: #4F46E5; border: 1px solid #C7D2FE; }
@@ -1192,19 +1252,19 @@
       .pricing-features {
         list-style: none;
         padding: 0;
-        margin: 0 0 28px;
+        margin: 0 0 20px;
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 8px;
         flex-grow: 1;
       }
       .pricing-feature-item {
         display: flex;
         align-items: flex-start;
-        gap: 10px;
-        font-size: 0.92rem;
+        gap: 8px;
+        font-size: 0.84rem;
         color: var(--tm-slate);
-        line-height: 1.45;
+        line-height: 1.4;
         font-weight: 500;
       }
       .pricing-feature-item.highlighted {
@@ -1212,13 +1272,13 @@
         font-weight: 700;
       }
       .feature-check-icon {
-        width: 22px;
-        height: 22px;
+        width: 18px;
+        height: 18px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.82rem;
+        font-size: 0.75rem;
         flex-shrink: 0;
         margin-top: 1px;
       }
@@ -1228,9 +1288,9 @@
       .btn-plan-select {
         display: block;
         width: 100%;
-        padding: 15px 20px;
-        border-radius: 14px;
-        font-size: 1rem;
+        padding: 12px 18px;
+        border-radius: 12px;
+        font-size: 0.92rem;
         font-weight: 800;
         text-align: center;
         text-decoration: none;
@@ -2057,8 +2117,6 @@
         .nav-container,
         .landing-hero-grid,
         .classes-section,
-        .our-results-section,
-        .subscription-section,
         .games-arena-section,
         .champions-leaderboard-section,
         .parents-trust-feedback-section,
@@ -2078,8 +2136,8 @@
         .hero-cta-group { justify-content: center; }
         .hero-features-bar { margin: 0 auto; grid-template-columns: repeat(2, 1fr); max-width: 520px; }
         .classes-grid-premium, .tm-classes-row-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 16px; }
-        .results-metrics-bar { grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 22px; }
-        .achievers-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .benefits-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 36px; }
+        .mentors-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
         .pricing-cards-grid-v2 { grid-template-columns: 1fr 1fr; max-width: 100%; gap: 20px; }
         .games-showcase-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
         .leaderboard-podium-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
@@ -2108,7 +2166,7 @@
           margin-bottom: 44px;
         }
 
-        .our-results-section,
+        .tm-benefits-mentors-section,
         .subscription-section,
         .games-arena-section,
         .champions-leaderboard-section,
@@ -2128,9 +2186,9 @@
         .tm-class-title { font-size: 1.06rem; }
         .tm-class-pill-btn { padding: 5px 12px; font-size: 0.76rem; }
 
-        .results-metrics-bar { grid-template-columns: 1fr; gap: 14px; padding: 16px; }
-        .metric-stat-box:not(:last-child)::after { display: none; }
-        .achievers-cards-grid { grid-template-columns: 1fr; gap: 16px; }
+        .benefits-cards-grid { grid-template-columns: 1fr; gap: 14px; margin-bottom: 32px; }
+        .mentors-cards-grid { grid-template-columns: 1fr; gap: 14px; }
+        .benefit-feature-card, .mentor-info-card { padding: 18px 16px; }
 
         .pricing-cards-grid-v2 { grid-template-columns: 1fr; width: 100%; max-width: 100%; margin-top: 24px; gap: 20px; }
         .pricing-card-v2 { padding: 24px 18px 20px; }
@@ -2351,7 +2409,7 @@
           <a href="/" class="active">Home</a>
           <a href="#classes">Classes</a>
           <a href="#pricing">Plans</a>
-          <a href="#results">Results</a>
+          <a href="#why-tezmindz">Why Us</a>
           <a href="#about">About</a>
         </nav>
 
@@ -2471,9 +2529,9 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
           <span>Subscription Plans ⭐</span>
         </a>
-        <a href="#results" class="drawer-nav-item" onclick="togglePublicMobileDrawer()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"></path><path d="M6 4h12a2 2 0 0 1 2 2v3a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6V6a2 2 0 0 1 2-2Z"></path></svg>
-          <span>Results &amp; Achievers</span>
+        <a href="#why-tezmindz" class="drawer-nav-item" onclick="togglePublicMobileDrawer()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+          <span>Why TezMindz</span>
         </a>
         <a href="#about" class="drawer-nav-item" onclick="togglePublicMobileDrawer()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
@@ -2903,77 +2961,138 @@
       </div>
     </section>
 
-    <!-- 5. OUR RESULTS & ACHIEVERS -->
-    <section class="our-results-section reveal-init" id="results">
-      <div class="section-heading-block">
-        <span class="section-tag-pill">🏆 Our Achievers</span>
-        <h2>Students Who Made Us Proud</h2>
-        <p>Real students, real results — powered by TezMindz learning games.</p>
+    <!-- 5. WHY LEARN WITH TEZMINDZ & EXPERIENCED MENTORS -->
+    <section class="tm-benefits-mentors-section reveal-init" id="why-tezmindz">
+      <!-- Top Sub-Heading: Learning Benefits -->
+      <div class="section-heading-block benefits-header-wrap">
+        <span class="section-tag-pill">✨ Proven Learning Methodology</span>
+        <h2>Why Learn with TezMindz?</h2>
+        <p>Build better learning habits, improve your problem-solving skills, and prepare smarter with TezMindz.</p>
       </div>
 
-      <!-- Stats Bar -->
-      <div class="results-metrics-bar">
-        <div class="metric-stat-box">
-          <div class="metric-num" style="color: #4F46E5;">98.6%</div>
-          <div class="metric-label">Qualification Rate</div>
+      <!-- 4 Compact Learning Benefits Cards -->
+      <div class="benefits-cards-grid">
+        <!-- Card 1: Time Management -->
+        <div class="benefit-feature-card">
+          <div class="benefit-icon-box" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h3 class="benefit-card-title">Time Management</h3>
+          <p class="benefit-card-desc">Every practice round runs on the clock — speed becomes a habit, not a shock on exam day.</p>
         </div>
-        <div class="metric-stat-box">
-          <div class="metric-num" style="color: #059669;">500+</div>
-          <div class="metric-label">Top Rankers</div>
+
+        <!-- Card 2: Fear Management & Confidence -->
+        <div class="benefit-feature-card">
+          <div class="benefit-icon-box" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="6"></circle>
+              <circle cx="12" cy="12" r="2" fill="currentColor"></circle>
+            </svg>
+          </div>
+          <h3 class="benefit-card-title">Fear Management</h3>
+          <p class="benefit-card-desc">A guided calm-down moment before every test — so pressure feels familiar, and kids walk in confident.</p>
         </div>
-        <div class="metric-stat-box">
-          <div class="metric-num" style="color: #D97706;">15,000+</div>
-          <div class="metric-label">Active Students</div>
+
+        <!-- Card 3: Out-of-the-Box Thinking -->
+        <div class="benefit-feature-card">
+          <div class="benefit-icon-box" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 18L10 6L14 14L17 9L20 18H4Z"></path>
+              <circle cx="17" cy="5" r="1.5" fill="currentColor"></circle>
+            </svg>
+          </div>
+          <h3 class="benefit-card-title">Out-of-the-Box Thinking</h3>
+          <p class="benefit-card-desc">Doubt-solving sessions teach the shortcut, not just the correction — sparking creative problem solving.</p>
         </div>
-        <div class="metric-stat-box">
-          <div class="metric-num" style="color: #7C3AED;">4.9 / 5 ⭐</div>
-          <div class="metric-label">Parent Rating</div>
+
+        <!-- Card 4: Tips & Tricks -->
+        <div class="benefit-feature-card">
+          <div class="benefit-icon-box" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+              <line x1="7" y1="15" x2="11" y2="15"></line>
+            </svg>
+          </div>
+          <h3 class="benefit-card-title">Tips &amp; Tricks</h3>
+          <p class="benefit-card-desc">One bite-sized card unlocks every practice session — smart strategies and small wins, daily.</p>
         </div>
       </div>
 
-      <!-- Student Cards -->
-      <div class="achievers-cards-grid">
-        <div class="achiever-card">
-          <div class="achiever-img-container">
-            <img src="/static/media/student_topper_1.jpg" alt="Aanya Sharma" class="achiever-img" />
-          </div>
-          <div class="achiever-content-body">
-            <h3 class="achiever-name">Aanya Sharma</h3>
-            <p class="achiever-detail">Class 5 • New Delhi</p>
-            <span class="achiever-achievement" style="background: #EEF2FF; color: #4F46E5;">🥇 IMO Gold Medalist</span>
-          </div>
+      <!-- Bottom Sub-Heading: Experienced Mentors -->
+      <div class="mentors-sub-block">
+        <div class="mentors-heading-wrap">
+          <h3 class="mentors-subheading">Learn from mentors who've done this before:</h3>
+          <p class="mentors-subtitle">Learn with guidance from mentors who understand how to make learning simple, engaging, and effective.</p>
         </div>
 
-        <div class="achiever-card">
-          <div class="achiever-img-container">
-            <img src="/static/media/student_topper_2.jpg" alt="Vihaan Patel" class="achiever-img" />
+        <!-- 4 Mentor Cards Grid -->
+        <div class="mentors-cards-grid">
+          <!-- Mentor 1: Science -->
+          <div class="mentor-info-card">
+            <div class="mentor-card-top">
+              <div class="mentor-subject-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"></ellipse>
+                  <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"></ellipse>
+                  <circle cx="12" cy="12" r="2" fill="currentColor"></circle>
+                </svg>
+              </div>
+              <span class="mentor-subject-pill pill-science">Science</span>
+            </div>
+            <h4 class="mentor-name">Dr. Ketki Kalele</h4>
+            <p class="mentor-qual-text">PhD holder • 50+ research papers published • Years of science teaching experience.</p>
           </div>
-          <div class="achiever-content-body">
-            <h3 class="achiever-name">Vihaan Patel</h3>
-            <p class="achiever-detail">Class 4 • Mumbai</p>
-            <span class="achiever-achievement" style="background: #ECFDF5; color: #059669;">🥈 NSO Silver Medalist</span>
-          </div>
-        </div>
 
-        <div class="achiever-card">
-          <div class="achiever-img-container">
-            <img src="/static/media/student_topper_3.jpg" alt="Rhea Deshmukh" class="achiever-img" />
+          <!-- Mentor 2: English -->
+          <div class="mentor-info-card">
+            <div class="mentor-card-top">
+              <div class="mentor-subject-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                  <line x1="12" y1="6" x2="12" y2="18"></line>
+                </svg>
+              </div>
+              <span class="mentor-subject-pill pill-english">English</span>
+            </div>
+            <h4 class="mentor-name">Vidhi Nawandar</h4>
+            <p class="mentor-qual-text">20 years of teaching experience • GRE/GMAT trainer • Has trained CAT aspirants.</p>
           </div>
-          <div class="achiever-content-body">
-            <h3 class="achiever-name">Rhea Deshmukh</h3>
-            <p class="achiever-detail">Class 6 • Bengaluru</p>
-            <span class="achiever-achievement" style="background: #FAF5FF; color: #7C3AED;">🏆 IEO Champion</span>
-          </div>
-        </div>
 
-        <div class="achiever-card">
-          <div class="achiever-img-container">
-            <img src="/static/media/student_topper_4.jpg" alt="Kabir Mehta" class="achiever-img" />
+          <!-- Mentor 3: Mathematics -->
+          <div class="mentor-info-card">
+            <div class="mentor-card-top">
+              <div class="mentor-subject-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 6h16M4 12h16M7 18h10"></path>
+                  <circle cx="7" cy="6" r="1" fill="currentColor"></circle>
+                  <circle cx="17" cy="12" r="1" fill="currentColor"></circle>
+                </svg>
+              </div>
+              <span class="mentor-subject-pill pill-math">Mathematics</span>
+            </div>
+            <h4 class="mentor-name">Nikita VN</h4>
+            <p class="mentor-qual-text">5 years of teaching experience • Has trained IIM-MBA graduates at an MNC.</p>
           </div>
-          <div class="achiever-content-body">
-            <h3 class="achiever-name">Kabir Mehta</h3>
-            <p class="achiever-detail">Class 5 • Chennai</p>
-            <span class="achiever-achievement" style="background: #FFFBEB; color: #D97706;">🌟 UIEO Top Scorer</span>
+
+          <!-- Mentor 4: Primary Academic Lead -->
+          <div class="mentor-info-card">
+            <div class="mentor-card-top">
+              <div class="mentor-subject-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                </svg>
+              </div>
+              <span class="mentor-subject-pill pill-lead">Primary Academic Lead</span>
+            </div>
+            <h4 class="mentor-name">Dr. Kunjan Ved</h4>
+            <p class="mentor-qual-text">Runs 3 schools and an academy • 20 years as an educator.</p>
           </div>
         </div>
       </div>
@@ -3180,7 +3299,11 @@
           <p class="game-card-desc">Slice and construct pizzas to visualize equivalent fractions, improper fractions, and decimals in real-time.</p>
           <div class="game-card-footer">
             <span class="game-card-players">👥 1,200+ Players</span>
-            <a href="/game/1/difficulty/" class="game-card-play-btn play-btn-math-alt">Play →</a>
+            {% if request.user.is_authenticated %}
+              <a href="/game/1/difficulty/" class="game-card-play-btn play-btn-math-alt">Play →</a>
+            {% else %}
+              <a href="javascript:void(0)" onclick="TMAuthModal.openLogin()" class="game-card-play-btn play-btn-math-alt">Play →</a>
+            {% endif %}
           </div>
         </div>
 
@@ -3195,7 +3318,11 @@
           <p class="game-card-desc">Combine sunlight photons, water molecules, and CO2 in chloroplast chambers to produce glucose.</p>
           <div class="game-card-footer">
             <span class="game-card-players">👥 750+ Players</span>
-            <a href="/subject/2/" class="game-card-play-btn play-btn-science">Explore →</a>
+            {% if request.user.is_authenticated %}
+              <a href="/subject/2/" class="game-card-play-btn play-btn-science">Explore →</a>
+            {% else %}
+              <a href="javascript:void(0)" onclick="TMAuthModal.openLogin()" class="game-card-play-btn play-btn-science">Explore →</a>
+            {% endif %}
           </div>
         </div>
 
@@ -3210,20 +3337,34 @@
           <p class="game-card-desc">Deconstruct and classify dynamic sentence tokens into Nouns, Verbs, Adjectives, and Adverbs.</p>
           <div class="game-card-footer">
             <span class="game-card-players">👥 620+ Players</span>
-            <a href="/subject/3/" class="game-card-play-btn play-btn-english">Play →</a>
+            {% if request.user.is_authenticated %}
+              <a href="/subject/3/" class="game-card-play-btn play-btn-english">Play →</a>
+            {% else %}
+              <a href="javascript:void(0)" onclick="TMAuthModal.openLogin()" class="game-card-play-btn play-btn-english">Play →</a>
+            {% endif %}
           </div>
         </div>
 
       </div>
 
       <div class="games-arena-cta">
-        <a href="/games/" class="btn-explore-all-games">
-          <span>Explore All 3D Games (Including Dream House Builder)</span>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
+        {% if request.user.is_authenticated %}
+          <a href="/games/" class="btn-explore-all-games">
+            <span>Explore All 3D Games (Including Dream House Builder)</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        {% else %}
+          <a href="javascript:void(0)" onclick="TMAuthModal.openLogin()" class="btn-explore-all-games">
+            <span>Explore All 3D Games (Including Dream House Builder)</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        {% endif %}
       </div>
     </section>
 
@@ -3312,7 +3453,7 @@
       </div>
     </section>
 
-    <!-- 8. PARENT REVIEWS -->
+    <!-- 8. PARENT REVIEWS (COMMENTED OUT)
     <section class="parents-trust-feedback-section reveal-init" id="parent-reviews">
       <div class="section-heading-block">
         <span class="section-tag-pill">💬 What Parents Say</span>
@@ -3321,7 +3462,6 @@
       </div>
 
       <div class="parent-reviews-grid">
-        <!-- Review 1 -->
         <div class="parent-review-card">
           <div>
             <div class="review-stars">★★★★★</div>
@@ -3336,7 +3476,6 @@
           </div>
         </div>
 
-        <!-- Review 2 -->
         <div class="parent-review-card">
           <div>
             <div class="review-stars">★★★★★</div>
@@ -3351,7 +3490,6 @@
           </div>
         </div>
 
-        <!-- Review 3 -->
         <div class="parent-review-card">
           <div>
             <div class="review-stars">★★★★★</div>
@@ -3367,6 +3505,7 @@
         </div>
       </div>
     </section>
+    -->
 
     <!-- 9. FINAL HIGH-CONVERSION CTA BANNER -->
     <section class="final-cta-section reveal-init">

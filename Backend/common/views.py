@@ -60,31 +60,174 @@ def learn_page(request):
         
     subjects = Subject.objects.all().order_by('order', 'name')
     class_subjects = []
+    
+    total_curriculum_topics = 0
+    total_mastered_topics = 0
+    current_learning_subject = None
+    
     for s in subjects:
         topics = s.topics.filter(grade=grade, status='published').order_by('order', 'id') if grade else s.topics.filter(status='published').order_by('order', 'id')
         total_topics = topics.count()
         done_topics = 0
+        tp_dict = {}
         if profile and total_topics > 0:
             tp_list = TopicProgress.objects.filter(student=profile, topic__in=topics)
+            tp_dict = {tp.topic_id: tp for tp in tp_list}
             done_topics = sum(1 for tp in tp_list if tp.best_score >= 60)
+            total_curriculum_topics += total_topics
+            total_mastered_topics += done_topics
+            
         progress_pct = int((done_topics / total_topics) * 100) if total_topics > 0 else 0
         
+        enriched_chapters = []
+        next_topic_to_continue = None
+        for idx, ch in enumerate(topics):
+            tp = tp_dict.get(ch.id)
+            if tp and tp.best_score >= 60:
+                ch_status = "completed"
+                ch_progress = 100
+                ch_status_label = "Completed"
+            elif tp and (tp.attempts > 0 or tp.best_score > 0):
+                ch_status = "in_progress"
+                ch_progress = max(25, min(80, int((tp.best_score / 60) * 100)))
+                ch_status_label = "In Progress"
+                if not next_topic_to_continue:
+                    next_topic_to_continue = ch
+            else:
+                ch_status = "not_started"
+                ch_progress = 0
+                ch_status_label = "Not Started"
+                if not next_topic_to_continue and done_topics == 0:
+                    next_topic_to_continue = ch
+            
+            concept_count = ch.concepts.filter(status='published').count() if hasattr(ch, 'concepts') else 0
+            if concept_count == 0:
+                concept_count = 3
+            completed_modules = int((ch_progress / 100) * concept_count)
+            
+            enriched_chapters.append({
+                "id": ch.id,
+                "order": ch.order or (idx + 1),
+                "name": ch.name,
+                "title": ch.title,
+                "difficulty": ch.difficulty,
+                "status": ch_status,
+                "status_label": ch_status_label,
+                "progress_pct": ch_progress,
+                "total_modules": concept_count,
+                "completed_modules": completed_modules,
+            })
+            
+        if not next_topic_to_continue and topics.exists():
+            for ch in topics:
+                tp = tp_dict.get(ch.id)
+                if not tp or tp.best_score < 60:
+                    next_topic_to_continue = ch
+                    break
+            if not next_topic_to_continue:
+                next_topic_to_continue = topics.first()
+                
+        if progress_pct > 0 and not current_learning_subject:
+            current_learning_subject = {
+                "name": s.name,
+                "slug": getattr(s, 'slug', ''),
+                "progress_pct": progress_pct,
+                "topic": next_topic_to_continue
+            }
+
+        topic_titles = [t.title for t in topics[:3]]
+        subtopics_str = " • ".join(topic_titles) if topic_titles else "Curriculum In Progress"
+
+        s_name_lower = s.name.lower()
+        s_slug = getattr(s, 'slug', '') or ''
+        if 'math' in s_name_lower or 'math' in s_slug:
+            icon_type = 'math'
+            theme_color = '#2563EB'
+            theme_bg = '#EFF6FF'
+            theme_pill = '#DBEAFE'
+            icon_emoji = '🔢'
+            olympiad_code = 'IMO'
+        elif 'sci' in s_name_lower or 'sci' in s_slug or 'bio' in s_name_lower:
+            icon_type = 'science'
+            theme_color = '#059669'
+            theme_bg = '#ECFDF5'
+            theme_pill = '#D1FAE5'
+            icon_emoji = '🧪'
+            olympiad_code = 'NSO'
+        elif 'eng' in s_name_lower or 'eng' in s_slug:
+            icon_type = 'english'
+            theme_color = '#DB2777'
+            theme_bg = '#FDF2F8'
+            theme_pill = '#FCE7F3'
+            icon_emoji = '📚'
+            olympiad_code = 'IEO'
+        else:
+            icon_type = 'general'
+            theme_color = '#7C3AED'
+            theme_bg = '#FAF5FF'
+            theme_pill = '#EDE9FE'
+            icon_emoji = '🌟'
+            olympiad_code = 'OLYMPIAD'
+        
+        total_modules_count = sum(c['total_modules'] for c in enriched_chapters)
+        completed_modules_count = sum(c['completed_modules'] for c in enriched_chapters)
+
         class_subjects.append({
             "id": s.id,
             "name": s.name,
-            "slug": getattr(s, 'slug', ''),
+            "slug": s_slug,
             "subject": s,
+            "icon_type": icon_type,
+            "icon_emoji": icon_emoji,
+            "theme_color": theme_color,
+            "theme_bg": theme_bg,
+            "theme_pill": theme_pill,
+            "olympiad_code": olympiad_code,
+            "subtopics_str": subtopics_str,
             "total_concepts": total_topics,
             "done_concepts": done_topics,
-            "total_modules": total_topics * 3,
+            "total_modules": total_modules_count or (total_topics * 3),
+            "done_modules": completed_modules_count,
+            "remaining_modules": max(0, (total_modules_count or (total_topics * 3)) - completed_modules_count),
             "progress_pct": progress_pct,
-            "chapters": topics
+            "current_topic": next_topic_to_continue,
+            "has_started": (done_topics > 0 or progress_pct > 0 or any(c['status'] == 'in_progress' for c in enriched_chapters)),
+            "chapters": enriched_chapters
         })
         
+    today_xp = 0
+    daily_goal_xp = 200
+    if profile:
+        today_xp = profile.xp_points % daily_goal_xp if profile.xp_points > 0 else 0
+        if today_xp == 0 and profile.xp_points > 0:
+            today_xp = daily_goal_xp
+    xp_to_goal = max(0, daily_goal_xp - today_xp)
+    xp_progress_pct = int((today_xp / daily_goal_xp) * 100)
+
+    overall_progress_pct = int((total_mastered_topics / total_curriculum_topics) * 100) if total_curriculum_topics > 0 else 0
+
+    student_name = ""
+    if profile and profile.display_name:
+        student_name = profile.display_name
+    elif hasattr(request, 'user') and request.user.is_authenticated:
+        student_name = request.user.get_full_name() or getattr(request.user, 'first_name', '') or request.user.username
+    if not student_name:
+        student_name = "Champion"
+
     context = {
+        "student_name": student_name,
         "student_class": grade,
         "profile": profile,
-        "class_subjects": class_subjects
+        "class_subjects": class_subjects,
+        "current_learning": current_learning_subject or ({"name": class_subjects[0]["name"], "slug": class_subjects[0]["slug"], "progress_pct": class_subjects[0]["progress_pct"], "topic": class_subjects[0]["current_topic"]} if class_subjects else None),
+        "overall_progress_pct": overall_progress_pct,
+        "total_mastered_topics": total_mastered_topics,
+        "total_curriculum_topics": total_curriculum_topics,
+        "today_xp": today_xp,
+        "daily_goal_xp": daily_goal_xp,
+        "xp_to_goal": xp_to_goal,
+        "xp_progress_pct": xp_progress_pct,
+        "streak_days": getattr(profile, 'daily_streak', 0) if profile else 0,
     }
     return render(request, "learn.html", context)
 
@@ -430,20 +573,136 @@ def game_play_page(request, game_id):
     return render(request, "games/game_shell.html", context)
 
 def games_page(request):
-    from apps.games.models import Game
+    from apps.games.models import Game, GameSession
     from django.db.models import Q
     student_class = None
     profile = None
     if hasattr(request, 'user') and request.user.is_authenticated and hasattr(request.user, 'student_profile'):
         profile = request.user.student_profile
         student_class = profile.grade
-        games = Game.published.filter(
+        games_qs = Game.published.filter(
             Q(concept__topic__grade=student_class) | Q(concept__isnull=True)
         ).distinct().order_by('id')
     else:
-        games = Game.published.all().order_by('id')
+        games_qs = Game.published.all().order_by('id')
         
-    return render(request, "games.html", {"games": games, "profile": profile, "student_class": student_class})
+    enriched_games = []
+    recent_session = None
+    if profile:
+        recent_session = GameSession.objects.filter(student=profile).order_by('-started_at').first()
+        
+    for g in games_qs:
+        subject_name = "General"
+        subject_slug = "general"
+        if g.concept and g.concept.topic and g.concept.topic.subject:
+            subject_name = g.concept.topic.subject.name
+            subject_slug = g.concept.topic.subject.slug or g.concept.topic.subject.name.lower()
+        
+        g_title_lower = g.title.lower()
+        if 'pizza' in g_title_lower or 'fraction' in g_title_lower or 'math' in subject_slug:
+            emoji = '🍕'
+            subject_category = 'Mathematics'
+            category_slug = 'math'
+            theme_color = '#2563EB'
+            theme_bg = '#EFF6FF'
+            theme_pill = '#DBEAFE'
+            xp_reward = 150
+            coin_reward = 15
+            is_flagship = True
+        elif 'bio' in g_title_lower or 'reactor' in g_title_lower or 'science' in subject_slug:
+            emoji = '🧪'
+            subject_category = 'Science'
+            category_slug = 'science'
+            theme_color = '#059669'
+            theme_bg = '#ECFDF5'
+            theme_pill = '#D1FAE5'
+            xp_reward = 160
+            coin_reward = 16
+            is_flagship = False
+        elif 'sentence' in g_title_lower or 'token' in g_title_lower or 'english' in subject_slug:
+            emoji = '📝'
+            subject_category = 'English'
+            category_slug = 'english'
+            theme_color = '#DB2777'
+            theme_bg = '#FDF2F8'
+            theme_pill = '#FCE7F3'
+            xp_reward = 140
+            coin_reward = 14
+            is_flagship = False
+        elif 'house' in g_title_lower or 'builder' in g_title_lower:
+            emoji = '🏠'
+            subject_category = '3D Worlds'
+            category_slug = 'math'
+            theme_color = '#7C3AED'
+            theme_bg = '#FAF5FF'
+            theme_pill = '#EDE9FE'
+            xp_reward = 200
+            coin_reward = 25
+            is_flagship = True
+        else:
+            emoji = '🎮'
+            subject_category = subject_name
+            category_slug = 'general'
+            theme_color = '#6366F1'
+            theme_bg = '#EEF2FF'
+            theme_pill = '#E0E7FF'
+            xp_reward = 100
+            coin_reward = 10
+            is_flagship = False
+
+        diff = g.difficulty.capitalize() if g.difficulty else "Medium"
+        if diff == "Easy":
+            diff_color = "#059669"
+            diff_bg = "#ECFDF5"
+        elif diff == "Hard":
+            diff_color = "#DC2626"
+            diff_bg = "#FEF2F2"
+        else:
+            diff_color = "#D97706"
+            diff_bg = "#FFFBEB"
+
+        enriched_games.append({
+            "id": g.id,
+            "title": g.title,
+            "description": g.description or f"Master key {subject_category} concepts through engaging 3D gameplay and interactive levels.",
+            "game_type": g.game_type,
+            "difficulty": diff,
+            "difficulty_color": diff_color,
+            "difficulty_bg": diff_bg,
+            "subject_category": subject_category,
+            "category_slug": category_slug,
+            "emoji": emoji,
+            "theme_color": theme_color,
+            "theme_bg": theme_bg,
+            "theme_pill": theme_pill,
+            "xp_reward": xp_reward,
+            "coin_reward": coin_reward,
+            "is_flagship": is_flagship,
+            "concept_name": g.concept.title if g.concept else "",
+            "topic_name": g.concept.topic.title if (g.concept and g.concept.topic) else "",
+        })
+
+    featured_game = None
+    if recent_session and recent_session.game:
+        # find matching dict
+        for gm in enriched_games:
+            if gm['id'] == recent_session.game.id:
+                featured_game = gm
+                break
+    if not featured_game and enriched_games:
+        featured_game = next((gm for gm in enriched_games if gm['is_flagship']), enriched_games[0])
+
+    context = {
+        "games": enriched_games,
+        "profile": profile,
+        "student_class": student_class,
+        "featured_game": featured_game,
+        "total_games_count": len(enriched_games),
+        "total_xp": getattr(profile, 'xp_points', 0) if profile else 0,
+        "total_coins": getattr(profile, 'adventure_coins', 0) if profile else 0,
+        "streak_days": getattr(profile, 'daily_streak', 0) if profile else 0,
+    }
+    return render(request, "games.html", context)
 
 def progress_page(request):
     from apps.curriculum.models import Subject
@@ -558,7 +817,7 @@ def profile_page(request):
 def login_page(request):
     if request.method == "GET":
         if hasattr(request, 'user') and request.user.is_authenticated:
-            if request.user.is_staff or request.user.is_superuser:
+            if request.user.is_staff or request.user.is_superuser or getattr(request.user, 'role', '') == 'admin':
                 return redirect("/admin/")
             return redirect("/dashboard/")
         return render(request, "login.html")
@@ -579,19 +838,23 @@ def login_page(request):
     if user is None:
         return JsonResponse({"success": False, "message": "Invalid email or password."}, status=400)
 
+    if user.is_staff or user.is_superuser or getattr(user, 'role', '') == 'admin':
+        return JsonResponse({
+            "success": False,
+            "message": "Admin accounts cannot login here. Please use the Admin Portal."
+        }, status=403)
+
     login(request, user)
     
     # Generate JWT tokens for API usage
     from rest_framework_simplejwt.tokens import RefreshToken
     refresh = RefreshToken.for_user(user)
     
-    redirect_url = "/admin/" if user.is_staff or user.is_superuser else "/dashboard/"
-    
     return JsonResponse({
         "success": True, 
         "access": str(refresh.access_token),
         "refresh": str(refresh),
-        "redirect_url": redirect_url
+        "redirect_url": "/dashboard/"
     })
 
 @require_http_methods(["GET", "POST"])

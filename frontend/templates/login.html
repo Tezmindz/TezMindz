@@ -415,6 +415,33 @@
         font-weight: 800;
         text-decoration: none;
       }
+
+      .btn-admin-portal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 12px 18px;
+        background: rgba(79, 70, 229, 0.05);
+        border: 1.5px dashed #c7d2fe;
+        border-radius: 12px;
+        color: #4f46e5;
+        font-size: 0.88rem;
+        font-weight: 800;
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+      .btn-admin-portal:hover {
+        background: #4f46e5;
+        color: #ffffff;
+        border-color: #4f46e5;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+      }
+      .btn-admin-portal:hover i {
+        color: #ffffff !important;
+      }
     </style>
   </head>
   <body>
@@ -549,9 +576,10 @@
           Don't have an account? <a href="/register/">Create one free</a>
         </p>
 
-        <div style="text-align:center;margin-top:18px;padding-top:14px;border-top:1px solid #EDE9FE;">
-          <a href="/tezadmin/login/" style="font-size:0.82rem;font-weight:800;color:#6366F1;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
-            <i class="bi bi-shield-lock-fill"></i> Staff &amp; Administrator Portal ➔
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid #EDE9FE;">
+          <a href="/tezadmin/login/" class="btn-admin-portal">
+            <i class="bi bi-shield-lock-fill" style="font-size:1.05rem;color:#4f46e5;"></i>
+            <span>Staff &amp; Administrator Portal ➔</span>
           </a>
         </div>
       </div>
