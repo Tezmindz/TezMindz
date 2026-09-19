@@ -5,147 +5,768 @@
 
 {% block extra_head %}
 <style>
-  .learn-header { margin-bottom: 28px; }
-  .learn-header h1 { font-size: clamp(1.4rem, 3vw, 1.85rem); font-weight: 900; color: #0F172A; margin: 0 0 6px; letter-spacing: -0.02em; }
-  .learn-header p { color: #64748B; font-size: 0.92rem; font-weight: 600; margin: 0; }
-
-  .subject-cards { display: flex; flex-direction: column; gap: 20px; }
-  .subject-card {
-    background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 24px;
-    padding: 24px; transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+  /* ══════════════════════════════════════════════════════════════════════════
+     LEARNING WORLDS INTERACTIVE DASHBOARD STYLING
+     ══════════════════════════════════════════════════════════════════════════ */
+  .lw-page-container {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    padding: 0 16px;
   }
-  .subject-card:hover {
-    box-shadow: 0 12px 32px rgba(79, 70, 229, 0.1);
-    border-color: #C4B5FD;
+
+  /* ── 1. PERSONALIZED HERO BANNER ── */
+  .lw-welcome-hero {
+    background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #4338CA 100%);
+    border-radius: 24px;
+    padding: 28px 32px;
+    color: #FFFFFF;
+    margin-bottom: 24px;
+    box-shadow: 0 14px 36px rgba(49, 46, 129, 0.18);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .lw-welcome-hero::before {
+    content: "";
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(129, 140, 248, 0.25) 0%, transparent 70%);
+    top: -100px;
+    right: -80px;
+    pointer-events: none;
+  }
+  .lw-welcome-content {
+    flex: 1;
+    min-width: 280px;
+    z-index: 2;
+  }
+  .lw-user-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 4px 14px;
+    border-radius: 99px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .lw-welcome-title {
+    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+    font-weight: 900;
+    margin: 0 0 6px;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+  .lw-welcome-subtitle {
+    font-size: 0.94rem;
+    color: #E0E7FF;
+    margin: 0 0 16px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .lw-streak-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: #FDE68A;
+    font-size: 0.82rem;
+    font-weight: 800;
+    padding: 5px 12px;
+    border-radius: 99px;
+  }
+  .lw-hero-actions {
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn-continue-hero {
+    background: #FFFFFF;
+    color: #4338CA;
+    font-size: 0.95rem;
+    font-weight: 800;
+    padding: 12px 22px;
+    border-radius: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn-continue-hero:hover {
     transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+    background: #F8FAFC;
+  }
+
+  /* ── 2. DAILY GOAL & STATS BAR ── */
+  .lw-stats-goal-strip {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 768px) {
+    .lw-stats-goal-strip { grid-template-columns: 1fr; }
+  }
+  .lw-goal-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03);
+  }
+  .lw-goal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .lw-goal-label {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .lw-goal-val {
+    font-size: 0.86rem;
+    font-weight: 900;
+    color: #4F46E5;
+  }
+  .lw-goal-bar {
+    height: 8px;
+    background: #F1F5F9;
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .lw-goal-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #F59E0B, #EF4444);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+  .lw-goal-caption {
+    font-size: 0.76rem;
+    color: #64748B;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .lw-quick-metrics {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03);
+  }
+  .lw-metric-item {
+    text-align: center;
+  }
+  .lw-metric-num {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #0F172A;
+    line-height: 1.1;
+  }
+  .lw-metric-sub {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+  }
+
+  /* ── 3. SUBJECT FILTER TABS ── */
+  .lw-filter-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .lw-filter-wrapper::-webkit-scrollbar { display: none; }
+  .lw-filter-btn {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 99px;
+    padding: 7px 16px;
+    font-family: inherit;
+    font-size: 0.84rem;
+    font-weight: 800;
+    color: #475569;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+  }
+  .lw-filter-btn:hover {
+    background: #F8FAFC;
+    border-color: #CBD5E1;
+    color: #0F172A;
+  }
+  .lw-filter-btn.active {
+    background: #1E1B4B;
+    border-color: #1E1B4B;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(30, 27, 75, 0.15);
+  }
+
+  /* ── 4. INTERACTIVE LEARNING WORLD CARDS ── */
+  .lw-worlds-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .lw-world-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    position: relative;
+  }
+  .lw-world-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(79, 70, 229, 0.08);
+    border-color: #C7D2FE;
+  }
+
+  /* Top Bar */
+  .lw-card-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .lw-subject-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .lw-subject-icon-disc {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+  }
+  .lw-subject-heading {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .lw-olympiad-code {
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 99px;
+    margin-left: 6px;
+    text-transform: uppercase;
+  }
+
+  /* Interactive Progress Trigger Button */
+  .lw-progress-popover-trigger {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 99px;
+    padding: 5px 12px;
+    font-size: 0.82rem;
+    font-weight: 900;
+    color: #334155;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+  }
+  .lw-progress-popover-trigger:hover,
+  .lw-progress-popover-trigger.active {
+    background: #EEF2FF;
+    border-color: #C7D2FE;
+    color: #4338CA;
+  }
+
+  /* Subtopics line */
+  .lw-subtopics-text {
+    font-size: 0.84rem;
+    color: #64748B;
+    font-weight: 600;
+    margin: 0 0 16px;
+    line-height: 1.4;
+  }
+
+  /* Progress Bar & Details */
+  .lw-card-progress-bar {
+    height: 8px;
+    background: #F1F5F9;
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    cursor: pointer;
+  }
+  .lw-card-progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Expandable / Interactive Progress Popover Panel */
+  .lw-progress-details-panel {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    display: none;
+    animation: fadeIn 0.2s ease;
+  }
+  .lw-progress-details-panel.show {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .lw-panel-metric {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #334155;
+  }
+
+  /* Stats Chip Row */
+  .lw-stats-chip-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .lw-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    color: #475569;
+  }
+  .lw-chip.mastered {
+    background: #ECFDF5;
+    border-color: #A7F3D0;
+    color: #065F46;
+  }
+
+  /* Chapter Cards Grid */
+  .lw-chapters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
   }
   @media (max-width: 600px) {
-    .subject-card { padding: 18px 14px; border-radius: 20px; }
+    .lw-chapters-grid { grid-template-columns: 1fr; }
   }
 
-  .subject-card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
-  .subject-card-icon {
-    width: 54px; height: 54px; border-radius: 16px;
-    display: grid; place-items: center; flex-shrink: 0;
+  .lw-chapter-card {
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+    position: relative;
   }
-  .subject-card-icon.math { background: #EFF6FF; color: #2563EB; }
-  .subject-card-icon.science { background: #ECFDF5; color: #059669; }
-  .subject-card-icon.english { background: #FDF2F8; color: #DB2777; }
-  .subject-card-meta { flex: 1; min-width: 160px; }
-  .subject-card-meta h2 { font-size: 1.2rem; font-weight: 900; color: #0F172A; margin: 0 0 4px; letter-spacing: -0.01em; }
-  .subject-card-meta p { font-size: 0.82rem; color: #64748B; font-weight: 600; margin: 0; }
-  .subject-action-btn-wrap { margin-left: auto; }
-  @media (max-width: 600px) {
-    .subject-action-btn-wrap { width: 100%; margin-left: 0; margin-top: 6px; }
-    .subject-action-btn-wrap .btn-primary { width: 100%; justify-content: center; }
+  .lw-chapter-card:hover {
+    background: #FFFFFF;
+    border-color: #818CF8;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.08);
+  }
+  .lw-chapter-card.completed {
+    border-color: #A7F3D0;
+    background: #F0FDF4;
+  }
+  .lw-chapter-card.in_progress {
+    border-color: #FED7AA;
+    background: #FFFBEB;
   }
 
-  .subject-progress-row { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-  .subject-progress-row .progress-bar-wrap { flex: 1; height: 8px; background: #F1F5F9; border-radius: 100px; overflow: hidden; }
-  .subject-progress-row .progress-bar-fill { height: 100%; border-radius: 100px; }
-  .subject-progress-pct { font-size: 0.9rem; font-weight: 900; color: #4F46E5; width: 44px; text-align: right; }
+  .lw-chapter-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .lw-chapter-num {
+    font-size: 0.68rem;
+    font-weight: 900;
+    color: #6366F1;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .lw-ch-status-badge {
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 6px;
+  }
+  .badge-completed { background: #DCFCE7; color: #15803D; }
+  .badge-in_progress { background: #FEF3C7; color: #B45309; }
+  .badge-not_started { background: #F1F5F9; color: #64748B; }
 
-  .subject-stats { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
-  .stat-chip {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px;
-    padding: 4px 10px; font-size: 0.74rem; font-weight: 800; color: #334155;
+  .lw-chapter-title {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0 0 10px;
+    line-height: 1.35;
   }
-  .stat-chip.green { background: #ECFDF5; border-color: #A7F3D0; color: #065F46; }
 
-  .chapters-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
-  @media (max-width: 480px) {
-    .chapters-grid { grid-template-columns: 1fr; }
+  .lw-chapter-meta-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: #64748B;
+    font-weight: 700;
   }
-  .chapter-tile {
-    background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px;
-    padding: 14px 16px; text-decoration: none; transition: all 0.18s ease;
-    display: flex; flex-direction: column; justify-content: space-between;
+  .lw-ch-action-arrow {
+    color: #4F46E5;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
-  .chapter-tile:hover { background: #FAF5FF; border-color: #C4B5FD; transform: translateY(-2px); }
-  .chapter-tile-num { font-size: 0.68rem; font-weight: 900; color: #6366F1; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
-  .chapter-tile-name { font-size: 0.9rem; font-weight: 800; color: #0F172A; margin-bottom: 8px; }
-  .chapter-tile-meta { font-size: 0.72rem; color: #64748B; font-weight: 700; }
+
+  /* Card Footer Actions */
+  .lw-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-top: 14px;
+    border-top: 1px solid #F1F5F9;
+  }
+  .lw-continue-hint {
+    font-size: 0.84rem;
+    color: #475569;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-world-action {
+    background: #1E1B4B;
+    color: #FFFFFF;
+    font-size: 0.88rem;
+    font-weight: 800;
+    padding: 9px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+  }
+  .btn-world-action:hover {
+    background: #312E81;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(30, 27, 75, 0.2);
+  }
+  .btn-world-action.continue {
+    background: linear-gradient(135deg, #4F46E5, #3730A3);
+  }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="learn-header">
-  <h1>{{ student_class.class_label }} — Learning Worlds</h1>
-  <p>{{ student_class.stage|default:"Explorer Stage" }} • Choose a world and embark on your learning adventure</p>
-</div>
+<div class="lw-page-container">
 
-<div class="subject-cards">
-{% for cs in class_subjects %}
-<div class="subject-card">
-  <div class="subject-card-header">
-    <div class="subject-card-icon {{ cs.subject.icon_type }}">
-      {% if cs.subject.icon_type == "math" %}
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-      {% elif cs.subject.icon_type == "science" %}
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"></path><path d="M14 9.3V1.99"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></svg>
+  <!-- 1. PERSONALIZED WELCOME & PROGRESS HERO -->
+  <div class="lw-welcome-hero">
+    <div class="lw-welcome-content">
+      <div class="lw-user-badge">
+        <span>⭐ {{ student_class.name|default:"Grade 4" }} Champion</span>
+      </div>
+      <h1 class="lw-welcome-title">
+        Welcome back, {{ student_name }} 👋
+      </h1>
+      <p class="lw-welcome-subtitle">
+        {% if current_learning %}
+          You're <strong>{{ current_learning.progress_pct }}%</strong> through <strong>{{ current_learning.name }}</strong>.
+        {% else %}
+          Ready to embark on your gamified Olympiad learning adventure?
+        {% endif %}
+      </p>
+      <div class="lw-streak-pill">
+        <span>🔥 {{ streak_days|default:"1" }} Day Streak</span>
+        <span>•</span>
+        <span>Keep your learning momentum going!</span>
+      </div>
+    </div>
+
+    <div class="lw-hero-actions">
+      {% if current_learning and current_learning.topic %}
+        <a href="/chapter/{{ current_learning.topic.id }}/" class="btn-continue-hero">
+          <span>Continue Learning</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
       {% else %}
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#DB2777" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><path d="M6 6h10"></path><path d="M6 10h10"></path></svg>
+        <a href="#worlds" class="btn-continue-hero">
+          <span>Explore All Worlds</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </a>
       {% endif %}
     </div>
-    <div class="subject-card-meta">
-      <h2>{{ cs.name }}</h2>
-      <p>{{ cs.subject.subtitle }} • {{ cs.subject.olympiad_code }}</p>
+  </div>
+
+  <!-- 2. DAILY GOAL & OVERALL MASTERY STATS -->
+  <div class="lw-stats-goal-strip">
+    <div class="lw-goal-card">
+      <div class="lw-goal-header">
+        <span class="lw-goal-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          Today's Learning Goal
+        </span>
+        <span class="lw-goal-val">{{ today_xp }} / {{ daily_goal_xp }} XP</span>
+      </div>
+      <div class="lw-goal-bar">
+        <div class="lw-goal-fill" style="width: {{ xp_progress_pct }}%;"></div>
+      </div>
+      <div class="lw-goal-caption">
+        <span>{% if xp_to_goal > 0 %}{{ xp_to_goal }} XP to reach today's goal{% else %}🎉 Daily Goal Completed!{% endif %}</span>
+        <a href="/games/" style="color:#4F46E5;text-decoration:none;font-weight:800;">Play Games for +XP →</a>
+      </div>
     </div>
-    <div class="subject-action-btn-wrap">
-      <a class="btn-primary" href="/subject/{{ cs.id }}/" style="display:inline-flex;align-items:center;gap:8px;">
-        <span>Explore World</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-      </a>
+
+    <div class="lw-quick-metrics">
+      <div class="lw-metric-item">
+        <div class="lw-metric-num" style="color:#059669;">{{ total_mastered_topics }}</div>
+        <div class="lw-metric-sub">Mastered</div>
+      </div>
+      <div class="lw-metric-item">
+        <div class="lw-metric-num" style="color:#2563EB;">{{ total_curriculum_topics }}</div>
+        <div class="lw-metric-sub">Chapters</div>
+      </div>
+      <div class="lw-metric-item">
+        <div class="lw-metric-num" style="color:#7C3AED;">{{ overall_progress_pct }}%</div>
+        <div class="lw-metric-sub">Total Mastery</div>
+      </div>
     </div>
   </div>
 
-  <div class="subject-progress-row">
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" style="width:{{ cs.progress_pct }}%; background:{% if 'math' in cs.slug %}linear-gradient(90deg,#2563EB,#60A5FA){% elif 'science' in cs.slug %}linear-gradient(90deg,#059669,#34D399){% else %}linear-gradient(90deg,#DB2777,#F472B6){% endif %};"></div>
+  <!-- 3. SUBJECT FILTER TABS -->
+  <div class="lw-filter-wrapper" id="worlds">
+    <button type="button" class="lw-filter-btn active" onclick="filterWorlds('all', this)">
+      <span>All Subjects</span>
+    </button>
+    <button type="button" class="lw-filter-btn" onclick="filterWorlds('math', this)">
+      <span>🔢 Mathematics</span>
+    </button>
+    <button type="button" class="lw-filter-btn" onclick="filterWorlds('science', this)">
+      <span>🧪 Science</span>
+    </button>
+    <button type="button" class="lw-filter-btn" onclick="filterWorlds('english', this)">
+      <span>📚 English</span>
+    </button>
+  </div>
+
+  <!-- 4. INTERACTIVE LEARNING WORLDS GRID -->
+  <div class="lw-worlds-grid">
+    {% for cs in class_subjects %}
+    <div class="lw-world-card world-item" data-category="{{ cs.icon_type }}" id="subject-world-{{ cs.id }}">
+      <!-- Top Bar -->
+      <div class="lw-card-topbar">
+        <div class="lw-subject-title-wrap">
+          <div class="lw-subject-icon-disc" style="background: {{ cs.theme_bg }}; color: {{ cs.theme_color }};">
+            {{ cs.icon_emoji }}
+          </div>
+          <div>
+            <h2 class="lw-subject-heading">
+              {{ cs.name }}
+              <span class="lw-olympiad-code" style="background: {{ cs.theme_pill }}; color: {{ cs.theme_color }};">{{ cs.olympiad_code }}</span>
+            </h2>
+          </div>
+        </div>
+
+        <button type="button" class="lw-progress-popover-trigger" onclick="toggleProgressPopover('{{ cs.id }}', this)" title="Click to see full progress breakdown">
+          <span>{{ cs.progress_pct }}% Complete</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- Subtopics Overview -->
+      <p class="lw-subtopics-text">{{ cs.subtopics_str }}</p>
+
+      <!-- Progress Bar -->
+      <div class="lw-card-progress-bar" onclick="toggleProgressPopover('{{ cs.id }}')">
+        <div class="lw-card-progress-fill" style="width: {{ cs.progress_pct }}%; background: {{ cs.theme_color }};"></div>
+      </div>
+
+      <!-- Interactive Progress Details Popover / Breakdown -->
+      <div class="lw-progress-details-panel" id="popover-{{ cs.id }}">
+        <div class="lw-panel-metric" style="color:#065F46;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span><strong>{{ cs.done_concepts }}</strong> Chapters mastered</span>
+        </div>
+        <div class="lw-panel-metric" style="color:#1E40AF;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon></svg>
+          <span><strong>{{ cs.done_modules }}</strong> Modules completed</span>
+        </div>
+        <div class="lw-panel-metric" style="color:#64748B;">
+          <span><strong>{{ cs.remaining_modules }}</strong> Modules remaining</span>
+        </div>
+      </div>
+
+      <!-- Stats Chips Row -->
+      <div class="lw-stats-chip-row">
+        <span class="lw-chip {% if cs.done_concepts > 0 %}mastered{% endif %}">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          {{ cs.done_concepts }}/{{ cs.total_concepts }} Mastered
+        </span>
+        <span class="lw-chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path></svg>
+          {{ cs.total_concepts }} Chapters
+        </span>
+        <span class="lw-chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          {{ cs.total_modules }} Modules
+        </span>
+      </div>
+
+      <!-- Preview Chapter Cards Grid -->
+      {% if cs.chapters %}
+      <div class="lw-chapters-grid">
+        {% for ch in cs.chapters|slice:":4" %}
+        <a class="lw-chapter-card {{ ch.status }}" href="/chapter/{{ ch.id }}/">
+          <div class="lw-chapter-top">
+            <span class="lw-chapter-num">Chapter {{ ch.order }}</span>
+            <span class="lw-ch-status-badge badge-{{ ch.status }}">{{ ch.status_label }}</span>
+          </div>
+          <div class="lw-chapter-title">{{ ch.name }}</div>
+          <div class="lw-chapter-meta-bar">
+            <span>{{ ch.completed_modules }}/{{ ch.total_modules }} Modules</span>
+            <span class="lw-ch-action-arrow">
+              {% if ch.status == 'completed' %}Review →{% elif ch.status == 'in_progress' %}Continue →{% else %}Start →{% endif %}
+            </span>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Card Footer Actions -->
+      <div class="lw-card-footer">
+        <div class="lw-continue-hint">
+          {% if cs.has_started and cs.current_topic %}
+            <span>📍 Continue from: <strong>Chapter {{ cs.current_topic.order }} → {{ cs.current_topic.title }}</strong></span>
+          {% else %}
+            <span>🌟 Start your journey with Chapter 1</span>
+          {% endif %}
+        </div>
+
+        <div>
+          {% if cs.has_started and cs.current_topic %}
+            <a href="/chapter/{{ cs.current_topic.id }}/" class="btn-world-action continue">
+              <span>Continue Learning</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          {% else %}
+            <a href="/subject/{{ cs.id }}/" class="btn-world-action">
+              <span>Start Learning</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          {% endif %}
+        </div>
+      </div>
     </div>
-    <div class="subject-progress-pct">{{ cs.progress_pct }}%</div>
-  </div>
-
-  <div class="subject-stats">
-    <span class="stat-chip green">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-      {{ cs.done_concepts }} Mastered
-    </span>
-    <span class="stat-chip">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path></svg>
-      {{ cs.total_concepts }} Chapters
-    </span>
-    <span class="stat-chip">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-      {{ cs.total_modules }} Modules
-    </span>
-  </div>
-
-  <!-- Preview first 4 chapters -->
-  {% with chapters=cs.chapters.all %}
-  {% if chapters %}
-  <div class="chapters-grid">
-    {% for ch in chapters|slice:":4" %}
-    <a class="chapter-tile" href="/chapter/{{ ch.id }}/">
-      <div class="chapter-tile-num">Chapter {{ ch.order }}</div>
-      <div class="chapter-tile-name">{{ ch.name }}</div>
-      <div class="chapter-tile-meta">{{ ch.concepts.count }} Chapters</div>
-    </a>
+    {% empty %}
+    <div class="card" style="text-align:center;padding:48px;border-radius:20px;">
+      <div style="width:64px;height:64px;border-radius:20px;background:#EDE9FE;color:#7C3AED;margin:0 auto 16px;display:grid;place-items:center;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path></svg>
+      </div>
+      <h3 style="color:#0F172A;margin:0 0 8px;font-weight:900;">No learning worlds available</h3>
+      <p style="color:#64748B;margin:0;">Curriculum modules for your class are being unlocked.</p>
+    </div>
     {% endfor %}
   </div>
-  {% endif %}
-  {% endwith %}
+
 </div>
-{% empty %}
-<div class="card" style="text-align:center;padding:48px;">
-  <div style="width:64px;height:64px;border-radius:20px;background:#EDE9FE;color:#7C3AED;margin:0 auto 16px;display:grid;place-items:center;">
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><path d="M6 6h10"></path><path d="M6 10h10"></path></svg>
-  </div>
-  <h3 style="color:#0F172A;margin:0 0 8px;font-weight:900;">No subjects yet</h3>
-  <p style="color:#64748B;margin:0;">Curriculum for {{ student_class.class_label }} is being assembled.</p>
-</div>
-{% endfor %}
-</div>
+
+<!-- Client-side filter & popover script -->
+<script>
+  function filterWorlds(category, btn) {
+    document.querySelectorAll('.lw-filter-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    if (btn) btn.classList.add('active');
+
+    var worlds = document.querySelectorAll('.world-item');
+    worlds.forEach(function(card) {
+      if (category === 'all' || card.getAttribute('data-category') === category) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  function toggleProgressPopover(subjectId, btn) {
+    var panel = document.getElementById('popover-' + subjectId);
+    if (!panel) return;
+    panel.classList.toggle('show');
+    if (btn) btn.classList.toggle('active');
+  }
+</script>
 {% endblock %}

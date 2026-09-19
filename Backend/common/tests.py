@@ -45,3 +45,29 @@ class CurriculumFlowViewTests(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.json().get('success'))
+
+    def test_student_login_success(self):
+        self.client.logout()
+        response = self.client.post(
+            reverse('common:login'),
+            data={'email': 'student@test.com', 'password': 'password123'},
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertTrue(data.get('success'))
+        self.assertEqual(data.get('redirect_url'), '/dashboard/')
+
+    def test_admin_cannot_login_on_student_login_page(self):
+        self.client.logout()
+        admin_user = User.objects.create_superuser(username="admin_user", email="admin@test.com", password="adminpassword123")
+        response = self.client.post(
+            reverse('common:login'),
+            data={'email': 'admin@test.com', 'password': 'adminpassword123'},
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 403)
+        data = response.json()
+        self.assertFalse(data.get('success'))
+        self.assertIn("Admin accounts cannot login here", data.get('message'))
+
