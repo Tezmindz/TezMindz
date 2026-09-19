@@ -70,6 +70,7 @@ class RequestSizeLimitMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
         self.max_body = getattr(settings, "MAX_REQUEST_BODY_SIZE", _DEFAULT_MAX_BODY)
+        self.admin_max_body = getattr(settings, "MAX_ADMIN_UPLOAD_SIZE", 15 * 1024 * 1024)
 
     def __call__(self, request):
         if request.method in self.MUTATING_METHODS:
@@ -79,14 +80,15 @@ class RequestSizeLimitMiddleware:
                     length = int(content_length)
                 except (ValueError, TypeError):
                     length = 0
-                if length > self.max_body:
+                current_limit = self.admin_max_body if request.path.startswith("/admin/") else self.max_body
+                if length > current_limit:
                     logger.warning(
                         "RequestSizeLimitMiddleware: rejected %s %s — "
                         "Content-Length %d > limit %d (IP: %s)",
                         request.method,
                         request.path,
                         length,
-                        self.max_body,
+                        current_limit,
                         _get_client_ip(request),
                     )
                     return HttpResponse(

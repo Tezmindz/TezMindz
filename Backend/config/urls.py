@@ -22,6 +22,7 @@ from apps.curriculum.admin_views import curriculum_hierarchy_filter_api
 
 urlpatterns = [
     path("admin/curriculum/hierarchy-filter/", curriculum_hierarchy_filter_api, name="admin_curriculum_hierarchy_filter"),
+    path("admin/bulk-import/", include("apps.bulk_import.urls", namespace="bulk_import")),
     path("admin/", admin.site.urls),
     path("", include("common.urls")),
     path("api/curriculum/", include("apps.curriculum.urls")),

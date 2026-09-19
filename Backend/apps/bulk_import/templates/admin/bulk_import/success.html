@@ -1,0 +1,147 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  .tm-success-shell {
+    max-width: 720px;
+    margin: 40px auto;
+  }
+  .success-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+  }
+  .success-icon-box {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #ECFDF5;
+    color: #059669;
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    margin: 0 auto 20px;
+  }
+  .success-card h1 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+  }
+  .success-card p {
+    font-size: 0.95rem;
+    color: #64748B;
+    margin: 0 0 28px;
+  }
+  .stats-summary-box {
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-around;
+  }
+  .stat-summary-item {
+    text-align: center;
+  }
+  .stat-summary-label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .stat-summary-val {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin-top: 4px;
+  }
+  .success-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary-action {
+    background: #4F46E5;
+    color: #FFFFFF !important;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-weight: 800;
+    font-size: 0.92rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s ease;
+  }
+  .btn-primary-action:hover {
+    background: #4338CA;
+    transform: translateY(-1px);
+  }
+  .btn-secondary-action {
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    color: #334155 !important;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-weight: 800;
+    font-size: 0.92rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-secondary-action:hover {
+    background: #F1F5F9;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="tm-success-shell">
+  <div class="success-card">
+    <div class="success-icon-box">
+      <i class="bi bi-check-lg"></i>
+    </div>
+    <h1>Import Completed Successfully!</h1>
+    <p>{{ job.import_log|default:"All records were committed atomically to the database." }}</p>
+
+    <div class="stats-summary-box">
+      <div class="stat-summary-item">
+        <div class="stat-summary-label">Created</div>
+        <div class="stat-summary-val" style="color: #059669;">+{{ job.created_count }}</div>
+      </div>
+      <div class="stat-summary-item">
+        <div class="stat-summary-label">Updated</div>
+        <div class="stat-summary-val" style="color: #2563EB;">~{{ job.updated_count }}</div>
+      </div>
+      <div class="stat-summary-item">
+        <div class="stat-summary-label">Skipped / Duplicates</div>
+        <div class="stat-summary-val" style="color: #D97706;">{{ job.duplicate_count }}</div>
+      </div>
+      <div class="stat-summary-item">
+        <div class="stat-summary-label">Total Processed</div>
+        <div class="stat-summary-val">{{ job.total_rows }}</div>
+      </div>
+    </div>
+
+    <div class="success-actions">
+      <a href="{{ meta.target_admin }}" class="btn-primary-action">
+        <i class="bi bi-eye"></i> View Imported Records in Admin
+      </a>
+      <a href="{% url 'bulk_import:hub' %}" class="btn-secondary-action">
+        <i class="bi bi-arrow-left"></i> Return to Import Hub
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

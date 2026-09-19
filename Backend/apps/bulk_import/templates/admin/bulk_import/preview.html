@@ -1,0 +1,419 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  .tm-preview-shell {
+    max-width: 1280px;
+    margin: 10px auto 40px;
+  }
+  .tm-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #64748B;
+  }
+  .tm-breadcrumb a { color: #4F46E5; text-decoration: none; }
+
+  .preview-hero {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 24px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .preview-hero h1 {
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .preview-hero p {
+    font-size: 0.88rem;
+    color: #64748B;
+    margin: 0;
+  }
+
+  /* Metric KPI Grid */
+  .preview-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .kpi-stat-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 18px 20px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03);
+  }
+  .kpi-stat-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .kpi-stat-val {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin-top: 4px;
+  }
+  .kpi-stat-val.primary { color: #0F172A; }
+  .kpi-stat-val.success { color: #059669; }
+  .kpi-stat-val.error { color: #DC2626; }
+  .kpi-stat-val.info { color: #2563EB; }
+  .kpi-stat-val.warning { color: #D97706; }
+
+  /* Error Section */
+  .error-report-card {
+    background: #FEF2F2;
+    border: 1.5px solid #FECACA;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .error-report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .error-report-header h3 {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #991B1B;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-download-errors {
+    background: #DC2626;
+    color: #FFFFFF !important;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 0.84rem;
+    font-weight: 800;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Tables */
+  .preview-table-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+    overflow-x: auto;
+  }
+  .preview-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+  .preview-table th {
+    background: #F8FAFC;
+    color: #475569;
+    font-weight: 800;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 10px 12px;
+    border-bottom: 1.5px solid #E2E8F0;
+    text-align: left;
+    white-space: nowrap;
+  }
+  .preview-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #F1F5F9;
+    vertical-align: middle;
+  }
+  .action-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 900;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+  }
+  .action-tag.create { background: #ECFDF5; color: #059669; }
+  .action-tag.update { background: #EFF6FF; color: #2563EB; }
+  .action-tag.duplicate { background: #FFFBEB; color: #D97706; }
+  .action-tag.error { background: #FEF2F2; color: #DC2626; }
+
+  /* Confirm Bar */
+  .confirm-bar {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+  }
+  .btn-confirm {
+    background: #059669;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s ease;
+  }
+  .btn-confirm:hover {
+    background: #047857;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+  }
+  .btn-reupload {
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    color: #334155 !important;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="tm-preview-shell">
+  <div class="tm-breadcrumb">
+    <a href="{% url 'bulk_import:hub' %}"><i class="bi bi-arrow-left"></i> Bulk Import Hub</a>
+    <span>/</span>
+    <span>{{ job.get_import_type_display }}</span>
+    <span>/</span>
+    <span>Preview: {{ job.filename }}</span>
+  </div>
+
+  <!-- Hero Header -->
+  <div class="preview-hero">
+    <div>
+      <h1><i class="bi bi-file-earmark-check" style="color: #4F46E5;"></i> Import Validation Preview</h1>
+      <p>File: <strong>{{ job.filename }}</strong> ({{ job.file_size_bytes|filesizeformat }}) &bull; Uploaded {{ job.created_at|timesince }} ago</p>
+    </div>
+    <div>
+      {% if can_confirm %}
+        <span class="action-tag create" style="font-size: 0.82rem; padding: 6px 14px;">Ready to Import</span>
+      {% else %}
+        <span class="action-tag error" style="font-size: 0.82rem; padding: 6px 14px;">Errors Detected (Import Blocked)</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- KPI Metric Cards -->
+  <div class="preview-kpi-grid">
+    <div class="kpi-stat-card">
+      <div class="kpi-stat-label">Total Rows</div>
+      <div class="kpi-stat-val primary">{{ job.total_rows }}</div>
+    </div>
+    <div class="kpi-stat-card">
+      <div class="kpi-stat-label">Valid Rows</div>
+      <div class="kpi-stat-val success">{{ job.valid_rows }}</div>
+    </div>
+    <div class="kpi-stat-card">
+      <div class="kpi-stat-label">Errors</div>
+      <div class="kpi-stat-val error">{{ job.error_rows }}</div>
+    </div>
+    <div class="kpi-stat-card">
+      <div class="kpi-stat-label">New Creates</div>
+      <div class="kpi-stat-val success">+{{ job.created_count }}</div>
+    </div>
+    <div class="kpi-stat-card">
+      <div class="kpi-stat-label">Updates</div>
+      <div class="kpi-stat-val info">~{{ job.updated_count }}</div>
+    </div>
+    <div class="kpi-stat-card">
+      <div class="kpi-stat-label">Duplicates / Skips</div>
+      <div class="kpi-stat-val warning">{{ job.duplicate_count }}</div>
+    </div>
+  </div>
+
+  <!-- Error Report Section (if any errors exist) -->
+  {% if job.error_rows > 0 %}
+  <div class="error-report-card">
+    <div class="error-report-header">
+      <h3><i class="bi bi-exclamation-triangle-fill"></i> Validation Errors ({{ job.error_rows }} issue{{ job.error_rows|pluralize }})</h3>
+      <a href="{% url 'bulk_import:export_errors' job_id=job.job_id %}" class="btn-download-errors">
+        <i class="bi bi-file-earmark-arrow-down"></i> Download Error Report (.xlsx)
+      </a>
+    </div>
+    <p style="font-size: 0.86rem; color: #7F1D1D; margin: 0 0 16px;">
+      The records below failed validation. To protect data integrity, <strong>no records can be partially imported</strong>. Please fix these rows in your spreadsheet and upload again.
+    </p>
+
+    <div style="background: #FFFFFF; border-radius: 12px; border: 1px solid #FECACA; overflow-x: auto;">
+      <table class="preview-table">
+        <thead>
+          <tr>
+            <th style="width: 80px;">Row #</th>
+            <th style="width: 140px;">Field / Column</th>
+            <th>Error Description</th>
+            <th style="width: 200px;">Provided Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for err in job.error_summary|slice:":50" %}
+          <tr>
+            <td><strong>Row {{ err.row }}</strong></td>
+            <td><span style="font-weight: 700; color: #991B1B;">{{ err.field }}</span></td>
+            <td>{{ err.error }}</td>
+            <td style="color: #64748B; font-family: monospace;">{{ err.value|default:"(empty)" }}</td>
+          </tr>
+          {% endfor %}
+          {% if job.error_summary|length > 50 %}
+          <tr>
+            <td colspan="4" style="text-align: center; color: #991B1B; font-weight: 700;">
+              ... and {{ job.error_summary|length|add:"-50" }} more errors. Download the full error report spreadsheet above to view all.
+            </td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Data Preview Table (First 50 Valid Rows) -->
+  <div class="preview-table-card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <h3 style="font-size: 1.1rem; font-weight: 800; color: #0F172A; margin: 0;">
+        <i class="bi bi-table"></i> Data Preview (Showing first {{ job.preview_data|length }} rows)
+      </h3>
+      <span style="font-size: 0.8rem; color: #64748B; font-weight: 600;">Action breakdown indicated by badges</span>
+    </div>
+
+    {% if job.preview_data %}
+    <table class="preview-table">
+      <thead>
+        <tr>
+          <th>Row</th>
+          <th>Action</th>
+          {% if job.import_type == 'curriculum' %}
+            <th>Grade</th>
+            <th>Subject</th>
+            <th>Chapter (Topic)</th>
+            <th>Concept</th>
+          {% elif job.import_type == 'questions' or job.import_type == 'quizzes' %}
+            <th>Topic</th>
+            <th>Prompt</th>
+            <th>Difficulty</th>
+            <th>Options Count</th>
+            <th>Marks</th>
+          {% elif job.import_type == 'game_content' %}
+            <th>Game Title</th>
+            <th>Step Order</th>
+            <th>Prompt</th>
+            <th>Content Type</th>
+            <th>Points</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in job.preview_data %}
+        <tr>
+          <td><strong>#{{ row.row_number }}</strong></td>
+          <td>
+            {% if row.action == 'CREATE' %}
+              <span class="action-tag create">+ CREATE</span>
+            {% elif row.action == 'UPDATE' %}
+              <span class="action-tag update">~ UPDATE</span>
+            {% elif row.action == 'DUPLICATE' %}
+              <span class="action-tag duplicate">SKIP (DUPLICATE)</span>
+            {% else %}
+              <span class="action-tag error">{{ row.action }}</span>
+            {% endif %}
+          </td>
+          {% if job.import_type == 'curriculum' %}
+            <td>{{ row.grade_name }}</td>
+            <td>{{ row.subject_name }}</td>
+            <td><strong>{{ row.chapter_title }}</strong></td>
+            <td>{{ row.concept_title }}</td>
+          {% elif job.import_type == 'questions' or job.import_type == 'quizzes' %}
+            <td>Ch #{{ row.topic_id }}</td>
+            <td>{{ row.prompt|truncatechars:70 }}</td>
+            <td><span class="badge">{{ row.difficulty|title }}</span></td>
+            <td>{{ row.options|length }} options</td>
+            <td>{{ row.marks }} pt{{ row.marks|pluralize }}</td>
+          {% elif job.import_type == 'game_content' %}
+            <td><strong>{{ row.game_title }}</strong></td>
+            <td>Step {{ row.order }}</td>
+            <td>{{ row.prompt|truncatechars:50 }}</td>
+            <td><code>{{ row.content_type }}</code></td>
+            <td>{{ row.points }}</td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p style="color: #94A3B8; text-align: center; padding: 20px 0;">No valid rows to preview.</p>
+    {% endif %}
+  </div>
+
+  <!-- Final Confirmation Bar -->
+  <div class="confirm-bar">
+    <div>
+      {% if can_confirm %}
+        <strong style="color: #059669; font-size: 0.95rem; display: block;">
+          <i class="bi bi-check-circle-fill"></i> All {{ job.valid_rows }} rows passed validation.
+        </strong>
+        <span style="font-size: 0.82rem; color: #64748B;">Importing will execute atomically. All database models will be updated immediately.</span>
+      {% else %}
+        <strong style="color: #DC2626; font-size: 0.95rem; display: block;">
+          <i class="bi bi-x-circle-fill"></i> Import blocked until all errors are corrected.
+        </strong>
+        <span style="font-size: 0.82rem; color: #64748B;">Please download the error report, correct the cells, and upload again.</span>
+      {% endif %}
+    </div>
+
+    <div style="display: flex; gap: 12px;">
+      <a href="{% url 'bulk_import:upload' import_type=job.import_type %}" class="btn-reupload">
+        <i class="bi bi-arrow-repeat"></i> Upload New File
+      </a>
+      {% if can_confirm %}
+      <form method="post" action="{% url 'bulk_import:confirm' job_id=job.job_id %}" onsubmit="return confirm('Execute atomic import of {{ job.valid_rows }} records now?');">
+        {% csrf_token %}
+        <button type="submit" class="btn-confirm">
+          <i class="bi bi-check-lg"></i> Confirm &amp; Import Now
+        </button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
