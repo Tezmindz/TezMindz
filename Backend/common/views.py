@@ -18,6 +18,8 @@ def template_page(template_name):
     return view
 
 def achievements_page(request):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect("/?auth=login&next=/achievements/")
     from apps.gamification.models import Badge, StudentBadge
     
     all_badges = Badge.objects.filter(is_active=True).order_by('name')
@@ -50,6 +52,8 @@ def achievements_page(request):
     return render(request, "achievements.html", context)
 
 def learn_page(request):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect("/?auth=login&next=/learn/")
     from apps.curriculum.models import Subject
     from apps.progress.models import TopicProgress
     grade = None
@@ -234,7 +238,7 @@ def learn_page(request):
 
 def dashboard_page(request):
     if not hasattr(request, 'user') or not request.user.is_authenticated:
-        return redirect("/login/?next=/dashboard/")
+        return redirect("/?auth=login&next=/dashboard/")
 
     if request.user.is_staff or request.user.is_superuser:
         # Strict role separation: administrators must access administrative console, not student dashboard
@@ -357,6 +361,8 @@ def world_detail_page(request, world_id):
     return redirect("common:subject", subject_id=world_id)
 
 def subject_page(request, subject_id):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect(f"/?auth=login&next=/subject/{subject_id}/")
     from django.shortcuts import get_object_or_404
     from apps.curriculum.models import Subject
     from apps.progress.models import TopicProgress
@@ -385,6 +391,8 @@ def subject_page(request, subject_id):
     return render(request, "subject.html", {"subject": subject, "chapters": topics, "student_class": student_class})
 
 def chapter_page(request, chapter_id):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect(f"/?auth=login&next=/chapter/{chapter_id}/")
     from django.shortcuts import get_object_or_404
     from apps.curriculum.models import Topic
     from apps.progress.models import TopicProgress
@@ -420,6 +428,8 @@ def chapter_page(request, chapter_id):
     })
 
 def concept_page(request, concept_id):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect(f"/?auth=login&next=/concept/{concept_id}/")
     from django.shortcuts import get_object_or_404
     from apps.curriculum.models import Concept
     from apps.assessments.models import Quiz
@@ -459,6 +469,8 @@ def concept_page(request, concept_id):
     })
 
 def quiz_page(request, quiz_id):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect(f"/?auth=login&next=/quiz/{quiz_id}/")
     from django.shortcuts import get_object_or_404
     from apps.assessments.models import Quiz
     quiz = get_object_or_404(Quiz, id=quiz_id)
@@ -466,6 +478,8 @@ def quiz_page(request, quiz_id):
     return render(request, "quiz.html", {"quiz": quiz, "questions": questions})
 
 def quiz_result_page(request, attempt_id):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect(f"/?auth=login&next=/quiz/result/{attempt_id}/")
     from django.shortcuts import get_object_or_404
     from apps.assessments.models import QuizAttempt
     from apps.curriculum.models import Concept
@@ -505,12 +519,16 @@ def quiz_result_page(request, attempt_id):
     })
 
 def game_difficulty_page(request, game_id):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect(f"/?auth=login&next=/game/{game_id}/difficulty/")
     from django.shortcuts import get_object_or_404
     from apps.games.models import Game
     game = get_object_or_404(Game, id=game_id)
     return render(request, "difficulty.html", {"game": game})
 
 def game_play_page(request, game_id):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect(f"/?auth=login&next=/game/{game_id}/play/")
     import json
     from django.shortcuts import get_object_or_404
     from apps.games.models import Game
@@ -573,6 +591,8 @@ def game_play_page(request, game_id):
     return render(request, "games/game_shell.html", context)
 
 def games_page(request):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect("/?auth=login&next=/games/")
     from apps.games.models import Game, GameSession
     from django.db.models import Q
     student_class = None
@@ -705,6 +725,8 @@ def games_page(request):
     return render(request, "games.html", context)
 
 def progress_page(request):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect("/?auth=login&next=/progress/")
     from apps.curriculum.models import Subject
     from apps.progress.models import TopicProgress
     student_class = None
@@ -743,6 +765,8 @@ def progress_page(request):
     })
 
 def leaderboard_page(request):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect("/?auth=login&next=/leaderboard/")
     from apps.accounts.models import StudentProfile
     student_class = None
     profile = None
@@ -771,6 +795,8 @@ def leaderboard_page(request):
     })
 
 def rewards_page(request):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect("/?auth=login&next=/rewards/")
     from apps.gamification.models import Badge, StudentBadge, XPTransaction, CreditTransaction
     student_class = None
     profile = None
@@ -806,6 +832,8 @@ def rewards_page(request):
     })
 
 def profile_page(request):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect("/?auth=login&next=/profile/")
     student_class = None
     profile = None
     if hasattr(request, 'user') and request.user.is_authenticated and hasattr(request.user, 'student_profile'):
@@ -820,7 +848,10 @@ def login_page(request):
             if request.user.is_staff or request.user.is_superuser or getattr(request.user, 'role', '') == 'admin':
                 return redirect("/admin/")
             return redirect("/dashboard/")
-        return render(request, "login.html")
+        query_string = request.META.get("QUERY_STRING", "")
+        if query_string:
+            return redirect(f"/?auth=login&{query_string}")
+        return redirect("/?auth=login")
 
     try:
         payload = json.loads(request.body or "{}")
@@ -860,7 +891,12 @@ def login_page(request):
 @require_http_methods(["GET", "POST"])
 def register_page(request):
     if request.method == "GET":
-        return render(request, "register.html")
+        if hasattr(request, 'user') and request.user.is_authenticated:
+            return redirect("/dashboard/")
+        query_string = request.META.get("QUERY_STRING", "")
+        if query_string:
+            return redirect(f"/?auth=register&{query_string}")
+        return redirect("/?auth=register")
 
     try:
         payload = json.loads(request.body or "{}")
@@ -1010,7 +1046,7 @@ def learn_complete_api_view(request):
 
 def subscription_page(request):
     if not hasattr(request, "user") or not request.user.is_authenticated:
-        return redirect("/login/?next=/subscription/")
+        return redirect("/?auth=login&next=/subscription/")
 
     profile = getattr(request.user, "student_profile", None)
     student_class = profile.grade if profile else None

@@ -4,12 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="api-base-url" content="{{ request.scheme }}://{{ request.get_host }}" />
-    <title>Tezz-Mindz — Olympiad Learning, Now More Fun!</title>
+    <title>TezMindZ — Olympiad Learning, Now More Fun!</title>
+    <link rel="icon" type="image/png" href="/static/media/tezmindz_brain_icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/static/css/styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <script src="/static/js/theme-toggle.js"></script>
     <style>
       :root {
         --tm-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -213,30 +215,35 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        max-width: 1260px;
+        max-width: 1240px;
         margin: 0 auto;
-        padding: 16px 24px;
+        padding: 16px 20px;
       }
       .landing-logo {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         text-decoration: none;
+        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
-      .landing-logo-mark {
-        width: 46px;
-        height: 46px;
-        border-radius: 14px;
-        background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #FFFFFF;
-        box-shadow: 0 8px 18px rgba(99, 102, 241, 0.3);
+      .landing-logo:hover {
+        transform: translateY(-1px) scale(1.02);
+      }
+      .landing-logo-brain-icon {
+        height: 40px;
+        width: 40px;
+        object-fit: contain;
+        flex-shrink: 0;
         transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
-      .landing-logo:hover .landing-logo-mark {
-        transform: scale(1.08) rotate(4deg);
+      .landing-logo:hover .landing-logo-brain-icon {
+        transform: scale(1.08) rotate(-4deg);
+      }
+      .landing-logo-img {
+        height: 36px;
+        width: auto;
+        object-fit: contain;
+        display: block;
       }
       .landing-logo-text strong {
         display: block;
@@ -247,11 +254,10 @@
         line-height: 1.15;
       }
       .landing-logo-text span {
-        font-size: 0.72rem;
-        font-weight: 800;
+        font-size: 0.8125rem;
+        font-weight: 700;
         color: var(--tm-muted);
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
+        letter-spacing: 0.02em;
       }
       .landing-nav-links {
         display: flex;
@@ -287,6 +293,35 @@
         display: flex;
         align-items: center;
         gap: 12px;
+      }
+      /* ── BRAND OUTLINE LOGIN/REGISTER BUTTON ── */
+      .btn-nav-login-reg {
+        border-radius: 8px;
+        padding: 8px 22px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        border: 1.8px solid #4F46E5;
+        background: #FFFFFF;
+        color: #4F46E5;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-family: var(--tm-font);
+        letter-spacing: -0.01em;
+        transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .btn-nav-login-reg:hover {
+        background: #EEF2FF;
+        border-color: #4338CA;
+        color: #4338CA;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.18);
+      }
+      .btn-nav-login-reg:active {
+        transform: translateY(0);
+        background: #E0E7FF;
       }
       .btn-nav-login {
         border-radius: 99px;
@@ -411,8 +446,9 @@
       /* ── SECTION HEADING REUSABLE ── */
       .section-heading-block {
         text-align: center;
-        max-width: 720px;
-        margin: 0 auto 46px;
+        max-width: 960px;
+        margin: 0 auto 36px;
+        padding: 0 10px;
       }
       .section-tag-pill {
         display: inline-flex;
@@ -426,32 +462,33 @@
         letter-spacing: 0.02em;
         padding: 6px 14px;
         border-radius: var(--tm-radius-full);
-        margin-bottom: 14px;
+        margin-bottom: 12px;
         border: 1px solid #E0E7FF;
       }
       .section-heading-block h2 {
-        font-size: clamp(2rem, 3.5vw, 2.6rem);
+        font-size: clamp(1.85rem, 3.2vw, 2.45rem);
         font-weight: 900;
         color: var(--tm-ink);
-        letter-spacing: -0.03em;
-        margin: 0 0 12px;
-        line-height: 1.2;
+        letter-spacing: -0.025em;
+        margin: 0 0 10px;
+        line-height: 1.25;
       }
       .section-heading-block p {
-        font-size: 1.12rem;
+        font-size: 1.05rem;
         color: var(--tm-muted);
-        line-height: 1.6;
-        margin: 0;
+        line-height: 1.55;
+        margin: 0 auto;
+        max-width: 780px;
         font-weight: 500;
       }
 
       /* ── HERO SECTION ── */
       .landing-hero-grid {
-        max-width: 1260px;
-        margin: 10px auto 60px;
-        padding: 30px 24px 40px;
+        max-width: 1240px;
+        margin: 10px auto 65px;
+        padding: 24px 20px 48px;
         display: grid;
-        grid-template-columns: 1.12fr 0.88fr;
+        grid-template-columns: 1.1fr 0.9fr;
         align-items: center;
         gap: 48px;
         position: relative;
@@ -459,75 +496,106 @@
       }
       .hero-left-content {
         max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
       }
 
       /* Hero Announcement Badge */
       .hero-badge-pill {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        background: #F3E8FF;
-        border: 1px solid #E9D5FF;
+        gap: 8px;
+        background: #FFFFFF;
+        border: 1.5px solid #E0E7FF;
         border-radius: 99px;
-        padding: 6px 18px 6px 8px;
-        margin-bottom: 24px;
-        box-shadow: 0 2px 8px rgba(124, 58, 237, 0.08);
-        transition: transform 0.25s ease;
+        padding: 6px 16px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 8px rgba(79, 70, 229, 0.05);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        cursor: default;
       }
       .hero-badge-pill:hover {
-        transform: scale(1.02);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.15);
       }
-      .hero-badge-icon {
-        width: 26px;
-        height: 26px;
+      .badge-dot-green {
+        width: 8px;
+        height: 8px;
         border-radius: 50%;
-        background: #FEF3C7;
-        color: #D97706;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 2px 6px rgba(217, 119, 6, 0.2);
+        background: #10B981;
+        display: inline-block;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        flex-shrink: 0;
       }
       .hero-badge-text {
         font-size: 0.88rem;
-        font-weight: 800;
-        color: #6B21A8;
+        font-weight: 700;
+        color: #5B4DF5;
         letter-spacing: -0.01em;
       }
 
       /* Hero Main Title */
       .hero-main-title {
-        font-size: clamp(2.6rem, 5vw, 3.8rem);
+        font-size: clamp(2.4rem, 4.2vw, 3.35rem);
         font-weight: 900;
-        color: var(--tm-ink);
-        line-height: 1.12;
+        color: #111827;
+        line-height: 1.08;
         letter-spacing: -0.035em;
-        margin: 0 0 20px;
+        margin: 0 0 10px;
       }
-      .hero-highlight-fun {
+      .hero-highlight-trained {
         color: #5B4DF5;
-        position: relative;
         display: inline-block;
       }
-      .hero-title-curve {
-        position: absolute;
-        bottom: -10px;
-        left: 0;
-        width: 100%;
-        height: 14px;
-        pointer-events: none;
-      }
 
+      /* Hero Subheading & Supporting Text */
+      .hero-subheading {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: #1E293B;
+        line-height: 1.35;
+        margin: 0 0 6px;
+        letter-spacing: -0.015em;
+      }
       .hero-description {
-        font-size: 1.15rem;
-        color: #475569;
-        line-height: 1.7;
-        margin: 0 0 32px;
+        font-size: 1.02rem;
+        color: #64748B;
+        line-height: 1.5;
+        margin: 0 0 14px;
         font-weight: 500;
       }
-      .hero-description strong {
-        color: var(--tm-ink);
+
+      /* ── INTERACTIVE "SEE IT • SOLVE IT • ACE IT" PILLS ── */
+      .hero-pills-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+      }
+      .hero-method-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 9px 22px;
+        border-radius: 99px;
+        font-size: 0.95rem;
         font-weight: 800;
+        color: #1E293B;
+        background: #FFFFFF;
+        border: 1.5px solid #E2E8F0;
+        cursor: default;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+        transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        user-select: none;
+      }
+      .hero-method-pill:hover {
+        background: #5B4DF5;
+        color: #FFFFFF;
+        border-color: #5B4DF5;
+        box-shadow: 0 4px 14px rgba(91, 77, 245, 0.4);
+        transform: translateY(-2px);
       }
 
       /* Hero CTA Buttons */
@@ -535,181 +603,245 @@
         display: flex;
         align-items: center;
         gap: 16px;
-        margin-bottom: 34px;
+        margin-bottom: 14px;
+        width: 100%;
+        flex-wrap: wrap;
       }
       .btn-hero-primary {
-        background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+        background: #5B4DF5;
         color: #FFFFFF;
         border-radius: 99px;
-        padding: 15px 36px;
+        padding: 14px 30px;
         font-size: 1.05rem;
         font-weight: 800;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 8px;
         text-decoration: none;
         border: none;
-        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
-        transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-        position: relative;
-        overflow: hidden;
-      }
-      .btn-hero-primary::after {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -60%;
-        width: 50px;
-        height: 200%;
-        background: rgba(255, 255, 255, 0.25);
-        transform: rotate(25deg);
-        transition: left 0.7s ease;
-      }
-      .btn-hero-primary:hover::after {
-        left: 130%;
+        box-shadow: 0 6px 20px rgba(91, 77, 245, 0.35);
+        transition: all 0.2s ease;
+        cursor: pointer;
       }
       .btn-hero-primary:hover {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
+        background: #4A3BE8;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(91, 77, 245, 0.45);
+        color: #FFFFFF;
+      }
+      .btn-hero-primary:active {
+        transform: translateY(0);
       }
       .btn-hero-secondary {
         background: #FFFFFF;
-        color: var(--tm-ink);
-        border: 1.5px solid var(--tm-brand-light);
+        color: #5B4DF5;
+        border: 1.5px solid #5B4DF5;
         border-radius: 99px;
-        padding: 14px 28px;
+        padding: 13px 26px;
         font-size: 1.02rem;
         font-weight: 800;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 8px;
         text-decoration: none;
-        box-shadow: var(--tm-shadow-sm);
-        transition: all 0.25s ease;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+        transition: all 0.2s ease;
+        cursor: pointer;
       }
       .btn-hero-secondary:hover {
-        background: var(--tm-brand-soft);
+        background: #EEF2FF;
         transform: translateY(-2px);
+        box-shadow: 0 4px 14px rgba(91, 77, 245, 0.15);
+      }
+      .btn-hero-secondary:active {
+        transform: translateY(0);
       }
 
-      /* ── 4 BOTTOM FEATURE MINI-PILLS ROW ── */
-      .hero-features-bar {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        max-width: 580px;
-      }
-      .hero-mini-pill {
-        background: #FFFFFF;
-        border-radius: 14px;
-        padding: 10px 12px;
+      /* ── SUPPORTING BENEFITS INLINE ROW ── */
+      .hero-benefits-inline {
         display: flex;
         align-items: center;
-        gap: 10px;
-        border: 1px solid #F1F5F9;
-        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        flex-wrap: wrap;
+        gap: 20px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #475569;
       }
-      .hero-mini-pill:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
-      }
-      .hero-mini-pill.f-pill-indigo { background: #EEF2FF; border-color: #E0E7FF; }
-      .hero-mini-pill.f-pill-rose { background: #FFF1F2; border-color: #FFE4E6; }
-      .hero-mini-pill.f-pill-emerald { background: #ECFDF5; border-color: #D1FAE5; }
-      .hero-mini-pill.f-pill-amber { background: #FFFBEB; border-color: #FEF3C7; }
-
-      .pill-icon-box {
-        width: 32px;
-        height: 32px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
-      .pill-text-block {
-        display: flex;
-        flex-direction: column;
-        line-height: 1.2;
-        text-align: left;
-      }
-      .pill-text-block strong {
-        font-size: 0.76rem;
-        font-weight: 800;
-        color: #0F172A;
-      }
-      .pill-text-block span {
-        font-size: 0.70rem;
-        font-weight: 600;
-        color: #64748B;
+      .hero-benefits-inline .check-green {
+        color: #059669;
+        font-weight: 900;
+        margin-right: 3px;
       }
 
-      /* ── HERO RIGHT ILLUSTRATION & FLOATING UI CHIPS ── */
+      /* ── HERO RIGHT CIRCULAR STAGE & FLOATING BADGES ── */
       .hero-right-illustration {
         position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
+        width: 100%;
       }
-      .hero-cloud-backdrop {
-        position: absolute;
-        width: 125%;
-        height: 125%;
-        background: radial-gradient(circle at 60% 50%, rgba(254, 215, 170, 0.42) 0%, rgba(224, 231, 255, 0.55) 45%, rgba(243, 232, 255, 0.45) 70%, transparent 85%);
-        filter: blur(30px);
-        z-index: 1;
-        pointer-events: none;
+      .hero-circle-stage {
+        position: relative;
+        width: 460px;
+        height: 460px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 50% 50%, #E0E7FF 0%, #EBF0FE 70%, #F5F7FF 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 20px 60px rgba(91, 77, 245, 0.12);
       }
-      .hero-character-stage {
+      .hero-student-wrapper {
         position: relative;
         z-index: 2;
-        width: 100%;
-        max-width: 540px;
+        width: 360px;
+        height: 360px;
         display: flex;
         align-items: center;
         justify-content: center;
       }
-      .hero-character-stage img {
+      .hero-champion-img {
         width: 100%;
-        height: auto;
-        display: block;
-        mix-blend-mode: multiply;
-        -webkit-mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 70%, transparent 100%);
-        mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 70%, transparent 100%);
-        animation: heroFloat 5s ease-in-out infinite alternate;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 15px 25px rgba(79, 70, 229, 0.2));
+        animation: heroFloatStudent 5s ease-in-out infinite alternate;
       }
-      @keyframes heroFloat {
+      @keyframes heroFloatStudent {
         0% { transform: translateY(0px); }
-        100% { transform: translateY(-10px); }
+        100% { transform: translateY(-8px); }
+      }
+
+      /* Floating Sparkles */
+      .hero-sparkle {
+        position: absolute;
+        color: #F59E0B;
+        font-size: 1.1rem;
+        pointer-events: none;
+        z-index: 1;
+        animation: twinkle 3s ease-in-out infinite alternate;
+      }
+      .sp-1 { top: 110px; left: 30px; animation-delay: 0s; }
+      .sp-2 { bottom: 120px; right: 45px; animation-delay: 1.2s; }
+      .sp-3 { top: 220px; right: 10px; font-size: 0.9rem; animation-delay: 2s; }
+      @keyframes twinkle {
+        0% { opacity: 0.3; transform: scale(0.8); }
+        100% { opacity: 1; transform: scale(1.2); }
+      }
+
+      /* 4 Floating Badges exactly like Reference */
+      .hero-pill-badge {
+        position: absolute;
+        z-index: 4;
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 99px;
+        padding: 8px 18px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+        font-weight: 800;
+        font-size: 0.92rem;
+        color: #0F172A;
+        user-select: none;
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+      .hero-pill-badge:hover {
+        transform: scale(1.08) translateY(-3px) !important;
+        box-shadow: 0 12px 30px rgba(91, 77, 245, 0.2);
+      }
+      .pill-badge-icon {
+        font-size: 1.15rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Exact badge placements from reference screenshot */
+      .badge-pos-shapes {
+        top: 15px;
+        left: -15px;
+        animation: badgeFloat1 5s ease-in-out infinite alternate;
+      }
+      @keyframes badgeFloat1 {
+        0% { transform: translateY(0px); }
+        100% { transform: translateY(-8px); }
+      }
+
+      .badge-pos-champion {
+        top: 50px;
+        right: -25px;
+        animation: badgeFloat2 5.5s ease-in-out infinite alternate 0.8s;
+      }
+      @keyframes badgeFloat2 {
+        0% { transform: translateY(0px); }
+        100% { transform: translateY(-7px); }
+      }
+
+      .badge-pos-science {
+        bottom: 70px;
+        left: -25px;
+        animation: badgeFloat3 6s ease-in-out infinite alternate 0.4s;
+      }
+      @keyframes badgeFloat3 {
+        0% { transform: translateY(0px); }
+        100% { transform: translateY(-8px); }
+      }
+
+      .badge-pos-xp {
+        bottom: 25px;
+        right: -20px;
+        animation: badgeFloat4 5.2s ease-in-out infinite alternate 1.2s;
+      }
+      @keyframes badgeFloat4 {
+        0% { transform: translateY(0px); }
+        100% { transform: translateY(-6px); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .hero-champion-img,
+        .hero-sparkle,
+        .badge-pos-shapes,
+        .badge-pos-champion,
+        .badge-pos-science,
+        .badge-pos-xp {
+          animation: none !important;
+          transition: none !important;
+        }
       }
 
 
       /* ── 5. CHOOSE YOUR CLASS SECTION (HORIZONTAL MODERN PILL CARDS) ── */
       .classes-section {
         max-width: 1240px;
-        margin: 0 auto 52px;
+        margin: 10px auto 65px;
         padding: 0 20px;
       }
       .classes-section .section-heading-block {
         text-align: center;
-        max-width: 600px;
-        margin: 0 auto 24px;
+        max-width: 960px;
+        margin: 0 auto 36px;
       }
       .classes-section .section-heading-block h2 {
-        font-size: 2.1rem;
+        font-size: clamp(1.85rem, 3.2vw, 2.45rem);
         font-weight: 900;
         color: var(--tm-ink);
-        letter-spacing: -0.03em;
-        margin: 0 0 6px;
+        letter-spacing: -0.025em;
+        margin: 0 0 10px;
+        line-height: 1.25;
       }
       .classes-section .section-heading-block p {
-        font-size: 0.95rem;
+        font-size: 1.05rem;
         color: var(--tm-muted);
-        font-weight: 600;
-        margin: 0;
+        font-weight: 500;
+        margin: 0 auto;
+        max-width: 780px;
+        line-height: 1.55;
       }
       
       .tm-classes-row-grid {
@@ -779,7 +911,7 @@
         line-height: 1.2;
       }
 
-      /* Pill Button */
+      /* Pill Button: Unified Consistent Style */
       .tm-class-pill-btn {
         display: inline-flex;
         align-items: center;
@@ -789,7 +921,10 @@
         font-size: 0.80rem;
         font-weight: 800;
         text-decoration: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        background: #FFFFFF;
+        color: #4F46E5;
+        border: 1.5px solid #E0E7FF;
+        box-shadow: 0 2px 6px rgba(79, 70, 229, 0.06);
         transition: all 0.22s ease;
         white-space: nowrap;
       }
@@ -797,152 +932,794 @@
         transition: transform 0.2s ease;
       }
       .tm-class-tile:hover .tm-btn-arrow {
-        transform: translateX(3px);
+        transform: translateX(4px);
+      }
+      .tm-class-tile:hover .tm-class-pill-btn {
+        background: #4F46E5;
+        color: #FFFFFF;
+        border-color: #4F46E5;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
       }
 
-      /* Distinctive Card Color Schemes */
-      /* Class 1 (Sky Blue) */
+      /* Cohesive Class Card Color Palettes */
       .tm-c1 { background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%); border-color: #BAE6FD; }
       .tm-c1 .tm-class-icon-disc { background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%); }
       .tm-c1 .tm-class-title { color: #0284C7; }
-      .tm-c1 .tm-class-pill-btn { background: #FFFFFF; color: #0284C7; border: 1px solid #BAE6FD; }
-      .tm-c1:hover { border-color: #0284C7; box-shadow: 0 14px 30px rgba(2, 132, 199, 0.18); }
-      .tm-c1:hover .tm-class-pill-btn { background: #0284C7; color: #FFFFFF; border-color: #0284C7; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35); }
+      .tm-c1:hover { border-color: #0284C7; box-shadow: 0 14px 28px rgba(2, 132, 199, 0.16); }
 
-      /* Class 2 (Royal Purple / Violet) */
       .tm-c2 { background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); border-color: #DDD6FE; }
       .tm-c2 .tm-class-icon-disc { background: linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 100%); }
       .tm-c2 .tm-class-title { color: #5B21B6; }
-      .tm-c2 .tm-class-pill-btn { background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%); color: #FFFFFF; border: none; box-shadow: 0 3px 10px rgba(79, 70, 229, 0.28); }
-      .tm-c2:hover { border-color: #7C3AED; box-shadow: 0 14px 30px rgba(124, 58, 237, 0.2); }
-      .tm-c2:hover .tm-class-pill-btn { background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%); box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4); }
+      .tm-c2:hover { border-color: #7C3AED; box-shadow: 0 14px 28px rgba(124, 58, 237, 0.16); }
 
-      /* Class 3 (Rose / Pink) */
       .tm-c3 { background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%); border-color: #FECDD3; }
       .tm-c3 .tm-class-icon-disc { background: linear-gradient(135deg, #FFE4E6 0%, #FECDD3 100%); }
       .tm-c3 .tm-class-title { color: #E11D48; }
-      .tm-c3 .tm-class-pill-btn { background: #FFFFFF; color: #E11D48; border: 1px solid #FECDD3; }
-      .tm-c3:hover { border-color: #E11D48; box-shadow: 0 14px 30px rgba(225, 29, 72, 0.18); }
-      .tm-c3:hover .tm-class-pill-btn { background: #E11D48; color: #FFFFFF; border-color: #E11D48; box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35); }
+      .tm-c3:hover { border-color: #E11D48; box-shadow: 0 14px 28px rgba(225, 29, 72, 0.16); }
 
-      /* Class 4 (Amber / Golden Sun) */
       .tm-c4 { background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border-color: #FED7AA; }
       .tm-c4 .tm-class-icon-disc { background: linear-gradient(135deg, #FEF3C7 0%, #FED7AA 100%); }
       .tm-c4 .tm-class-title { color: #D97706; }
-      .tm-c4 .tm-class-pill-btn { background: #FFFFFF; color: #D97706; border: 1px solid #FED7AA; }
-      .tm-c4:hover { border-color: #D97706; box-shadow: 0 14px 30px rgba(217, 119, 6, 0.18); }
-      .tm-c4:hover .tm-class-pill-btn { background: #D97706; color: #FFFFFF; border-color: #D97706; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35); }
+      .tm-c4:hover { border-color: #D97706; box-shadow: 0 14px 28px rgba(217, 119, 6, 0.16); }
 
-      /* Class 5 (Amethyst / Deep Violet) */
       .tm-c5 { background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%); border-color: #E9D5FF; }
       .tm-c5 .tm-class-icon-disc { background: linear-gradient(135deg, #F3E8FF 0%, #E9D5FF 100%); }
       .tm-c5 .tm-class-title { color: #7C3AED; }
-      .tm-c5 .tm-class-pill-btn { background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%); color: #FFFFFF; border: none; box-shadow: 0 3px 10px rgba(124, 58, 237, 0.28); }
-      .tm-c5:hover { border-color: #7C3AED; box-shadow: 0 14px 30px rgba(124, 58, 237, 0.2); }
-      .tm-c5:hover .tm-class-pill-btn { background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%); box-shadow: 0 6px 16px rgba(124, 58, 237, 0.4); }
+      .tm-c5:hover { border-color: #7C3AED; box-shadow: 0 14px 28px rgba(124, 58, 237, 0.16); }
 
-      /* Class 6 (Emerald / Mint) */
       .tm-c6 { background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%); border-color: #A7F3D0; }
       .tm-c6 .tm-class-icon-disc { background: linear-gradient(135deg, #DCFCE7 0%, #A7F3D0 100%); }
       .tm-c6 .tm-class-title { color: #059669; }
-      .tm-c6 .tm-class-pill-btn { background: #FFFFFF; color: #059669; border: 1px solid #A7F3D0; }
-      .tm-c6:hover { border-color: #059669; box-shadow: 0 14px 30px rgba(5, 150, 105, 0.18); }
-      .tm-c6:hover .tm-class-pill-btn { background: #059669; color: #FFFFFF; border-color: #059669; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35); }
+      .tm-c6:hover { border-color: #059669; box-shadow: 0 14px 28px rgba(5, 150, 105, 0.16); }
 
-      /* Class 7 (Magenta / Crimson) */
       .tm-c7 { background: linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 100%); border-color: #FBCFE8; }
       .tm-c7 .tm-class-icon-disc { background: linear-gradient(135deg, #FCE7F3 0%, #FBCFE8 100%); }
       .tm-c7 .tm-class-title { color: #DB2777; }
-      .tm-c7 .tm-class-pill-btn { background: #FFFFFF; color: #DB2777; border: 1px solid #FBCFE8; }
-      .tm-c7:hover { border-color: #DB2777; box-shadow: 0 14px 30px rgba(219, 39, 119, 0.18); }
-      .tm-c7:hover .tm-class-pill-btn { background: #DB2777; color: #FFFFFF; border-color: #DB2777; box-shadow: 0 4px 12px rgba(219, 39, 119, 0.35); }
+      .tm-c7:hover { border-color: #DB2777; box-shadow: 0 14px 28px rgba(219, 39, 119, 0.16); }
 
-      /* Class 8 (Royal Indigo) */
       .tm-c8 { background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%); border-color: #C7D2FE; }
       .tm-c8 .tm-class-icon-disc { background: linear-gradient(135deg, #E0E7FF 0%, #C7D2FE 100%); }
       .tm-c8 .tm-class-title { color: #4338CA; }
-      .tm-c8 .tm-class-pill-btn { background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%); color: #FFFFFF; border: none; box-shadow: 0 3px 10px rgba(79, 70, 229, 0.28); }
-      .tm-c8:hover { border-color: #4F46E5; box-shadow: 0 14px 30px rgba(79, 70, 229, 0.2); }
-      .tm-c8:hover .tm-class-pill-btn { background: linear-gradient(135deg, #4338CA 0%, #312E81 100%); box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4); }
+      .tm-c8:hover { border-color: #4F46E5; box-shadow: 0 14px 28px rgba(79, 70, 229, 0.16); }
 
-
-
-
-      /* ── 7. LEARNING BENEFITS & MENTORS SECTION ── */
-      .tm-benefits-mentors-section {
-        max-width: 1040px;
-        margin: 0 auto 70px;
+      /* ── 6. VISUAL INTERACTIVE EXPLANATION (VIE) SECTION ── */
+      .vie-section {
+        max-width: 1240px;
+        margin: 10px auto 65px;
         padding: 0 20px;
+        position: relative;
+        z-index: 5;
       }
-      .benefits-header-wrap {
-        text-align: center;
-        max-width: 640px;
-        margin: 0 auto 30px;
-      }
-      .benefits-cards-grid {
+      .vie-outer-card {
+        background: linear-gradient(145deg, #F8FAFF 0%, #EEF2FF 48%, #F5F3FF 100%);
+        border: 1.5px solid #E0E7FF;
+        border-radius: 32px;
+        padding: 44px 44px;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-        margin-bottom: 44px;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 16px 45px rgba(79, 70, 229, 0.08);
       }
-      .benefit-feature-card {
-        background: #FFFFFF;
-        border: 1.5px solid #1E293B;
-        border-radius: 18px;
-        padding: 20px 16px 18px;
+      .vie-outer-card::before {
+        content: '';
+        position: absolute;
+        top: -120px;
+        left: -120px;
+        width: 440px;
+        height: 440px;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 70%);
+        border-radius: 50%;
+        pointer-events: none;
+      }
+      .vie-outer-card::after {
+        content: '';
+        position: absolute;
+        bottom: -100px;
+        right: -100px;
+        width: 480px;
+        height: 480px;
+        background: radial-gradient(circle, rgba(199, 210, 254, 0.45) 0%, rgba(199, 210, 254, 0) 70%);
+        border-radius: 50%;
+        pointer-events: none;
+      }
+
+      /* Left Content */
+      .vie-left-content {
+        position: relative;
+        z-index: 2;
         display: flex;
         flex-direction: column;
-        transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease;
-        box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
-        position: relative;
+        align-items: flex-start;
       }
-      /* Asymmetrical playful rounded corners inspired by reference design */
-      .benefit-feature-card:nth-child(1) {
-        border-top-right-radius: 38px;
-      }
-      .benefit-feature-card:nth-child(2) {
-        border-radius: 18px;
-      }
-      .benefit-feature-card:nth-child(3) {
-        border-top-right-radius: 38px;
-        border-bottom-right-radius: 38px;
-      }
-      .benefit-feature-card:nth-child(4) {
-        border-top-right-radius: 38px;
-      }
-      .benefit-feature-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.1);
-        border-color: var(--tm-brand);
-      }
-      .benefit-icon-box {
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
-        display: flex;
+      .vie-badge-pill {
+        display: inline-flex;
         align-items: center;
-        justify-content: flex-start;
-        margin-bottom: 12px;
-        color: #0F172A;
+        gap: 8px;
+        background: #FFFFFF;
+        border: 1.5px solid #C7D2FE;
+        border-radius: 99px;
+        padding: 5px 14px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(79, 70, 229, 0.08);
       }
-      .benefit-icon-box svg {
-        width: 28px;
-        height: 28px;
-      }
-      .benefit-card-title {
-        font-size: 1.05rem;
+      .vie-badge-icon { font-size: 0.95rem; }
+      .vie-badge-text {
+        font-size: 0.82rem;
         font-weight: 800;
-        color: #0F172A;
-        margin: 0 0 6px;
-        line-height: 1.3;
+        color: #4F46E5;
         letter-spacing: -0.01em;
       }
-      .benefit-card-desc {
-        font-size: 0.82rem;
+
+      .vie-main-heading {
+        font-size: clamp(2.2rem, 3.8vw, 3rem);
+        font-weight: 900;
+        color: #0F172A;
+        line-height: 1.15;
+        letter-spacing: -0.025em;
+        margin: 0 0 16px;
+      }
+      .vie-heading-line {
+        display: block;
+        color: #0F172A;
+      }
+
+      .vie-subtext {
+        font-size: 1rem;
         color: #475569;
-        line-height: 1.5;
+        line-height: 1.55;
+        margin: 0 0 28px;
+        max-width: 420px;
+        font-weight: 500;
+      }
+
+      /* CTA Button */
+      .btn-vie-cta {
+        background: #4F46E5;
+        color: #FFFFFF;
+        font-size: 0.98rem;
+        font-weight: 800;
+        border-radius: 99px;
+        padding: 13px 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+        box-shadow: 0 6px 18px rgba(79, 70, 229, 0.28);
+        transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        cursor: pointer;
+        border: none;
+      }
+      .btn-vie-cta:hover {
+        background: #4338CA;
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 10px 24px rgba(79, 70, 229, 0.38);
+        color: #FFFFFF;
+      }
+
+      /* Right Column Area */
+      .vie-right-area {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        position: relative;
+        z-index: 2;
+        width: 100%;
+      }
+
+      /* Connected Learning Flow Chain (Above Card) */
+      .vie-top-flow-chain {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        width: 100%;
+      }
+      .flow-pill-white {
+        background: #FFFFFF;
+        color: #0F172A;
+        font-size: 0.78rem;
+        font-weight: 800;
+        padding: 5px 14px;
+        border-radius: 99px;
+        border: 1.5px solid #E2E8F0;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      }
+      .flow-pill-translucent {
+        background: #EEF2FF;
+        color: #4F46E5;
+        font-size: 0.78rem;
+        font-weight: 800;
+        padding: 5px 14px;
+        border-radius: 99px;
+        border: 1.5px solid #C7D2FE;
+      }
+      .flow-pill-dark {
+        background: #F1F5F9;
+        color: #64748B;
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 5px 14px;
+        border-radius: 99px;
+        border: 1.5px solid #E2E8F0;
+      }
+      .flow-arrow-white {
+        color: #94A3B8;
+        font-size: 0.8rem;
+        font-weight: 900;
+      }
+
+      /* Right Column: Interactive Demonstration Card */
+      .vie-demo-card {
+        background: #FFFFFF;
+        border: 1.5px solid #E0E7FF;
+        border-radius: 24px;
+        padding: 24px 28px 22px;
+        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* Tabs Header on Top Left */
+      .vie-tabs-header {
+        display: inline-flex;
+        align-items: center;
+        background: #EEF2F6;
+        border-radius: 99px;
+        padding: 3px;
+        margin-bottom: 14px;
+        width: fit-content;
+      }
+      .vie-tab-btn {
+        padding: 5px 16px;
+        border-radius: 99px;
+        border: none;
+        background: transparent;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: #64748B;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .vie-tab-btn.active {
+        background: #4F46E5;
+        color: #FFFFFF;
+        font-weight: 800;
+        box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
+      }
+
+      /* Tab Panes */
+      .vie-tab-pane {
+        display: none;
+      }
+      .vie-tab-pane.active {
+        display: block;
+        animation: vieFadeIn 0.25s ease-out;
+      }
+
+      .vie-pane-caption {
+        font-size: 0.98rem;
+        font-weight: 800;
+        color: #0F172A;
+        margin: 0 0 16px;
+        letter-spacing: -0.01em;
+      }
+
+      /* Grid Visual Area */
+      .vie-grid-stage-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 130px;
+        margin-bottom: 18px;
+      }
+      .vie-area-grid {
+        display: grid;
+        gap: 7px;
+        justify-content: center;
+        align-content: center;
+      }
+      .vie-block-unit {
+        width: 32px;
+        height: 32px;
+        border-radius: 7px;
+        background: linear-gradient(135deg, #5B50EC 0%, #4F46E5 100%);
+        box-shadow: 0 3px 8px rgba(79, 70, 229, 0.22);
+        animation: vieBlockPop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      /* Sliders Row (Full-width clean row with label & value) */
+      .vie-sliders-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 14px;
+        width: 100%;
+      }
+      .vie-slider-row-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        width: 100%;
+      }
+      .vie-slider-row-item label {
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: #0F172A;
+        min-width: 50px;
+      }
+      .vie-slider-input {
+        flex: 1;
+        height: 5px;
+        border-radius: 99px;
+        background: #E2E8F0;
+        outline: none;
+        -webkit-appearance: none;
+        appearance: none;
+        cursor: pointer;
+      }
+      .vie-slider-input::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #4F46E5;
+        border: 2px solid #FFFFFF;
+        box-shadow: 0 2px 6px rgba(79, 70, 229, 0.35);
+        cursor: pointer;
+        transition: transform 0.15s ease;
+      }
+      .vie-slider-input::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #4F46E5;
+        border: 2px solid #FFFFFF;
+        box-shadow: 0 2px 6px rgba(79, 70, 229, 0.35);
+        cursor: pointer;
+      }
+      .vie-slider-input::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+      }
+      .vie-slider-val-num {
+        font-size: 0.9rem;
+        font-weight: 800;
+        color: #0F172A;
+        min-width: 16px;
+        text-align: right;
+      }
+
+      /* Live Calculation Result Bar */
+      .vie-calc-display {
+        text-align: center;
+        margin-top: 10px;
+      }
+      .vie-calc-formula-text {
+        font-size: 1.28rem;
+        font-weight: 900;
+        color: #4F46E5;
+        letter-spacing: -0.01em;
+      }
+
+      /* Fractions Visualizer */
+      .vie-fraction-presets {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+      .fraction-preset-btn {
+        background: #F8FAFC;
+        border: 1.5px solid #E2E8F0;
+        border-radius: 99px;
+        padding: 4px 12px;
+        font-size: 0.82rem;
+        font-weight: 800;
+        color: #475569;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .fraction-preset-btn.active,
+      .fraction-preset-btn:hover {
+        background: #4F46E5;
+        color: #FFFFFF;
+        border-color: #4F46E5;
+      }
+      .vie-fraction-visual-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 150px;
+        margin-bottom: 22px;
+      }
+      .vie-fraction-bar-strip {
+        display: flex;
+        width: 100%;
+        max-width: 340px;
+        height: 42px;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #E2E8F0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        border: 2px solid #CBD5E1;
+      }
+      .fraction-segment {
+        flex: 1;
+        height: 100%;
+        border-right: 2px solid #FFFFFF;
+        transition: all 0.25s ease;
+      }
+      .fraction-segment:last-child {
+        border-right: none;
+      }
+      .fraction-segment.filled {
+        background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
+      }
+      .fraction-segment.empty {
+        background: #F1F5F9;
+      }
+
+      /* ── 6.5. WHY VISUAL LEARNING WORKS ── */
+      .wvl-section {
+        max-width: 1140px;
+        margin: 10px auto 65px;
+        padding: 0 20px;
+      }
+      .wvl-outer-card {
+        background: linear-gradient(145deg, #F8FAFF 0%, #EEF2FF 50%, #F5F3FF 100%);
+        border: 1.5px solid #E0E7FF;
+        border-radius: 32px;
+        padding: 44px 40px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+        align-items: center;
+        box-shadow: 0 16px 40px rgba(79, 70, 229, 0.06);
+        position: relative;
+        overflow: hidden;
+      }
+      .wvl-left-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .wvl-tag-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #FFFFFF;
+        border: 1.5px solid #C7D2FE;
+        color: #4F46E5;
+        font-size: 0.82rem;
+        font-weight: 800;
+        padding: 5px 14px;
+        border-radius: 99px;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 6px rgba(79, 70, 229, 0.06);
+      }
+      .wvl-heading {
+        font-size: clamp(2.2rem, 3.8vw, 3rem);
+        font-weight: 900;
+        color: #0F172A;
+        line-height: 1.16;
+        letter-spacing: -0.03em;
+        margin: 0 0 14px;
+      }
+      .wvl-highlight-tagline {
+        font-size: clamp(1.2rem, 2.2vw, 1.45rem);
+        font-weight: 900;
+        background: linear-gradient(90deg, #4F46E5 0%, #7C3AED 50%, #EC4899 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 18px;
+        line-height: 1.35;
+      }
+      .wvl-desc {
+        font-size: 1.05rem;
+        color: #475569;
+        line-height: 1.65;
+        margin: 0 0 20px;
+        font-weight: 500;
+      }
+      .wvl-source {
+        font-size: 0.82rem;
+        color: #94A3B8;
+        font-weight: 600;
+        font-style: italic;
+      }
+
+      /* Right Card: Retention Comparison */
+      .wvl-retention-card {
+        background: #FFFFFF;
+        border-radius: 28px;
+        padding: 28px 28px 24px;
+        box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+        border: 1.5px solid #E2E8F0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .wvl-card-title {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #0F172A;
+        margin: 0 0 4px;
+        letter-spacing: -0.01em;
+      }
+
+      /* Comparison Bars */
+      .wvl-compare-group {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .wvl-compare-item {
+        background: #F8FAFC;
+        border: 1.5px solid #E2E8F0;
+        border-radius: 18px;
+        padding: 14px 16px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+        position: relative;
+        user-select: none;
+      }
+      .wvl-compare-item:hover {
+        transform: translateY(-2px);
+        border-color: #6366F1;
+        box-shadow: 0 8px 22px rgba(99, 102, 241, 0.14);
+        background: #FFFFFF;
+      }
+      .wvl-compare-item:focus-visible {
+        outline: 2px solid #6366F1;
+        outline-offset: 2px;
+      }
+      .wvl-compare-item.active {
+        border-color: #6366F1;
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.12);
+        background: #FFFFFF;
+      }
+      .wvl-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .wvl-item-label {
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: #1E293B;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .wvl-item-stat-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .wvl-item-percent {
+        font-size: 1.05rem;
+        font-weight: 900;
+        color: #64748B;
+      }
+      .wvl-expand-icon {
+        font-size: 0.85rem;
+        color: #94A3B8;
+        transition: transform 0.25s ease, color 0.2s ease;
+      }
+      .wvl-compare-item:hover .wvl-expand-icon {
+        color: #4F46E5;
+      }
+      .wvl-compare-item.active .wvl-expand-icon {
+        transform: rotate(180deg);
+        color: #4F46E5;
+      }
+      .wvl-compare-item.featured .wvl-item-percent {
+        color: #5B4DF5;
+      }
+
+      .wvl-progress-track {
+        height: 14px;
+        background: #E2E8F0;
+        border-radius: 99px;
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 8px;
+      }
+      .wvl-progress-fill {
+        height: 100%;
+        border-radius: 99px;
+        width: 0%;
+        transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .fill-read {
+        background: linear-gradient(90deg, #CBD5E1 0%, #94A3B8 100%);
+      }
+      .fill-visual {
+        background: linear-gradient(90deg, #6366F1 0%, #5B4DF5 50%, #7C3AED 100%);
+        box-shadow: 0 0 12px rgba(91, 77, 245, 0.4);
+      }
+      .wvl-item-tooltip {
+        font-size: 0.82rem;
+        color: #64748B;
+        line-height: 1.45;
+        font-weight: 600;
+        transition: color 0.2s ease;
+      }
+      .wvl-compare-item:hover .wvl-item-tooltip {
+        color: #334155;
+      }
+
+      /* Memory Timeline */
+      .wvl-timeline-wrap {
+        border-top: 1.5px dashed #E2E8F0;
+        padding-top: 16px;
+      }
+      .wvl-timeline-title {
+        font-size: 0.875rem;
+        font-weight: 800;
+        color: var(--tm-text-muted, #64748B);
+        text-transform: none;
+        letter-spacing: normal;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .wvl-timeline-steps {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+        align-items: center;
+        gap: 8px;
+      }
+      .wvl-time-step {
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        padding: 8px 6px;
+        text-align: center;
+        transition: transform 0.2s ease;
+      }
+      .wvl-time-step:hover {
+        transform: translateY(-2px);
+        border-color: #C7D2FE;
+      }
+      .wvl-step-day {
+        font-size: 0.72rem;
+        font-weight: 800;
+        color: #64748B;
+        display: block;
+      }
+      .wvl-step-icon {
+        font-size: 1.2rem;
+        margin: 2px 0;
+        display: block;
+      }
+      .wvl-step-desc {
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: #1E293B;
+        line-height: 1.2;
+      }
+      .wvl-time-step.step-day-3 {
+        background: #EEF2FF;
+        border-color: #C7D2FE;
+      }
+      .wvl-time-step.step-day-3 .wvl-step-day {
+        color: #5B4DF5;
+      }
+      .wvl-time-step.step-day-3 .wvl-step-desc {
+        color: #4338CA;
+      }
+      .wvl-step-arrow {
+        color: #94A3B8;
+        font-size: 0.85rem;
+        font-weight: 800;
+      }
+
+      /* ── 7. ONE PLATFORM. COMPLETE LEARNING JOURNEY (6-CARD ECOSYSTEM) ── */
+      .tm-benefits-mentors-section {
+        max-width: 1240px;
+        margin: 10px auto 65px;
+        padding: 0 20px;
+      }
+      .journey-header-wrap {
+        text-align: center;
+        max-width: 960px;
+        margin: 0 auto 36px;
+      }
+      .journey-flow-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #F1F5F9;
+        border: 1px solid #E2E8F0;
+        border-radius: 99px;
+        padding: 6px 14px;
+        margin-top: 14px;
+        font-size: 0.76rem;
+        font-weight: 800;
+        color: #475569;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .journey-flow-indicator span.flow-active {
+        color: #5B4DF5;
+      }
+
+      .learning-journey-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-bottom: 56px;
+      }
+
+      .journey-card {
+        background: #FFFFFF;
+        border: 1.5px solid #E2E8F0;
+        border-radius: 24px;
+        padding: 32px 28px;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+        position: relative;
+        overflow: hidden;
+      }
+      .journey-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 36px rgba(79, 70, 229, 0.12);
+        border-color: #818CF8;
+      }
+      .journey-card:hover .journey-card-title {
+        color: #4F46E5;
+      }
+
+      .journey-icon-disc {
+        width: 60px;
+        height: 60px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.9rem;
+        margin-bottom: 20px;
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .journey-card:hover .journey-icon-disc {
+        transform: scale(1.12) rotate(4deg);
+      }
+
+      .disc-indigo { background: #EEF2FF; }
+      .disc-sky { background: #E0F2FE; }
+      .disc-amber { background: #FEF3C7; }
+      .disc-emerald { background: #DCFCE7; }
+      .disc-rose { background: #FFE4E6; }
+      .disc-purple { background: #F3E8FF; }
+
+      .journey-card-title {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: #0F172A;
+        margin: 0 0 10px;
+        letter-spacing: -0.015em;
+        line-height: 1.35;
+        transition: color 0.2s ease;
+      }
+      .journey-card-desc {
+        font-size: 0.94rem;
+        color: #64748B;
+        line-height: 1.6;
         margin: 0;
-        font-weight: 450;
+        font-weight: 500;
       }
 
       /* Mentors Sub-Section */
@@ -964,6 +1741,12 @@
         color: #64748B;
         margin: 0;
         line-height: 1.45;
+      }
+      .tm-mentors-section {
+        max-width: 1240px;
+        margin: 10px auto 65px;
+        padding: 0 20px;
+        position: relative;
       }
       .mentors-cards-grid {
         display: grid;
@@ -1028,10 +1811,181 @@
         font-weight: 450;
       }
 
+      /* ── 7.0 HOW IT WORKS WORKFLOW SECTION ── */
+      .how-it-works-workflow-section {
+        max-width: 1240px;
+        margin: 10px auto 65px;
+        padding: 0 20px;
+        position: relative;
+      }
+      .hiw-workflow-inner {
+        background: linear-gradient(180deg, #FAF8FF 0%, #FFFFFF 100%);
+        border: 1.5px solid #E0E7FF;
+        border-radius: 36px;
+        padding: 52px 40px 44px;
+        box-shadow: 0 16px 40px rgba(79, 70, 229, 0.05);
+        position: relative;
+        overflow: hidden;
+      }
+      .hiw-heading-block {
+        text-align: center;
+        max-width: 960px;
+        margin: 0 auto 36px;
+      }
+      .hiw-heading-block h2 {
+        font-size: clamp(1.85rem, 3.2vw, 2.45rem);
+        font-weight: 900;
+        color: #0F172A;
+        letter-spacing: -0.025em;
+        margin: 0 0 10px;
+        line-height: 1.25;
+      }
+      .hiw-heading-block p {
+        font-size: 1.05rem;
+        color: #64748B;
+        margin: 0 auto;
+        max-width: 780px;
+        font-weight: 500;
+        line-height: 1.55;
+      }
+
+      .hiw-steps-track {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        position: relative;
+        margin: 36px 0 40px;
+      }
+      .hiw-step-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+        cursor: default;
+      }
+      .hiw-step-item:hover {
+        transform: translateY(-4px);
+      }
+      .hiw-badge-connector-wrap {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .hiw-num-squircle {
+        width: 72px;
+        height: 72px;
+        border-radius: 22px;
+        background: linear-gradient(135deg, #4F46E5 0%, #5B4DF5 100%);
+        color: #FFFFFF;
+        font-size: 1.5rem;
+        font-weight: 900;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 24px rgba(91, 77, 245, 0.3);
+        z-index: 2;
+        position: relative;
+        transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease, background 0.28s ease;
+      }
+      .hiw-step-item:hover .hiw-num-squircle {
+        transform: scale(1.08) translateY(-2px);
+        box-shadow: 0 16px 36px rgba(91, 77, 245, 0.45);
+        background: linear-gradient(135deg, #4338CA 0%, #4F46E5 100%);
+      }
+      .hiw-dashed-line {
+        position: absolute;
+        top: 50%;
+        left: calc(50% + 44px);
+        width: calc(100% - 88px + 20px);
+        border-top: 2.5px dashed #A5B4FC;
+        z-index: 1;
+        transform: translateY(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+      }
+      .hiw-arrow-indicator {
+        background: #FAF8FF;
+        color: #5B4DF5;
+        font-size: 0.95rem;
+        font-weight: 900;
+        padding: 0 6px;
+        transform: translateY(-1px);
+        line-height: 1;
+      }
+      .hiw-step-title {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #0F172A;
+        margin: 0 0 8px;
+        transition: color 0.2s ease;
+      }
+      .hiw-step-item:hover .hiw-step-title {
+        color: #4F46E5;
+      }
+      .hiw-step-desc {
+        font-size: 0.92rem;
+        color: #64748B;
+        line-height: 1.55;
+        margin: 0;
+        max-width: 230px;
+        font-weight: 500;
+      }
+
+      /* Bottom Text Flow Indicator */
+      .hiw-text-flow-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        font-size: 0.92rem;
+        font-weight: 900;
+        color: #5B4DF5;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-top: 24px;
+        flex-wrap: wrap;
+      }
+      .hiw-flow-tag {
+        transition: transform 0.2s ease;
+      }
+      .hiw-flow-arrow {
+        color: #A5B4FC;
+        font-weight: 800;
+      }
+
+      @media (max-width: 900px) {
+        .hiw-steps-track {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 36px 20px;
+        }
+        .hiw-step-item:nth-child(2) .hiw-dashed-line {
+          display: none;
+        }
+      }
+      @media (max-width: 600px) {
+        .hiw-steps-track {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        .hiw-dashed-line {
+          display: none;
+        }
+        .hiw-workflow-inner {
+          padding: 36px 20px 30px;
+        }
+      }
+
       /* ── 7.5 SUBSCRIPTION PLANS & TIERS SECTION ── */
       .subscription-section {
-        max-width: 960px;
-        margin: 0 auto 64px;
+        max-width: 1240px;
+        margin: 10px auto 65px;
         padding: 0 20px;
         position: relative;
       }
@@ -1086,8 +2040,8 @@
       .pricing-cards-grid-v2 {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        max-width: 880px;
+        gap: 24px;
+        max-width: 920px;
         margin: 28px auto 0;
         align-items: stretch;
         position: relative;
@@ -1324,7 +2278,8 @@
 
 
       .pricing-trust-strip {
-        margin-top: 36px;
+        margin: 36px auto 0;
+        max-width: 920px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1352,9 +2307,9 @@
 
       /* ── 8. GAMES ARENA SECTION ── */
       .games-arena-section {
-        max-width: 1260px;
-        margin: 0 auto 90px;
-        padding: 0 24px;
+        max-width: 1240px;
+        margin: 10px auto 65px;
+        padding: 0 20px;
       }
 
       /* All 3 Game Cards in a uniform grid */
@@ -1572,9 +2527,9 @@
 
       /* ── 9. ALL-INDIA CHAMPIONS LEADERBOARD SECTION ── */
       .champions-leaderboard-section {
-        max-width: 1260px;
-        margin: 0 auto 90px;
-        padding: 0 24px;
+        max-width: 1240px;
+        margin: 10px auto 65px;
+        padding: 0 20px;
         position: relative;
       }
       .leaderboard-podium-grid {
@@ -1758,9 +2713,9 @@
 
       /* ── 10. PARENT REVIEWS (SIMPLE) ── */
       .parents-trust-feedback-section {
-        max-width: 1260px;
-        margin: 0 auto 90px;
-        padding: 0 24px;
+        max-width: 1240px;
+        margin: 10px auto 65px;
+        padding: 0 20px;
       }
       .parent-reviews-grid {
         display: grid;
@@ -1829,9 +2784,9 @@
 
       /* ── 11. FINAL CTA BANNER ── */
       .final-cta-section {
-        max-width: 1260px;
-        margin: 0 auto 90px;
-        padding: 0 24px;
+        max-width: 1240px;
+        margin: 10px auto 65px;
+        padding: 0 20px;
       }
       .final-cta-card {
         background: linear-gradient(135deg, #4F46E5 0%, #6366F1 50%, #7C3AED 100%);
@@ -1927,16 +2882,16 @@
       .site-footer-v2 {
         background: #FFFFFF;
         border-top: 1px solid var(--tm-border);
-        padding: 60px 24px 30px;
+        padding: 60px 20px 30px;
       }
       .footer-inner-grid {
-        max-width: 1260px;
-        margin: 0 auto;
+        max-width: 1240px;
+        margin: 0 auto 40px;
         display: grid;
         grid-template-columns: 1.5fr 1fr 1fr 1fr;
         gap: 40px;
-        margin-bottom: 40px;
       }
+      .footer-col h3,
       .footer-col h5 {
         font-size: 0.95rem;
         font-weight: 800;
@@ -1958,9 +2913,9 @@
         color: var(--tm-brand);
       }
       .footer-bottom-bar {
-        max-width: 1260px;
+        max-width: 1240px;
         margin: 0 auto;
-        padding-top: 24px;
+        padding: 24px 0 0;
         border-top: 1px solid #F1F5F9;
         display: flex;
         align-items: center;
@@ -2117,13 +3072,18 @@
         .nav-container,
         .landing-hero-grid,
         .classes-section,
+        .vie-section,
+        .tm-benefits-mentors-section,
+        .how-it-works-workflow-section,
+        .tm-mentors-section,
+        .subscription-section,
         .games-arena-section,
         .champions-leaderboard-section,
         .parents-trust-feedback-section,
         .final-cta-section,
         .footer-inner-grid,
         .footer-bottom-bar {
-          max-width: 1340px;
+          max-width: 1240px;
         }
       }
 
@@ -2131,12 +3091,28 @@
       @media (max-width: 1023px) and (min-width: 768px) {
         .landing-nav-links { gap: 14px; }
         .landing-nav-links a { font-size: 0.88rem; }
-        .landing-hero-grid { grid-template-columns: 1fr; text-align: center; gap: 36px; }
-        .hero-left-content { margin: 0 auto; max-width: 640px; }
+        .landing-hero-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; padding: 24px 20px 36px; }
+        .hero-left-content { margin: 0 auto; max-width: 640px; align-items: center; }
+        .hero-subheading, .hero-description { text-align: center; }
+        .hero-pills-row { justify-content: center; }
         .hero-cta-group { justify-content: center; }
-        .hero-features-bar { margin: 0 auto; grid-template-columns: repeat(2, 1fr); max-width: 520px; }
+        .hero-benefits-inline { justify-content: center; }
+        .hero-circle-stage { width: 380px; height: 380px; margin: 0 auto; }
+        .hero-student-wrapper { width: 290px; height: 290px; }
+        .vie-outer-card { grid-template-columns: 1fr; padding: 36px 30px; gap: 32px; }
+        .vie-left-content { align-items: center; text-align: center; }
+        .vie-subtext { text-align: center; }
+        .vie-right-area { align-items: center; width: 100%; }
+        .vie-top-flow-chain { justify-content: center; }
+        .wvl-outer-card { grid-template-columns: 1fr; padding: 36px 30px; gap: 32px; }
+        .wvl-left-content { align-items: center; text-align: center; }
+        .wvl-desc { text-align: center; }
         .classes-grid-premium, .tm-classes-row-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 16px; }
-        .benefits-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 36px; }
+        .learning-journey-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 36px; }
+        .how-it-works-workflow-section { padding: 0 20px; margin-bottom: 44px; }
+        .hiw-steps-track { grid-template-columns: repeat(2, 1fr); gap: 32px 20px; }
+        .hiw-step-item:nth-child(2) .hiw-dashed-line { display: none; }
+        .tm-mentors-section { padding: 0 20px; margin-bottom: 44px; }
         .mentors-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
         .pricing-cards-grid-v2 { grid-template-columns: 1fr 1fr; max-width: 100%; gap: 20px; }
         .games-showcase-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -2149,17 +3125,52 @@
       @media (max-width: 767px) {
         .nav-container { padding: 12px 16px; }
         .landing-nav-links { display: none; }
-        .btn-nav-login, .btn-nav-started { display: none; }
+        .landing-nav-actions .btn-nav-login,
+        .landing-nav-actions .btn-nav-started,
+        .landing-nav-actions .btn-nav-login-reg { display: none; }
         .btn-mobile-nav-toggle { display: flex; }
 
-        .landing-hero-grid { grid-template-columns: 1fr; text-align: center; padding: 24px 16px 40px; gap: 28px; }
-        .hero-left-content { margin: 0 auto; width: 100%; }
-        .hero-main-title { font-size: clamp(1.85rem, 6.5vw, 2.4rem); }
-        .hero-description { font-size: var(--tm-text-sm); line-height: 1.55; }
+        .landing-hero-grid { grid-template-columns: 1fr; text-align: center; padding: 20px 16px 36px; gap: 32px; }
+        .hero-left-content { margin: 0 auto; width: 100%; align-items: center; }
+        .hero-badge-pill { max-width: 100%; padding: 6px 14px; }
+        .hero-badge-text { font-size: 0.78rem; }
+        .hero-main-title { font-size: clamp(1.85rem, 6.5vw, 2.35rem); }
+        .hero-subheading { font-size: 1.05rem; text-align: center; }
+        .hero-description { font-size: 0.92rem; line-height: 1.55; text-align: center; }
+        .hero-pills-row { justify-content: center; gap: 8px; }
+        .hero-method-pill { padding: 7px 16px; font-size: 0.85rem; }
         .hero-cta-group { flex-direction: column; width: 100%; gap: 12px; }
         .btn-hero-primary, .btn-hero-secondary { width: 100%; min-height: 48px; }
-        .hero-features-bar { grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; max-width: 100%; }
-        .hero-mini-pill { padding: 8px 10px; }
+        .hero-benefits-inline { justify-content: center; gap: 10px 16px; font-size: 0.85rem; }
+
+        .hero-circle-stage { width: 290px; height: 290px; margin: 0 auto; }
+        .hero-student-wrapper { width: 230px; height: 230px; }
+        .hero-pill-badge { padding: 5px 12px; font-size: 0.78rem; gap: 6px; }
+        .pill-badge-icon { font-size: 0.95rem; }
+        .badge-pos-shapes { top: 0px; left: -10px; }
+        .badge-pos-champion { top: 20px; right: -15px; }
+        .badge-pos-science { bottom: 25px; left: -15px; }
+        .badge-pos-xp { bottom: 0px; right: -10px; }
+
+        .vie-section { padding: 0 14px; margin-bottom: 44px; }
+        .vie-outer-card { grid-template-columns: 1fr; padding: 26px 18px; border-radius: 24px; gap: 24px; }
+        .vie-left-content { align-items: center; text-align: center; }
+        .vie-main-heading { font-size: clamp(1.75rem, 6.5vw, 2.2rem); text-align: center; }
+        .vie-subtext { font-size: 0.95rem; text-align: center; }
+        .vie-right-area { align-items: center; width: 100%; }
+        .vie-top-flow-chain { justify-content: center; font-size: 0.72rem; gap: 4px; }
+        .flow-pill-white, .flow-pill-translucent, .flow-pill-dark { padding: 4px 10px; font-size: 0.75rem; }
+        .btn-vie-cta { width: 100%; min-height: 48px; }
+        .vie-demo-card { padding: 18px 14px; border-radius: 20px; }
+        .vie-block-unit { width: 28px; height: 28px; border-radius: 6px; }
+
+        .wvl-section { padding: 0 14px; margin-bottom: 44px; }
+        .wvl-outer-card { grid-template-columns: 1fr; padding: 26px 18px; border-radius: 24px; gap: 24px; }
+        .wvl-left-content { align-items: center; text-align: center; }
+        .wvl-heading { font-size: clamp(1.75rem, 6.5vw, 2.2rem); text-align: center; }
+        .wvl-highlight-tagline { text-align: center; }
+        .wvl-desc { font-size: 0.95rem; text-align: center; }
+        .wvl-retention-card { padding: 20px 16px; border-radius: 20px; }
 
         .classes-section {
           padding: 0 14px;
@@ -2186,9 +3197,16 @@
         .tm-class-title { font-size: 1.06rem; }
         .tm-class-pill-btn { padding: 5px 12px; font-size: 0.76rem; }
 
-        .benefits-cards-grid { grid-template-columns: 1fr; gap: 14px; margin-bottom: 32px; }
+        .learning-journey-grid { grid-template-columns: 1fr; gap: 14px; margin-bottom: 32px; }
+        .journey-card { padding: 20px 18px; border-radius: 18px; }
+        .how-it-works-workflow-section { padding: 0 14px; margin-bottom: 44px; }
+        .hiw-workflow-inner { padding: 32px 18px 26px; border-radius: 24px; }
+        .hiw-steps-track { grid-template-columns: 1fr; gap: 28px; margin: 24px 0 24px; }
+        .hiw-dashed-line { display: none; }
+        .hiw-text-flow-bar { font-size: 0.8rem; gap: 8px; }
+        .tm-mentors-section { padding: 0 14px; margin-bottom: 44px; }
         .mentors-cards-grid { grid-template-columns: 1fr; gap: 14px; }
-        .benefit-feature-card, .mentor-info-card { padding: 18px 16px; }
+        .mentor-info-card { padding: 18px 16px; }
 
         .pricing-cards-grid-v2 { grid-template-columns: 1fr; width: 100%; max-width: 100%; margin-top: 24px; gap: 20px; }
         .pricing-card-v2 { padding: 24px 18px 20px; }
@@ -2390,31 +3408,24 @@
     <header class="public-nav-v2" id="main-navbar">
       <div class="nav-container">
         <!-- Logo -->
-        <a class="landing-logo" href="/">
-          <div class="landing-logo-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4.5 16.5c-1.5 1.5-2.5 3.5-2.5 5.5C4 22 6 21 7.5 19.5" />
-              <path d="M12 12l9-9-3 12-6 3-3-3-3-3 6-3z" />
-              <path d="M9 15l-3-3" />
-            </svg>
-          </div>
-          <div class="landing-logo-text">
-            <strong>Tezz-Mindz</strong>
-            <span>Learn • Play • Master</span>
-          </div>
+        <a class="landing-logo" href="/" aria-label="TezMindZ Home">
+          <img src="/static/media/tezmindz_brain_icon.png" alt="TezMindZ Icon" class="landing-logo-brain-icon" style="height: 40px; width: 40px; object-fit: contain; flex-shrink: 0;" />
+          <img src="/static/media/tezmindz_logo_transparent.png" alt="TezMindZ" class="landing-logo-img" style="height: 36px; width: auto; object-fit: contain; max-width: 160px;" />
         </a>
         
         <!-- Center Nav Links -->
         <nav class="landing-nav-links" aria-label="Main Navigation">
           <a href="/" class="active">Home</a>
           <a href="#classes">Classes</a>
-          <a href="#pricing">Plans</a>
           <a href="#why-tezmindz">Why Us</a>
+          <a href="#pricing">Plans</a>
           <a href="#about">About</a>
         </nav>
 
         <!-- Right Action Controls -->
         <div class="landing-nav-actions">
+
+
           {% if request.user.is_staff or request.user.is_superuser %}
             <!-- Authenticated Administrator HUD & Console Access -->
             <a class="hud-profile-pill" href="/admin/" title="Administrator: {{ request.user.username }} (Staff)">
@@ -2472,19 +3483,8 @@
               </svg>
             </a>
           {% else %}
-            <a class="btn-nav-login" href="javascript:void(0)" onclick="TMAuthModal.openLogin()" data-open-modal="login">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-              <span>Login</span>
-            </a>
-            <a class="btn-nav-started" href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">
-              <span>Get Started</span>
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
+            <a class="btn-nav-login-reg" href="javascript:void(0)" onclick="TMAuthModal.openLogin()" data-open-modal="login">
+              Login/Register
             </a>
           {% endif %}
 
@@ -2504,19 +3504,15 @@
     <div class="public-drawer-backdrop" id="public-drawer-backdrop" onclick="togglePublicMobileDrawer()"></div>
     <div class="public-drawer" id="public-drawer">
       <div class="public-drawer-header">
-        <a class="landing-logo" href="/" onclick="togglePublicMobileDrawer()">
-          <div class="landing-logo-mark" style="width:36px;height:36px;border-radius:10px;">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.5-2.5 3.5-2.5 5.5C4 22 6 21 7.5 19.5" /><path d="M12 12l9-9-3 12-6 3-3-3-3-3 6-3z" /></svg>
-          </div>
-          <div class="landing-logo-text">
-            <strong style="font-size:1.15rem;">Tezz-Mindz</strong>
-            <span style="font-size:0.6rem;">Learn • Play • Master</span>
-          </div>
+        <a class="landing-logo" href="/" onclick="togglePublicMobileDrawer()" aria-label="TezMindZ Home">
+          <img src="/static/media/tezmindz_brain_icon.png" alt="TezMindZ Icon" class="landing-logo-brain-icon" style="height: 34px; width: 34px; object-fit: contain; flex-shrink: 0;" />
+          <img src="/static/media/tezmindz_logo_transparent.png" alt="TezMindZ" class="landing-logo-img" style="height: 30px; width: auto; object-fit: contain; max-width: 135px;" />
         </a>
         <button type="button" class="btn-drawer-close" onclick="togglePublicMobileDrawer()" aria-label="Close menu">✕</button>
       </div>
 
       <nav class="public-drawer-links">
+
         <a href="/" class="drawer-nav-item" onclick="togglePublicMobileDrawer()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
           <span>Home</span>
@@ -2525,13 +3521,13 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
           <span>Class 1 – 8</span>
         </a>
-        <a href="#pricing" class="drawer-nav-item" onclick="togglePublicMobileDrawer()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          <span>Subscription Plans ⭐</span>
-        </a>
         <a href="#why-tezmindz" class="drawer-nav-item" onclick="togglePublicMobileDrawer()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
           <span>Why TezMindz</span>
+        </a>
+        <a href="#pricing" class="drawer-nav-item" onclick="togglePublicMobileDrawer()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>Subscription Plans ⭐</span>
         </a>
         <a href="#about" class="drawer-nav-item" onclick="togglePublicMobileDrawer()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
@@ -2544,8 +3540,7 @@
           <a href="/dashboard/" class="btn-drawer-primary">Go to Dashboard 🚀</a>
           <a href="/logout/" class="btn-drawer-outline" style="color:#DC2626;border-color:#FCA5A5;">Logout</a>
         {% else %}
-          <a href="javascript:void(0)" onclick="togglePublicMobileDrawer(); TMAuthModal.openRegister();" class="btn-drawer-primary">Start Free Practice →</a>
-          <a href="javascript:void(0)" onclick="togglePublicMobileDrawer(); TMAuthModal.openLogin();" class="btn-drawer-outline">Student Login</a>
+          <a href="javascript:void(0)" onclick="togglePublicMobileDrawer(); TMAuthModal.openLogin();" class="btn-nav-login-reg" style="width: 100%; text-align: center;">Login/Register</a>
         {% endif %}
       </div>
     </div>
@@ -2553,161 +3548,110 @@
     </header>
 
     <!-- 2. HERO SECTION -->
-    <section class="landing-hero-grid">
+    <section class="landing-hero-grid" id="hero">
       <div class="hero-left-content reveal-init is-revealed">
         
         <!-- Top Announcement Badge -->
-        <div class="hero-badge-pill">
-          <span class="hero-badge-icon">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#F59E0B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-              <path d="M4 22h16"></path>
-              <path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"></path>
-              <path d="M6 4h12a2 2 0 0 1 2 2v3a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6V6a2 2 0 0 1 2-2Z"></path>
-            </svg>
-          </span>
-          <span class="hero-badge-text">India's Next Gen Olympiad Learning Platform</span>
+        <div class="hero-badge-pill" role="status">
+          <span class="badge-dot-green" aria-hidden="true"></span>
+          <span class="hero-badge-text">India's Next-Gen Olympiad Learning Platform</span>
         </div>
 
-        <!-- Headline with Curved Accent -->
+        <!-- Headline with Purple Highlight -->
         <h1 class="hero-main-title">
-          Olympiad Learning,<br />
-          Now <span class="hero-highlight-fun">More Fun!
-            <svg class="hero-title-curve" viewBox="0 0 220 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 13C60 4 160 4 217 13" stroke="#F59E0B" stroke-width="5.5" stroke-linecap="round"/>
-            </svg>
-          </span>
+          Quick Minds<br />
+          Aren't Born.<br />
+          <span class="hero-highlight-trained">They're Trained.</span>
         </h1>
 
-        <!-- Subtitle -->
+        <!-- Subheading -->
+        <h2 class="hero-subheading">Built to train a faster, fearless mind for competitive exams.</h2>
+
+        <!-- Supporting Text -->
         <p class="hero-description">
-          {% if request.user.is_staff or request.user.is_superuser %}
-            Administrator access active for <strong>{{ request.user.username }}</strong>. Manage curriculum, subjects, learning worlds, telemetry, and platform settings via the Admin Console.
-          {% elif request.user.is_authenticated and profile %}
-            Welcome back, <strong>{{ profile.display_name|default:request.user.first_name|default:request.user.username }}</strong>! Continue mastering concepts, completing challenges, and earning trophies with <strong>Tezz-Mindz</strong>.
-          {% else %}
-            Learn concepts, play games, solve challenges and become an Olympiad Champion with <strong>Tezz-Mindz</strong>.
-          {% endif %}
+          Learn concepts visually, practice with interactive challenges, clear your doubts, and build the confidence to perform your best.
         </p>
+
+        <!-- Methodology Pillars: See It. | Solve It. | Ace It. -->
+        <div class="hero-pills-row" aria-label="Learning Methodology">
+          <span class="hero-method-pill" id="pillSeeIt">See It.</span>
+          <span class="hero-method-pill" id="pillSolveIt">Solve It.</span>
+          <span class="hero-method-pill" id="pillAceIt">Ace It.</span>
+        </div>
         
         <!-- CTA Group -->
         <div class="hero-cta-group">
           {% if request.user.is_staff or request.user.is_superuser %}
             <a class="btn-hero-primary" href="/admin/">
-              <span>Open Admin Console</span>
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
+              <span>Open Admin Console →</span>
             </a>
             <a class="btn-hero-secondary" href="/logout/">
               <span>Log Out</span>
             </a>
           {% elif request.user.is_authenticated and profile %}
             <a class="btn-hero-primary" href="/dashboard/">
-              <span>Continue Learning</span>
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
+              <span>Continue Learning →</span>
             </a>
-            <a class="btn-hero-secondary" href="#classes">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6366F1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
-                <path d="M6 6h10"></path>
-                <path d="M6 10h10"></path>
-              </svg>
-              <span>Explore Classes</span>
+            <a class="btn-hero-secondary" href="/how-it-works/">
+              <span>Explore How It Works</span>
             </a>
           {% else %}
             <a class="btn-hero-primary" href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">
-              <span>Start Free Practice</span>
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
+              <span>Start Free Practice →</span>
             </a>
-            <a class="btn-hero-secondary" href="#results">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#6366F1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="8" r="7"></circle>
-                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-              </svg>
-              <span>Our Results</span>
+            <a class="btn-hero-secondary" href="/how-it-works/">
+              <span>Explore How It Works</span>
             </a>
           {% endif %}
         </div>
 
-        <!-- Bottom 4 Feature Mini-Pills Bar -->
-        <div class="hero-features-bar">
-          <!-- 1. Game Based Learning -->
-          <div class="hero-mini-pill f-pill-indigo">
-            <div class="pill-icon-box">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#4F46E5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="6" y1="12" x2="10" y2="12"></line>
-                <line x1="8" y1="10" x2="8" y2="14"></line>
-                <line x1="15" y1="13" x2="15.01" y2="13"></line>
-                <line x1="18" y1="11" x2="18.01" y2="11"></line>
-                <rect x="2" y="6" width="20" height="12" rx="6"></rect>
-              </svg>
-            </div>
-            <div class="pill-text-block">
-              <strong>Game Based</strong>
-              <span>Learning</span>
-            </div>
-          </div>
-
-          <!-- 2. Olympiad Focused -->
-          <div class="hero-mini-pill f-pill-rose">
-            <div class="pill-icon-box">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#E11D48" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="6" r="6"></circle>
-                <circle cx="12" cy="12" r="2"></circle>
-              </svg>
-            </div>
-            <div class="pill-text-block">
-              <strong>Olympiad</strong>
-              <span>Focused</span>
-            </div>
-          </div>
-
-          <!-- 3. Progress Tracking -->
-          <div class="hero-mini-pill f-pill-emerald">
-            <div class="pill-icon-box">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 3v18h18"></path>
-                <path d="m19 9-5 5-4-4-3 3"></path>
-              </svg>
-            </div>
-            <div class="pill-text-block">
-              <strong>Progress</strong>
-              <span>Tracking</span>
-            </div>
-          </div>
-
-          <!-- 4. Rewards & Certificates -->
-          <div class="hero-mini-pill f-pill-amber">
-            <div class="pill-icon-box">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="8" r="6"></circle>
-                <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
-              </svg>
-            </div>
-            <div class="pill-text-block">
-              <strong>Rewards</strong>
-              <span>&amp; Certificates</span>
-            </div>
-          </div>
+        <!-- Supporting Benefits Line below CTA Buttons -->
+        <div class="hero-benefits-inline" aria-label="Key Benefits">
+          <span><span class="check-green">✓</span> Visual learning</span>
+          <span><span class="check-green">✓</span> Practice</span>
+          <span><span class="check-green">✓</span> Confidence</span>
+          <span><span class="check-green">✓</span> Olympiad prep</span>
         </div>
 
       </div>
 
-      <!-- Right Column Hero Illustration -->
-      <div class="hero-right-illustration reveal-init is-revealed">
-        <div class="hero-cloud-backdrop"></div>
-        <div class="hero-character-stage">
-          <img src="/static/media/hero_student.jpg" alt="Tezz-Mindz Student Learning with Laptop and Olympiad Trophies" />
+      <!-- Right Column Circular Stage with Floating Badges & Student Champion -->
+      <div class="hero-right-illustration reveal-init is-revealed" aria-label="Olympiad Student Champion">
+        <div class="hero-circle-stage">
+          <!-- Sparkles -->
+          <div class="hero-sparkle sp-1" aria-hidden="true">✦</div>
+          <div class="hero-sparkle sp-2" aria-hidden="true">✦</div>
+          <div class="hero-sparkle sp-3" aria-hidden="true">★</div>
+
+          <!-- Student Champion Image -->
+          <div class="hero-student-wrapper">
+            <img src="/static/media/hero_student_champion.png" alt="TezMindz Olympiad Student Champion" class="hero-champion-img" loading="eager" />
+          </div>
+
+          <!-- 4 Floating Educational Badges -->
+          <!-- 1. Shapes (Top-Left) -->
+          <div class="hero-pill-badge badge-pos-shapes" tabindex="0" role="img" aria-label="Shapes Badge">
+            <span class="pill-badge-icon" aria-hidden="true">📐</span>
+            <span>Shapes</span>
+          </div>
+
+          <!-- 2. Champion (Top-Right) -->
+          <div class="hero-pill-badge badge-pos-champion" tabindex="0" role="img" aria-label="Champion Badge">
+            <span class="pill-badge-icon" aria-hidden="true">🏆</span>
+            <span>Champion</span>
+          </div>
+
+          <!-- 3. Science (Bottom-Left) -->
+          <div class="hero-pill-badge badge-pos-science" tabindex="0" role="img" aria-label="Science Badge">
+            <span class="pill-badge-icon" aria-hidden="true">🔬</span>
+            <span>Science</span>
+          </div>
+
+          <!-- 4. +50 XP (Bottom-Right) -->
+          <div class="hero-pill-badge badge-pos-xp" tabindex="0" role="img" aria-label="Plus 50 XP Badge">
+            <span class="pill-badge-icon" aria-hidden="true" style="color: #F59E0B;">⚡</span>
+            <span>+50 XP</span>
+          </div>
         </div>
       </div>
     </section>
@@ -2961,139 +3905,423 @@
       </div>
     </section>
 
-    <!-- 5. WHY LEARN WITH TEZMINDZ & EXPERIENCED MENTORS -->
+    <!-- 4.5. VISUAL INTERACTIVE EXPLANATION (VIE) SECTION -->
+    <section class="vie-section reveal-init" id="visual-interactive-explanation">
+      <div class="vie-outer-card">
+        
+        <!-- Left Content -->
+        <div class="vie-left-content">
+          <div class="vie-badge-pill" role="status">
+            <span class="vie-badge-icon" aria-hidden="true">🎯</span>
+            <span class="vie-badge-text">Visual Interactive Explanation</span>
+          </div>
+
+          <h2 class="vie-main-heading">
+            <span class="vie-heading-line line-1">Don't Just Read It.</span>
+            <span class="vie-heading-line line-2">See It. Move It.</span>
+            <span class="vie-heading-line line-3">Understand It.</span>
+          </h2>
+
+          <p class="vie-subtext">
+            Concepts you see and control, not just read — built for faster, deeper understanding.
+          </p>
+
+          <!-- CTA Button -->
+          <div class="vie-cta-wrap">
+            <a href="javascript:void(0)" onclick="TMAuthModal.openRegister()" class="btn-vie-cta" data-open-modal="register">
+              <span>Try Interactive Learning →</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column Area: Flow Chain + Interactive Demonstration Playground -->
+        <div class="vie-right-area">
+          <!-- Connected Learning Flow Chain (Above Card) -->
+          <div class="vie-top-flow-chain" aria-label="Learning Progression Flow">
+            <div class="flow-pill-white">Concept</div>
+            <div class="flow-arrow-white" aria-hidden="true">→</div>
+            <div class="flow-pill-translucent">Interactive Visual</div>
+            <div class="flow-arrow-white" aria-hidden="true">→</div>
+            <div class="flow-pill-dark">Student Understanding</div>
+          </div>
+
+          <!-- Interactive Demonstration Card -->
+          <div class="vie-demo-card" role="region" aria-label="Interactive Math Concept Visualizer">
+            <!-- Tabs Navigation -->
+            <div class="vie-tabs-header" role="tablist" aria-label="Concept Demonstrator Tabs">
+              <button type="button" class="vie-tab-btn active" id="tabBtnArea" role="tab" aria-selected="true" aria-controls="paneArea" onclick="switchVieTab('area')">
+                Area
+              </button>
+              <button type="button" class="vie-tab-btn" id="tabBtnFractions" role="tab" aria-selected="false" aria-controls="paneFractions" onclick="switchVieTab('fractions')">
+                Fractions
+              </button>
+            </div>
+
+            <!-- Tab Pane 1: AREA -->
+            <div class="vie-tab-pane active" id="paneArea" role="tabpanel" aria-labelledby="tabBtnArea">
+              <p class="vie-pane-caption">Build a rectangle. Watch the blocks multiply.</p>
+
+              <!-- Dynamic Block Grid Stage -->
+              <div class="vie-grid-stage-wrap" aria-label="Visual Rectangle Blocks Stage">
+                <div class="vie-area-grid" id="vieAreaGrid" style="grid-template-columns: repeat(4, 1fr);">
+                  <!-- Blocks dynamically generated via JS -->
+                </div>
+              </div>
+
+              <!-- Sliders Stack -->
+              <div class="vie-sliders-stack">
+                <div class="vie-slider-row-item">
+                  <label for="vieWidthSlider">Width</label>
+                  <input type="range" id="vieWidthSlider" class="vie-slider-input" min="1" max="8" value="4" step="1" oninput="updateVieArea()" aria-label="Width slider" />
+                  <span class="vie-slider-val-num" id="vieWidthVal">4</span>
+                </div>
+                <div class="vie-slider-row-item">
+                  <label for="vieHeightSlider">Height</label>
+                  <input type="range" id="vieHeightSlider" class="vie-slider-input" min="1" max="6" value="3" step="1" oninput="updateVieArea()" aria-label="Height slider" />
+                  <span class="vie-slider-val-num" id="vieHeightVal">3</span>
+                </div>
+              </div>
+
+              <!-- Live Calculation Formula Display -->
+              <div class="vie-calc-display">
+                <span class="vie-calc-formula-text" id="vieFormulaDisplay">4 × 3 = 12</span>
+              </div>
+            </div>
+
+            <!-- Tab Pane 2: FRACTIONS -->
+            <div class="vie-tab-pane" id="paneFractions" role="tabpanel" aria-labelledby="tabBtnFractions">
+              <p class="vie-pane-caption">Slice the whole. Watch the fraction take shape.</p>
+
+              <!-- Dynamic Fraction Visualizer -->
+              <div class="vie-fraction-visual-box" aria-label="Fraction Strip Visualizer">
+                <div class="vie-fraction-bar-strip" id="vieFractionStrip">
+                  <!-- Segments dynamically rendered via JS -->
+                </div>
+              </div>
+
+              <!-- Sliders Stack -->
+              <div class="vie-sliders-stack">
+                <div class="vie-slider-row-item">
+                  <label for="vieNumeratorSlider">Numerator</label>
+                  <input type="range" id="vieNumeratorSlider" class="vie-slider-input" min="1" max="8" value="3" step="1" oninput="updateVieFractionSliders()" aria-label="Numerator slider" />
+                  <span class="vie-slider-val-num" id="vieNumeratorVal">3</span>
+                </div>
+                <div class="vie-slider-row-item">
+                  <label for="vieDenominatorSlider">Denominator</label>
+                  <input type="range" id="vieDenominatorSlider" class="vie-slider-input" min="2" max="8" value="4" step="1" oninput="updateVieFractionSliders()" aria-label="Denominator slider" />
+                  <span class="vie-slider-val-num" id="vieDenominatorVal">4</span>
+                </div>
+              </div>
+
+              <!-- Quick Presets -->
+              <div class="vie-fraction-presets" role="group" aria-label="Quick Fraction Presets" style="justify-content: center; margin-top: 10px;">
+                <button type="button" class="fraction-preset-btn" id="preset12" onclick="setVieFraction(1, 2)">1/2</button>
+                <button type="button" class="fraction-preset-btn" id="preset24" onclick="setVieFraction(2, 4)">2/4</button>
+                <button type="button" class="fraction-preset-btn active" id="preset34" onclick="setVieFraction(3, 4)">3/4</button>
+                <button type="button" class="fraction-preset-btn" id="preset38" onclick="setVieFraction(3, 8)">3/8</button>
+                <button type="button" class="fraction-preset-btn" id="preset58" onclick="setVieFraction(5, 8)">5/8</button>
+              </div>
+
+              <!-- Live Calculation Formula Display -->
+              <div class="vie-calc-display">
+                <span class="vie-calc-formula-text" id="vieFractionFormulaDisplay">3 / 4 = 75%</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4.6. WHY VISUAL LEARNING WORKS (COMMENTED OUT)
+    <section class="wvl-section reveal-init" id="why-visual-learning">
+      <div class="wvl-outer-card">
+        
+        <div class="wvl-left-content">
+          <div class="wvl-tag-pill">
+            <span>🧠</span> Cognitive Retention Research
+          </div>
+
+          <h2 class="wvl-heading">Why Visual Learning Works</h2>
+
+          <div class="wvl-highlight-tagline">
+            See It. Understand It. Remember It.
+          </div>
+
+          <p class="wvl-desc">
+            Research on memory shows that after three days, people retain only 10–20% of information they only read or heard — but retention can be around 65% when learning is paired with visuals.
+          </p>
+        </div>
+
+        <div class="wvl-retention-card" role="region" aria-label="Memory Retention Comparison">
+          <h3 class="wvl-card-title">Information remembered after three days</h3>
+
+          <div class="wvl-compare-group">
+            <div class="wvl-compare-item" tabindex="0" role="button" aria-expanded="false" onclick="toggleWvlTooltip(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleWvlTooltip(this)">
+              <div class="wvl-item-header">
+                <span class="wvl-item-label">
+                  <span aria-hidden="true">📖</span> Read / Hear
+                </span>
+                <div class="wvl-item-stat-wrap">
+                  <span class="wvl-item-percent">10–20%</span>
+                  <i class="bi bi-chevron-down wvl-expand-icon" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="wvl-progress-track">
+                <div class="wvl-progress-fill fill-read" data-target="18%" style="width: 0%;"></div>
+              </div>
+              <div class="wvl-item-tooltip">
+                Information is introduced mainly through reading or listening.
+              </div>
+            </div>
+
+            <div class="wvl-compare-item featured active" tabindex="0" role="button" aria-expanded="true" onclick="toggleWvlTooltip(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleWvlTooltip(this)">
+              <div class="wvl-item-header">
+                <span class="wvl-item-label">
+                  <span aria-hidden="true">👁️</span> Visual Learning
+                </span>
+                <div class="wvl-item-stat-wrap">
+                  <span class="wvl-item-percent">~65%</span>
+                  <i class="bi bi-chevron-down wvl-expand-icon" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="wvl-progress-track">
+                <div class="wvl-progress-fill fill-visual" data-target="65%" style="width: 0%;"></div>
+              </div>
+              <div class="wvl-item-tooltip">
+                Visuals help connect ideas, patterns and concepts in a way that can make learning easier to remember.
+              </div>
+            </div>
+          </div>
+
+          <div class="wvl-timeline-wrap">
+            <div class="wvl-timeline-title">
+              <span>⏱️ Memory Retention Timeline</span>
+            </div>
+            <div class="wvl-timeline-steps">
+              <div class="wvl-time-step">
+                <span class="wvl-step-day">Day 1</span>
+                <span class="wvl-step-icon" aria-hidden="true">🧠</span>
+                <span class="wvl-step-desc">Concepts Introduced</span>
+              </div>
+              <div class="wvl-step-arrow" aria-hidden="true">→</div>
+              <div class="wvl-time-step">
+                <span class="wvl-step-day">Day 2</span>
+                <span class="wvl-step-icon" aria-hidden="true">💭</span>
+                <span class="wvl-step-desc">Visual Association</span>
+              </div>
+              <div class="wvl-step-arrow" aria-hidden="true">→</div>
+              <div class="wvl-time-step step-day-3">
+                <span class="wvl-step-day">Day 3</span>
+                <span class="wvl-step-icon" aria-hidden="true">🌟</span>
+                <span class="wvl-step-desc">~65% Retained</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+    -->
+
+    <!-- 5. ONE PLATFORM. COMPLETE LEARNING JOURNEY -->
     <section class="tm-benefits-mentors-section reveal-init" id="why-tezmindz">
-      <!-- Top Sub-Heading: Learning Benefits -->
-      <div class="section-heading-block benefits-header-wrap">
-        <span class="section-tag-pill">✨ Proven Learning Methodology</span>
-        <h2>Why Learn with TezMindz?</h2>
-        <p>Build better learning habits, improve your problem-solving skills, and prepare smarter with TezMindz.</p>
+      <!-- Section Heading -->
+      <div class="section-heading-block journey-header-wrap">
+        <span class="section-tag-pill">🚀 The TezMindz Ecosystem</span>
+        <h2>One Platform. Complete Learning Journey.</h2>
+        <p>From visual exploration to test mastery — every tool built to help you excel.</p>
       </div>
 
-      <!-- 4 Compact Learning Benefits Cards -->
-      <div class="benefits-cards-grid">
-        <!-- Card 1: Time Management -->
-        <div class="benefit-feature-card">
-          <div class="benefit-icon-box" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-          </div>
-          <h3 class="benefit-card-title">Time Management</h3>
-          <p class="benefit-card-desc">Every practice round runs on the clock — speed becomes a habit, not a shock on exam day.</p>
+      <!-- 6 Learning Features in Responsive 3x2 Grid -->
+      <div class="learning-journey-grid">
+        <!-- Card 1: Visual Interactive Explanation -->
+        <div class="journey-card">
+          <div class="journey-icon-disc disc-indigo" aria-hidden="true">🎯</div>
+          <h3 class="journey-card-title">Visual Interactive Explanation</h3>
+          <p class="journey-card-desc">Concepts you see and control, not just read — built for faster, deeper understanding.</p>
         </div>
 
-        <!-- Card 2: Fear Management & Confidence -->
-        <div class="benefit-feature-card">
-          <div class="benefit-icon-box" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <circle cx="12" cy="12" r="6"></circle>
-              <circle cx="12" cy="12" r="2" fill="currentColor"></circle>
-            </svg>
-          </div>
-          <h3 class="benefit-card-title">Fear Management</h3>
-          <p class="benefit-card-desc">A guided calm-down moment before every test — so pressure feels familiar, and kids walk in confident.</p>
+        <!-- Card 2: HomeTest -->
+        <div class="journey-card">
+          <div class="journey-icon-disc disc-sky" aria-hidden="true">🏠</div>
+          <h3 class="journey-card-title">HomeTest</h3>
+          <p class="journey-card-desc">Online mock test series — practice anytime, from home.</p>
         </div>
 
-        <!-- Card 3: Out-of-the-Box Thinking -->
-        <div class="benefit-feature-card">
-          <div class="benefit-icon-box" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 18L10 6L14 14L17 9L20 18H4Z"></path>
-              <circle cx="17" cy="5" r="1.5" fill="currentColor"></circle>
-            </svg>
-          </div>
-          <h3 class="benefit-card-title">Out-of-the-Box Thinking</h3>
-          <p class="benefit-card-desc">Doubt-solving sessions teach the shortcut, not just the correction — sparking creative problem solving.</p>
+        <!-- Card 3: Offline Test Papers -->
+        <div class="journey-card">
+          <div class="journey-icon-disc disc-amber" aria-hidden="true">📝</div>
+          <h3 class="journey-card-title">Offline Test Papers</h3>
+          <p class="journey-card-desc">Printed test series for real exam-hall practice.</p>
         </div>
 
-        <!-- Card 4: Tips & Tricks -->
-        <div class="benefit-feature-card">
-          <div class="benefit-icon-box" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-              <line x1="3" y1="10" x2="21" y2="10"></line>
-              <line x1="7" y1="15" x2="11" y2="15"></line>
-            </svg>
-          </div>
-          <h3 class="benefit-card-title">Tips &amp; Tricks</h3>
-          <p class="benefit-card-desc">One bite-sized card unlocks every practice session — smart strategies and small wins, daily.</p>
+        <!-- Card 4: On-Centre Doubt Clearance -->
+        <div class="journey-card">
+          <div class="journey-icon-disc disc-emerald" aria-hidden="true">🧑‍🏫</div>
+          <h3 class="journey-card-title">On-Centre Doubt Clearance</h3>
+          <p class="journey-card-desc">In-person sessions for concept clarity, right where you need it.</p>
+        </div>
+
+        <!-- Card 5: Fear-Free Learning -->
+        <div class="journey-card">
+          <div class="journey-icon-disc disc-rose" aria-hidden="true">🧠</div>
+          <h3 class="journey-card-title">Fear-Free Learning</h3>
+          <p class="journey-card-desc">Built to reduce exam anxiety through practice, not pressure.</p>
+        </div>
+
+        <!-- Card 6: Time & Speed Mastery -->
+        <div class="journey-card">
+          <div class="journey-icon-disc disc-purple" aria-hidden="true">⏱️</div>
+          <h3 class="journey-card-title">Time &amp; Speed Mastery</h3>
+          <p class="journey-card-desc">Train for focused, fast, accurate problem-solving — not just knowledge.</p>
         </div>
       </div>
+    </section>
 
-      <!-- Bottom Sub-Heading: Experienced Mentors -->
-      <div class="mentors-sub-block">
-        <div class="mentors-heading-wrap">
-          <h3 class="mentors-subheading">Learn from mentors who've done this before:</h3>
-          <p class="mentors-subtitle">Learn with guidance from mentors who understand how to make learning simple, engaging, and effective.</p>
+    <!-- 5.2 HOW IT WORKS WORKFLOW SECTION -->
+    <section class="how-it-works-workflow-section reveal-init" id="how-it-works">
+      <div class="hiw-workflow-inner">
+        <div class="section-heading-block hiw-heading-block">
+          <span class="section-tag-pill">⚡ Step-by-Step System</span>
+          <h2>How It Works</h2>
+          <p>From understanding a concept to mastering exam-day performance.</p>
         </div>
 
-        <!-- 4 Mentor Cards Grid -->
-        <div class="mentors-cards-grid">
-          <!-- Mentor 1: Science -->
-          <div class="mentor-info-card">
-            <div class="mentor-card-top">
-              <div class="mentor-subject-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"></ellipse>
-                  <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"></ellipse>
-                  <circle cx="12" cy="12" r="2" fill="currentColor"></circle>
-                </svg>
+        <!-- 4 Connected Steps Grid -->
+        <div class="hiw-steps-track" role="region" aria-label="Learning Workflow Steps">
+          <!-- Step 1: Learn -->
+          <div class="hiw-step-item">
+            <div class="hiw-badge-connector-wrap">
+              <div class="hiw-num-squircle" aria-label="Step 1">01</div>
+              <div class="hiw-dashed-line" aria-hidden="true">
+                <span class="hiw-arrow-indicator">→</span>
               </div>
-              <span class="mentor-subject-pill pill-science">Science</span>
             </div>
-            <h4 class="mentor-name">Dr. Ketki Kalele</h4>
-            <p class="mentor-qual-text">PhD holder • 50+ research papers published • Years of science teaching experience.</p>
+            <h3 class="hiw-step-title">Learn</h3>
+            <p class="hiw-step-desc">Explore concepts visually, at your own pace.</p>
           </div>
 
-          <!-- Mentor 2: English -->
-          <div class="mentor-info-card">
-            <div class="mentor-card-top">
-              <div class="mentor-subject-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                  <line x1="12" y1="6" x2="12" y2="18"></line>
-                </svg>
+          <!-- Step 2: Test -->
+          <div class="hiw-step-item">
+            <div class="hiw-badge-connector-wrap">
+              <div class="hiw-num-squircle" aria-label="Step 2">02</div>
+              <div class="hiw-dashed-line" aria-hidden="true">
+                <span class="hiw-arrow-indicator">→</span>
               </div>
-              <span class="mentor-subject-pill pill-english">English</span>
             </div>
-            <h4 class="mentor-name">Vidhi Nawandar</h4>
-            <p class="mentor-qual-text">20 years of teaching experience • GRE/GMAT trainer • Has trained CAT aspirants.</p>
+            <h3 class="hiw-step-title">Test</h3>
+            <p class="hiw-step-desc">Practice with HomeTest online or offline papers, exam-style.</p>
           </div>
 
-          <!-- Mentor 3: Mathematics -->
-          <div class="mentor-info-card">
-            <div class="mentor-card-top">
-              <div class="mentor-subject-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 6h16M4 12h16M7 18h10"></path>
-                  <circle cx="7" cy="6" r="1" fill="currentColor"></circle>
-                  <circle cx="17" cy="12" r="1" fill="currentColor"></circle>
-                </svg>
+          <!-- Step 3: Clarify -->
+          <div class="hiw-step-item">
+            <div class="hiw-badge-connector-wrap">
+              <div class="hiw-num-squircle" aria-label="Step 3">03</div>
+              <div class="hiw-dashed-line" aria-hidden="true">
+                <span class="hiw-arrow-indicator">→</span>
               </div>
-              <span class="mentor-subject-pill pill-math">Mathematics</span>
             </div>
-            <h4 class="mentor-name">Nikita VN</h4>
-            <p class="mentor-qual-text">5 years of teaching experience • Has trained IIM-MBA graduates at an MNC.</p>
+            <h3 class="hiw-step-title">Clarify</h3>
+            <p class="hiw-step-desc">Get doubts solved in-person, on-centre and online live sessions by experts.</p>
           </div>
 
-          <!-- Mentor 4: Primary Academic Lead -->
-          <div class="mentor-info-card">
-            <div class="mentor-card-top">
-              <div class="mentor-subject-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                  <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                </svg>
-              </div>
-              <span class="mentor-subject-pill pill-lead">Primary Academic Lead</span>
+          <!-- Step 4: Master -->
+          <div class="hiw-step-item">
+            <div class="hiw-badge-connector-wrap">
+              <div class="hiw-num-squircle" aria-label="Step 4">04</div>
             </div>
-            <h4 class="mentor-name">Dr. Kunjan Ved</h4>
-            <p class="mentor-qual-text">Runs 3 schools and an academy • 20 years as an educator.</p>
+            <h3 class="hiw-step-title">Master</h3>
+            <p class="hiw-step-desc">Build speed, focus, and fear-free confidence for exam day.</p>
           </div>
+        </div>
+
+        <!-- Bottom Text Progression Flow -->
+        <div class="hiw-text-flow-bar" aria-label="Learning Stages">
+          <span class="hiw-flow-tag">LEARN</span>
+          <span class="hiw-flow-arrow" aria-hidden="true">→</span>
+          <span class="hiw-flow-tag">TEST</span>
+          <span class="hiw-flow-arrow" aria-hidden="true">→</span>
+          <span class="hiw-flow-tag">CLARIFY</span>
+          <span class="hiw-flow-arrow" aria-hidden="true">→</span>
+          <span class="hiw-flow-tag">MASTER</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5.3 EXPERIENCED MENTORS SECTION -->
+    <section class="tm-mentors-section reveal-init" id="mentors">
+      <div class="section-heading-block mentors-heading-wrap">
+        <span class="section-tag-pill">🌟 Expert Guidance</span>
+        <h2>Learn from mentors who've done this before:</h2>
+        <p>Learn with guidance from mentors who understand how to make learning simple, engaging, and effective.</p>
+      </div>
+
+      <!-- 4 Mentor Cards Grid -->
+      <div class="mentors-cards-grid">
+        <!-- Mentor 1: Science -->
+        <div class="mentor-info-card">
+          <div class="mentor-card-top">
+            <div class="mentor-subject-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"></ellipse>
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"></ellipse>
+                <circle cx="12" cy="12" r="2" fill="currentColor"></circle>
+              </svg>
+            </div>
+            <span class="mentor-subject-pill pill-science">Science</span>
+          </div>
+          <h3 class="mentor-name">Dr. Ketki Kalele</h3>
+          <p class="mentor-qual-text">PhD holder • 50+ research papers published • Years of science teaching experience.</p>
+        </div>
+
+        <!-- Mentor 2: English -->
+        <div class="mentor-info-card">
+          <div class="mentor-card-top">
+            <div class="mentor-subject-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <line x1="12" y1="6" x2="12" y2="18"></line>
+              </svg>
+            </div>
+            <span class="mentor-subject-pill pill-english">English</span>
+          </div>
+          <h3 class="mentor-name">Vidhi Nawandar</h3>
+          <p class="mentor-qual-text">20 years of teaching experience • GRE/GMAT trainer • Has trained CAT aspirants.</p>
+        </div>
+
+        <!-- Mentor 3: Mathematics -->
+        <div class="mentor-info-card">
+          <div class="mentor-card-top">
+            <div class="mentor-subject-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 6h16M4 12h16M7 18h10"></path>
+                <circle cx="7" cy="6" r="1" fill="currentColor"></circle>
+                <circle cx="17" cy="12" r="1" fill="currentColor"></circle>
+              </svg>
+            </div>
+            <span class="mentor-subject-pill pill-math">Mathematics</span>
+          </div>
+          <h3 class="mentor-name">Nikita VN</h3>
+          <p class="mentor-qual-text">5 years of teaching experience • Has trained IIM-MBA graduates at an MNC.</p>
+        </div>
+
+        <!-- Mentor 4: Primary Academic Lead -->
+        <div class="mentor-info-card">
+          <div class="mentor-card-top">
+            <div class="mentor-subject-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+              </svg>
+            </div>
+            <span class="mentor-subject-pill pill-lead">Primary Academic Lead</span>
+          </div>
+          <h3 class="mentor-name">Dr. Kunjan Ved</h3>
+          <p class="mentor-qual-text">Runs 3 schools and an academy • 20 years as an educator.</p>
         </div>
       </div>
     </section>
@@ -3277,7 +4505,8 @@
       </div>
     </section>
 
-    <!-- 6. GAMES ARENA SHOWCASE -->
+    <!-- 6. GAMES ARENA SHOWCASE (COMMENTED OUT) -->
+    <!--
     <section class="games-arena-section reveal-init" id="games">
       <div class="section-heading-block">
         <span class="section-tag-pill">🎮 Play-Based Learning</span>
@@ -3287,7 +4516,6 @@
 
       <div class="games-showcase-grid">
 
-        <!-- Game 1: Fraction Quest: Pizza Master (Mathematics • Flagship) -->
         <div class="game-card-v2 game-card-math-alt flagship-card">
           <span class="flagship-crown">⭐ Flagship</span>
           <div class="game-card-emoji-icon">🍕</div>
@@ -3307,7 +4535,6 @@
           </div>
         </div>
 
-        <!-- Game 2: Bio-Reactor Lab (Science) -->
         <div class="game-card-v2 game-card-science">
           <div class="game-card-emoji-icon">🧪</div>
           <div class="game-card-badge-row">
@@ -3326,7 +4553,6 @@
           </div>
         </div>
 
-        <!-- Game 3: Sentence Tokenizer (English) -->
         <div class="game-card-v2 game-card-english">
           <div class="game-card-emoji-icon">📝</div>
           <div class="game-card-badge-row">
@@ -3367,6 +4593,7 @@
         {% endif %}
       </div>
     </section>
+    -->
 
     <!-- 7. ALL-INDIA CHAMPIONS LEADERBOARD -->
     <section class="champions-leaderboard-section reveal-init" id="leaderboard">
@@ -3381,7 +4608,7 @@
         <!-- Rank 2: Silver -->
         <div class="podium-card podium-rank-2">
           <div class="podium-avatar">🥈</div>
-          <h4 class="podium-name">Vihaan Patel</h4>
+          <h3 class="podium-name">Vihaan Patel</h3>
           <p class="podium-school">Class 4 • Cathedral, Mumbai</p>
           <span class="podium-score-pill">🥈 1,380 XP • 30D Streak</span>
         </div>
@@ -3400,7 +4627,7 @@
         <!-- Rank 3: Bronze -->
         <div class="podium-card podium-rank-3">
           <div class="podium-avatar">🥉</div>
-          <h4 class="podium-name">Kabir Mehta</h4>
+          <h3 class="podium-name">Kabir Mehta</h3>
           <p class="podium-school">Class 5 • DAV Boys, Chennai</p>
           <span class="podium-score-pill">🥉 1,290 XP • 25D Streak</span>
         </div>
@@ -3510,16 +4737,16 @@
     <!-- 9. FINAL HIGH-CONVERSION CTA BANNER -->
     <section class="final-cta-section reveal-init">
       <div class="final-cta-card">
-        <h2>Ready to Make Learning More Fun?</h2>
-        <p>Join thousands of students across India who prepare for Math, Science, and English Olympiads through interactive 3D games and adaptive quizzes.</p>
+        <h2>Learn visually. Test rigorously. Never stay stuck.</h2>
+        <p>Build understanding, improve speed, clear your doubts and prepare with confidence.</p>
         
         <div class="final-cta-btn-group">
           {% if request.user.is_authenticated %}
             <a class="btn-cta-white" href="/dashboard/">Go to Dashboard →</a>
-            <a class="btn-cta-outline" href="#classes">Explore Classes</a>
+            <a class="btn-cta-outline" href="#pricing">Explore Plans</a>
           {% else %}
-            <a class="btn-cta-white" href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">Start Free Practice →</a>
-            <a class="btn-cta-outline" href="#classes">Explore Classes</a>
+            <a class="btn-cta-white" href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">Start Your Free Practice →</a>
+            <a class="btn-cta-outline" href="#pricing">Explore Plans</a>
           {% endif %}
         </div>
       </div>
@@ -3537,24 +4764,15 @@
     <footer class="site-footer-v2" id="about">
       <div class="footer-inner-grid">
         <div class="footer-col">
-          <a class="landing-logo" href="/" style="margin-bottom: 14px;">
-            <div class="landing-logo-mark">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4.5 16.5c-1.5 1.5-2.5 3.5-2.5 5.5C4 22 6 21 7.5 19.5" />
-                <path d="M12 12l9-9-3 12-6 3-3-3-3-3 6-3z" />
-                <path d="M9 15l-3-3" />
-              </svg>
-            </div>
-            <div class="landing-logo-text">
-              <strong>Tezz-Mindz</strong>
-              <span>Learn • Play • Master</span>
-            </div>
+          <a class="landing-logo" href="/" style="margin-bottom: 14px;" aria-label="TezMindZ Home">
+            <img src="/static/media/tezmindz_brain_icon.png" alt="TezMindZ Icon" class="landing-logo-brain-icon" style="height: 40px; width: 40px; object-fit: contain; flex-shrink: 0;" />
+            <img src="/static/media/tezmindz_logo_transparent.png" alt="TezMindZ" class="landing-logo-img" style="height: 36px; width: auto; object-fit: contain; max-width: 160px;" />
           </a>
           <p style="font-size: 0.88rem; color: var(--tm-muted); line-height: 1.6; margin-top: 10px;">India's next-generation gamified Olympiad learning platform combining NCERT syllabus curriculum with interactive 3D games and adaptive quizzes.</p>
         </div>
 
         <div class="footer-col">
-          <h5>Subjects</h5>
+          <h3>Subjects</h3>
           <a href="/subject/1/">Mathematics (IMO)</a>
           <a href="/subject/2/">Science (NSO)</a>
           <a href="/subject/3/">English (IEO)</a>
@@ -3562,7 +4780,7 @@
         </div>
 
         <div class="footer-col">
-          <h5>Platform</h5>
+          <h3>Platform</h3>
           <a href="#classes">Class 1 – Class 8</a>
           <a href="/how-it-works/">How It Works</a>
           <a href="/about/">About Us</a>
@@ -3570,7 +4788,7 @@
         </div>
 
         <div class="footer-col">
-          <h5>Support &amp; Legal</h5>
+          <h3>Support &amp; Legal</h3>
           <a href="javascript:void(0)" onclick="TMAuthModal.openLogin()" data-open-modal="login">Student Login</a>
           <a href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">Create Free Account</a>
           <a href="#">Privacy Policy</a>
@@ -3701,9 +4919,60 @@
     <script src="/static/js/scroll-reveal.js"></script>
     <script src="/static/js/auth-modal.js"></script>
     <script>
+      // ── HERO INTERACTIVE METHODOLOGY FLOW (See It • Solve It • Ace It) ──
+      var tmHeroSteps = {
+        see: {
+          title: "See It:",
+          desc: "Watch concepts come alive.",
+          sparkle: "👁️"
+        },
+        solve: {
+          title: "Solve It:",
+          desc: "Practice challenges and sharpen your thinking.",
+          sparkle: "🧩"
+        },
+        ace: {
+          title: "Ace It:",
+          desc: "Build speed, accuracy and confidence.",
+          sparkle: "🏆"
+        }
+      };
 
+      function setHeroStep(stepKey) {
+        var step = tmHeroSteps[stepKey] || tmHeroSteps.ace;
+        
+        var pills = {
+          see: document.getElementById('pillSeeIt'),
+          solve: document.getElementById('pillSolveIt'),
+          ace: document.getElementById('pillAceIt')
+        };
 
+        for (var k in pills) {
+          if (pills[k]) {
+            if (k === stepKey) {
+              pills[k].classList.add('is-active');
+              pills[k].setAttribute('aria-selected', 'true');
+            } else {
+              pills[k].classList.remove('is-active');
+              pills[k].setAttribute('aria-selected', 'false');
+            }
+          }
+        }
 
+        var titleEl = document.getElementById('heroStepTitle');
+        var descEl = document.getElementById('heroStepDesc');
+        var cardEl = document.getElementById('heroStepCard');
+        var sparkleEl = cardEl ? cardEl.querySelector('.step-card-sparkle') : null;
+
+        if (cardEl) {
+          cardEl.classList.remove('pulse-flash');
+          void cardEl.offsetWidth; // trigger reflow
+          cardEl.classList.add('pulse-flash');
+        }
+        if (titleEl) titleEl.textContent = step.title;
+        if (descEl) descEl.textContent = step.desc;
+        if (sparkleEl) sparkleEl.textContent = step.sparkle;
+      }
 
       function selectClass(e, classLevel) {
         if (e && e.preventDefault) e.preventDefault();
@@ -3736,6 +5005,187 @@
             location.href = "/register/?class=" + classLevel;
           }
         }
+      }
+
+      function selectHeroMethod(stepKey) {
+        var pills = {
+          see: document.getElementById('pillSeeIt'),
+          solve: document.getElementById('pillSolveIt'),
+          ace: document.getElementById('pillAceIt')
+        };
+        for (var k in pills) {
+          if (pills[k]) {
+            if (k === stepKey) {
+              pills[k].classList.add('is-active');
+              pills[k].setAttribute('aria-selected', 'true');
+            } else {
+              pills[k].classList.remove('is-active');
+              pills[k].setAttribute('aria-selected', 'false');
+            }
+          }
+        }
+      }
+
+      // ── VISUAL INTERACTIVE EXPLANATION (VIE) LOGIC ──
+      function switchVieTab(tabName) {
+        var btnArea = document.getElementById('tabBtnArea');
+        var btnFractions = document.getElementById('tabBtnFractions');
+        var paneArea = document.getElementById('paneArea');
+        var paneFractions = document.getElementById('paneFractions');
+
+        if (tabName === 'area') {
+          if (btnArea) { btnArea.classList.add('active'); btnArea.setAttribute('aria-selected', 'true'); }
+          if (btnFractions) { btnFractions.classList.remove('active'); btnFractions.setAttribute('aria-selected', 'false'); }
+          if (paneArea) paneArea.classList.add('active');
+          if (paneFractions) paneFractions.classList.remove('active');
+          updateVieArea();
+        } else {
+          if (btnArea) { btnArea.classList.remove('active'); btnArea.setAttribute('aria-selected', 'false'); }
+          if (btnFractions) { btnFractions.classList.add('active'); btnFractions.setAttribute('aria-selected', 'true'); }
+          if (paneArea) paneArea.classList.remove('active');
+          if (paneFractions) paneFractions.classList.add('active');
+          updateVieFractionSliders();
+        }
+      }
+
+      function updateVieArea() {
+        var wInput = document.getElementById('vieWidthSlider');
+        var hInput = document.getElementById('vieHeightSlider');
+        var wVal = document.getElementById('vieWidthVal');
+        var hVal = document.getElementById('vieHeightVal');
+        var grid = document.getElementById('vieAreaGrid');
+        var formulaDisplay = document.getElementById('vieFormulaDisplay');
+
+        if (!wInput || !hInput || !grid) return;
+
+        var w = parseInt(wInput.value, 10) || 4;
+        var h = parseInt(hInput.value, 10) || 3;
+        var total = w * h;
+
+        if (wVal) wVal.textContent = w;
+        if (hVal) hVal.textContent = h;
+
+        grid.style.gridTemplateColumns = 'repeat(' + w + ', 1fr)';
+        grid.innerHTML = '';
+
+        for (var i = 1; i <= total; i++) {
+          var block = document.createElement('div');
+          block.className = 'vie-block-unit';
+          block.setAttribute('aria-label', 'Block ' + i);
+          grid.appendChild(block);
+        }
+
+        if (formulaDisplay) {
+          formulaDisplay.textContent = w + ' × ' + h + ' = ' + total;
+        }
+      }
+
+      function setVieFraction(num, denom) {
+        var numInput = document.getElementById('vieNumeratorSlider');
+        var denomInput = document.getElementById('vieDenominatorSlider');
+        if (denomInput) denomInput.value = denom;
+        if (numInput) numInput.value = num;
+
+        var presets = document.querySelectorAll('.fraction-preset-btn');
+        presets.forEach(function(btn) {
+          btn.classList.remove('active');
+          if (btn.textContent.trim() === num + '/' + denom) {
+            btn.classList.add('active');
+          }
+        });
+
+        updateVieFractionSliders();
+      }
+
+      function updateVieFractionSliders() {
+        var numInput = document.getElementById('vieNumeratorSlider');
+        var denomInput = document.getElementById('vieDenominatorSlider');
+        var numVal = document.getElementById('vieNumeratorVal');
+        var denomVal = document.getElementById('vieDenominatorVal');
+        var strip = document.getElementById('vieFractionStrip');
+        var formulaDisplay = document.getElementById('vieFractionFormulaDisplay');
+
+        if (!numInput || !denomInput || !strip) return;
+
+        var denom = parseInt(denomInput.value, 10) || 4;
+        var num = parseInt(numInput.value, 10) || 3;
+
+        if (num > denom) {
+          num = denom;
+          numInput.value = num;
+        }
+        numInput.max = denom;
+
+        if (numVal) numVal.textContent = num;
+        if (denomVal) denomVal.textContent = denom;
+
+        strip.innerHTML = '';
+        for (var i = 1; i <= denom; i++) {
+          var seg = document.createElement('div');
+          seg.className = 'fraction-segment ' + (i <= num ? 'filled' : 'empty');
+          seg.textContent = i <= num ? '1/' + denom : '';
+          seg.setAttribute('aria-label', (i <= num ? 'Shaded part ' : 'Unshaded part ') + i + ' of ' + denom);
+          strip.appendChild(seg);
+        }
+
+        var pct = Math.round((num / denom) * 100);
+        if (formulaDisplay) {
+          formulaDisplay.textContent = num + ' / ' + denom + ' = ' + pct + '%';
+        }
+      }
+
+      // ── WHY VISUAL LEARNING WORKS (Progress Bar & Tooltip Interactivity) ──
+      function toggleWvlTooltip(el) {
+        var items = document.querySelectorAll('.wvl-compare-item');
+        items.forEach(function(item) {
+          if (item !== el) {
+            item.classList.remove('active');
+            item.setAttribute('aria-expanded', 'false');
+          }
+        });
+        el.classList.toggle('active');
+        el.setAttribute('aria-expanded', el.classList.contains('active') ? 'true' : 'false');
+      }
+
+      function initWvlObserver() {
+        var wvlSection = document.getElementById('why-visual-learning');
+        if (!wvlSection) return;
+
+        var animated = false;
+        var fills = wvlSection.querySelectorAll('.wvl-progress-fill');
+
+        if ('IntersectionObserver' in window) {
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting && !animated) {
+                animated = true;
+                fills.forEach(function(fill) {
+                  var target = fill.getAttribute('data-target') || '50%';
+                  fill.style.width = target;
+                });
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.25 });
+          observer.observe(wvlSection);
+        } else {
+          fills.forEach(function(fill) {
+            fill.style.width = fill.getAttribute('data-target') || '50%';
+          });
+        }
+      }
+
+      // Initialize default values
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          updateVieArea();
+          updateVieFractionSliders();
+          initWvlObserver();
+        });
+      } else {
+        updateVieArea();
+        updateVieFractionSliders();
+        initWvlObserver();
       }
     </script>
 

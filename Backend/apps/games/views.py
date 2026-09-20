@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -48,6 +48,8 @@ class GameDetailAPIView(APIView):
 
 
 def dream_house_builder_view(request):
+    if not hasattr(request, 'user') or not request.user.is_authenticated:
+        return redirect("/?auth=login&next=/games/dream-house-builder/")
     # Existing game page — we'll fix its lookup separately.
     game = Game.objects.first()
 
