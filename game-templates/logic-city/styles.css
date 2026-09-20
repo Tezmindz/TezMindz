@@ -1,0 +1,404 @@
+/**
+ * Scoped styles for Logic City Game Template
+ */
+.tm-game-logic {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #1e293b;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  background: #ffffff;
+  border-radius: 1rem;
+}
+
+.tm-game-logic .tm-stage-nav {
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.tm-game-logic .tm-stage-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-logic .tm-stage-pill.active {
+  background: #7e22ce;
+  color: #ffffff;
+  border-color: #6b21a8;
+  box-shadow: 0 1px 3px rgba(126, 34, 206, 0.25);
+}
+
+.tm-game-logic .tm-header {
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 0.75rem;
+}
+
+.tm-game-logic .tm-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #7e22ce;
+  background: #faf5ff;
+  border: 1px solid #e9d5ff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  margin-bottom: 0.5rem;
+}
+
+.tm-game-logic .tm-prompt {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.4;
+  margin: 0 0 0.35rem 0;
+}
+
+.tm-game-logic .tm-subprompt {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.tm-game-logic .tm-discovery-card {
+  background: #faf5ff;
+  border: 1px solid #e9d5ff;
+  border-radius: 0.85rem;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.tm-game-logic .tm-discovery-title {
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: #6b21a8;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-logic .tm-discovery-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.8rem;
+  color: #4c1d95;
+  line-height: 1.4;
+}
+
+.tm-game-logic .tm-discovery-sub {
+  font-size: 0.75rem;
+  color: #7e22ce;
+  font-style: italic;
+  margin-top: 0.35rem;
+}
+
+.tm-game-logic .tm-abstract-notice {
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.tm-game-logic .tm-abstract-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.tm-game-logic .tm-abstract-title {
+  font-weight: 800;
+  font-size: 1rem;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.tm-game-logic .tm-rule-box {
+  background: #fdf4ff;
+  border: 1px solid #f0abfc;
+  border-radius: 0.85rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tm-game-logic .tm-rule-prompt {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #86198f;
+  margin-bottom: 0.65rem;
+}
+
+.tm-game-logic .tm-rule-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tm-game-logic .tm-rule-opt-btn {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.6rem;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1e293b;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-logic .tm-rule-opt-btn:hover {
+  background: #faf5ff;
+  border-color: #c084fc;
+}
+
+.tm-game-logic .tm-hint-section {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.tm-game-logic .tm-hint-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #92400e;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-logic .tm-next-hint-btn {
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  color: #78350f;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+}
+
+.tm-game-logic .tm-hint-body {
+  font-size: 0.8rem;
+  color: #78350f;
+  line-height: 1.4;
+}
+
+/* Playground */
+.tm-game-logic .tm-playground {
+  background: #faf5ff;
+  border: 1px solid #e9d5ff;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.tm-game-logic .tm-cipher-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.tm-game-logic .tm-cipher-cell {
+  background: #ffffff;
+  border: 2px solid #d8b4fe;
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 65px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.tm-game-logic .tm-cell-missing {
+  border: 2px dashed #9333ea;
+  background: #f3e8ff;
+}
+
+.tm-game-logic .tm-cell-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #9333ea;
+  text-transform: uppercase;
+  margin-bottom: 0.15rem;
+}
+
+.tm-game-logic .tm-cell-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #3b0764;
+}
+
+.tm-game-logic .tm-cipher-arrow {
+  color: #a855f7;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.tm-game-logic .tm-cipher-rules {
+  background: #ffffff;
+  border: 1px solid #f3e8ff;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+}
+
+.tm-game-logic .tm-rules-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #7e22ce;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-logic .tm-rules-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tm-game-logic .tm-rule-chip {
+  background: #faf5ff;
+  border: 1px solid #e9d5ff;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.75rem;
+  color: #581c87;
+}
+
+/* Deduction Board */
+.tm-game-logic .tm-deduction-board {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.tm-game-logic .tm-deduction-header {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #334155;
+  margin-bottom: 0.5rem;
+}
+
+.tm-game-logic .tm-clues-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tm-game-logic .tm-clue-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #475569;
+  line-height: 1.4;
+}
+
+.tm-game-logic .tm-clue-num {
+  background: #ede9fe;
+  color: #6d28d9;
+  font-weight: 800;
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.3rem;
+  shrink: 0;
+}
+
+/* Options Grid */
+.tm-game-logic .tm-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.tm-game-logic .tm-option-btn {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-logic .tm-option-btn:hover {
+  background: #faf5ff;
+  border-color: #c084fc;
+}
+
+.tm-game-logic .tm-option-correct {
+  background: #ecfdf5 !important;
+  border-color: #10b981 !important;
+  color: #065f46 !important;
+}
+
+.tm-game-logic .tm-option-wrong {
+  background: #fff1f2 !important;
+  border-color: #f43f5e !important;
+  color: #9f1239 !important;
+}
+
+/* Feedback */
+.tm-game-logic .tm-feedback-panel {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+}
+
+.tm-game-logic .tm-feedback-correct {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+.tm-game-logic .tm-feedback-wrong {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #9f1239;
+}
+
+.tm-game-logic .tm-feedback-title {
+  font-weight: 800;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.tm-game-logic .tm-feedback-text {
+  font-size: 0.85rem;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-logic .tm-feedback-explanation {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  border-top: 1px dashed rgba(0,0,0,0.15);
+  padding-top: 0.35rem;
+}

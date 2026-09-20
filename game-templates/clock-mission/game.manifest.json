@@ -1,0 +1,127 @@
+{
+  "name": "Clock & Timeline Simulator",
+  "slug": "clock-mission",
+  "version": "2.0.0",
+  "description": "Simulation engine for time concepts: elapsed time, starting & finishing times, crossing noon/midnight, and hour-to-minute conversions across the 5-stage mastery model.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Everyday Mathematics",
+  "conceptCluster": "Measurement of Time & Timelines",
+  "pedagogyModel": {
+    "framework": "Tezmindz Simulation-Based Concept Mastery",
+    "stages": [
+      { "id": "STAGE_A", "name": "Concept Discovery", "focus": "Manipulate clock hands, observe minute-to-hour ratio, discover 60 mins = 1 full rotation" },
+      { "id": "STAGE_B", "name": "Guided Simulation", "focus": "Goal-driven timeline navigation with 4-step progressive hints" },
+      { "id": "STAGE_C", "name": "Rule Discovery", "focus": "Expressing the elapsed time formula before formal vocabulary" },
+      { "id": "STAGE_D", "name": "Controlled Practice", "focus": "Parameterized dynamic variations (varying durations, crossing noon/midnight)" },
+      { "id": "STAGE_E", "name": "Anti-Memorisation Assessment", "focus": "Unseen word problems without visual manipulative assistance" }
+    ]
+  },
+  "supportedMechanics": [
+    "INTERACTIVE_CLOCK_HANDS",
+    "TIMELINE_ELAPSED_DRAGGER",
+    "NOON_MIDNIGHT_CROSSING",
+    "PROGRESSIVE_4_STEP_HINTS",
+    "RULE_FORMULATION_BUILDER",
+    "DYNAMIC_VARIATION_GENERATOR"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "correctAnswer", "options"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "conceptId": { "type": "string", "default": "TIME_ELAPSED_01" },
+      "currentStage": { "type": "string", "enum": ["STAGE_A", "STAGE_B", "STAGE_C", "STAGE_D", "STAGE_E"], "default": "STAGE_B" },
+      "prompt": { "type": "string" },
+      "subPrompt": { "type": "string" },
+      "discoveryGuidingQuestions": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "initialTime": {
+        "type": "object",
+        "properties": {
+          "hours": { "type": "number", "minimum": 1, "maximum": 12 },
+          "minutes": { "type": "number", "minimum": 0, "maximum": 59 },
+          "period": { "type": "string", "enum": ["AM", "PM"] }
+        }
+      },
+      "targetTime": {
+        "type": "object",
+        "properties": {
+          "hours": { "type": "number", "minimum": 1, "maximum": 12 },
+          "minutes": { "type": "number", "minimum": 0, "maximum": 59 },
+          "period": { "type": "string", "enum": ["AM", "PM"] }
+        }
+      },
+      "progressiveHints": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "4-tier hints: 1. Attention pointer, 2. Next reasoning step, 3. Demonstration step, 4. Full solution"
+      },
+      "ruleDiscovery": {
+        "type": "object",
+        "properties": {
+          "statementPrompt": { "type": "string" },
+          "ruleOptions": { "type": "array", "items": { "type": "string" } },
+          "correctRule": { "type": "string" }
+        }
+      },
+      "options": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "antiMemorisation": {
+        "type": "object",
+        "properties": {
+          "format": { "type": "string", "enum": ["FRESH_VARIABLES", "REVERSED_GOAL", "CONTEXT_SHIFT"] },
+          "hideClockVisual": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  },
+  "sampleData": {
+    "questionId": "clk-sim-001",
+    "conceptId": "TIME_ELAPSED_CROSSING_NOON",
+    "currentStage": "STAGE_B",
+    "prompt": "An Olympiad inter-school marathon commenced at 10:45 AM and concluded at 01:20 PM. Calculate the total elapsed time.",
+    "subPrompt": "Drag the interactive minute hand or use the +15 min / +1 hour buttons to bridge across 12:00 Noon.",
+    "discoveryGuidingQuestions": [
+      "What happens to the hour hand when the minute hand completes 1 full rotation (60 minutes)?",
+      "When moving from 11:59 AM to 12:00, what happens to the AM/PM designation?",
+      "Can we break 10:45 AM to 01:20 PM into two jumps: (10:45 AM to 12:00 Noon) and (12:00 Noon to 01:20 PM)?"
+    ],
+    "initialTime": { "hours": 10, "minutes": 45, "period": "AM" },
+    "targetTime": { "hours": 1, "minutes": 20, "period": "PM" },
+    "progressiveHints": [
+      "Level 1 (Attention): Focus on the bridge hour: 12:00 Noon.",
+      "Level 2 (Reasoning): How many minutes from 10:45 AM to 12:00 Noon? (15 mins to 11:00 AM + 60 mins = 75 minutes = 1 hr 15 mins).",
+      "Level 3 (Demonstration): Next add the time from 12:00 Noon to 01:20 PM, which is 1 hour 20 minutes.",
+      "Level 4 (Full Solution): 1 hr 15 mins + 1 hr 20 mins = 2 hours 35 minutes."
+    ],
+    "ruleDiscovery": {
+      "statementPrompt": "Complete the rule for calculating elapsed time crossing noon:",
+      "ruleOptions": [
+        "Elapsed Time = (Time to 12:00 Noon) + (Time past 12:00 Noon)",
+        "Elapsed Time = Finish Time minus Start Time ignoring AM/PM",
+        "Elapsed Time = Always multiply hours by 60 and add seconds"
+      ],
+      "correctRule": "Elapsed Time = (Time to 12:00 Noon) + (Time past 12:00 Noon)"
+    },
+    "options": [
+      "2 hours 15 minutes",
+      "2 hours 35 minutes",
+      "3 hours 05 minutes",
+      "3 hours 35 minutes"
+    ],
+    "correctAnswer": "2 hours 35 minutes",
+    "explanation": "Jump 1: 10:45 AM to 12:00 PM = 1 hour 15 minutes. Jump 2: 12:00 PM to 01:20 PM = 1 hour 20 minutes. Total = 2 hours 35 minutes.",
+    "antiMemorisation": {
+      "format": "FRESH_VARIABLES",
+      "hideClockVisual": false
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "name": "Balance Scale Simulator",
+  "slug": "balance-scale",
+  "version": "2.0.0",
+  "description": "Simulation engine for early algebra, equation balance, substitution of unknowns, and weight equivalence across the 5-stage mastery model.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Mathematical Reasoning",
+  "conceptCluster": "Algebraic Thinking & Balance Equations",
+  "pedagogyModel": {
+    "framework": "Tezmindz Simulation-Based Concept Mastery",
+    "stages": [
+      { "id": "STAGE_A", "name": "Concept Discovery", "focus": "Add and remove weights from left/right pans, observe tilt, discover equality condition" },
+      { "id": "STAGE_B", "name": "Guided Simulation", "focus": "Solve unknown object weight with 4-tier progressive hints" },
+      { "id": "STAGE_C", "name": "Rule Discovery", "focus": "State the balance principle: 'Whatever is done to one side must be done to the other'" },
+      { "id": "STAGE_D", "name": "Controlled Practice", "focus": "Dynamic variations across 2 unknowns, mixed units, and composite shapes" },
+      { "id": "STAGE_E", "name": "Anti-Memorisation Assessment", "focus": "Unseen word equation in story context without balance beam visual" }
+    ]
+  },
+  "supportedMechanics": [
+    "BALANCE_EQUATIONS",
+    "WEIGHT_SUBSTITUTION",
+    "UNKNOWN_VARIABLE",
+    "PROGRESSIVE_4_STEP_HINTS",
+    "RULE_FORMULATION_BUILDER"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "leftPan", "rightPan", "options", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "conceptId": { "type": "string", "default": "ALGEBRA_BALANCE_UNKNOWN" },
+      "currentStage": { "type": "string", "enum": ["STAGE_A", "STAGE_B", "STAGE_C", "STAGE_D", "STAGE_E"], "default": "STAGE_B" },
+      "prompt": { "type": "string" },
+      "leftPan": { "type": "object" },
+      "rightPan": { "type": "object" },
+      "targetUnknown": { "type": "string" },
+      "progressiveHints": { "type": "array", "items": { "type": "string" } },
+      "ruleDiscovery": {
+        "type": "object",
+        "properties": {
+          "statementPrompt": { "type": "string" },
+          "ruleOptions": { "type": "array", "items": { "type": "string" } },
+          "correctRule": { "type": "string" }
+        }
+      },
+      "options": { "type": "array", "items": { "type": "string" } },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "antiMemorisation": {
+        "type": "object",
+        "properties": {
+          "format": { "type": "string", "enum": ["FRESH_VARIABLES", "REVERSED_GOAL", "CONTEXT_SHIFT"] },
+          "hideBeam": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  },
+  "sampleData": {
+    "questionId": "bal-sim-001",
+    "conceptId": "ALGEBRA_BALANCE_UNKNOWN",
+    "currentStage": "STAGE_B",
+    "prompt": "If 2 Star Blocks (★) balance with 1 Cube Block (■) and 4 kg, and 1 Cube = 6 kg, what is the weight of 1 Star Block (★)?",
+    "leftPan": { "items": ["★", "★"], "totalWeight": 10 },
+    "rightPan": { "items": ["■ (6kg)", "4kg"], "totalWeight": 10 },
+    "targetUnknown": "★",
+    "progressiveHints": [
+      "Level 1 (Attention): The scale is in perfect level balance. That means: Weight of Left Pan = Weight of Right Pan.",
+      "Level 2 (Reasoning): Calculate the total known weight on the Right Pan: 1 Cube (6 kg) + 4 kg = 10 kg.",
+      "Level 3 (Demonstration): So, 2 Star Blocks (★ + ★) = 10 kg.",
+      "Level 4 (Full Solution): Divide by 2: 1 Star Block = 10 ÷ 2 = 5 kg."
+    ],
+    "ruleDiscovery": {
+      "statementPrompt": "Complete the fundamental rule of balance scales and equations:",
+      "ruleOptions": [
+        "In a balanced state, Total Left Weight = Total Right Weight",
+        "The left side is always twice the right side",
+        "Only numbered weights count towards balance"
+      ],
+      "correctRule": "In a balanced state, Total Left Weight = Total Right Weight"
+    },
+    "options": ["3 kg", "4 kg", "5 kg", "6 kg"],
+    "correctAnswer": "5 kg",
+    "explanation": "Right side total = 6 + 4 = 10 kg. Since 2 Stars = 10 kg, 1 Star = 10 / 2 = 5 kg.",
+    "antiMemorisation": {
+      "format": "FRESH_VARIABLES",
+      "hideBeam": false
+    }
+  }
+}

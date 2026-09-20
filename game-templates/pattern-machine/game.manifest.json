@@ -1,0 +1,91 @@
+{
+  "name": "Pattern Machine Simulator",
+  "slug": "pattern-machine",
+  "version": "2.0.0",
+  "description": "Simulation engine for arithmetic progressions, geometric doubling patterns, alternating step rules, and rotational patterns across the 5-stage mastery model.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Logical Reasoning",
+  "conceptCluster": "Patterns, Sequences & Algebraic Thinking",
+  "pedagogyModel": {
+    "framework": "Tezmindz Simulation-Based Concept Mastery",
+    "stages": [
+      { "id": "STAGE_A", "name": "Concept Discovery", "focus": "Turn gear wheels, observe step differences (+4, ×2, alternating), see terms update live" },
+      { "id": "STAGE_B", "name": "Guided Simulation", "focus": "Complete missing term in machine with 4-tier progressive hints" },
+      { "id": "STAGE_C", "name": "Rule Discovery", "focus": "Formulate sequence rule in plain English before mathematical notation" },
+      { "id": "STAGE_D", "name": "Controlled Practice", "focus": "Dynamic sequences varying starting number, step ratio, and missing position" },
+      { "id": "STAGE_E", "name": "Anti-Memorisation Assessment", "focus": "Unseen word sequence problem in novel story context without gear visual" }
+    ]
+  },
+  "supportedMechanics": [
+    "SEQUENCE_COMPLETION",
+    "ROTATION_PATTERN",
+    "GEOMETRIC_PROGRESSION",
+    "PROGRESSIVE_4_STEP_HINTS",
+    "RULE_FORMULATION_BUILDER"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "sequence", "missingIndex", "options", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "conceptId": { "type": "string", "default": "SEQUENCE_DOUBLING_ADD_ONE" },
+      "currentStage": { "type": "string", "enum": ["STAGE_A", "STAGE_B", "STAGE_C", "STAGE_D", "STAGE_E"], "default": "STAGE_B" },
+      "prompt": { "type": "string" },
+      "patternType": { "type": "string", "enum": ["NUMERIC", "ROTATIONAL", "GEOMETRIC"] },
+      "sequence": { "type": "array", "items": { "type": "string" } },
+      "missingIndex": { "type": "number" },
+      "progressiveHints": { "type": "array", "items": { "type": "string" } },
+      "ruleDiscovery": {
+        "type": "object",
+        "properties": {
+          "statementPrompt": { "type": "string" },
+          "ruleOptions": { "type": "array", "items": { "type": "string" } },
+          "correctRule": { "type": "string" }
+        }
+      },
+      "options": { "type": "array", "items": { "type": "string" } },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "antiMemorisation": {
+        "type": "object",
+        "properties": {
+          "format": { "type": "string", "enum": ["FRESH_VARIABLES", "REVERSED_GOAL", "CONTEXT_SHIFT"] },
+          "hideVisual": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  },
+  "sampleData": {
+    "questionId": "pat-sim-001",
+    "conceptId": "SEQUENCE_DOUBLING_ADD_ONE",
+    "currentStage": "STAGE_B",
+    "prompt": "Identify the missing number that completes the gear sequence according to the rule.",
+    "patternType": "NUMERIC",
+    "sequence": ["3", "7", "15", "31", "?", "127"],
+    "missingIndex": 4,
+    "progressiveHints": [
+      "Level 1 (Attention): Look at the jumps between consecutive terms: 3 -> 7 -> 15 -> 31.",
+      "Level 2 (Reasoning): From 3 to 7 is +4. From 7 to 15 is +8. From 15 to 31 is +16. What do you notice about +4, +8, +16?",
+      "Level 3 (Demonstration): The difference doubles each time! Next difference must be 16 × 2 = +32.",
+      "Level 4 (Full Solution): 31 + 32 = 63. Let's verify next step: 63 + 64 = 127. The missing number is 63."
+    ],
+    "ruleDiscovery": {
+      "statementPrompt": "Complete the rule governing this number pattern:",
+      "ruleOptions": [
+        "Each term is obtained by: (Previous Term × 2) + 1",
+        "Each term is obtained by adding 4 each time",
+        "Each term is a multiple of 3"
+      ],
+      "correctRule": "Each term is obtained by: (Previous Term × 2) + 1"
+    },
+    "options": ["47", "55", "63", "65"],
+    "correctAnswer": "63",
+    "explanation": "Rule 1: Previous × 2 + 1: (31 × 2) + 1 = 63. Rule 2: Differences double (+4, +8, +16, +32): 31 + 32 = 63.",
+    "antiMemorisation": {
+      "format": "FRESH_VARIABLES",
+      "hideVisual": false
+    }
+  }
+}

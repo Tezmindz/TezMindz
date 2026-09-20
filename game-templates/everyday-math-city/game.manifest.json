@@ -1,0 +1,121 @@
+{
+  "name": "Everyday Math City - Real-World Life Simulator",
+  "slug": "everyday-math-city",
+  "version": "2.0.0",
+  "description": "Interactive real-world simulation for money transactions, unitary price comparisons, elapsed time intervals, distance-speed-time travel, and household budgeting across the 5-stage mastery model.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Everyday Mathematics",
+  "conceptCluster": "Money, Time, Measurement & Applied Math",
+  "pedagogyModel": {
+    "framework": "Tezmindz Simulation-Based Concept Mastery",
+    "stages": [
+      { "id": "STAGE_A", "name": "Concept Discovery", "focus": "Manipulate currency notes/coins or clock hands, observe change returned and elapsed intervals live" },
+      { "id": "STAGE_B", "name": "Guided Simulation", "focus": "Solve authentic real-world shopping or schedule missions with 4-tier progressive hints" },
+      { "id": "STAGE_C", "name": "Rule Discovery", "focus": "Formulate core applied math rules: Change = Paid - Bill, Elapsed Time = End - Start" },
+      { "id": "STAGE_D", "name": "Controlled Practice", "focus": "Dynamic variations across currencies (₹, $, £), unitary item packs, and train schedules" },
+      { "id": "STAGE_E", "name": "Anti-Memorisation Assessment", "focus": "Unseen multi-step story problem solved purely with mental calculations without visual registers" }
+    ]
+  },
+  "supportedMechanics": [
+    "MARKET_REGISTER",
+    "TIMELINE_TRACKER",
+    "UNIT_RATE_COMPARATOR",
+    "PROGRESSIVE_4_STEP_HINTS",
+    "RULE_FORMULATION_BUILDER"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "options", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "conceptId": { "type": "string", "default": "EVERYDAY_MONEY_SHOPPING" },
+      "currentStage": { "type": "string", "enum": ["STAGE_A", "STAGE_B", "STAGE_C", "STAGE_D", "STAGE_E"], "default": "STAGE_B" },
+      "prompt": { "type": "string" },
+      "subPrompt": { "type": "string" },
+      "cartItems": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "qty": { "type": "number" },
+            "unitPrice": { "type": "number" },
+            "icon": { "type": "string" }
+          }
+        }
+      },
+      "currency": { "type": "string", "default": "₹" },
+      "paidAmount": { "type": "number" },
+      "timeData": {
+        "type": "object",
+        "properties": {
+          "startTime": { "type": "string" },
+          "endTime": { "type": "string" },
+          "durationMinutes": { "type": "number" }
+        }
+      },
+      "progressiveHints": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "ruleDiscovery": {
+        "type": "object",
+        "properties": {
+          "statementPrompt": { "type": "string" },
+          "ruleOptions": { "type": "array", "items": { "type": "string" } },
+          "correctRule": { "type": "string" }
+        }
+      },
+      "options": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "antiMemorisation": {
+        "type": "object",
+        "properties": {
+          "format": { "type": "string", "enum": ["FRESH_VARIABLES", "REVERSED_GOAL", "CONTEXT_SHIFT"] },
+          "hideRegister": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  },
+  "sampleData": {
+    "questionId": "ev-math-001",
+    "conceptId": "EVERYDAY_MONEY_SHOPPING",
+    "currentStage": "STAGE_B",
+    "prompt": "Rohan bought 3 notebooks at ₹45 each and 2 geometry pens at ₹25 each in Everyday Math City. He paid with a ₹500 note. How much balance change should he receive back?",
+    "subPrompt": "Calculate total cost of all purchased items first, then subtract from cash tendered.",
+    "currency": "₹",
+    "paidAmount": 500,
+    "cartItems": [
+      { "name": "Notebooks", "qty": 3, "unitPrice": 45, "icon": "📓" },
+      { "name": "Geometry Pens", "qty": 2, "unitPrice": 25, "icon": "🖊️" }
+    ],
+    "progressiveHints": [
+      "Level 1 (Attention): First, find the total cost of 3 notebooks: 3 × ₹45.",
+      "Level 2 (Reasoning): 3 × 45 = ₹135. Cost of 2 pens = 2 × ₹25 = ₹50. Total bill = 135 + 50 = ₹185.",
+      "Level 3 (Demonstration): Rohan gave the cashier ₹500. Change Returned = Amount Paid - Total Bill = 500 - 185.",
+      "Level 4 (Full Solution): 500 - 185 = ₹315. Rohan receives ₹315 in change."
+    ],
+    "ruleDiscovery": {
+      "statementPrompt": "Complete the fundamental rule of consumer money transactions:",
+      "ruleOptions": [
+        "Change Returned = Total Paid - Total Cost of Items",
+        "Change Returned = Total Paid + Total Cost of Items",
+        "Change Returned = Total Cost multiplied by number of notes"
+      ],
+      "correctRule": "Change Returned = Total Paid - Total Cost of Items"
+    },
+    "options": ["₹305", "₹315", "₹325", "₹385"],
+    "correctAnswer": "₹315",
+    "explanation": "Cost of notebooks = 3 × 45 = ₹135. Cost of pens = 2 × 25 = ₹50. Total bill = ₹185. Change = 500 - 185 = ₹315.",
+    "antiMemorisation": {
+      "format": "FRESH_VARIABLES",
+      "hideRegister": false
+    }
+  }
+}

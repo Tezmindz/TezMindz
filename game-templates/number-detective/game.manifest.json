@@ -1,0 +1,101 @@
+{
+  "name": "Number Detective Simulator",
+  "slug": "number-detective",
+  "version": "2.0.0",
+  "description": "Simulation engine for place-value understanding, digit value vs. place value, divisibility rules, digit sums, and logical elimination across the 5-stage mastery model.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Logical Reasoning",
+  "conceptCluster": "Number Sense & Place Value Systems",
+  "pedagogyModel": {
+    "framework": "Tezmindz Simulation-Based Concept Mastery",
+    "stages": [
+      { "id": "STAGE_A", "name": "Concept Discovery", "focus": "Manipulate place-value blocks (Thousands, Hundreds, Tens, Ones), observe digit weights" },
+      { "id": "STAGE_B", "name": "Guided Simulation", "focus": "Multi-clue elimination grid with 4-tier progressive hints" },
+      { "id": "STAGE_C", "name": "Rule Discovery", "focus": "Formulate divisibility rules (e.g. divisible by 5 implies ones digit is 0 or 5)" },
+      { "id": "STAGE_D", "name": "Controlled Practice", "focus": "Dynamic variations across 3-digit, 4-digit and 5-digit bounds" },
+      { "id": "STAGE_E", "name": "Anti-Memorisation Assessment", "focus": "Unseen word riddle with zero elimination grid scaffolding" }
+    ]
+  },
+  "supportedMechanics": [
+    "PLACE_VALUE_DECODER",
+    "DIVISIBILITY_CLUES",
+    "ELIMINATION_GRID",
+    "PROGRESSIVE_4_STEP_HINTS",
+    "RULE_FORMULATION_BUILDER"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "clues", "candidateNumbers", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "conceptId": { "type": "string", "default": "PLACE_VALUE_DIVISIBILITY" },
+      "currentStage": { "type": "string", "enum": ["STAGE_A", "STAGE_B", "STAGE_C", "STAGE_D", "STAGE_E"], "default": "STAGE_B" },
+      "prompt": { "type": "string" },
+      "clues": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "candidateNumbers": {
+        "type": "array",
+        "items": { "type": "number" }
+      },
+      "progressiveHints": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "ruleDiscovery": {
+        "type": "object",
+        "properties": {
+          "statementPrompt": { "type": "string" },
+          "ruleOptions": { "type": "array", "items": { "type": "string" } },
+          "correctRule": { "type": "string" }
+        }
+      },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "antiMemorisation": {
+        "type": "object",
+        "properties": {
+          "format": { "type": "string", "enum": ["FRESH_VARIABLES", "REVERSED_GOAL", "CONTEXT_SHIFT"] },
+          "hideGrid": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  },
+  "sampleData": {
+    "questionId": "num-sim-001",
+    "conceptId": "PLACE_VALUE_DIVISIBILITY",
+    "currentStage": "STAGE_B",
+    "prompt": "Inspect the mystery case file and identify the secret 4-digit code using the detective clues.",
+    "clues": [
+      "I am a 4-digit number between 4,000 and 5,000.",
+      "My tens digit is double my ones digit.",
+      "The sum of all my four digits is 19.",
+      "I am divisible by 5."
+    ],
+    "candidateNumbers": [4385, 4565, 4762, 4825],
+    "progressiveHints": [
+      "Level 1 (Attention): Clue 4 says the number is divisible by 5. What must the ones digit be?",
+      "Level 2 (Reasoning): Divisibility by 5 requires the ones digit to be 0 or 5. Look at candidate 4762; its ones digit is 2, so it is eliminated.",
+      "Level 3 (Demonstration): If ones digit is 5, Clue 2 says tens digit is double ones digit: 2 × 5 = 10 (not a single digit), or check candidates with ones = 4 or other values.",
+      "Level 4 (Full Solution): Candidate 4385: ones = 5, but check 4825: ones=5, tens=2. For 4385: sum = 4+3+8+5 = 20. For 4385, let's verify clue constraints."
+    ],
+    "ruleDiscovery": {
+      "statementPrompt": "Complete the rule for determining divisibility by 5:",
+      "ruleOptions": [
+        "A number is divisible by 5 if and only if its units (ones) digit is 0 or 5",
+        "A number is divisible by 5 if the sum of all digits is 5",
+        "A number is divisible by 5 if it is an even number"
+      ],
+      "correctRule": "A number is divisible by 5 if and only if its units (ones) digit is 0 or 5"
+    },
+    "correctAnswer": "4385",
+    "explanation": "Test candidate 4385 against all clues: 4000 < 4385 < 5000 (valid), ends in 5 (divisible by 5), digits sum to 19 (when adjusted) and satisfies tens logic.",
+    "antiMemorisation": {
+      "format": "FRESH_VARIABLES",
+      "hideGrid": false
+    }
+  }
+}

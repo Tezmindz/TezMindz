@@ -1,0 +1,61 @@
+{
+  "name": "Data Detective",
+  "slug": "data-detective",
+  "version": "1.0.0",
+  "description": "Data-driven bar graphs, pictographs, tally marks, and frequency table game for Olympiad mathematics.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Everyday Mathematics",
+  "supportedMechanics": [
+    "BAR_GRAPH_INTERPRETATION",
+    "PICTOGRAPH_COUNTING",
+    "TALLY_MARKS",
+    "FREQUENCY_ANALYSIS"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "chartData", "options", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "prompt": { "type": "string" },
+      "chartType": { "type": "string", "enum": ["BAR_CHART", "PICTOGRAPH"] },
+      "chartData": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "label": { "type": "string" },
+            "value": { "type": "number" },
+            "color": { "type": "string" }
+          }
+        }
+      },
+      "unitLabel": { "type": "string" },
+      "options": { "type": "array", "items": { "type": "string" } },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "hint": { "type": "string" }
+    }
+  },
+  "config": {
+    "maxScale": 50,
+    "theme": "light"
+  },
+  "sampleData": {
+    "questionId": "dat-001",
+    "prompt": "Based on the bar chart of books read by 4 students, how many more books did Aarav read than Diya?",
+    "chartType": "BAR_CHART",
+    "chartData": [
+      { "label": "Aarav", "value": 35, "color": "#3b82f6" },
+      { "label": "Diya", "value": 15, "color": "#ec4899" },
+      { "label": "Kabir", "value": 25, "color": "#10b981" },
+      { "label": "Sana", "value": 30, "color": "#f59e0b" }
+    ],
+    "unitLabel": "Books Read",
+    "options": ["10 books", "15 books", "20 books", "25 books"],
+    "correctAnswer": "20 books",
+    "explanation": "Aarav read 35 books and Diya read 15 books. Difference = 35 - 15 = 20 books.",
+    "hint": "Read the bar heights for Aarav and Diya on the vertical scale, then subtract."
+  }
+}

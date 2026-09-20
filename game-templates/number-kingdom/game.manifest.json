@@ -1,0 +1,123 @@
+{
+  "name": "Number Kingdom - Place Value & Number Sense Quest",
+  "slug": "number-kingdom",
+  "version": "2.0.0",
+  "description": "Simulation engine for multi-digit place value (Thousands, Hundreds, Tens, Ones), expanded form notation, divisibility tests, and number detective clues across the 5-stage mastery model.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Number Sense & Arithmetic",
+  "conceptCluster": "Place Value Systems & Number Theory",
+  "pedagogyModel": {
+    "framework": "Tezmindz Simulation-Based Concept Mastery",
+    "stages": [
+      { "id": "STAGE_A", "name": "Concept Discovery", "focus": "Manipulate place-value block units (Th, H, T, O) and observe digit value vs. face value live" },
+      { "id": "STAGE_B", "name": "Guided Simulation", "focus": "Multi-clue elimination and place-value reconstruction with 4-tier progressive hints" },
+      { "id": "STAGE_C", "name": "Rule Discovery", "focus": "Formulate divisibility and place-value expansion rules before formal algebra" },
+      { "id": "STAGE_D", "name": "Controlled Practice", "focus": "Dynamic variations across 3-digit, 4-digit, and 5-digit bounds with varied clues" },
+      { "id": "STAGE_E", "name": "Anti-Memorisation Assessment", "focus": "Unseen word riddle solved by pure mathematical deduction without place-value blocks" }
+    ]
+  },
+  "supportedMechanics": [
+    "PLACE_VALUE_BLOCKS",
+    "DIVISIBILITY_SCANNER",
+    "EXPANDED_FORM_BUILDER",
+    "PROGRESSIVE_4_STEP_HINTS",
+    "RULE_FORMULATION_BUILDER"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "options", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "conceptId": { "type": "string", "default": "NUMBER_PLACE_VALUE" },
+      "currentStage": { "type": "string", "enum": ["STAGE_A", "STAGE_B", "STAGE_C", "STAGE_D", "STAGE_E"], "default": "STAGE_B" },
+      "prompt": { "type": "string" },
+      "subPrompt": { "type": "string" },
+      "numberDigits": {
+        "type": "object",
+        "properties": {
+          "thousands": { "type": "number" },
+          "hundreds": { "type": "number" },
+          "tens": { "type": "number" },
+          "ones": { "type": "number" }
+        }
+      },
+      "clues": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "candidateNumbers": {
+        "type": "array",
+        "items": { "type": "number" }
+      },
+      "progressiveHints": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "ruleDiscovery": {
+        "type": "object",
+        "properties": {
+          "statementPrompt": { "type": "string" },
+          "ruleOptions": { "type": "array", "items": { "type": "string" } },
+          "correctRule": { "type": "string" }
+        }
+      },
+      "options": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "antiMemorisation": {
+        "type": "object",
+        "properties": {
+          "format": { "type": "string", "enum": ["FRESH_VARIABLES", "REVERSED_GOAL", "CONTEXT_SHIFT"] },
+          "hideBlocks": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  },
+  "sampleData": {
+    "questionId": "num-king-001",
+    "conceptId": "NUMBER_PLACE_VALUE_RIDDLE",
+    "currentStage": "STAGE_B",
+    "prompt": "Identify the royal vault 4-digit code using the King's mathematical clues.",
+    "subPrompt": "Check the place-value breakdown and eliminate impossible codes.",
+    "numberDigits": {
+      "thousands": 7,
+      "hundreds": 4,
+      "tens": 8,
+      "ones": 2
+    },
+    "clues": [
+      "I am a 4-digit even number greater than 7,000.",
+      "My tens digit is double my hundreds digit.",
+      "The value of my thousands digit is 7,000.",
+      "The sum of all my four digits is 21."
+    ],
+    "candidateNumbers": [7482, 7248, 6482, 7581],
+    "progressiveHints": [
+      "Level 1 (Attention): Focus on Clue 1: the number is greater than 7,000 and even. That eliminates 6482 (< 7000) and 7581 (ends in odd 1).",
+      "Level 2 (Reasoning): Remaining candidates are 7482 and 7248. Now test Clue 2: 'My tens digit is double my hundreds digit'.",
+      "Level 3 (Demonstration): In 7482: hundreds digit = 4, tens digit = 8. Since 8 = 2 × 4, this satisfies Clue 2! In 7248: tens is 4, hundreds is 2 (4 = 2 × 2, but let's check digit sum).",
+      "Level 4 (Full Solution): Check digit sum for 7482: 7 + 4 + 8 + 2 = 21. For 7248: 7 + 2 + 4 + 8 = 21, but 7482 has tens digit = 8 which is double hundreds digit 4. The secret vault code is 7482."
+    ],
+    "ruleDiscovery": {
+      "statementPrompt": "Complete the rule for Place Value in 4-digit numbers:",
+      "ruleOptions": [
+        "Total Value = (Thousands × 1000) + (Hundreds × 100) + (Tens × 10) + (Ones × 1)",
+        "Total Value = Thousands + Hundreds + Tens + Ones without multiplying",
+        "Every even number must always have a 0 in the hundreds place"
+      ],
+      "correctRule": "Total Value = (Thousands × 1000) + (Hundreds × 100) + (Tens × 10) + (Ones × 1)"
+    },
+    "options": ["7248", "7482", "6482", "7581"],
+    "correctAnswer": "7482",
+    "explanation": "7482 is > 7000 and even. Tens digit (8) is double hundreds digit (4). Digits sum: 7+4+8+2 = 21.",
+    "antiMemorisation": {
+      "format": "FRESH_VARIABLES",
+      "hideBlocks": false
+    }
+  }
+}

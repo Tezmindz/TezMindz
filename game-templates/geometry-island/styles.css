@@ -1,0 +1,348 @@
+/**
+ * Scoped styles for Geometry Island Game Template
+ */
+.tm-game-geometry-island {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #1e293b;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  background: #ffffff;
+  border-radius: 1rem;
+}
+
+.tm-game-geometry-island .tm-stage-nav {
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.tm-game-geometry-island .tm-stage-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-geometry-island .tm-stage-pill.active {
+  background: #059669;
+  color: #ffffff;
+  border-color: #047857;
+  box-shadow: 0 1px 3px rgba(5, 150, 105, 0.25);
+}
+
+.tm-game-geometry-island .tm-header {
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 0.75rem;
+}
+
+.tm-game-geometry-island .tm-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #047857;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  margin-bottom: 0.5rem;
+}
+
+.tm-game-geometry-island .tm-prompt {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.4;
+  margin: 0 0 0.35rem 0;
+}
+
+.tm-game-geometry-island .tm-subprompt {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.tm-game-geometry-island .tm-discovery-card {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 0.85rem;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.tm-game-geometry-island .tm-discovery-title {
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: #047857;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-geometry-island .tm-discovery-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.8rem;
+  color: #064e3b;
+  line-height: 1.4;
+}
+
+.tm-game-geometry-island .tm-discovery-sub {
+  font-size: 0.75rem;
+  color: #047857;
+  font-style: italic;
+  margin-top: 0.35rem;
+}
+
+.tm-game-geometry-island .tm-abstract-notice {
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.tm-game-geometry-island .tm-abstract-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.tm-game-geometry-island .tm-abstract-title {
+  font-weight: 800;
+  font-size: 1rem;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.tm-game-geometry-island .tm-rule-box {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 0.85rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tm-game-geometry-island .tm-rule-prompt {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #065f46;
+  margin-bottom: 0.65rem;
+}
+
+.tm-game-geometry-island .tm-rule-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tm-game-geometry-island .tm-rule-opt-btn {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.6rem;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1e293b;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-geometry-island .tm-rule-opt-btn:hover {
+  background: #ecfdf5;
+  border-color: #10b981;
+}
+
+.tm-game-geometry-island .tm-hint-section {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.tm-game-geometry-island .tm-hint-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #475569;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-geometry-island .tm-next-hint-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+}
+
+.tm-game-geometry-island .tm-hint-body {
+  font-size: 0.8rem;
+  color: #334155;
+  line-height: 1.4;
+}
+
+/* Playground */
+.tm-game-geometry-island .tm-playground {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.tm-game-geometry-island .tm-svg-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.tm-game-geometry-island .tm-shape-meta {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.tm-game-geometry-island .tm-meta-badge {
+  background: #ffffff;
+  border: 1px solid #bbf7d0;
+  color: #065f46;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.4rem;
+}
+
+/* Perimeter tool */
+.tm-game-geometry-island .tm-perimeter-tool {
+  background: #ffffff;
+  border: 1px solid #bbf7d0;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+}
+
+.tm-game-geometry-island .tm-tool-header {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #047857;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-geometry-island .tm-sides-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.4rem;
+}
+
+.tm-game-geometry-island .tm-side-chip {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  color: #166534;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.3rem;
+}
+
+.tm-game-geometry-island .tm-sum-line {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #15803d;
+}
+
+/* Options */
+.tm-game-geometry-island .tm-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.tm-game-geometry-island .tm-option-btn {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-geometry-island .tm-option-btn:hover {
+  background: #ecfdf5;
+  border-color: #10b981;
+}
+
+.tm-game-geometry-island .tm-option-correct {
+  background: #ecfdf5 !important;
+  border-color: #10b981 !important;
+  color: #065f46 !important;
+}
+
+.tm-game-geometry-island .tm-option-wrong {
+  background: #fff1f2 !important;
+  border-color: #f43f5e !important;
+  color: #9f1239 !important;
+}
+
+/* Feedback */
+.tm-game-geometry-island .tm-feedback-panel {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+}
+
+.tm-game-geometry-island .tm-feedback-correct {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+.tm-game-geometry-island .tm-feedback-wrong {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #9f1239;
+}
+
+.tm-game-geometry-island .tm-feedback-title {
+  font-weight: 800;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.tm-game-geometry-island .tm-feedback-text {
+  font-size: 0.85rem;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-geometry-island .tm-feedback-explanation {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  border-top: 1px dashed rgba(0,0,0,0.15);
+  padding-top: 0.35rem;
+}

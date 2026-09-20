@@ -1,0 +1,190 @@
+/* ==========================================================================
+   Pattern Machine Game Template Styles
+   Scoped under .tm-game-pattern
+   ========================================================================== */
+
+.tm-game-pattern {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1e293b;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+  max-width: 680px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.tm-game-pattern * {
+  box-sizing: border-box;
+}
+
+.tm-game-pattern .tm-header {
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 1rem;
+}
+
+.tm-game-pattern .tm-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.tm-game-pattern .tm-prompt {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 0.65rem;
+  line-height: 1.5;
+}
+
+/* Conveyor Track */
+.tm-game-pattern .tm-conveyor-belt {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1.25rem 1rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.tm-game-pattern .tm-belt-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: max-content;
+  padding: 0.25rem;
+}
+
+.tm-game-pattern .tm-pattern-node {
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 0.85rem;
+  width: 58px;
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  position: relative;
+}
+
+.tm-game-pattern .tm-node-index {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #94a3b8;
+  position: absolute;
+  top: 4px;
+}
+
+.tm-game-pattern .tm-node-content {
+  font-family: ui-monospace, monospace;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 8px;
+}
+
+.tm-game-pattern .tm-pattern-connector {
+  color: #94a3b8;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.tm-game-pattern .tm-node-missing {
+  border: 2px dashed #f59e0b;
+  background: #fffbeb;
+}
+
+.tm-game-pattern .tm-node-missing .tm-node-content {
+  color: #d97706;
+}
+
+.tm-game-pattern .tm-node-filled-correct {
+  border: 2px solid #10b981 !important;
+  background: #ecfdf5 !important;
+}
+
+.tm-game-pattern .tm-node-filled-correct .tm-node-content {
+  color: #065f46 !important;
+}
+
+.tm-game-pattern .tm-node-filled-wrong {
+  border: 2px solid #f43f5e !important;
+  background: #fff1f2 !important;
+}
+
+/* Options Grid */
+.tm-game-pattern .tm-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 540px) {
+  .tm-game-pattern .tm-options-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.tm-game-pattern .tm-option-btn {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-pattern .tm-option-btn:hover {
+  border-color: #10b981;
+  background: #f0fdf4;
+  transform: translateY(-2px);
+}
+
+.tm-game-pattern .tm-option-val {
+  font-family: ui-monospace, monospace;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Feedback panel */
+.tm-game-pattern .tm-feedback-panel {
+  margin-top: 1.25rem;
+  border-radius: 0.85rem;
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.tm-game-pattern .tm-hidden {
+  display: none !important;
+}
+
+.tm-game-pattern .tm-feedback-success {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+
+.tm-game-pattern .tm-feedback-error {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #9f1239;
+}

@@ -1,0 +1,114 @@
+{
+  "name": "Logic City - Pattern & Cipher Arena",
+  "slug": "logic-city",
+  "version": "2.0.0",
+  "description": "Simulation and reasoning engine for logical patterns, substitution ciphers, direction grids, ranking logic, and visual deduction across the TezMindz 5-stage mastery model.",
+  "author": "TezMindz Olympiad Team",
+  "entryPoint": "index.js",
+  "styles": "styles.css",
+  "category": "Logical Reasoning",
+  "conceptCluster": "Patterns, Sequences & Logical Reasoning",
+  "pedagogyModel": {
+    "framework": "Tezmindz Simulation-Based Concept Mastery",
+    "stages": [
+      { "id": "STAGE_A", "name": "Concept Discovery", "focus": "Manipulate sequence gears and substitution ciphers, observe live transformation" },
+      { "id": "STAGE_B", "name": "Guided Simulation", "focus": "Goal-driven logical deduction with 4-tier progressive hints" },
+      { "id": "STAGE_C", "name": "Rule Discovery", "focus": "Formulate the pattern/cipher transition rule in plain language" },
+      { "id": "STAGE_D", "name": "Controlled Practice", "focus": "Dynamic variations across numbers, letters, shapes, and rotational steps" },
+      { "id": "STAGE_E", "name": "Anti-Memorisation Assessment", "focus": "Novel context puzzle solved through pure reasoning without visual manipulators" }
+    ]
+  },
+  "supportedMechanics": [
+    "CIPHER_DECODER",
+    "PATTERN_CONVEYOR",
+    "DEDUCTION_GRID",
+    "PROGRESSIVE_4_STEP_HINTS",
+    "RULE_FORMULATION_BUILDER"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["questionId", "prompt", "options", "correctAnswer"],
+    "properties": {
+      "questionId": { "type": "string" },
+      "conceptId": { "type": "string", "default": "LOGIC_PATTERN_CIPHER" },
+      "currentStage": { "type": "string", "enum": ["STAGE_A", "STAGE_B", "STAGE_C", "STAGE_D", "STAGE_E"], "default": "STAGE_B" },
+      "prompt": { "type": "string" },
+      "subPrompt": { "type": "string" },
+      "sequence": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "missingIndex": { "type": "number", "default": -1 },
+      "cipherRules": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "source": { "type": "string" },
+            "target": { "type": "string" }
+          }
+        }
+      },
+      "progressiveHints": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "ruleDiscovery": {
+        "type": "object",
+        "properties": {
+          "statementPrompt": { "type": "string" },
+          "ruleOptions": { "type": "array", "items": { "type": "string" } },
+          "correctRule": { "type": "string" }
+        }
+      },
+      "options": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "correctAnswer": { "type": "string" },
+      "explanation": { "type": "string" },
+      "antiMemorisation": {
+        "type": "object",
+        "properties": {
+          "format": { "type": "string", "enum": ["FRESH_VARIABLES", "REVERSED_GOAL", "CONTEXT_SHIFT"] },
+          "hideVisual": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  },
+  "sampleData": {
+    "questionId": "logic-sim-001",
+    "conceptId": "LOGIC_PATTERN_CIPHER",
+    "currentStage": "STAGE_B",
+    "prompt": "Find the missing symbol in the Logic City conveyor sequence according to the transformation rule.",
+    "subPrompt": "Inspect the alternating jump of numbers and letter symbols.",
+    "sequence": ["A2", "D5", "G8", "J11", "?", "P17"],
+    "missingIndex": 4,
+    "cipherRules": [
+      { "source": "Letter Step", "target": "+3 positions in alphabet (A -> D -> G -> J -> M -> P)" },
+      { "source": "Number Step", "target": "+3 to each number (2 -> 5 -> 8 -> 11 -> 14 -> 17)" }
+    ],
+    "progressiveHints": [
+      "Level 1 (Attention): Separate each term into its letter part and its number part.",
+      "Level 2 (Reasoning): Letters advance by +3: A(+3)=D, D(+3)=G, G(+3)=J. What is J + 3?",
+      "Level 3 (Demonstration): Numbers also advance by +3: 2, 5, 8, 11, 11 + 3 = 14. For letters: J is 10th letter, 10 + 3 = 13th letter which is M.",
+      "Level 4 (Full Solution): The combination is M + 14 = M14. Verify next term: M(+3)=P, 14(+3)=17 (P17). Correct answer is M14."
+    ],
+    "ruleDiscovery": {
+      "statementPrompt": "Complete the rule governing this alternating sequence:",
+      "ruleOptions": [
+        "Both the letter (alphabetical index) and number increase by +3 at each step",
+        "The letter stays the same while the number doubles",
+        "Only the vowel positions are counted"
+      ],
+      "correctRule": "Both the letter (alphabetical index) and number increase by +3 at each step"
+    },
+    "options": ["L13", "M13", "M14", "N14"],
+    "correctAnswer": "M14",
+    "explanation": "Letters increase by 3 alphabetical steps: A -> D -> G -> J -> M. Numbers increase by +3: 2 -> 5 -> 8 -> 11 -> 14. Result is M14.",
+    "antiMemorisation": {
+      "format": "FRESH_VARIABLES",
+      "hideVisual": false
+    }
+  }
+}

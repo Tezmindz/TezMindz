@@ -1,0 +1,469 @@
+/* ==========================================================================
+   Clock Mission Game Template Styles
+   Scoped under .tm-game-clock to prevent host application style bleeding.
+   ========================================================================== */
+
+.tm-game-clock {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1e293b;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+  max-width: 680px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.tm-game-clock * {
+  box-sizing: border-box;
+}
+
+/* Header & Question Area */
+.tm-game-clock .tm-stage-nav {
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.tm-game-clock .tm-stage-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-clock .tm-stage-pill.active {
+  background: #7e22ce;
+  color: #ffffff;
+  border-color: #6b21a8;
+  box-shadow: 0 1px 3px rgba(126, 34, 206, 0.25);
+}
+
+.tm-game-clock .tm-discovery-card {
+  background: #faf5ff;
+  border: 1px solid #e9d5ff;
+  border-radius: 0.85rem;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.tm-game-clock .tm-discovery-title {
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: #6b21a8;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-clock .tm-discovery-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.8rem;
+  color: #4c1d95;
+  line-height: 1.4;
+}
+
+.tm-game-clock .tm-discovery-sub {
+  font-size: 0.75rem;
+  color: #7e22ce;
+  font-style: italic;
+  margin-top: 0.35rem;
+}
+
+.tm-game-clock .tm-abstract-notice {
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.tm-game-clock .tm-abstract-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.tm-game-clock .tm-abstract-title {
+  font-weight: 800;
+  font-size: 1rem;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.tm-game-clock .tm-rule-box {
+  background: #fdf4ff;
+  border: 1px solid #f0abfc;
+  border-radius: 0.85rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tm-game-clock .tm-rule-prompt {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #86198f;
+  margin-bottom: 0.65rem;
+}
+
+.tm-game-clock .tm-rule-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tm-game-clock .tm-rule-opt-btn {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.6rem;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1e293b;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-clock .tm-rule-opt-btn:hover {
+  background: #faf5ff;
+  border-color: #c084fc;
+}
+
+.tm-game-clock .tm-hint-section {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.tm-game-clock .tm-hint-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #92400e;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-clock .tm-next-hint-btn {
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  color: #78350f;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+}
+
+.tm-game-clock .tm-hint-body {
+  font-size: 0.8rem;
+  color: #78350f;
+  line-height: 1.4;
+}
+
+.tm-game-clock .tm-header {
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 1rem;
+}
+
+.tm-game-clock .tm-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  background: #f3e8ff;
+  color: #7e22ce;
+  border: 1px solid #e9d5ff;
+}
+
+.tm-game-clock .tm-prompt {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 0.65rem;
+  line-height: 1.5;
+}
+
+.tm-game-clock .tm-subprompt {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 0.35rem;
+}
+
+/* Interactive Playground Layout */
+.tm-game-clock .tm-playground {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+@media (min-width: 640px) {
+  .tm-game-clock .tm-playground {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* Clock SVG & Dial */
+.tm-game-clock .tm-clock-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tm-game-clock .tm-clock-dial-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+}
+
+.tm-game-clock .tm-clock-bezel {
+  fill: #f8fafc;
+  stroke: #cbd5e1;
+  stroke-width: 4;
+}
+
+.tm-game-clock .tm-clock-face {
+  fill: #ffffff;
+  stroke: #e2e8f0;
+  stroke-width: 1.5;
+}
+
+.tm-game-clock .tm-clock-num {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  fill: #334155;
+  user-select: none;
+}
+
+.tm-game-clock .tm-clock-tick-line {
+  stroke: #94a3b8;
+  stroke-width: 1.5;
+}
+
+.tm-game-clock .tm-clock-hand-hour {
+  stroke: #4f46e5;
+  stroke-width: 5;
+  stroke-linecap: round;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tm-game-clock .tm-clock-hand-min {
+  stroke: #0284c7;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tm-game-clock .tm-clock-pin-outer {
+  fill: #1e293b;
+}
+
+.tm-game-clock .tm-clock-pin-inner {
+  fill: #fbbf24;
+}
+
+/* Digital Readout */
+.tm-game-clock .tm-digital-readout {
+  margin-top: 0.5rem;
+  background: #0f172a;
+  color: #38bdf8;
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 0.5rem;
+  letter-spacing: 0.1em;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+/* Quick Adjust Buttons */
+.tm-game-clock .tm-btn-group {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tm-game-clock .tm-control-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-game-clock .tm-control-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+  border-color: #94a3b8;
+}
+
+/* Options Grid */
+.tm-game-clock .tm-options-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 0.65rem;
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .tm-game-clock .tm-options-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.tm-game-clock .tm-option-btn {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.85rem;
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.tm-game-clock .tm-option-btn:hover {
+  border-color: #a855f7;
+  background: #faf5ff;
+  transform: translateY(-1px);
+}
+
+.tm-game-clock .tm-option-btn.tm-selected {
+  border-color: #7e22ce;
+  background: #f3e8ff;
+  color: #581c87;
+}
+
+.tm-game-clock .tm-option-btn.tm-correct {
+  border-color: #10b981;
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.tm-game-clock .tm-option-btn.tm-wrong {
+  border-color: #f43f5e;
+  background: #fff1f2;
+  color: #9f1239;
+}
+
+.tm-game-clock .tm-option-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 0.45rem;
+  background: #f1f5f9;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #475569;
+}
+
+/* Feedback Box */
+.tm-game-clock .tm-feedback-panel {
+  margin-top: 1.25rem;
+  border-radius: 0.85rem;
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+}
+
+.tm-game-clock .tm-hidden {
+  display: none !important;
+}
+
+.tm-game-clock .tm-feedback-success {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+
+.tm-game-clock .tm-feedback-error {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #9f1239;
+}
+
+.tm-game-clock .tm-feedback-hint {
+  background: #fefce8;
+  border: 1px solid #fef08a;
+  color: #854d0e;
+}
+
+.tm-game-clock .tm-feedback-badge {
+  font-weight: 800;
+  font-size: 0.8rem;
+  margin-bottom: 0.35rem;
+}
+
+.tm-game-clock .tm-feedback-meta {
+  font-size: 0.8rem;
+  margin-bottom: 0.35rem;
+}
+
+/* Footer / Action Bar */
+.tm-game-clock .tm-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.tm-game-clock .tm-hint-btn {
+  background: transparent;
+  border: 1px dashed #cbd5e1;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tm-game-clock .tm-hint-btn:hover {
+  border-color: #f59e0b;
+  color: #b45309;
+  background: #fffbeb;
+}
