@@ -3376,49 +3376,744 @@ body.tm-modal-open {
   stroke: #FFFFFF !important;
 }
 
-/* ══════════════════════════════════════════════ */
-/* RESPONSIVE MEDIA QUERIES FOR AUTH MODALS */
-/* ══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════════════════
+   TEZMINDZ MASTER UNIVERSAL RESPONSIVE ENGINE (320px — 2560px)
+   ══════════════════════════════════════════════════════════════════════════ */
 
-/* Mobile (320px - 600px) */
+/* ── 1. GLOBAL NO-OVERFLOW & TOUCH FOUNDATIONS ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+img, video, canvas, svg, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Fluid Text & Heading Hierarchy */
+h1, .hero-title, .tm-welcome-title {
+  font-size: clamp(1.65rem, 4.5vw, 2.75rem);
+  line-height: 1.18;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+h2, .section-title, .ga-header-title-wrap h1 {
+  font-size: clamp(1.35rem, 3.2vw, 2rem);
+  line-height: 1.22;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+h3, .card-title, .pillar-card h4 {
+  font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+  line-height: 1.25;
+}
+
+p, .body-text {
+  font-size: clamp(0.88rem, 1.5vw, 1rem);
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+/* Touch Target Minimums (>= 44px) */
+button, 
+.btn-primary, 
+.btn-cta, 
+.btn-subject-cta, 
+.btn-play-game, 
+.btn-play-featured,
+.tm-auth-btn-primary,
+.ga-filter-btn,
+.class-tab-btn,
+.tm-m-nav-item,
+.tm-nav-link,
+.tm-drawer-card,
+.footer-col a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Touch Input Sizing (Prevents iOS Safari auto-zoom at <16px) */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+select,
+textarea {
+  font-size: 16px !important;
+  min-height: 44px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── 2. NAVBAR & HEADER RESPONSIVENESS ── */
+.public-nav-v2, .tm-navbar {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nav-container, .tm-navbar-inner {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* ── 3. VISUAL INTERACTIVE EXPLANATION (VIE) MOBILE ADAPTATION ── */
+@media (max-width: 768px) {
+  .vie-interactive-box {
+    padding: 16px 12px !important;
+  }
+  .vie-controls-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+  }
+  .vie-slider-group {
+    width: 100% !important;
+  }
+  .vie-slider-group input[type="range"] {
+    width: 100% !important;
+  }
+  .vie-grid-stage {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    padding: 8px !important;
+  }
+  .vie-area-grid {
+    gap: 4px !important;
+  }
+  .vie-block-unit {
+    min-width: 20px !important;
+    min-height: 20px !important;
+  }
+  .fraction-segment {
+    font-size: 0.70rem !important;
+    padding: 6px 2px !important;
+  }
+}
+
+/* ── 4. STATS & CRYSTAL STRIPS ── */
+@media (max-width: 900px) {
+  .stats-crystals-strip {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .stat-crystal-card {
+    padding: 12px 14px !important;
+    gap: 10px !important;
+  }
+}
+@media (max-width: 420px) {
+  .stats-crystals-strip {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+  .stat-crystal-card {
+    padding: 10px 10px !important;
+  }
+  .crystal-icon-wrap {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 10px !important;
+  }
+}
+
+/* ── 5. LEARNING WORLDS, REALM & CHAPTER GRIDS ── */
+@media (max-width: 1100px) {
+  .dash-canvas-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  .dash-sidebar-column {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .worlds-3d-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .chapters-adventure-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .subjects-hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .mv-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .pillars-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .tracks-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+}
+
+/* ── 6. GAME ARENA & GAME CARDS ── */
+@media (max-width: 900px) {
+  .ga-games-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+}
 @media (max-width: 600px) {
-  .tm-auth-card {
-    padding: 26px 18px;
-    border-radius: 20px;
-    max-height: 94vh;
+  .ga-games-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
   }
-
-  .tm-auth-title {
-    font-size: 1.45rem;
+  .ga-game-card {
+    padding: 16px !important;
   }
-
-  .tm-auth-subtitle {
-    font-size: 0.82rem;
+  .ga-play-btn-wrap a {
+    width: 100% !important;
+    justify-content: center !important;
   }
-
-  .tm-auth-header {
-    margin-bottom: 18px;
-    padding-left: 10px;
-    padding-right: 10px;
+  .ga-featured-banner {
+    padding: 18px 16px !important;
   }
-
-  .tm-auth-input-wrap input,
-  .tm-auth-input-wrap select {
-    height: 44px;
-    font-size: 0.88rem;
-  }
-
-  .tm-auth-btn-primary {
-    height: 46px;
-    font-size: 0.92rem;
+  .btn-play-featured {
+    width: 100% !important;
+    justify-content: center !important;
   }
 }
 
-/* Tablet & Desktop (768px+) */
-@media (min-width: 768px) {
+/* ── 7. SUBSCRIPTION & PRICING RESPONSIVE ── */
+@media (max-width: 992px) {
+  .pricing-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    max-width: 480px !important;
+    margin: 0 auto !important;
+  }
+  .checkout-container-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+}
+
+/* ── 8. FOOTER RESPONSIVENESS ── */
+@media (max-width: 900px) {
+  .footer-inner-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 28px 20px !important;
+  }
+}
+@media (max-width: 520px) {
+  .footer-inner-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .footer-bottom-bar {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 8px !important;
+  }
+}
+
+/* ── 9. MODALS & POPUPS RESPONSIVENESS ── */
+@media (max-width: 600px) {
   .tm-auth-modal-wrapper {
-    max-width: 480px;
+    width: calc(100% - 24px) !important;
+    max-width: 100% !important;
+    margin: 12px auto !important;
+  }
+  .tm-auth-card {
+    padding: 22px 16px !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 }
+
+/* ── 10. ORIENTATION & ACCESSIBILITY ── */
+@media (orientation: landscape) and (max-height: 500px) {
+  .tm-auth-card {
+    max-height: 85vh !important;
+    padding: 14px !important;
+  }
+  .tm-mobile-drawer {
+    max-height: 88vh !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   TEZMINDZ COMPLETE DARK MODE ENGINE (ULTRA-PREMIUM OBSIDIAN PALETTE)
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── THEME TOGGLE BUTTON STYLES ── */
+.tm-theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  color: #475569;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.tm-theme-toggle-btn:hover {
+  background: #F1F5F9;
+  color: #4F46E5;
+  border-color: #C7D2FE;
+  transform: translateY(-1px) rotate(15deg);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.15);
+}
+
+.tm-theme-toggle-btn:active {
+  transform: translateY(0) scale(0.94);
+}
+
+.tm-theme-toggle-btn .theme-icon-sun {
+  display: none;
+  color: #FBBF24;
+}
+
+.tm-theme-toggle-btn .theme-icon-moon {
+  display: block;
+  color: #6366F1;
+}
+
+[data-theme="dark"] .tm-theme-toggle-btn,
+.dark-theme .tm-theme-toggle-btn {
+  background: #1E293B;
+  border-color: #334155;
+  color: #F8FAFC;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .tm-theme-toggle-btn:hover,
+.dark-theme .tm-theme-toggle-btn:hover {
+  background: #334155;
+  border-color: #FBBF24;
+  box-shadow: 0 0 16px rgba(251, 191, 36, 0.3);
+}
+
+[data-theme="dark"] .tm-theme-toggle-btn .theme-icon-sun,
+.dark-theme .tm-theme-toggle-btn .theme-icon-sun {
+  display: block;
+}
+
+[data-theme="dark"] .tm-theme-toggle-btn .theme-icon-moon,
+.dark-theme .tm-theme-toggle-btn .theme-icon-moon {
+  display: none;
+}
+
+/* ── DARK MODE ROOT VARIABLES ── */
+[data-theme="dark"],
+.dark-theme {
+  --bg: #090D16 !important;
+  --card: #131B2E !important;
+  --ink: #F8FAFC !important;
+  --muted: #94A3B8 !important;
+  --line: #1E293B !important;
+  --tm-bg: #090D16 !important;
+  --tm-ink: #F8FAFC !important;
+  --tm-slate: #CBD5E1 !important;
+  --tm-muted: #94A3B8 !important;
+  --tm-border: #1E293B !important;
+  --tm-text-primary: #F8FAFC !important;
+  --tm-text-secondary: #CBD5E1 !important;
+  --tm-text-muted: #94A3B8 !important;
+}
+
+/* ── GLOBAL DARK OVERRIDES ── */
+[data-theme="dark"] body,
+[data-theme="dark"] html,
+[data-theme="dark"] body.page.landing,
+.dark-theme body,
+.dark-theme html,
+.dark-theme body.page.landing {
+  background-color: #090D16 !important;
+  color: #CBD5E1 !important;
+}
+
+/* Headings in Dark Mode */
+[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h4, [data-theme="dark"] h5, [data-theme="dark"] h6,
+[data-theme="dark"] strong, [data-theme="dark"] .landing-logo-text strong, [data-theme="dark"] .tm-brand-text strong,
+.dark-theme h1, .dark-theme h2, .dark-theme h3, .dark-theme h4, .dark-theme h5, .dark-theme h6,
+.dark-theme strong, .dark-theme .landing-logo-text strong, .dark-theme .tm-brand-text strong {
+  color: #F8FAFC !important;
+}
+
+/* Paragraphs and Text */
+[data-theme="dark"] p, [data-theme="dark"] .body-text, [data-theme="dark"] .hero-description, [data-theme="dark"] .vie-subtext,
+.dark-theme p, .dark-theme .body-text, .dark-theme .hero-description, .dark-theme .vie-subtext {
+  color: #CBD5E1 !important;
+}
+
+/* Navbars & Headers in Dark Mode */
+[data-theme="dark"] .public-nav-v2,
+[data-theme="dark"] .tm-navbar,
+.dark-theme .public-nav-v2,
+.dark-theme .tm-navbar {
+  background: rgba(9, 13, 22, 0.94) !important;
+  border-bottom: 1px solid #1E293B !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .tm-nav-links,
+.dark-theme .tm-nav-links {
+  background: #111827 !important;
+  border: 1px solid #1F2937 !important;
+}
+
+[data-theme="dark"] .tm-nav-link,
+[data-theme="dark"] .landing-nav-links a,
+.dark-theme .tm-nav-link,
+.dark-theme .landing-nav-links a {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .tm-nav-link:hover,
+[data-theme="dark"] .landing-nav-links a:hover,
+.dark-theme .tm-nav-link:hover,
+.dark-theme .landing-nav-links a:hover {
+  color: #818CF8 !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme="dark"] .tm-nav-link.active,
+[data-theme="dark"] .landing-nav-links a.active,
+.dark-theme .tm-nav-link.active,
+.dark-theme .landing-nav-links a.active {
+  background: #1E293B !important;
+  color: #818CF8 !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Dropdown Menus */
+[data-theme="dark"] .tm-dropdown-menu,
+.dark-theme .tm-dropdown-menu {
+  background: #111827 !important;
+  border: 1.5px solid #1F2937 !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .tm-dropdown-item,
+.dark-theme .tm-dropdown-item {
+  color: #E2E8F0 !important;
+}
+
+[data-theme="dark"] .tm-dropdown-item:hover,
+.dark-theme .tm-dropdown-item:hover {
+  background: #1F2937 !important;
+  color: #818CF8 !important;
+}
+
+[data-theme="dark"] .tm-dropdown-divider,
+.dark-theme .tm-dropdown-divider {
+  background: #1F2937 !important;
+}
+
+/* Mobile Drawers & Bottom Bar in Dark Mode */
+[data-theme="dark"] .public-drawer,
+[data-theme="dark"] .tm-mobile-drawer,
+.dark-theme .public-drawer,
+.dark-theme .tm-mobile-drawer {
+  background: #111827 !important;
+  border-color: #1F2937 !important;
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="dark"] .public-drawer-header,
+[data-theme="dark"] .tm-drawer-header,
+.dark-theme .public-drawer-header,
+.dark-theme .tm-drawer-header {
+  border-bottom-color: #1F2937 !important;
+}
+
+[data-theme="dark"] .drawer-nav-item,
+[data-theme="dark"] .tm-drawer-card,
+.dark-theme .drawer-nav-item,
+.dark-theme .tm-drawer-card {
+  background: #161F30 !important;
+  border-color: #1F2937 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tm-mobile-bottom-bar,
+.dark-theme .tm-mobile-bottom-bar {
+  background: rgba(9, 13, 22, 0.96) !important;
+  border-top-color: #1E293B !important;
+}
+
+[data-theme="dark"] .tm-m-nav-item,
+.dark-theme .tm-m-nav-item {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .tm-m-nav-item.active,
+.dark-theme .tm-m-nav-item.active {
+  color: #818CF8 !important;
+  background: #1E293B !important;
+}
+
+/* Mobile Hamburger Toggle Button */
+[data-theme="dark"] .btn-mobile-nav-toggle,
+[data-theme="dark"] .tm-mobile-menu-btn,
+.dark-theme .btn-mobile-nav-toggle,
+.dark-theme .tm-mobile-menu-btn {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+/* HUD & Profile Pills */
+[data-theme="dark"] .hud-profile-pill,
+.dark-theme .hud-profile-pill {
+  background: #161F30 !important;
+  border-color: #1E293B !important;
+  color: #F8FAFC !important;
+}
+
+/* Content Cards & Containers across all pages */
+[data-theme="dark"] .stat-crystal-card,
+[data-theme="dark"] .world-3d-card,
+[data-theme="dark"] .ga-game-card,
+[data-theme="dark"] .chapter-adventure-card,
+[data-theme="dark"] .mission-action-card,
+[data-theme="dark"] .mission-steps-meter,
+[data-theme="dark"] .subject-hero-card,
+[data-theme="dark"] .pillar-card,
+[data-theme="dark"] .mv-card,
+[data-theme="dark"] .track-card,
+[data-theme="dark"] .stat-strip-card,
+[data-theme="dark"] .pricing-card-v2,
+[data-theme="dark"] .vie-outer-card,
+[data-theme="dark"] .vie-demo-card,
+[data-theme="dark"] .parent-review-card,
+[data-theme="dark"] .tm-class-card,
+[data-theme="dark"] .leaderboard-list-table,
+[data-theme="dark"] .leaderboard-row-item,
+.dark-theme .stat-crystal-card,
+.dark-theme .world-3d-card,
+.dark-theme .ga-game-card,
+.dark-theme .chapter-adventure-card,
+.dark-theme .mission-action-card,
+.dark-theme .mission-steps-meter,
+.dark-theme .subject-hero-card,
+.dark-theme .pillar-card,
+.dark-theme .mv-card,
+.dark-theme .track-card,
+.dark-theme .stat-strip-card,
+.dark-theme .pricing-card-v2,
+.dark-theme .vie-outer-card,
+.dark-theme .vie-demo-card,
+.dark-theme .parent-review-card,
+.dark-theme .tm-class-card,
+.dark-theme .leaderboard-list-table,
+.dark-theme .leaderboard-row-item {
+  background: #131B2E !important;
+  border-color: #1E293B !important;
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .leaderboard-row-item:hover,
+.dark-theme .leaderboard-row-item:hover {
+  background: #1A243B !important;
+}
+
+/* Interactive Chips, Buttons, and Tabs in Dark Mode */
+[data-theme="dark"] .ga-filter-btn,
+[data-theme="dark"] .class-tab-btn,
+[data-theme="dark"] .hero-method-pill,
+[data-theme="dark"] .pricing-grade-tab-btn,
+[data-theme="dark"] .vie-tab-btn,
+[data-theme="dark"] .vie-badge-pill,
+[data-theme="dark"] .btn-hero-secondary,
+[data-theme="dark"] .btn-cta-outline,
+.dark-theme .ga-filter-btn,
+.dark-theme .class-tab-btn,
+.dark-theme .hero-method-pill,
+.dark-theme .pricing-grade-tab-btn,
+.dark-theme .vie-tab-btn,
+.dark-theme .vie-badge-pill,
+.dark-theme .btn-hero-secondary,
+.dark-theme .btn-cta-outline {
+  background: #161F30 !important;
+  border-color: #334155 !important;
+  color: #E2E8F0 !important;
+}
+
+[data-theme="dark"] .ga-filter-btn.active,
+[data-theme="dark"] .class-tab-btn.active,
+[data-theme="dark"] .pricing-grade-tab-btn.active,
+[data-theme="dark"] .vie-tab-btn.active,
+.dark-theme .ga-filter-btn.active,
+.dark-theme .class-tab-btn.active,
+.dark-theme .pricing-grade-tab-btn.active,
+.dark-theme .vie-tab-btn.active {
+  background: #4F46E5 !important;
+  border-color: #6366F1 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4) !important;
+}
+
+/* VIE Visual Interactive Calculation display */
+[data-theme="dark"] .vie-calc-display,
+[data-theme="dark"] .vie-grid-stage-wrap,
+[data-theme="dark"] .vie-fraction-visual-box,
+.dark-theme .vie-calc-display,
+.dark-theme .vie-grid-stage-wrap,
+.dark-theme .vie-fraction-visual-box {
+  background: #0D1322 !important;
+  border-color: #1E293B !important;
+}
+
+/* Pricing Card Bodies in Dark Mode */
+[data-theme="dark"] .pricing-card-body,
+[data-theme="dark"] .pricing-features,
+.dark-theme .pricing-card-body,
+.dark-theme .pricing-features {
+  background: transparent !important;
+}
+
+[data-theme="dark"] .pricing-feature-item,
+.dark-theme .pricing-feature-item {
+  color: #CBD5E1 !important;
+  border-bottom-color: #1E293B !important;
+}
+
+[data-theme="dark"] .price-box,
+.dark-theme .price-box {
+  border-top-color: #1E293B !important;
+  border-bottom-color: #1E293B !important;
+}
+
+[data-theme="dark"] .savings-badge,
+.dark-theme .savings-badge {
+  background: #1E293B !important;
+  color: #818CF8 !important;
+  border-color: #334155 !important;
+}
+
+/* Authentication Modals in Dark Mode */
+[data-theme="dark"] .tm-auth-card,
+.dark-theme .tm-auth-card {
+  background: #111827 !important;
+  border-color: #1F2937 !important;
+  color: #CBD5E1 !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7) !important;
+}
+
+[data-theme="dark"] .tm-auth-input-wrap input,
+[data-theme="dark"] .tm-auth-input-wrap select,
+.dark-theme .tm-auth-input-wrap input,
+.dark-theme .tm-auth-input-wrap select {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tm-auth-input-wrap input:focus,
+[data-theme="dark"] .tm-auth-input-wrap select:focus,
+.dark-theme .tm-auth-input-wrap input:focus,
+.dark-theme .tm-auth-input-wrap select:focus {
+  border-color: #818CF8 !important;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2) !important;
+}
+
+[data-theme="dark"] .tm-auth-demo-badge,
+.dark-theme .tm-auth-demo-badge {
+  background: #064E3B !important;
+  border-color: #059669 !important;
+}
+[data-theme="dark"] .tm-auth-demo-text strong,
+.dark-theme .tm-auth-demo-text strong {
+  color: #6EE7B7 !important;
+}
+[data-theme="dark"] .tm-auth-demo-text span,
+.dark-theme .tm-auth-demo-text span {
+  color: #A7F3D0 !important;
+}
+
+/* Footer in Dark Mode */
+[data-theme="dark"] .site-footer-v2,
+.dark-theme .site-footer-v2 {
+  background: #060910 !important;
+  border-top-color: #1E293B !important;
+}
+
+[data-theme="dark"] .footer-col h5,
+[data-theme="dark"] .footer-col h3,
+.dark-theme .footer-col h5,
+.dark-theme .footer-col h3 {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .footer-col a,
+.dark-theme .footer-col a {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .footer-col a:hover,
+.dark-theme .footer-col a:hover {
+  color: #818CF8 !important;
+}
+
+[data-theme="dark"] .footer-bottom-bar,
+.dark-theme .footer-bottom-bar {
+  border-top-color: #1E293B !important;
+  color: #64748B !important;
+}
+
+/* WhatsApp Widget in Dark Mode */
+[data-theme="dark"] .whatsapp-chat-popup,
+.dark-theme .whatsapp-chat-popup {
+  background: #111827 !important;
+  border-color: #1F2937 !important;
+}
+[data-theme="dark"] .whatsapp-popup-msg,
+.dark-theme .whatsapp-popup-msg {
+  background: #1E293B !important;
+  color: #F8FAFC !important;
+}
+[data-theme="dark"] .btn-back-to-top,
+.dark-theme .btn-back-to-top {
+  background: #1E293B !important;
+  color: #F8FAFC !important;
+  border-color: #334155 !important;
+}
+
+
 
 

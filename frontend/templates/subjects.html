@@ -3,12 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Subjects &amp; Curriculum — Tezz-Mindz Olympiad Learning</title>
+    <title>Subjects &amp; Curriculum — TezMindZ Olympiad Learning</title>
+    <link rel="icon" type="image/png" href="/static/media/tezmindz_brain_icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/static/css/styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <script src="/static/js/theme-toggle.js"></script>
     <style>
       :root {
         --tm-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -97,20 +99,28 @@
       .landing-logo {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         text-decoration: none;
+        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
-      .landing-logo-mark {
-        width: 46px;
-        height: 46px;
-        border-radius: 14px;
-        background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #FFFFFF;
-        box-shadow: 0 8px 18px rgba(99, 102, 241, 0.3);
-        transition: transform 0.25s ease;
+      .landing-logo:hover {
+        transform: translateY(-1px) scale(1.02);
+      }
+      .landing-logo-brain-icon {
+        height: 40px;
+        width: 40px;
+        object-fit: contain;
+        flex-shrink: 0;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .landing-logo:hover .landing-logo-brain-icon {
+        transform: scale(1.08) rotate(-4deg);
+      }
+      .landing-logo-img {
+        height: 36px;
+        width: auto;
+        object-fit: contain;
+        display: block;
       }
       .landing-logo:hover .landing-logo-mark {
         transform: scale(1.05) rotate(3deg);
@@ -164,6 +174,34 @@
         display: flex;
         align-items: center;
         gap: 12px;
+      }
+      .btn-nav-login-reg {
+        border-radius: 8px;
+        padding: 8px 22px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        border: 1.8px solid #4F46E5;
+        background: #FFFFFF;
+        color: #4F46E5;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-family: var(--tm-font);
+        letter-spacing: -0.01em;
+        transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .btn-nav-login-reg:hover {
+        background: #EEF2FF;
+        border-color: #4338CA;
+        color: #4338CA;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.18);
+      }
+      .btn-nav-login-reg:active {
+        transform: translateY(0);
+        background: #E0E7FF;
       }
       .btn-nav-login {
         border-radius: 99px;
@@ -683,25 +721,17 @@
     <header class="public-nav-v2" id="main-navbar">
       <div class="nav-container">
         <!-- Logo -->
-        <a class="landing-logo" href="/">
-          <div class="landing-logo-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4.5 16.5c-1.5 1.5-2.5 3.5-2.5 5.5C4 22 6 21 7.5 19.5" />
-              <path d="M12 12l9-9-3 12-6 3-3-3-3-3 6-3z" />
-              <path d="M9 15l-3-3" />
-            </svg>
-          </div>
-          <div class="landing-logo-text">
-            <strong>Tezz-Mindz</strong>
-            <span>Learn • Play • Master</span>
-          </div>
+        <a class="landing-logo" href="/" aria-label="TezMindZ Home">
+          <img src="/static/media/tezmindz_brain_icon.png" alt="TezMindZ Icon" class="landing-logo-brain-icon" style="height: 40px; width: 40px; object-fit: contain; flex-shrink: 0;" />
+          <img src="/static/media/tezmindz_logo_transparent.png" alt="TezMindZ" class="landing-logo-img" style="height: 36px; width: auto; object-fit: contain; max-width: 160px;" />
         </a>
         
         <!-- Center Nav Links -->
         <nav class="landing-nav-links" aria-label="Main Navigation">
           <a href="/">Home</a>
-          <a href="/subjects/" class="active">Subjects</a>
-          <a href="/how-it-works/">How It Works</a>
+          <a href="/#classes">Classes</a>
+          <a href="/#why-tezmindz">Why Us</a>
+          <a href="/#pricing">Plans</a>
           <a href="/about/">About</a>
         </nav>
 
@@ -736,8 +766,7 @@
             </a>
             <a class="btn-nav-register" href="/dashboard/">Dashboard →</a>
           {% else %}
-            <a class="btn-nav-login" href="javascript:void(0)" onclick="TMAuthModal.openLogin()" data-open-modal="login">Student Login</a>
-            <a class="btn-nav-register" href="javascript:void(0)" onclick="TMAuthModal.openRegister()" data-open-modal="register">Start Free</a>
+            <a class="btn-nav-login-reg" href="javascript:void(0)" onclick="TMAuthModal.openLogin()" data-open-modal="login">Login/Register</a>
           {% endif %}
         </div>
       </div>
@@ -1024,18 +1053,9 @@
     <footer class="site-footer-v2">
       <div class="footer-inner-grid">
         <div class="footer-col">
-          <a class="landing-logo" href="/" style="margin-bottom: 14px;">
-            <div class="landing-logo-mark">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4.5 16.5c-1.5 1.5-2.5 3.5-2.5 5.5C4 22 6 21 7.5 19.5" />
-                <path d="M12 12l9-9-3 12-6 3-3-3-3-3 6-3z" />
-                <path d="M9 15l-3-3" />
-              </svg>
-            </div>
-            <div class="landing-logo-text">
-              <strong>Tezz-Mindz</strong>
-              <span>Learn • Play • Master</span>
-            </div>
+          <a class="landing-logo" href="/" style="margin-bottom: 14px;" aria-label="TezMindZ Home">
+            <img src="/static/media/tezmindz_brain_icon.png" alt="TezMindZ Icon" class="landing-logo-brain-icon" style="height: 40px; width: 40px; object-fit: contain; flex-shrink: 0;" />
+            <img src="/static/media/tezmindz_logo_transparent.png" alt="TezMindZ" class="landing-logo-img" style="height: 36px; width: auto; object-fit: contain; max-width: 160px;" />
           </a>
           <p style="font-size: 0.88rem; color: var(--tm-muted); line-height: 1.6; margin-top: 10px;">
             India's next-generation gamified Olympiad learning platform combining NCERT syllabus curriculum with interactive 3D games and adaptive quizzes.

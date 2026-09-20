@@ -58,12 +58,19 @@
         self.pendingPlanId = localStorage.getItem('tm_pending_plan_id');
       }
 
-      // Check URL query parameters for auto-opening modal (e.g. ?auth=login or ?auth=register)
-      var authAction = urlParams.get('auth');
+      var nextParam = urlParams.get('next');
+      if (nextParam) {
+        localStorage.setItem('tm_auth_next_url', nextParam);
+      }
+
+      // Check URL query parameters for auto-opening modal (e.g. ?auth=login, ?auth=register, ?modal=login, ?modal=register)
+      var authAction = (urlParams.get('auth') || urlParams.get('modal') || '').toLowerCase();
       if (authAction === 'login') {
-        setTimeout(function () { self.openLogin(); }, 200);
+        setTimeout(function () { self.openLogin(); }, 120);
       } else if (authAction === 'register') {
-        setTimeout(function () { self.openRegister(); }, 200);
+        setTimeout(function () { self.openRegister(); }, 120);
+      } else if (authAction === 'forgot') {
+        setTimeout(function () { self.openForgot(); }, 120);
       }
 
       // Close on Backdrop Click
@@ -120,22 +127,6 @@
       if (planId) {
         this.pendingPlanId = planId;
         localStorage.setItem('tm_pending_plan_id', planId);
-      }
-
-      // Show plan banner if a plan is pending
-      var pending = this.pendingPlanId || localStorage.getItem('tm_pending_plan_id');
-      var banner = document.getElementById('tmRegisterPlanBanner');
-      if (banner) {
-        if (pending) {
-          banner.style.display = 'flex';
-          var planNameEl = document.getElementById('tmRegisterPlanName');
-          if (planNameEl) {
-            var planCode = localStorage.getItem('tm_pending_plan_code');
-            planNameEl.textContent = planCode ? 'Selected Plan: ' + planCode.toUpperCase() : 'Selected Plan Reserved';
-          }
-        } else {
-          banner.style.display = 'none';
-        }
       }
 
       this._showModal('tmRegisterModal');
@@ -318,6 +309,13 @@
           if (data.access) localStorage.setItem('tm_access', data.access);
           if (data.refresh) localStorage.setItem('tm_refresh', data.refresh);
 
+          var nextUrl = localStorage.getItem('tm_auth_next_url');
+          if (nextUrl) {
+            localStorage.removeItem('tm_auth_next_url');
+            window.location.href = nextUrl;
+            return;
+          }
+
           var pendingPlan = self.pendingPlanId || localStorage.getItem('tm_pending_plan_id');
           if (pendingPlan) {
             window.location.href = '/subscription/checkout/?plan=' + pendingPlan;
@@ -372,6 +370,12 @@
         if (data.success) {
           if (data.access) localStorage.setItem('tm_access', data.access);
           if (data.refresh) localStorage.setItem('tm_refresh', data.refresh);
+          var nextUrl = localStorage.getItem('tm_auth_next_url');
+          if (nextUrl) {
+            localStorage.removeItem('tm_auth_next_url');
+            window.location.href = nextUrl;
+            return;
+          }
           window.location.href = data.redirect_url || '/dashboard/';
         } else {
           btn.disabled = false;
@@ -434,6 +438,13 @@
         if (data.success) {
           if (data.access) localStorage.setItem('tm_access', data.access);
           if (data.refresh) localStorage.setItem('tm_refresh', data.refresh);
+
+          var nextUrl = localStorage.getItem('tm_auth_next_url');
+          if (nextUrl) {
+            localStorage.removeItem('tm_auth_next_url');
+            window.location.href = nextUrl;
+            return;
+          }
 
           var pendingPlan = self.pendingPlanId || localStorage.getItem('tm_pending_plan_id');
           if (pendingPlan) {
