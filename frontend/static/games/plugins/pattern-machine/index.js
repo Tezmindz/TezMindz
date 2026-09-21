@@ -3,6 +3,7 @@
  * Pattern Machine - Main Game Entry Point
  * 
  * 100% Data-driven Olympiad sequence and logic game.
+ * Ported from reference PatternMachine.tsx
  * ==========================================================================
  */
 
@@ -47,14 +48,20 @@ export class PatternMachineGame {
     header.className = 'tm-header';
     header.innerHTML = `
       <span class="tm-badge">⚙️ Sequence Engine</span>
-      <h2 class="tm-prompt">${this.escapeHtml(this.data.prompt || 'Complete the pattern sequence')}</h2>
+      <h2 class="tm-prompt">${this.escapeHtml(this.data.prompt || 'Analyze the gear engine and find the missing term')}</h2>
     `;
     root.appendChild(header);
 
-    // 2. Conveyor Belt Renderer (Data-driven from data.sequence)
+    // 2. Interactive Conveyor & Gear Renderer
+    const seq = this.data.sequence || [4, 9, 19, 39, 79, "?"];
     this.renderer = new PatternRenderer(
-      this.data.sequence || [],
-      typeof this.data.missingIndex === 'number' ? this.data.missingIndex : -1
+      seq,
+      typeof this.data.missingIndex === 'number' ? this.data.missingIndex : -1,
+      {
+        deltas: this.data.deltas,
+        missingVal: this.data.correctAnswer || 159,
+        ruleText: this.data.explanation || "The difference doubles at each step (+5, +10, +20, +40, +80)."
+      }
     );
     this.renderer.render(root);
 
@@ -62,13 +69,13 @@ export class PatternMachineGame {
     const optionsGrid = document.createElement('div');
     optionsGrid.className = 'tm-options-grid';
 
-    (this.data.options || []).forEach((opt) => {
+    (this.data.options || [149, 159, 169, 179]).forEach((opt) => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'tm-option-btn';
       btn.innerHTML = `<span class="tm-option-val">${this.escapeHtml(opt)}</span>`;
 
-      btn.addEventListener('click', () => this.handleSelect(opt));
+      btn.addEventListener('click', () => this.handleSelect(opt, btn));
       optionsGrid.appendChild(btn);
     });
     root.appendChild(optionsGrid);
@@ -82,12 +89,16 @@ export class PatternMachineGame {
     this.container.appendChild(root);
   }
 
-  handleSelect(selectedVal) {
+  handleSelect(selectedVal, btnEl) {
     if (this.hasAnswered) return;
     this.hasAnswered = true;
 
     const isCorrect = String(selectedVal).trim() === String(this.data.correctAnswer).trim();
     this.renderer.fillMissingSlot(selectedVal, isCorrect);
+
+    if (btnEl) {
+      btnEl.classList.add(isCorrect ? 'tm-opt-correct' : 'tm-opt-wrong');
+    }
 
     const feedback = this.container.querySelector('#tm-pattern-feedback');
     if (feedback) {

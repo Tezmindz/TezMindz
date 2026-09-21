@@ -264,4 +264,6 @@ export function initGame(container, data, config) {
 if (typeof window !== 'undefined') {
   window.TezMindz = window.TezMindz || {};
   window.TezMindz.EverydayMathCity = { initGame, EverydayMathCityGame };
+  window.TezMindzGameRegistry = window.TezMindzGameRegistry || {};
+  window.TezMindzGameRegistry['everyday-math-city'] = { id: 'everyday-math-city', initGame };
 }

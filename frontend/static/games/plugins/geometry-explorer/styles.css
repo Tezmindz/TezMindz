@@ -9,6 +9,11 @@
   max-width: 680px;
   margin: 0 auto;
   box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.tm-game-geometry * {
+  box-sizing: border-box;
 }
 
 .tm-game-geometry .tm-header {
@@ -24,9 +29,9 @@
   text-transform: uppercase;
   padding: 0.25rem 0.65rem;
   border-radius: 9999px;
-  background: #eff6ff;
-  color: #2563eb;
-  border: 1px solid #bfdbfe;
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
 }
 
 .tm-game-geometry .tm-prompt {
@@ -34,40 +39,140 @@
   font-weight: 700;
   color: #0f172a;
   margin-top: 0.65rem;
-  line-height: 1.4;
 }
 
-.tm-game-geometry .tm-geometry-stage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  background: #f8fafc;
-  border-radius: 1rem;
-  border: 1px solid #e2e8f0;
+/* ShapeLab Card */
+.tm-shape-lab-wrapper {
   margin: 1.25rem 0;
 }
 
-.tm-game-geometry .tm-measurements-row {
+.tm-shapelab-card {
+  background: #0f172a;
+  border: 1.5px solid #10b981;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.tm-shapelab-header {
   display: flex;
-  gap: 0.5rem;
-  margin-top: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 0.5rem;
 }
 
-.tm-game-geometry .tm-measurement-pill {
-  font-size: 0.8rem;
+.tm-shapelab-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #34d399;
+}
+
+.tm-shapelab-toggles {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.btn-toggle {
+  background: #1e293b;
+  border: 1px solid #475569;
+  color: #cbd5e1;
+  border-radius: 0.4rem;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: #1d4ed8;
-  background: #ffffff;
-  padding: 0.3rem 0.75rem;
-  border-radius: 9999px;
-  border: 1px solid #cbd5e1;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-toggle:hover {
+  background: #334155;
+  color: #ffffff;
+}
+.btn-toggle.toggle-on {
+  background: #059669;
+  border-color: #34d399;
+  color: #ffffff;
 }
 
+.tm-shapelab-stage {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 0.85rem;
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.tm-shapelab-stage.stage-grid-active {
+  background-image: radial-gradient(circle, rgba(16, 185, 129, 0.25) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+
+.tm-shape-svg {
+  width: 100%;
+  max-width: 320px;
+  height: 180px;
+  margin: 0 auto;
+  display: block;
+}
+
+.tm-perimeter-walk-anim {
+  animation: dash 1.5s linear infinite;
+}
+@keyframes dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+.tm-walkway-formula {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+.tm-walkway-formula strong {
+  color: #6ee7b7;
+  font-family: ui-monospace, monospace;
+}
+
+.tm-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.tm-metric-pill {
+  background: #1e293b;
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+}
+.tm-metric-pill.metric-perimeter {
+  border: 1px solid #059669;
+}
+.tm-metric-pill.metric-area {
+  border: 1px solid #0d9488;
+}
+
+.tm-metric-label {
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.tm-metric-val {
+  font-family: ui-monospace, monospace;
+  font-size: 0.95rem;
+  color: #34d399;
+}
+
+/* Options */
 .tm-game-geometry .tm-options-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -85,12 +190,25 @@
   color: #1e293b;
   cursor: pointer;
   transition: all 0.15s ease;
+  text-align: center;
 }
 
 .tm-game-geometry .tm-option-btn:hover {
-  border-color: #3b82f6;
-  background: #eff6ff;
+  border-color: #10b981;
+  background: #ecfdf5;
   transform: translateY(-2px);
+}
+
+.tm-game-geometry .tm-option-btn.tm-opt-correct {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #065f46;
+}
+
+.tm-game-geometry .tm-option-btn.tm-opt-wrong {
+  background: #fff1f2;
+  border-color: #f43f5e;
+  color: #9f1239;
 }
 
 .tm-game-geometry .tm-feedback {

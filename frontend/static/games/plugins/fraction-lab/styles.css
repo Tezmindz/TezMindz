@@ -9,6 +9,7 @@
   max-width: 680px;
   margin: 0 auto;
   box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
 }
 
 .tm-game-fraction .tm-header {
@@ -36,6 +37,12 @@
   margin-top: 0.65rem;
 }
 
+.tm-game-fraction .tm-visual-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .tm-game-fraction .tm-fraction-display {
   display: flex;
   flex-direction: column;
@@ -45,7 +52,22 @@
   background: #faf5ff;
   border-radius: 1rem;
   border: 1px solid #f3e8ff;
-  margin: 1.25rem 0;
+  margin: 1rem 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tm-fraction-circle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tm-slice-interactive {
+  cursor: pointer;
+}
+.tm-slice-interactive:hover {
+  opacity: 0.85;
 }
 
 .tm-game-fraction .tm-fraction-badge {
@@ -59,11 +81,22 @@
   border: 1px solid #e9d5ff;
 }
 
+.tm-live-fraction-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff5f7;
+  border: 1.5px solid #fbcfe8;
+  border-radius: 0.75rem;
+  padding: 0.65rem 1rem;
+  margin: 0.75rem 0;
+}
+
 .tm-game-fraction .tm-options-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem;
-  margin-top: 1rem;
+  margin-top: 0.75rem;
 }
 
 .tm-game-fraction .tm-option-btn {
@@ -83,6 +116,24 @@
   border-color: #ec4899;
   background: #fdf2f8;
   transform: translateY(-2px);
+}
+
+.tm-game-fraction .tm-option-btn.tm-opt-highlighted {
+  border-color: #ec4899;
+  background: #fdf2f8;
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
+}
+
+.tm-game-fraction .tm-option-btn.tm-btn-correct {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #065f46;
+}
+
+.tm-game-fraction .tm-option-btn.tm-btn-wrong {
+  background: #fff1f2;
+  border-color: #f43f5e;
+  color: #9f1239;
 }
 
 .tm-game-fraction .tm-feedback {

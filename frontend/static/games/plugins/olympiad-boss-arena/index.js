@@ -102,10 +102,11 @@ export class OlympiadBossArenaGame {
       const playground = document.createElement('div');
       playground.className = 'tm-playground';
 
-      if (this.data.bossData) {
-        const hud = new BossBattleHud(this.data.bossData);
-        hud.render(playground);
-      }
+      this.hud = new BossBattleHud(this.data.bossData || {
+        bossName: this.data.bossName || "Arch-Sorcerer Mathalon (Achievers Boss)",
+        avatar: this.data.bossAvatar || "🐲"
+      });
+      this.hud.render(playground);
 
       if (this.data.strategySteps && this.data.strategySteps.length > 0) {
         const strategy = new MultiStepStrategyBoard(this.data.strategySteps);
@@ -207,12 +208,15 @@ export class OlympiadBossArenaGame {
       buttonElement.classList.add(isCorrect ? 'tm-option-correct' : 'tm-option-wrong');
     }
 
-    // If correct, simulate boss HP reducing to 0
+    // If correct, trigger boss defeat animation and reduce HP to 0
     if (isCorrect) {
-      const hpFill = this.container.querySelector('.tm-hp-bar-fill');
-      const hpText = this.container.querySelector('.tm-boss-hp-text');
-      if (hpFill) hpFill.style.width = '0%';
-      if (hpText) hpText.textContent = 'HP: 0 / 100 (DEFEATED!)';
+      if (this.hud && typeof this.hud.defeat === 'function') {
+        this.hud.defeat();
+      }
+    } else {
+      if (this.hud && typeof this.hud.triggerHit === 'function') {
+        this.hud.triggerHit(5);
+      }
     }
 
     const fb = this.container.querySelector('#tm-boss-feedback');
@@ -268,4 +272,6 @@ export function initGame(container, data, config) {
 if (typeof window !== 'undefined') {
   window.TezMindz = window.TezMindz || {};
   window.TezMindz.OlympiadBossArena = { initGame, OlympiadBossArenaGame };
+  window.TezMindzGameRegistry = window.TezMindzGameRegistry || {};
+  window.TezMindzGameRegistry['olympiad-boss-arena'] = { id: 'olympiad-boss-arena', initGame };
 }

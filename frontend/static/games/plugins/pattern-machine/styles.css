@@ -36,9 +36,9 @@
   letter-spacing: 0.05em;
   padding: 0.25rem 0.65rem;
   border-radius: 9999px;
-  background: #f0fdf4;
-  color: #16a34a;
-  border: 1px solid #bbf7d0;
+  background: #f3e8ff;
+  color: #7e22ce;
+  border: 1px solid #e9d5ff;
 }
 
 .tm-game-pattern .tm-prompt {
@@ -49,82 +49,179 @@
   line-height: 1.5;
 }
 
-/* Conveyor Track */
-.tm-game-pattern .tm-conveyor-belt {
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
-  border-radius: 1rem;
-  padding: 1.25rem 1rem;
-  margin: 1.5rem 0;
-  overflow-x: auto;
+/* Pattern Engine Card */
+.tm-pattern-engine-wrapper {
+  margin: 1.25rem 0;
 }
 
-.tm-game-pattern .tm-belt-track {
+.tm-pattern-card {
+  background: #0f172a;
+  border: 1.5px solid #a855f7;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.tm-pattern-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  min-width: max-content;
-  padding: 0.25rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 0.75rem;
 }
 
-.tm-game-pattern .tm-pattern-node {
-  background: #ffffff;
-  border: 2px solid #cbd5e1;
+.tm-pattern-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #c084fc;
+}
+
+.tm-gear-icon {
+  display: inline-block;
+  font-size: 1.2rem;
+  transition: transform 0.5s linear;
+}
+.tm-gear-icon.gear-spinning {
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.btn-analyze-gear {
+  background: #9333ea;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.15s ease;
+}
+.btn-analyze-gear:hover {
+  background: #a855f7;
+  transform: translateY(-1px);
+}
+
+/* Sequence Track */
+.tm-sequence-track {
+  background: #020617;
+  border: 1px solid #1e293b;
   border-radius: 0.85rem;
-  width: 58px;
-  height: 64px;
+  padding: 1.25rem 0.75rem;
+  overflow-x: auto;
+  margin-bottom: 0.75rem;
+}
+
+.tm-sequence-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 0.5rem;
+  min-width: 320px;
+}
+
+.tm-seq-node-col {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.tm-seq-box {
+  width: 44px;
+  height: 48px;
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-  position: relative;
-}
-
-.tm-game-pattern .tm-node-index {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: #94a3b8;
-  position: absolute;
-  top: 4px;
-}
-
-.tm-game-pattern .tm-node-content {
   font-family: ui-monospace, monospace;
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   font-weight: 800;
-  color: #0f172a;
-  margin-top: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+  transition: all 0.2s;
 }
 
-.tm-game-pattern .tm-pattern-connector {
-  color: #94a3b8;
-  font-weight: 800;
-  font-size: 0.95rem;
+.tm-seq-box.box-fixed {
+  background: #1e293b;
+  color: #e9d5ff;
+  border: 1px solid #7e22ce;
 }
 
-.tm-game-pattern .tm-node-missing {
+.tm-seq-box.box-missing {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fcd34d;
   border: 2px dashed #f59e0b;
-  background: #fffbeb;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
 }
 
-.tm-game-pattern .tm-node-missing .tm-node-content {
-  color: #d97706;
+.tm-seq-box.box-revealed {
+  background: #9333ea;
+  color: #ffffff;
+  border: 2px solid #d8b4fe;
+  animation: none;
 }
 
-.tm-game-pattern .tm-node-filled-correct {
-  border: 2px solid #10b981 !important;
-  background: #ecfdf5 !important;
+.tm-seq-pos {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  margin-top: 0.35rem;
+  font-family: ui-monospace, monospace;
 }
 
-.tm-game-pattern .tm-node-filled-correct .tm-node-content {
-  color: #065f46 !important;
+.tm-delta-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
 }
 
-.tm-game-pattern .tm-node-filled-wrong {
-  border: 2px solid #f43f5e !important;
-  background: #fff1f2 !important;
+.tm-delta-badge {
+  font-family: ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #34d399;
+  background: rgba(6, 78, 59, 0.6);
+  border: 1px solid #059669;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.3rem;
+}
+
+.tm-delta-arrow {
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+.tm-rule-banner {
+  background: rgba(147, 51, 234, 0.15);
+  border: 1px solid #a855f7;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  color: #e9d5ff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tm-hint-sub {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-align: center;
+  padding: 0.35rem;
 }
 
 /* Options Grid */
@@ -135,7 +232,7 @@
   margin-top: 1rem;
 }
 
-@media (min-width: 540px) {
+@media (min-width: 520px) {
   .tm-game-pattern .tm-options-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -145,23 +242,32 @@
   background: #ffffff;
   border: 1.5px solid #e2e8f0;
   border-radius: 0.75rem;
-  padding: 0.75rem;
-  text-align: center;
+  padding: 0.85rem;
+  font-size: 1.2rem;
+  font-family: ui-monospace, monospace;
+  font-weight: 800;
+  color: #1e293b;
   cursor: pointer;
   transition: all 0.15s ease;
+  text-align: center;
 }
 
 .tm-game-pattern .tm-option-btn:hover {
-  border-color: #10b981;
-  background: #f0fdf4;
+  border-color: #9333ea;
+  background: #faf5ff;
   transform: translateY(-2px);
 }
 
-.tm-game-pattern .tm-option-val {
-  font-family: ui-monospace, monospace;
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #0f172a;
+.tm-game-pattern .tm-option-btn.tm-opt-correct {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #065f46;
+}
+
+.tm-game-pattern .tm-option-btn.tm-opt-wrong {
+  background: #fff1f2;
+  border-color: #f43f5e;
+  color: #9f1239;
 }
 
 /* Feedback panel */

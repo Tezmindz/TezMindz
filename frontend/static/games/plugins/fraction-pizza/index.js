@@ -1,5 +1,6 @@
 /**
  * Pizza Fraction Challenge Plugin
+ * Fully Interactive SVG Pizza Lab Ported from Reference Implementation
  * Standardized TezMindz Game Plugin Contract
  */
 (function() {
@@ -15,81 +16,173 @@
     let currentQuestionIndex = 0;
 
     const fallbackConfig = (gameData && gameData.config) || {};
-    const defaultTotalUnits = fallbackConfig.total_units || 4;
-    const defaultTarget = fallbackConfig.target || { num: 1, den: 4 };
+    const defaultTotalUnits = fallbackConfig.total_units || 8;
+    const defaultTarget = fallbackConfig.target || { num: 3, den: 8 };
 
     function getActiveQuestion() {
       if (questions && questions[currentQuestionIndex]) {
         const q = questions[currentQuestionIndex];
         const d = q.data || {};
-        const target = d.target || { num: parseInt(q.correct_answer || '1', 10), den: d.total_units || 4 };
+        const den = d.total_units || (d.target && d.target.den) || 8;
+        const num = (d.target && d.target.num) !== undefined
+          ? d.target.num
+          : parseInt(q.correct_answer || '3', 10);
         return {
           id: q.id,
-          prompt: q.prompt || `Assemble ${target.num}/${target.den} of the pizza on the serving plate!`,
-          totalUnits: d.total_units || 4,
-          targetNum: target.num,
-          targetDen: target.den || 4,
+          prompt: q.prompt || `Select exactly ${num}/${den} of the pizza to serve the customer!`,
+          totalUnits: den,
+          targetNum: num,
+          targetDen: den,
+          initialSelected: (d.initial_selected !== undefined) ? d.initial_selected : 0,
           hints: q.hints || [
-            `Remember: The denominator (${target.den}) shows total equal slices.`,
-            `The numerator (${target.num}) shows how many slices need to be placed on the plate.`
+            `The denominator (${den}) indicates the total number of equal slices.`,
+            `The numerator (${num}) is the number of slices you need to shade/select.`,
+            `Click on individual pizza slices to toggle them on or off.`
           ]
         };
       }
 
       return {
         id: 'default',
-        prompt: `Assemble ${defaultTarget.num}/${defaultTarget.den} of the pizza on the serving plate!`,
+        prompt: `Select exactly ${defaultTarget.num}/${defaultTarget.den} of the pizza to serve the customer!`,
         totalUnits: defaultTotalUnits,
         targetNum: defaultTarget.num,
         targetDen: defaultTarget.den,
+        initialSelected: 0,
         hints: [
-          `Hint 1: Slices total ${defaultTarget.den}. You need to transfer ${defaultTarget.num} slice(s).`,
-          `Hint 2: Click a slice in the Kitchen Tray to move it to the Serving Plate.`
+          `The denominator (${defaultTarget.den}) indicates the total number of equal slices.`,
+          `The numerator (${defaultTarget.num}) is the number of slices you need to shade/select.`,
+          `Click on individual pizza slices to toggle them on or off.`
         ]
       };
     }
 
     let activeQ = getActiveQuestion();
-    // state: arrays of slice IDs
-    let traySlices = Array.from({ length: activeQ.totalUnits }, (_, i) => i + 1);
-    let plateSlices = [];
+    let totalSlices = activeQ.totalUnits;
+    let selectedSlices = [];
+
+    // Helper: SVG slice path using polar trigonometry
+    function getSlicePath(index, total) {
+      const anglePerSlice = (2 * Math.PI) / total;
+      const startAngle = index * anglePerSlice - Math.PI / 2;
+      const endAngle = (index + 1) * anglePerSlice - Math.PI / 2;
+      const r = 90;
+      const cx = 100;
+      const cy = 100;
+
+      const x1 = cx + r * Math.cos(startAngle);
+      const y1 = cy + r * Math.sin(startAngle);
+      const x2 = cx + r * Math.cos(endAngle);
+      const y2 = cy + r * Math.sin(endAngle);
+
+      const largeArc = anglePerSlice > Math.PI ? 1 : 0;
+      return `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z`;
+    }
+
+    function toggleSlice(index) {
+      if (selectedSlices.includes(index)) {
+        selectedSlices = selectedSlices.filter(i => i !== index);
+      } else {
+        selectedSlices.push(index);
+      }
+      updatePizzaVisual();
+      updateReadout();
+    }
+
+    function setPreset(count) {
+      selectedSlices = Array.from({ length: Math.min(count, totalSlices) }, (_, i) => i);
+      updatePizzaVisual();
+      updateReadout();
+    }
+
+    function resetSlices() {
+      selectedSlices = [];
+      updatePizzaVisual();
+      updateReadout();
+    }
 
     function renderUI() {
       container.innerHTML = `
         <div class="pizza-fraction-wrapper">
           <div class="pizza-mission-banner">
-            <h2>🍕 ${gameData.title || "Pizza Fraction Challenge"}</h2>
-            <p>${activeQ.prompt}</p>
+            <h2>🍕 ${escapeHtml(gameData.title || "Interactive Fraction Pizza Lab")}</h2>
+            <p>${escapeHtml(activeQ.prompt)}</p>
             <div class="pizza-target-fraction">Target: ${activeQ.targetNum} / ${activeQ.targetDen}</div>
           </div>
 
-          <div class="pizza-kitchen-stage">
-            <div class="pizza-zone-card">
-              <div class="pizza-zone-title">👨‍🍳 Kitchen Prep Tray (${traySlices.length} slices left)</div>
-              <div class="pizza-slices-holder" id="pf-tray-holder">
-                ${traySlices.map(id => `
-                  <div class="pizza-slice-item" data-slice-id="${id}" title="Click to move to plate">
-                    <span class="pizza-slice-icon">🍕</span>
-                    <span class="pizza-slice-sub">1/${activeQ.targetDen}</span>
-                  </div>
-                `).join('')}
-                ${traySlices.length === 0 ? '<div style="color:#94A3B8; font-style:italic; margin-top:20px;">All slices moved to plate!</div>' : ''}
+          <div class="pizza-interactive-stage">
+            {/* Pizza Visual Card */}
+            <div class="pizza-display-card">
+              <div class="pizza-card-header">
+                <span class="pizza-zone-title">🍕 Interactive Pizza (Tap slices to toggle)</span>
+                <button type="button" class="btn-pizza-reset" id="pf-btn-reset" title="Reset pizza slices">
+                  🔄 Reset
+                </button>
+              </div>
+
+              <div class="pizza-svg-container">
+                <svg viewBox="0 0 200 200" class="pizza-svg" id="pf-svg-pizza">
+                  <!-- Crust border -->
+                  <circle cx="100" cy="100" r="96" fill="#78350f" stroke="#b45309" stroke-width="4" />
+                  <circle cx="100" cy="100" r="90" fill="#fef3c7" />
+
+                  <!-- Slices -->
+                  <g id="pf-slices-group">
+                    ${Array.from({ length: totalSlices }).map((_, i) => {
+                      const isSelected = selectedSlices.includes(i);
+                      return `
+                        <path
+                          d="${getSlicePath(i, totalSlices)}"
+                          fill="${isSelected ? '#f59e0b' : '#334155'}"
+                          stroke="#1e293b"
+                          stroke-width="2"
+                          data-slice-index="${i}"
+                          class="pizza-slice-path ${isSelected ? 'slice-selected' : ''}"
+                        />
+                      `;
+                    }).join('')}
+                  </g>
+
+                  <!-- Center cheese garnish -->
+                  <circle cx="100" cy="100" r="9" fill="#d97706" stroke="#92400e" stroke-width="2" />
+                </svg>
+              </div>
+
+              <div class="pizza-tap-tip">
+                💡 <em>Click or tap any slice on the pizza</em> to shade or unshade it!
               </div>
             </div>
 
-            <div class="pizza-zone-card">
-              <div class="pizza-zone-title">🍽️ Customer Serving Plate (<span id="pf-plate-fraction">${plateSlices.length}/${activeQ.targetDen}</span>)</div>
-              <div class="pizza-plate-circle" id="pf-plate-circle">
-                <div class="pizza-slices-holder" style="gap:6px;">
-                  ${plateSlices.map(id => `
-                    <div class="pizza-slice-item" data-slice-id="${id}" title="Click to return to tray" style="width:52px;height:52px;">
-                      <span class="pizza-slice-icon" style="font-size:1.3rem;">🍕</span>
-                    </div>
-                  `).join('')}
-                  ${plateSlices.length === 0 ? '<span style="color:#94A3B8; font-size:0.85rem;">Tap slices to place here</span>' : ''}
+            {/* Live Readout & Controls Card */}
+            <div class="pizza-control-card">
+              <span class="pizza-zone-title">📊 Live Fraction Readout</span>
+
+              <div class="pizza-fraction-display-box">
+                <span class="fraction-numerator" id="pf-readout-num">${selectedSlices.length}</span>
+                <div class="fraction-divider-bar"></div>
+                <span class="fraction-denominator" id="pf-readout-den">${totalSlices}</span>
+              </div>
+
+              <div class="pizza-count-breakdown">
+                <div class="count-row">
+                  <span class="count-label">Selected (Shaded):</span>
+                  <strong class="count-value text-amber" id="pf-count-selected">${selectedSlices.length} of ${totalSlices} parts</strong>
+                </div>
+                <div class="count-row">
+                  <span class="count-label">Remaining:</span>
+                  <strong class="count-value text-slate" id="pf-count-remaining">${totalSlices - selectedSlices.length} of ${totalSlices} parts</strong>
                 </div>
               </div>
-              <div style="font-size:0.75rem; color:#64748B; margin-top:12px;">(Click any placed slice to return it to the tray)</div>
+
+              <div class="pizza-presets-section">
+                <span class="presets-title">Quick Adjust:</span>
+                <div class="presets-buttons">
+                  <button type="button" class="btn-preset" data-preset="1">1/${totalSlices}</button>
+                  <button type="button" class="btn-preset" data-preset="${Math.floor(totalSlices / 2)}">1/2 (${Math.floor(totalSlices / 2)}/${totalSlices})</button>
+                  <button type="button" class="btn-preset" data-preset="${activeQ.targetNum}">Target (${activeQ.targetNum}/${totalSlices})</button>
+                  <button type="button" class="btn-preset" data-preset="${totalSlices}">All (${totalSlices}/${totalSlices})</button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -102,7 +195,7 @@
             </button>
           </div>
 
-          <div id="pf-hint-box" style="display:none; margin-top:14px; background:#EFF6FF; border:1.5px solid #BFDBFE; color:#1E40AF; padding:12px 16px; border-radius:12px; font-size:0.9rem;"></div>
+          <div id="pf-hint-box" class="pizza-hint-toast" style="display:none;"></div>
           <div id="pf-feedback-box" class="pizza-feedback-toast"></div>
         </div>
       `;
@@ -110,24 +203,51 @@
       attachEventListeners();
     }
 
+    function updatePizzaVisual() {
+      const paths = container.querySelectorAll('.pizza-slice-path');
+      paths.forEach((path) => {
+        const idx = parseInt(path.getAttribute('data-slice-index'), 10);
+        const isSelected = selectedSlices.includes(idx);
+        path.setAttribute('fill', isSelected ? '#f59e0b' : '#334155');
+        if (isSelected) {
+          path.classList.add('slice-selected');
+        } else {
+          path.classList.remove('slice-selected');
+        }
+      });
+    }
+
+    function updateReadout() {
+      const numEl = container.querySelector('#pf-readout-num');
+      const selEl = container.querySelector('#pf-count-selected');
+      const remEl = container.querySelector('#pf-count-remaining');
+      if (numEl) numEl.textContent = selectedSlices.length;
+      if (selEl) selEl.textContent = `${selectedSlices.length} of ${totalSlices} parts`;
+      if (remEl) remEl.textContent = `${totalSlices - selectedSlices.length} of ${totalSlices} parts`;
+    }
+
     function attachEventListeners() {
-      // Move from tray to plate
-      container.querySelectorAll('#pf-tray-holder .pizza-slice-item').forEach(el => {
-        el.addEventListener('click', () => {
-          const id = parseInt(el.getAttribute('data-slice-id'), 10);
-          traySlices = traySlices.filter(x => x !== id);
-          plateSlices.push(id);
-          renderUI();
+      // Slices click/touch
+      const paths = container.querySelectorAll('.pizza-slice-path');
+      paths.forEach((path) => {
+        path.addEventListener('click', (e) => {
+          e.preventDefault();
+          const idx = parseInt(path.getAttribute('data-slice-index'), 10);
+          toggleSlice(idx);
         });
       });
 
-      // Move from plate to tray
-      container.querySelectorAll('#pf-plate-circle .pizza-slice-item').forEach(el => {
-        el.addEventListener('click', () => {
-          const id = parseInt(el.getAttribute('data-slice-id'), 10);
-          plateSlices = plateSlices.filter(x => x !== id);
-          traySlices.push(id);
-          renderUI();
+      // Reset
+      const resetBtn = container.querySelector('#pf-btn-reset');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', resetSlices);
+      }
+
+      // Presets
+      container.querySelectorAll('.btn-preset').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = parseInt(btn.getAttribute('data-preset'), 10);
+          if (!isNaN(val)) setPreset(val);
         });
       });
 
@@ -140,23 +260,23 @@
           hintBtn.textContent = `💡 Chef's Hint (${Math.min(hintsUsed, 3)}/3)`;
           hintBox.style.display = 'block';
           const hintText = activeQ.hints[Math.min(hintsUsed - 1, activeQ.hints.length - 1)] || "Count the slices carefully!";
-          hintBox.innerHTML = `<strong>Chef's Hint:</strong> ${hintText}`;
+          hintBox.innerHTML = `<strong>Chef's Hint:</strong> ${escapeHtml(hintText)}`;
         });
       }
 
-      // Bake / Submit
+      // Bake / Serve
       const bakeBtn = container.querySelector('#pf-btn-bake');
       const feedbackBox = container.querySelector('#pf-feedback-box');
       if (bakeBtn && feedbackBox) {
         bakeBtn.addEventListener('click', () => {
-          const currentCount = plateSlices.length;
+          const currentCount = selectedSlices.length;
           feedbackBox.style.display = 'block';
 
           if (currentCount === activeQ.targetNum) {
             bakeBtn.disabled = true;
             bakeBtn.innerHTML = '<span>✅ Perfect Order Served!</span>';
             feedbackBox.className = 'pizza-feedback-toast correct';
-            feedbackBox.innerHTML = `🎉 <strong>DELICIOUS!</strong> You served exactly ${currentCount}/${activeQ.targetDen} of the pizza!`;
+            feedbackBox.innerHTML = `🎉 <strong>DELICIOUS!</strong> You shaded exactly ${currentCount}/${activeQ.targetDen} of the pizza!`;
 
             const timeSpent = Math.max(1, Math.round((Date.now() - startTime) / 1000));
 
@@ -172,8 +292,8 @@
               setTimeout(() => {
                 currentQuestionIndex++;
                 activeQ = getActiveQuestion();
-                traySlices = Array.from({ length: activeQ.totalUnits }, (_, i) => i + 1);
-                plateSlices = [];
+                totalSlices = activeQ.totalUnits;
+                selectedSlices = [];
                 renderUI();
               }, 1200);
             } else {
@@ -194,10 +314,15 @@
             }
           } else {
             feedbackBox.className = 'pizza-feedback-toast almost';
-            feedbackBox.innerHTML = `💪 <strong>Almost!</strong> You have placed ${currentCount}/${activeQ.targetDen} slices, but the customer ordered ${activeQ.targetNum}/${activeQ.targetDen}. Adjust the slices and try again!`;
+            feedbackBox.innerHTML = `💪 <strong>Almost!</strong> You selected ${currentCount}/${activeQ.targetDen} slices, but the customer ordered ${activeQ.targetNum}/${activeQ.targetDen}. Click slices to adjust and try again!`;
           }
         });
       }
+    }
+
+    function escapeHtml(str) {
+      if (typeof str !== 'string') return String(str || '');
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
     renderUI();

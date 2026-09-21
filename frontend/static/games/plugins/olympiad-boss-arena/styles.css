@@ -385,3 +385,256 @@
   border-top: 1px dashed rgba(0,0,0,0.15);
   padding-top: 0.35rem;
 }
+
+/* Interactive Boss Battle Stage Styles */
+.tm-boss-battle-stage {
+  position: relative;
+  background: linear-gradient(180deg, rgba(76, 5, 25, 0.9) 0%, rgba(15, 23, 42, 0.95) 50%, rgba(2, 6, 23, 1) 100%);
+  border: 1.5px solid rgba(225, 29, 72, 0.5);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  color: #f8fafc;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 12px 30px rgba(159, 18, 57, 0.25);
+  overflow: hidden;
+}
+
+.tm-bbs-flare {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(244, 63, 94, 0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.tm-bbs-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(225, 29, 72, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.tm-bbs-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.tm-bbs-name {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fb7185;
+}
+
+.tm-bbs-stage-pill {
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: rgba(136, 19, 55, 0.7);
+  border: 1px solid rgba(244, 63, 94, 0.4);
+  color: #fecdd3;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  font-family: ui-monospace, monospace;
+}
+
+/* Boss Health Bar */
+.tm-bbs-hp-section {
+  margin-bottom: 1rem;
+}
+
+.tm-bbs-hp-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  margin-bottom: 0.3rem;
+}
+
+.tm-bbs-boss-label {
+  font-weight: 700;
+  color: #fda4af;
+}
+
+.tm-bbs-hp-readout {
+  font-weight: 800;
+  color: #fb7185;
+  font-family: ui-monospace, monospace;
+}
+
+.tm-bbs-hp-track {
+  width: 100%;
+  height: 12px;
+  background: #020617;
+  border-radius: 9999px;
+  border: 1px solid rgba(225, 29, 72, 0.4);
+  overflow: hidden;
+  padding: 2px;
+}
+
+.tm-bbs-hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #e11d48, #f59e0b);
+  border-radius: 9999px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Arena Duel Area */
+.tm-bbs-arena {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: rgba(2, 6, 23, 0.7);
+  border: 1px solid rgba(136, 19, 55, 0.35);
+  border-radius: 0.85rem;
+  padding: 1rem 0.5rem;
+  margin-bottom: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.tm-bbs-arena.is-clashing {
+  background: rgba(76, 5, 25, 0.35);
+  box-shadow: 0 0 15px rgba(225, 29, 72, 0.5);
+}
+
+.tm-bbs-combatant {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tm-bbs-avatar-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.85rem;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.tm-bbs-player-circle {
+  background: #1e293b;
+  border: 2px solid #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+.tm-bbs-lvl-tag {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #0ea5e9;
+  color: #020617;
+  font-size: 0.6rem;
+  font-weight: 800;
+  padding: 0.1rem 0.3rem;
+  border-radius: 9999px;
+}
+
+.tm-bbs-boss-circle {
+  background: #4c0519;
+  border: 2px solid #f43f5e;
+  box-shadow: 0 0 12px rgba(244, 63, 94, 0.4);
+}
+
+.hit-shake {
+  animation: bossShake 0.4s ease-in-out;
+}
+
+@keyframes bossShake {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  20% { transform: translate(-8px, 4px) scale(0.9); }
+  40% { transform: translate(8px, -4px) scale(0.9); }
+  60% { transform: translate(-6px, 2px) scale(0.95); }
+  80% { transform: translate(4px, -2px) scale(0.95); }
+}
+
+.tm-bbs-combatant-name {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #cbd5e1;
+}
+
+.tm-bbs-clash-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tm-bbs-vs-badge {
+  font-family: ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: #f59e0b;
+}
+
+.tm-bbs-attack-btn {
+  background: linear-gradient(135deg, #e11d48, #be123c);
+  color: #ffffff;
+  border: 1px solid #fda4af;
+  border-radius: 9999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.4);
+}
+
+.tm-bbs-attack-btn:hover {
+  background: linear-gradient(135deg, #f43f5e, #e11d48);
+  transform: scale(1.06);
+}
+
+.tm-bbs-clash-indicator {
+  font-size: 0.65rem;
+  color: #fb7185;
+  font-weight: 700;
+}
+
+/* Weakness Clues Box */
+.tm-bbs-weakness-box {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(51, 65, 85, 0.7);
+  border-radius: 0.65rem;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.75rem;
+}
+
+.tm-bbs-weakness-title {
+  display: block;
+  font-weight: 700;
+  color: #fda4af;
+  margin-bottom: 0.35rem;
+}
+
+.tm-bbs-clue-line {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #cbd5e1;
+  margin-top: 0.25rem;
+}
+
+.tm-bbs-clue-step {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #881337;
+  color: #fecdd3;
+  font-size: 0.6rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  shrink: 0;
+}
+

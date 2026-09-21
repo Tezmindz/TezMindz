@@ -260,4 +260,6 @@ export function initGame(container, data, config) {
 if (typeof window !== 'undefined') {
   window.TezMindz = window.TezMindz || {};
   window.TezMindz.GeometryIsland = { initGame, GeometryIslandGame };
+  window.TezMindzGameRegistry = window.TezMindzGameRegistry || {};
+  window.TezMindzGameRegistry['geometry-island'] = { id: 'geometry-island', initGame };
 }

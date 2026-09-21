@@ -357,3 +357,170 @@
   border-top: 1px dashed rgba(0,0,0,0.15);
   padding-top: 0.35rem;
 }
+
+/* Interactive Place Value Explorer Styles */
+.tm-pv-explorer-board {
+  background: #1e293b;
+  border: 1.5px solid rgba(245, 158, 11, 0.4);
+  border-radius: 1rem;
+  padding: 1rem;
+  color: #f8fafc;
+  margin-bottom: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.tm-pve-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 0.6rem;
+}
+
+.tm-pve-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #fbbf24;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.tm-pve-num-badge {
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: rgba(120, 53, 15, 0.5);
+  color: #fde68a;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.4rem;
+}
+
+.tm-pve-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.tm-pve-col-card {
+  background: #0f172a;
+  border: 1.5px solid #334155;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  color: #cbd5e1;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.tm-pve-col-card:hover {
+  background: #1e293b;
+  border-color: #f59e0b;
+  transform: translateY(-2px);
+}
+
+.tm-pve-col-card.is-selected {
+  background: #d97706;
+  border-color: #fde68a;
+  color: #ffffff;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.5), 0 0 0 2px rgba(253, 230, 138, 0.5);
+}
+
+.tm-pve-col-card.is-target:not(.is-selected) {
+  background: rgba(120, 53, 15, 0.4);
+  border-color: #f59e0b;
+  color: #fef3c7;
+}
+
+.tm-pve-col-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  opacity: 0.85;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60px;
+}
+
+.tm-pve-col-digit {
+  font-family: ui-monospace, monospace;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 0.2rem 0;
+}
+
+.tm-pve-col-power {
+  font-size: 0.65rem;
+  opacity: 0.75;
+  font-family: ui-monospace, monospace;
+}
+
+.tm-pve-inspector {
+  background: #090d16;
+  border: 1px solid #1e293b;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tm-pve-stat-line {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-bottom: 0.2rem;
+}
+
+.tm-pve-stat-val {
+  color: #f8fafc;
+  font-weight: 700;
+}
+
+.tm-pve-highlight {
+  color: #fbbf24;
+}
+
+.tm-pve-inspector-right {
+  text-align: right;
+}
+
+.tm-pve-calc-label {
+  display: block;
+  font-size: 0.7rem;
+  color: #94a3b8;
+}
+
+.tm-pve-calc-value {
+  font-family: ui-monospace, monospace;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #fbbf24;
+}
+
+.tm-pve-calc-formula {
+  display: block;
+  font-size: 0.7rem;
+  color: #64748b;
+  font-family: ui-monospace, monospace;
+}
+
+.tm-pve-footer-hint {
+  margin-top: 0.65rem;
+  font-size: 0.75rem;
+  color: #fde68a;
+  background: rgba(120, 53, 15, 0.2);
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+

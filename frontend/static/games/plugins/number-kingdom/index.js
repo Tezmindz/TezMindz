@@ -102,10 +102,13 @@ export class NumberKingdomGame {
       const playground = document.createElement('div');
       playground.className = 'tm-playground';
 
-      if (this.data.numberDigits) {
-        const pvBoard = new PlaceValueBoard(this.data.numberDigits);
-        pvBoard.render(playground);
-      }
+      const pvBoard = new PlaceValueBoard({
+        digits: this.data.numberDigits,
+        numberStr: this.data.numberStr,
+        highlightDigit: this.data.highlightDigit || this.data.targetDigit,
+        system: this.data.system || 'Indian'
+      });
+      pvBoard.render(playground);
 
       if (this.data.clues && this.data.clues.length > 0) {
         const scanner = new DivisibilityScanner(this.data.clues, this.data.candidateNumbers || []);
@@ -260,4 +263,6 @@ export function initGame(container, data, config) {
 if (typeof window !== 'undefined') {
   window.TezMindz = window.TezMindz || {};
   window.TezMindz.NumberKingdom = { initGame, NumberKingdomGame };
+  window.TezMindzGameRegistry = window.TezMindzGameRegistry || {};
+  window.TezMindzGameRegistry['number-kingdom'] = { id: 'number-kingdom', initGame };
 }

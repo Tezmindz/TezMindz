@@ -264,4 +264,6 @@ export function initGame(container, data, config) {
 if (typeof window !== 'undefined') {
   window.TezMindz = window.TezMindz || {};
   window.TezMindz.LogicCity = { initGame, LogicCityGame };
+  window.TezMindzGameRegistry = window.TezMindzGameRegistry || {};
+  window.TezMindzGameRegistry['logic-city'] = { id: 'logic-city', initGame };
 }
