@@ -1,8 +1,8 @@
-/* Pizza Fraction Challenge — Standard Plugin Styles */
+/* Pizza Fraction Challenge — Interactive Plugin Styles */
 .pizza-fraction-wrapper {
   max-width: 860px;
   margin: 0 auto;
-  padding: 28px;
+  padding: 24px;
   background: #FFFFFF;
   border-radius: 24px;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
@@ -16,7 +16,7 @@
   border-radius: 20px;
   padding: 20px 24px;
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   box-shadow: 0 4px 16px rgba(234, 88, 12, 0.08);
 }
 .pizza-mission-banner h2 {
@@ -34,7 +34,7 @@
   font-weight: 900;
   color: #EA580C;
   background: #FFFFFF;
-  padding: 4px 18px;
+  padding: 4px 20px;
   border-radius: 14px;
   border: 2px solid #FDBA74;
   display: inline-block;
@@ -42,90 +42,193 @@
   box-shadow: 0 4px 12px rgba(234, 88, 12, 0.15);
 }
 
-.pizza-kitchen-stage {
+.pizza-interactive-stage {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 24px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
+  align-items: stretch;
 }
-@media (max-width: 640px) {
-  .pizza-kitchen-stage {
+@media (max-width: 768px) {
+  .pizza-interactive-stage {
     grid-template-columns: 1fr;
   }
 }
 
-.pizza-zone-card {
+.pizza-display-card,
+.pizza-control-card {
   background: #F8FAFC;
-  border: 2px dashed #CBD5E1;
+  border: 2px solid #E2E8F0;
   border-radius: 20px;
   padding: 20px;
-  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 280px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
 }
+
+.pizza-card-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
 .pizza-zone-title {
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 800;
   color: #475569;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 16px;
+  letter-spacing: 0.06em;
 }
 
-.pizza-plate-circle {
-  width: 190px;
-  height: 190px;
-  border-radius: 50%;
+.btn-pizza-reset {
   background: #FFFFFF;
-  border: 4px solid #E2E8F0;
-  box-shadow: inset 0 4px 12px rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.04);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748B;
   cursor: pointer;
-  overflow: hidden;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
-.pizza-plate-circle:hover {
-  border-color: #EA580C;
+.btn-pizza-reset:hover {
+  background: #F1F5F9;
+  color: #0F172A;
 }
 
-.pizza-slices-holder {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
-  align-items: center;
+.pizza-svg-container {
+  width: 220px;
+  height: 220px;
+  margin: 8px auto 14px;
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.12));
+}
+.pizza-svg {
   width: 100%;
+  height: 100%;
 }
 
-.pizza-slice-item {
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #F59E0B, #EA580C);
-  color: #FFFFFF;
+.pizza-slice-path {
+  cursor: pointer;
+  transition: fill 0.2s ease, opacity 0.15s ease, transform 0.2s ease;
+  transform-origin: 100px 100px;
+}
+.pizza-slice-path:hover {
+  opacity: 0.88;
+}
+.pizza-slice-path.slice-selected {
+  filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.4));
+}
+
+.pizza-tap-tip {
+  font-size: 0.78rem;
+  color: #64748B;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  padding: 8px 14px;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: auto;
+}
+
+/* Control Card & Readout */
+.pizza-fraction-display-box {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
-  transition: all 0.18s ease;
-  border: 2px solid #FFFFFF;
+  background: #0F172A;
+  border: 2px solid #F59E0B;
+  border-radius: 18px;
+  padding: 16px 36px;
+  margin: 16px 0;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
 }
-.pizza-slice-item:hover {
-  transform: scale(1.1) rotate(5deg);
+.fraction-numerator {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #FCD34D;
+  font-family: monospace;
+  line-height: 1;
 }
-.pizza-slice-icon {
-  font-size: 1.6rem;
+.fraction-divider-bar {
+  width: 48px;
+  height: 4px;
+  background: #F59E0B;
+  border-radius: 99px;
+  margin: 6px 0;
 }
-.pizza-slice-sub {
-  font-size: 0.65rem;
+.fraction-denominator {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #FEF3C7;
+  font-family: monospace;
+  line-height: 1;
+}
+
+.pizza-count-breakdown {
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+.count-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  padding: 4px 0;
+}
+.count-label {
+  color: #64748B;
+  font-weight: 600;
+}
+.count-value.text-amber {
+  color: #D97706;
   font-weight: 800;
+}
+.count-value.text-slate {
+  color: #475569;
+  font-weight: 700;
+}
+
+.pizza-presets-section {
+  width: 100%;
+}
+.presets-title {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748B;
+  margin-bottom: 6px;
+}
+.presets-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.btn-preset {
+  flex: 1;
+  min-width: 60px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #1E293B;
+  border-radius: 8px;
+  padding: 6px 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: monospace;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-preset:hover {
+  background: #F59E0B;
+  color: #FFFFFF;
+  border-color: #D97706;
 }
 
 .pizza-action-bar {
@@ -171,6 +274,16 @@
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
+}
+
+.pizza-hint-toast {
+  margin-top: 14px;
+  background: #EFF6FF;
+  border: 1.5px solid #BFDBFE;
+  color: #1E40AF;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.9rem;
 }
 
 .pizza-feedback-toast {

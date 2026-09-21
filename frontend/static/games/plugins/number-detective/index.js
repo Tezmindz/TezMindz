@@ -2,12 +2,14 @@
  * ==========================================================================
  * Number Detective - Main Game Entry Point
  * 
- * 100% Data-driven Olympiad logic detective game.
+ * 100% Data-driven Olympiad logic & divisibility detective game.
+ * Ported from reference NumberDetective.tsx
  * ==========================================================================
  */
 
 import { ClueBoard } from './components/ClueBoard.js';
 import { NumberGrid } from './components/NumberGrid.js';
+import { DivisibilityScanner } from './components/DivisibilityScanner.js';
 
 export class NumberDetectiveGame {
   constructor(container, data, config = {}) {
@@ -30,6 +32,7 @@ export class NumberDetectiveGame {
 
     this.hasAnswered = false;
     this.numberGrid = null;
+    this.scanner = null;
     this.init();
   }
 
@@ -47,23 +50,45 @@ export class NumberDetectiveGame {
     const header = document.createElement('div');
     header.className = 'tm-header';
     header.innerHTML = `
-      <span class="tm-badge">🕵️ Logic Case File</span>
-      <h2 class="tm-prompt">${this.escapeHtml(this.data.prompt || 'Crack the Mystery Code')}</h2>
+      <span class="tm-badge">🕵️ Divisibility Case File</span>
+      <h2 class="tm-prompt">${this.escapeHtml(this.data.prompt || 'Crack the Mystery Code using Divisibility Rules')}</h2>
     `;
     root.appendChild(header);
 
-    // 2. Clue Board (Data-driven from data.clues)
-    const clueBoard = new ClueBoard(this.data.clues || []);
-    clueBoard.render(root);
+    // 2. Interactive Divisibility Scanner
+    const scannerHolder = document.createElement('div');
+    scannerHolder.className = 'tm-scanner-holder';
 
-    // 3. Suspect Number Cards (Data-driven from data.candidateNumbers)
+    const digits = this.data.digits || (this.data.candidateNumbers && this.data.candidateNumbers[0] ? String(this.data.candidateNumbers[0]).split('') : ["7", "4", "*", "3", "2"]);
+    const targetDivisor = this.data.targetDivisor || 9;
+
+    this.scanner = new DivisibilityScanner({
+      digits: digits,
+      targetDivisor: targetDivisor,
+      onTestDigit: (result) => {
+        if (result.isDivisible && this.data.correctAnswer === undefined) {
+          // If no separate candidate list, the tested digit might be the solution
+        }
+      }
+    });
+    this.scanner.render(scannerHolder);
+    root.appendChild(scannerHolder);
+
+    // 3. Clue Board (Data-driven from data.clues)
+    if (this.data.clues && this.data.clues.length > 0) {
+      const clueBoard = new ClueBoard(this.data.clues);
+      clueBoard.render(root);
+    }
+
+    // 4. Suspect Number Cards / Options (Data-driven from candidateNumbers or options)
+    const candidates = this.data.candidateNumbers || this.data.options || [1, 2, 5, 8];
     this.numberGrid = new NumberGrid({
-      candidates: this.data.candidateNumbers || [],
+      candidates: candidates,
       onSelect: (selectedNumber) => this.handleNumberSelect(selectedNumber)
     });
     this.numberGrid.render(root);
 
-    // 4. Feedback Panel
+    // 5. Feedback Panel
     const feedback = document.createElement('div');
     feedback.id = 'tm-detective-feedback';
     feedback.className = 'tm-feedback-panel tm-hidden';
@@ -85,7 +110,7 @@ export class NumberDetectiveGame {
         feedback.className = 'tm-feedback-panel tm-feedback-success';
         feedback.innerHTML = `
           <div style="font-weight: 800; margin-bottom: 4px;">🎉 Case Solved! Master Detective!</div>
-          <div>${this.data.explanation || 'You correctly matched all clues.'}</div>
+          <div>${this.data.explanation || 'You correctly satisfied the divisibility rule.'}</div>
         `;
       } else {
         feedback.className = 'tm-feedback-panel tm-feedback-error';

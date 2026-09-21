@@ -1,6 +1,7 @@
 /**
  * Geometry Explorer Game Template
  * 100% Data-Driven Olympiad Geometry, Perimeter & Polygon Game
+ * Ported from reference ShapeLab.tsx
  */
 import { ShapeCanvas } from './components/ShapeCanvas.js';
 
@@ -11,6 +12,7 @@ export class GeometryExplorerGame {
     this.data = data || {};
     this.config = Object.assign({ onAnswer: null, onComplete: null }, config);
     this.hasAnswered = false;
+    this.canvas = null;
     this.init();
   }
 
@@ -27,23 +29,29 @@ export class GeometryExplorerGame {
     const header = document.createElement('div');
     header.className = 'tm-header';
     header.innerHTML = `
-      <span class="tm-badge">📐 Geometry & Perimeter</span>
-      <h2 class="tm-prompt">${this.escapeHtml(this.data.prompt || 'Calculate the measurement')}</h2>
+      <span class="tm-badge">📐 Geometry &amp; Perimeter Lab</span>
+      <h2 class="tm-prompt">${this.escapeHtml(this.data.prompt || 'Calculate the perimeter or area measurement')}</h2>
     `;
     root.appendChild(header);
 
-    // Shape canvas
-    const canvas = new ShapeCanvas(this.data.shape || {});
-    canvas.render(root);
+    // Interactive Shape canvas
+    const shapeData = Object.assign({}, this.data.shape || {}, {
+      length: this.data.length || (this.data.shape && this.data.shape.length),
+      breadth: this.data.breadth || (this.data.shape && this.data.shape.breadth),
+      unit: this.data.unit || (this.data.shape && this.data.shape.unit) || 'm'
+    });
 
-    // Options
+    this.canvas = new ShapeCanvas(shapeData);
+    this.canvas.render(root);
+
+    // Options Grid
     const optionsGrid = document.createElement('div');
     optionsGrid.className = 'tm-options-grid';
     (this.data.options || []).forEach(opt => {
       const btn = document.createElement('button');
       btn.className = 'tm-option-btn';
       btn.textContent = opt;
-      btn.addEventListener('click', () => this.handleSelect(opt));
+      btn.addEventListener('click', () => this.handleSelect(opt, btn));
       optionsGrid.appendChild(btn);
     });
     root.appendChild(optionsGrid);
@@ -57,11 +65,16 @@ export class GeometryExplorerGame {
     this.container.appendChild(root);
   }
 
-  handleSelect(selected) {
+  handleSelect(selected, btnEl) {
     if (this.hasAnswered) return;
     this.hasAnswered = true;
 
-    const isCorrect = String(selected).trim() === String(this.data.correctAnswer).trim();
+    const isCorrect = String(selected).trim().toLowerCase() === String(this.data.correctAnswer).trim().toLowerCase();
+
+    if (btnEl) {
+      btnEl.classList.add(isCorrect ? 'tm-opt-correct' : 'tm-opt-wrong');
+    }
+
     const fb = this.container.querySelector('#tm-geometry-feedback');
     if (fb) {
       fb.style.display = 'block';
@@ -96,6 +109,10 @@ export class GeometryExplorerGame {
     this.hasAnswered = false;
     this.render();
   }
+
+  destroy() {
+    this.container.innerHTML = '';
+  }
 }
 
 export function initGame(container, data, config) {
@@ -105,4 +122,7 @@ export function initGame(container, data, config) {
 if (typeof window !== 'undefined') {
   window.TezMindz = window.TezMindz || {};
   window.TezMindz.GeometryExplorer = { initGame, GeometryExplorerGame };
+  window.TezMindzGameRegistry = window.TezMindzGameRegistry || {};
+  window.TezMindzGameRegistry['geometry-explorer'] = { id: 'geometry-explorer', initGame };
+  window.TezMindzGameRegistry['geometry_explorer'] = window.TezMindzGameRegistry['geometry-explorer'];
 }

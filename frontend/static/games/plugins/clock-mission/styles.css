@@ -63,116 +63,126 @@
   align-items: center;
   gap: 1.5rem;
   margin: 1.5rem 0;
+  width: 100%;
 }
 
-@media (min-width: 640px) {
-  .tm-game-clock .tm-playground {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-/* Clock SVG & Dial */
+/* Clock Wrapper & Card */
 .tm-game-clock .tm-clock-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  width: 100%;
 }
 
-.tm-game-clock .tm-clock-dial-container {
-  position: relative;
-  width: 220px;
-  height: 220px;
-}
-
-.tm-game-clock .tm-clock-bezel {
-  fill: #f8fafc;
-  stroke: #cbd5e1;
-  stroke-width: 4;
-}
-
-.tm-game-clock .tm-clock-face {
-  fill: #ffffff;
-  stroke: #e2e8f0;
-  stroke-width: 1.5;
-}
-
-.tm-game-clock .tm-clock-num {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 13px;
-  font-weight: 700;
-  fill: #334155;
-  user-select: none;
-}
-
-.tm-game-clock .tm-clock-tick-line {
-  stroke: #94a3b8;
-  stroke-width: 1.5;
-}
-
-.tm-game-clock .tm-clock-hand-hour {
-  stroke: #4f46e5;
-  stroke-width: 5;
-  stroke-linecap: round;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.tm-game-clock .tm-clock-hand-min {
-  stroke: #0284c7;
-  stroke-width: 3.5;
-  stroke-linecap: round;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.tm-game-clock .tm-clock-pin-outer {
-  fill: #1e293b;
-}
-
-.tm-game-clock .tm-clock-pin-inner {
-  fill: #fbbf24;
-}
-
-/* Digital Readout */
-.tm-game-clock .tm-digital-readout {
-  margin-top: 0.5rem;
-  background: #0f172a;
-  color: #38bdf8;
-  font-family: ui-monospace, monospace;
-  font-weight: 700;
-  font-size: 1.15rem;
-  padding: 0.35rem 0.85rem;
-  border-radius: 0.5rem;
-  letter-spacing: 0.1em;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
-  text-align: center;
-}
-
-/* Quick Adjust Buttons */
-.tm-game-clock .tm-btn-group {
+.tm-clock-card {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  width: 100%;
+  max-width: 440px;
   display: flex;
-  gap: 0.35rem;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
 }
 
-.tm-game-clock .tm-control-btn {
-  background: #f1f5f9;
+.tm-clock-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.tm-clock-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0369a1;
+}
+
+.tm-clock-reset-btn {
+  background: #ffffff;
   border: 1px solid #cbd5e1;
-  color: #334155;
+  border-radius: 6px;
+  padding: 3px 8px;
   font-size: 0.75rem;
   font-weight: 700;
-  padding: 0.35rem 0.6rem;
-  border-radius: 0.5rem;
+  color: #64748b;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.15s;
+}
+.tm-clock-reset-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
 }
 
-.tm-game-clock .tm-control-btn:hover {
-  background: #e2e8f0;
-  color: #0f172a;
-  border-color: #94a3b8;
+.tm-clock-svg-wrap {
+  width: 210px;
+  height: 210px;
+  margin: 0.25rem auto;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.06));
+}
+.tm-clock-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.tm-digital-readout-box {
+  text-align: center;
+  margin: 0.75rem 0 0.5rem;
+}
+.tm-digital-badge {
+  display: inline-block;
+  background: #ffffff;
+  padding: 0.35rem 1.25rem;
+  border-radius: 9999px;
+  border: 1.5px solid #a5f3fc;
+  font-family: ui-monospace, monospace;
+  color: #0e7490;
+  font-size: 1.15rem;
+  font-weight: 800;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.tm-angle-calc-text {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 0.35rem;
+  font-family: monospace;
+}
+
+.tm-clock-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
+  width: 100%;
+  padding-top: 0.65rem;
+  border-top: 1px solid #e2e8f0;
+}
+.tm-time-step-btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 0.45rem 0.2rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.tm-time-step-btn:hover {
+  background: #f1f5f9;
+  border-color: #0284c7;
+  color: #0284c7;
+}
+
+.tm-manip-status {
+  margin-top: 0.65rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #047857;
+  font-weight: 700;
 }
 
 /* Options Grid */
@@ -207,15 +217,15 @@
 }
 
 .tm-game-clock .tm-option-btn:hover {
-  border-color: #a855f7;
-  background: #faf5ff;
+  border-color: #0284c7;
+  background: #f0f9ff;
   transform: translateY(-1px);
 }
 
 .tm-game-clock .tm-option-btn.tm-selected {
-  border-color: #7e22ce;
-  background: #f3e8ff;
-  color: #581c87;
+  border-color: #0284c7;
+  background: #e0f2fe;
+  color: #0369a1;
 }
 
 .tm-game-clock .tm-option-btn.tm-correct {

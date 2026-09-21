@@ -49,6 +49,169 @@
   line-height: 1.5;
 }
 
+/* Divisibility Scanner Card */
+.tm-scanner-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.tm-scanner-card {
+  background: #0f172a;
+  border: 1.5px solid #eab308;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.tm-scanner-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 0.5rem;
+}
+
+.tm-scanner-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #facc15;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.tm-scanner-rule-badge {
+  font-size: 0.75rem;
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+  background: rgba(234, 179, 8, 0.2);
+  color: #fde047;
+  border: 1px solid #ca8a04;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.4rem;
+}
+
+.tm-scanner-stage {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.tm-scanner-prompt-sub {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.tm-scanner-digits-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.tm-digit-slot {
+  width: 44px;
+  height: 52px;
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ui-monospace, monospace;
+  font-size: 1.4rem;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.tm-digit-slot.slot-fixed {
+  background: #1e293b;
+  color: #f8fafc;
+  border: 1px solid #334155;
+}
+
+.tm-digit-slot.slot-missing {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fcd34d;
+  border: 2px dashed #f59e0b;
+  transform: scale(1.05);
+}
+
+.tm-digit-slot.slot-filled {
+  background: #eab308;
+  color: #020617;
+  border: 2px solid #fef08a;
+  box-shadow: 0 0 12px rgba(234, 179, 8, 0.5);
+}
+
+.tm-scanner-feedback {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.tm-scanner-feedback.status-success {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid #10b981;
+  color: #6ee7b7;
+}
+
+.tm-scanner-feedback.status-fail {
+  background: rgba(244, 63, 94, 0.2);
+  border: 1px solid #f43f5e;
+  color: #fda4af;
+}
+
+.tm-scanner-keypad-section {
+  border-top: 1px solid #1e293b;
+  padding-top: 0.75rem;
+}
+
+.tm-keypad-title {
+  display: block;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+
+.tm-scanner-keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.4rem;
+}
+
+.tm-keypad-btn {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #f8fafc;
+  font-family: ui-monospace, monospace;
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 0.45rem 0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tm-keypad-btn:hover {
+  background: #334155;
+  color: #ffffff;
+}
+
+.tm-keypad-btn.btn-active {
+  background: #eab308;
+  color: #020617;
+  border-color: #fef08a;
+  box-shadow: 0 0 8px rgba(234, 179, 8, 0.5);
+}
+
 /* Clue Board */
 .tm-game-detective .tm-clue-board {
   background: #fffbeb;

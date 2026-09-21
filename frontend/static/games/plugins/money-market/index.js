@@ -1,6 +1,7 @@
 /**
  * Money Market Game Template
  * 100% Data-Driven Olympiad Currency and Transactions Game
+ * Ported from reference MoneyShop.tsx
  */
 import { CashRegister } from './components/CashRegister.js';
 
@@ -11,6 +12,7 @@ export class MoneyMarketGame {
     this.data = data || {};
     this.config = Object.assign({ onAnswer: null, onComplete: null }, config);
     this.hasAnswered = false;
+    this.cashRegister = null;
     this.init();
   }
 
@@ -27,23 +29,30 @@ export class MoneyMarketGame {
     const header = document.createElement('div');
     header.className = 'tm-header';
     header.innerHTML = `
-      <span class="tm-badge">🪙 Currency & Shopping Math</span>
-      <h2 class="tm-prompt">${this.escapeHtml(this.data.prompt || 'Calculate the change')}</h2>
+      <span class="tm-badge">🪙 Currency &amp; Shopping Math</span>
+      <h2 class="tm-prompt">${this.escapeHtml(this.data.prompt || 'Calculate the change or total bill')}</h2>
     `;
     root.appendChild(header);
 
-    // Cash register receipt
-    const reg = new CashRegister(this.data.items || [], this.data.amountPaid || 0, this.data.currencySymbol || '₹');
-    reg.render(root);
+    // Interactive Cash register
+    this.cashRegister = new CashRegister({
+      items: this.data.items,
+      amountPaid: this.data.amountPaid || this.data.cashTendered || 0,
+      currencySymbol: this.data.currencySymbol || '₹',
+      onChange: (state) => {
+        // Can be used to guide or verify answers
+      }
+    });
+    this.cashRegister.render(root);
 
-    // Options
+    // Options (data.options or common change amounts)
     const optionsGrid = document.createElement('div');
     optionsGrid.className = 'tm-options-grid';
     (this.data.options || []).forEach(opt => {
       const btn = document.createElement('button');
       btn.className = 'tm-option-btn';
-      btn.textContent = opt;
-      btn.addEventListener('click', () => this.handleSelect(opt));
+      btn.textContent = typeof opt === 'number' ? `₹${opt}` : opt;
+      btn.addEventListener('click', () => this.handleSelect(opt, btn));
       optionsGrid.appendChild(btn);
     });
     root.appendChild(optionsGrid);
@@ -57,18 +66,23 @@ export class MoneyMarketGame {
     this.container.appendChild(root);
   }
 
-  handleSelect(selected) {
+  handleSelect(selected, btnEl) {
     if (this.hasAnswered) return;
     this.hasAnswered = true;
 
-    const isCorrect = String(selected).trim() === String(this.data.correctAnswer).trim();
+    const isCorrect = String(selected).trim().replace(/₹/g, '') === String(this.data.correctAnswer).trim().replace(/₹/g, '');
+
+    if (btnEl) {
+      btnEl.classList.add(isCorrect ? 'tm-opt-correct' : 'tm-opt-wrong');
+    }
+
     const fb = this.container.querySelector('#tm-money-feedback');
     if (fb) {
       fb.style.display = 'block';
       fb.className = `tm-feedback ${isCorrect ? 'tm-feedback-correct' : 'tm-feedback-wrong'}`;
       fb.innerHTML = `
-        <div style="font-weight: 800; margin-bottom: 4px;">${isCorrect ? '✓ Exact Change Calculated!' : '✕ Incorrect Calculation'}</div>
-        <div>${this.data.explanation || `The correct change is ${this.data.correctAnswer}.`}</div>
+        <div style="font-weight: 800; margin-bottom: 4px;">${isCorrect ? '✓ Exact Amount Verified!' : '✕ Calculation Discrepancy'}</div>
+        <div>${this.data.explanation || `The correct answer is ${this.data.correctAnswer}.`}</div>
       `;
     }
 
@@ -96,6 +110,10 @@ export class MoneyMarketGame {
     this.hasAnswered = false;
     this.render();
   }
+
+  destroy() {
+    this.container.innerHTML = '';
+  }
 }
 
 export function initGame(container, data, config) {
@@ -105,4 +123,7 @@ export function initGame(container, data, config) {
 if (typeof window !== 'undefined') {
   window.TezMindz = window.TezMindz || {};
   window.TezMindz.MoneyMarket = { initGame, MoneyMarketGame };
+  window.TezMindzGameRegistry = window.TezMindzGameRegistry || {};
+  window.TezMindzGameRegistry['money-market'] = { id: 'money-market', initGame };
+  window.TezMindzGameRegistry['money_market'] = window.TezMindzGameRegistry['money-market'];
 }

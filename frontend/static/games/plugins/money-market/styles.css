@@ -9,6 +9,11 @@
   max-width: 680px;
   margin: 0 auto;
   box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.tm-game-money * {
+  box-sizing: border-box;
 }
 
 .tm-game-money .tm-header {
@@ -24,9 +29,9 @@
   text-transform: uppercase;
   padding: 0.25rem 0.65rem;
   border-radius: 9999px;
-  background: #ecfdf5;
-  color: #059669;
-  border: 1px solid #a7f3d0;
+  background: #ecfeff;
+  color: #0891b2;
+  border: 1px solid #cffafe;
 }
 
 .tm-game-money .tm-prompt {
@@ -34,70 +39,252 @@
   font-weight: 700;
   color: #0f172a;
   margin-top: 0.65rem;
-  line-height: 1.4;
 }
 
-.tm-game-money .tm-market-stage {
-  padding: 1.25rem;
-  background: #f8fafc;
-  border-radius: 1rem;
-  border: 1px solid #e2e8f0;
+/* Cash Register Card */
+.tm-cash-register-wrapper {
   margin: 1.25rem 0;
 }
 
-.tm-game-money .tm-receipt-card {
-  background: #ffffff;
-  border: 1px dashed #cbd5e1;
-  border-radius: 0.75rem;
-  padding: 1rem 1.25rem;
-  max-width: 400px;
-  margin: 0 auto;
+.tm-market-card {
+  background: #0f172a;
+  border: 1.5px solid #06b6d4;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-.tm-game-money .tm-receipt-title {
-  font-weight: 800;
-  font-size: 0.9rem;
-  color: #334155;
-  border-bottom: 1px solid #e2e8f0;
+.tm-market-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #334155;
   padding-bottom: 0.5rem;
+}
+
+.tm-market-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #22d3ee;
+}
+
+.btn-market-reset {
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 0.4rem;
+  color: #cbd5e1;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-market-reset:hover {
+  background: #334155;
+  color: #ffffff;
+}
+
+/* Cart items */
+.tm-cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.tm-cart-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid #334155;
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.85rem;
+}
+
+.tm-item-name {
+  font-weight: 800;
+  color: #f8fafc;
+  font-size: 0.9rem;
+  display: block;
+}
+
+.tm-item-rate {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-family: ui-monospace, monospace;
+}
+
+.tm-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.tm-stepper-box {
+  display: flex;
+  align-items: center;
+  background: #0f172a;
+  border: 1px solid #475569;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.btn-qty {
+  background: transparent;
+  border: none;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  font-weight: 800;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.btn-qty:hover {
+  background: #334155;
+}
+
+.tm-qty-count {
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #ffffff;
+  padding: 0 0.5rem;
+  min-width: 24px;
+  text-align: center;
+}
+
+.tm-item-subtotal {
+  font-family: ui-monospace, monospace;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #67e8f9;
+  min-width: 60px;
+  text-align: right;
+}
+
+/* Grand Total Banner */
+.tm-bill-banner {
+  background: #020617;
+  border: 1px solid #0891b2;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.tm-bill-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #cbd5e1;
+}
+
+.tm-bill-amount {
+  font-size: 1.35rem;
+  font-weight: 900;
+  font-family: ui-monospace, monospace;
+  color: #22d3ee;
+}
+
+/* Cash Pad */
+.tm-cash-pad-section {
+  border-top: 1px solid #334155;
+  padding-top: 0.75rem;
+}
+
+.tm-cash-pad-title {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
   margin-bottom: 0.5rem;
 }
 
-.tm-game-money .tm-receipt-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.85rem;
-  padding: 0.25rem 0;
-  color: #475569;
+.tm-cash-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
 }
 
-.tm-game-money .tm-receipt-price {
-  font-weight: 700;
-  color: #0f172a;
+.btn-cash {
+  border: none;
+  font-family: ui-monospace, monospace;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.2rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.btn-cash.note-10 {
+  background: #78350f;
+  color: #fef3c7;
+  border: 1px solid #b45309;
+}
+.btn-cash.note-20 {
+  background: #854d0e;
+  color: #fef9c3;
+  border: 1px solid #ca8a04;
+}
+.btn-cash.note-50 {
+  background: #155e75;
+  color: #cffafe;
+  border: 1px solid #0891b2;
+}
+.btn-cash.note-100 {
+  background: #3730a3;
+  color: #e0e7ff;
+  border: 1px solid #4f46e5;
+}
+.btn-cash.note-500 {
+  background: #1c1917;
+  color: #a7f3d0;
+  border: 1px solid #059669;
+}
+
+.btn-cash:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.2);
+}
+
+/* Change summary */
+.tm-change-summary {
+  display: flex;
+  justify-content: space-between;
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.8rem;
+}
+
+.tm-change-label {
+  color: #94a3b8;
+  margin-right: 0.35rem;
+}
+
+.tm-val-tendered {
+  color: #ffffff;
   font-family: ui-monospace, monospace;
 }
 
-.tm-game-money .tm-receipt-paid {
-  margin-top: 0.75rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid #e2e8f0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #1e293b;
-}
-
-.tm-game-money .tm-paid-badge {
-  background: #ecfdf5;
-  color: #065f46;
-  border: 1px solid #a7f3d0;
-  padding: 0.2rem 0.6rem;
-  border-radius: 6px;
+.tm-val-change {
+  color: #34d399;
   font-family: ui-monospace, monospace;
+  font-size: 0.95rem;
 }
 
+/* Options Grid */
 .tm-game-money .tm-options-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -105,23 +292,42 @@
   margin-top: 1rem;
 }
 
+@media (min-width: 480px) {
+  .tm-game-money .tm-options-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 .tm-game-money .tm-option-btn {
   background: #ffffff;
   border: 1.5px solid #e2e8f0;
   border-radius: 0.75rem;
   padding: 0.85rem;
-  font-size: 1.1rem;
-  font-weight: 800;
+  font-size: 1.25rem;
   font-family: ui-monospace, monospace;
+  font-weight: 800;
   color: #1e293b;
   cursor: pointer;
   transition: all 0.15s ease;
+  text-align: center;
 }
 
 .tm-game-money .tm-option-btn:hover {
-  border-color: #10b981;
-  background: #f0fdf4;
+  border-color: #06b6d4;
+  background: #ecfeff;
   transform: translateY(-2px);
+}
+
+.tm-game-money .tm-option-btn.tm-opt-correct {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #065f46;
+}
+
+.tm-game-money .tm-option-btn.tm-opt-wrong {
+  background: #fff1f2;
+  border-color: #f43f5e;
+  color: #9f1239;
 }
 
 .tm-game-money .tm-feedback {

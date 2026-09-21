@@ -247,4 +247,6 @@
 
   // Support alternative slug naming
   window.TezMindzGameRegistry['number_train'] = window.TezMindzGameRegistry[PLUGIN_ID];
+  window.TezMindz = window.TezMindz || {};
+  window.TezMindz.NumberTrain = { initGame };
 })();

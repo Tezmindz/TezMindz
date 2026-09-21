@@ -1,6 +1,7 @@
 /**
  * Data Detective Game Template
  * 100% Data-Driven Olympiad Data Handling & Charts Game
+ * Ported from reference GraphExplorer.tsx
  */
 import { BarGraph } from './components/BarGraph.js';
 
@@ -11,6 +12,7 @@ export class DataDetectiveGame {
     this.data = data || {};
     this.config = Object.assign({ onAnswer: null, onComplete: null }, config);
     this.hasAnswered = false;
+    this.graph = null;
     this.init();
   }
 
@@ -27,14 +29,27 @@ export class DataDetectiveGame {
     const header = document.createElement('div');
     header.className = 'tm-header';
     header.innerHTML = `
-      <span class="tm-badge">📊 Data Handling & Graphs</span>
-      <h2 class="tm-prompt">${this.escapeHtml(this.data.prompt || 'Inspect the data graph')}</h2>
+      <span class="tm-badge">📊 Data Handling &amp; Graphs</span>
+      <h2 class="tm-prompt">${this.escapeHtml(this.data.prompt || 'Inspect the data graph to find the solution')}</h2>
     `;
     root.appendChild(header);
 
-    // Chart component
-    const graph = new BarGraph(this.data.chartData || [], this.data.unitLabel || 'Total');
-    graph.render(root);
+    // Interactive Chart component
+    this.graph = new BarGraph(
+      this.data.chartData || [
+        { label: "Aarav", value: 15, color: "#38bdf8" },
+        { label: "Diya", value: 25, color: "#a855f7" },
+        { label: "Kabir", value: 20, color: "#34d399" },
+        { label: "Tanvi", value: 30, color: "#f59e0b" }
+      ],
+      this.data.unitLabel || 'Books Read',
+      {
+        onSelect: (bar) => {
+          // Dynamic inspection
+        }
+      }
+    );
+    this.graph.render(root);
 
     // Options
     const optionsGrid = document.createElement('div');
@@ -43,7 +58,7 @@ export class DataDetectiveGame {
       const btn = document.createElement('button');
       btn.className = 'tm-option-btn';
       btn.textContent = opt;
-      btn.addEventListener('click', () => this.handleSelect(opt));
+      btn.addEventListener('click', () => this.handleSelect(opt, btn));
       optionsGrid.appendChild(btn);
     });
     root.appendChild(optionsGrid);
@@ -57,11 +72,16 @@ export class DataDetectiveGame {
     this.container.appendChild(root);
   }
 
-  handleSelect(selected) {
+  handleSelect(selected, btnEl) {
     if (this.hasAnswered) return;
     this.hasAnswered = true;
 
-    const isCorrect = String(selected).trim() === String(this.data.correctAnswer).trim();
+    const isCorrect = String(selected).trim().toLowerCase() === String(this.data.correctAnswer).trim().toLowerCase();
+
+    if (btnEl) {
+      btnEl.classList.add(isCorrect ? 'tm-opt-correct' : 'tm-opt-wrong');
+    }
+
     const fb = this.container.querySelector('#tm-chart-feedback');
     if (fb) {
       fb.style.display = 'block';
@@ -96,6 +116,10 @@ export class DataDetectiveGame {
     this.hasAnswered = false;
     this.render();
   }
+
+  destroy() {
+    this.container.innerHTML = '';
+  }
 }
 
 export function initGame(container, data, config) {
@@ -105,4 +129,7 @@ export function initGame(container, data, config) {
 if (typeof window !== 'undefined') {
   window.TezMindz = window.TezMindz || {};
   window.TezMindz.DataDetective = { initGame, DataDetectiveGame };
+  window.TezMindzGameRegistry = window.TezMindzGameRegistry || {};
+  window.TezMindzGameRegistry['data-detective'] = { id: 'data-detective', initGame };
+  window.TezMindzGameRegistry['data_detective'] = window.TezMindzGameRegistry['data-detective'];
 }
