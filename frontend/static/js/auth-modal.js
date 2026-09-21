@@ -279,7 +279,7 @@
       var password = document.getElementById('tmLoginPassword').value || '';
 
       if (!email) {
-        self.showError('login', 'Please enter your email or username.');
+        self.showError('login', 'Please enter your email or phone number.');
         return;
       }
       if (!password) {
@@ -325,13 +325,13 @@
         } else {
           btn.disabled = false;
           btn.innerHTML = '<span>Login</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
-          self.showError('login', data.message || 'Invalid email or password.');
+          self.showError('login', data.message || 'Invalid email/phone or password.');
         }
       })
       .catch(function (err) {
         btn.disabled = false;
         btn.innerHTML = '<span>Login</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
-        self.showError('login', err.message || 'Incorrect email or password. Please try again.');
+        self.showError('login', err.message || 'Incorrect email/phone or password. Please try again.');
       });
     },
 
@@ -396,7 +396,7 @@
       self.clearErrors();
 
       var name = (document.getElementById('tmRegFullName').value || '').trim();
-      var username = (document.getElementById('tmRegUsername').value || '').trim();
+      var phone = (document.getElementById('tmRegPhone').value || '').trim();
       var email = (document.getElementById('tmRegEmail').value || '').trim().toLowerCase();
       var classLevel = document.getElementById('tmRegClassLevel').value;
       var password = document.getElementById('tmRegPassword').value || '';
@@ -404,7 +404,8 @@
       var agree = document.getElementById('tmRegAgree').checked;
 
       if (!name) { self.showError('register', 'Please enter your full name.'); return; }
-      if (!username || username.length < 3) { self.showError('register', 'Username must be at least 3 characters.'); return; }
+      var cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '');
+      if (!cleanPhone || cleanPhone.length < 10) { self.showError('register', 'Please enter a valid 10-digit phone number.'); return; }
       if (!email || !email.includes('@')) { self.showError('register', 'Please enter a valid email address.'); return; }
       if (!classLevel) { self.showError('register', 'Please select your class / grade level.'); return; }
       if (!password || password.length < 6) { self.showError('register', 'Password must be at least 6 characters long.'); return; }
@@ -424,7 +425,7 @@
         },
         body: JSON.stringify({
           name: name,
-          username: username,
+          phone: phone,
           email: email,
           classLevel: parseInt(classLevel, 10),
           password: password
@@ -455,13 +456,13 @@
         } else {
           btn.disabled = false;
           btn.innerHTML = '<span>Create Account</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4-4-4"></path><path d="M3 10h13"></path><path d="M21 20V4"></path></svg>';
-          self.showError('register', data.message || 'Registration failed. Email or username may already exist.');
+          self.showError('register', data.message || 'Registration failed. Email or phone number may already exist.');
         }
       })
       .catch(function (err) {
         btn.disabled = false;
         btn.innerHTML = '<span>Create Account</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4-4-4"></path><path d="M3 10h13"></path><path d="M21 20V4"></path></svg>';
-        self.showError('register', err.message || 'That email or username is already registered. Please try logging in.');
+        self.showError('register', err.message || 'That email or phone number is already registered. Please try logging in.');
       });
     },
 

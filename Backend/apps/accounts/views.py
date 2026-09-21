@@ -25,5 +25,5 @@ class DemoLoginView(View):
             demo_user.is_active = True
             demo_user.save(update_fields=["is_active"])
 
-        login(request, demo_user)
+        login(request, demo_user, backend="apps.accounts.backends.EmailOrPhoneBackend")
         return redirect("/dashboard/")

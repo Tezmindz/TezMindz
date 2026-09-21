@@ -56,6 +56,14 @@ class StudentProfile(TimeStampedModel):
 
     user = models.OneToOneField("accounts.User", on_delete=models.CASCADE, related_name="student_profile")
     display_name = models.CharField(max_length=50)
+    phone_number = models.CharField(
+        max_length=20,
+        unique=True,
+        null=True,
+        blank=True,
+        db_index=True,
+        help_text="Student phone number in E.164 format (e.g. +919876543210).",
+    )
     
     # PROTECT, not CASCADE: deleting a Grade should never silently delete
     # every student in it. A real deletion has to be an explicit, separate

@@ -1,0 +1,637 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ mock_test.title }} — Mock Test — TezMindz{% endblock %}
+
+{% block extra_head %}
+<style>
+  :root {
+    --test-primary: #4F46E5;
+    --test-emerald: #10B981;
+    --test-amber: #F59E0B;
+    --test-red: #EF4444;
+  }
+
+  .test-shell {
+    max-width: 980px;
+    margin: 0 auto 60px;
+    padding: 0 16px;
+  }
+
+  /* ── 1. STICKY TEST HEADER ── */
+  .test-header-bar {
+    position: sticky;
+    top: 75px;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(14px);
+    border: 1.5px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    margin-bottom: 24px;
+  }
+  .test-title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .test-grade-badge {
+    font-size: 0.72rem;
+    font-weight: 900;
+    background: #EDE9FE;
+    color: #6D28D9;
+    padding: 4px 10px;
+    border-radius: 99px;
+    text-transform: uppercase;
+  }
+  .test-name {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0;
+  }
+
+  /* Timer clock */
+  .test-timer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #0F172A;
+    color: #FFFFFF;
+    font-size: 1.15rem;
+    font-weight: 900;
+    padding: 8px 18px;
+    border-radius: 14px;
+    font-variant-numeric: tabular-nums;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+    transition: all 0.3s ease;
+  }
+  .test-timer-badge.warning {
+    background: #D97706;
+  }
+  .test-timer-badge.danger {
+    background: #DC2626;
+    animation: pulseDanger 1.2s infinite ease-in-out;
+  }
+  @keyframes pulseDanger {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  /* ── 2. QUESTION CARD ── */
+  .question-container {
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 8px 28px rgba(15, 23, 42, 0.04);
+    margin-bottom: 24px;
+  }
+  .q-top-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .q-counter-pill {
+    font-size: 0.84rem;
+    font-weight: 900;
+    color: #4F46E5;
+    background: #EEF2FF;
+    padding: 5px 14px;
+    border-radius: 99px;
+  }
+  .q-marks-pill {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #64748B;
+  }
+
+  .q-prompt-text {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0F172A;
+    line-height: 1.5;
+    margin: 0 0 24px;
+  }
+
+  /* Options list */
+  .options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .option-card {
+    background: #F8FAFC;
+    border: 2px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  .option-card:hover {
+    background: #F1F5F9;
+    border-color: #CBD5E1;
+  }
+  .option-card.selected {
+    background: #EEF2FF;
+    border-color: #6366F1;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.15);
+  }
+  .opt-indicator {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #CBD5E1;
+    display: grid;
+    place-items: center;
+    font-size: 0.85rem;
+    font-weight: 900;
+    color: #475569;
+    background: #FFFFFF;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+  .option-card.selected .opt-indicator {
+    background: #4F46E5;
+    border-color: #4F46E5;
+    color: #FFFFFF;
+  }
+  .opt-text {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1E293B;
+  }
+
+  /* ── 3. QUESTION PALETTE STRIP ── */
+  .palette-wrapper {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+  }
+  .palette-label {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #64748B;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .palette-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .palette-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1.5px solid #E2E8F0;
+    background: #F8FAFC;
+    color: #475569;
+    font-size: 0.88rem;
+    font-weight: 900;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .palette-btn:hover {
+    border-color: #818CF8;
+  }
+  .palette-btn.active {
+    outline: 2.5px solid #4F46E5;
+    outline-offset: 2px;
+  }
+  .palette-btn.answered {
+    background: #10B981;
+    border-color: #10B981;
+    color: #FFFFFF;
+  }
+
+  /* ── 4. BOTTOM ACTION BUTTONS ── */
+  .test-actions-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .btn-nav-step {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 12px 24px;
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #334155;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }
+  .btn-nav-step:hover {
+    background: #F8FAFC;
+    border-color: #CBD5E1;
+  }
+  .btn-nav-step:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .btn-submit-test {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 14px;
+    padding: 13px 28px;
+    font-size: 0.96rem;
+    font-weight: 900;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+    transition: all 0.2s ease;
+  }
+  .btn-submit-test:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(16, 185, 129, 0.45);
+  }
+
+  /* ── CONFIRM MODAL ── */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    place-items: center;
+    padding: 16px;
+  }
+  .modal-backdrop.show {
+    display: grid;
+  }
+  .modal-card {
+    background: #FFFFFF;
+    border-radius: 24px;
+    max-width: 460px;
+    width: 100%;
+    padding: 28px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  }
+  .modal-icon {
+    font-size: 2.8rem;
+    margin-bottom: 12px;
+  }
+  .modal-title {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0 0 8px;
+  }
+  .modal-desc {
+    font-size: 0.94rem;
+    color: #64748B;
+    line-height: 1.5;
+    margin: 0 0 22px;
+  }
+  .modal-stat-strip {
+    display: flex;
+    justify-content: space-around;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 24px;
+  }
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="test-shell">
+
+  <!-- 1. STICKY HEADER WITH TIMER -->
+  <div class="test-header-bar">
+    <div class="test-title-group">
+      <span class="test-grade-badge">Class {{ grade.name }}</span>
+      <h2 class="test-name">{{ mock_test.title }}</h2>
+    </div>
+
+    <div class="test-timer-badge" id="timerBadge">
+      <span>⏱</span>
+      <span id="timerClock">00:00</span>
+    </div>
+  </div>
+
+  <!-- 2. ACTIVE QUESTION CONTAINER -->
+  <div class="question-container" id="questionBox">
+    <div class="q-top-meta">
+      <span class="q-counter-pill" id="qCounter">Question 1 of {{ total_questions }}</span>
+      <span class="q-marks-pill" id="qMarks">+1 Mark</span>
+    </div>
+
+    <div class="q-prompt-text" id="qPrompt">
+      <!-- Injected by JavaScript -->
+    </div>
+
+    <div class="options-grid" id="optionsList">
+      <!-- Injected by JavaScript -->
+    </div>
+  </div>
+
+  <!-- 3. QUESTION PALETTE -->
+  <div class="palette-wrapper">
+    <div class="palette-label">
+      <span>Question Palette</span>
+      <span id="paletteStatus">0 of {{ total_questions }} Answered</span>
+    </div>
+    <div class="palette-grid" id="paletteGrid">
+      {% for q in questions %}
+      <button type="button" class="palette-btn" id="pal-{{ forloop.counter0 }}" onclick="goToQuestion({{ forloop.counter0 }})">
+        {{ forloop.counter }}
+      </button>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- 4. BOTTOM ACTION BUTTONS -->
+  <div class="test-actions-bar">
+    <button type="button" class="btn-nav-step" id="btnPrev" onclick="prevQuestion()" disabled>
+      <span>← Previous</span>
+    </button>
+    <button type="button" class="btn-nav-step" id="btnNext" onclick="nextQuestion()">
+      <span>Next →</span>
+    </button>
+    <button type="button" class="btn-submit-test" onclick="openSubmitModal()">
+      <span>Finish &amp; Submit Test 🚀</span>
+    </button>
+  </div>
+
+</div>
+
+<!-- SUBMIT CONFIRMATION MODAL -->
+<div class="modal-backdrop" id="confirmModal">
+  <div class="modal-card">
+    <div class="modal-icon">🎯</div>
+    <h3 class="modal-title">Ready to Submit?</h3>
+    <p class="modal-desc">
+      Once submitted, your answers will be graded server-side and your final score, XP, and coins will be calculated!
+    </p>
+
+    <div class="modal-stat-strip">
+      <div>
+        <strong id="modalAnswered" style="font-size:1.3rem; color:#10B981; display:block;">0</strong>
+        <span style="font-size:0.75rem; color:#64748B; font-weight:800;">Answered</span>
+      </div>
+      <div>
+        <strong id="modalRemaining" style="font-size:1.3rem; color:#EF4444; display:block;">0</strong>
+        <span style="font-size:0.75rem; color:#64748B; font-weight:800;">Unanswered</span>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-nav-step" style="flex:1;" onclick="closeSubmitModal()">
+        <span>Review Answers</span>
+      </button>
+      <button type="button" class="btn-submit-test" style="flex:1; justify-content:center;" id="btnFinalSubmit" onclick="submitTest()">
+        <span>Submit Now 🚀</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENT TEST ENGINE SCRIPT -->
+<script>
+  const testId = {{ mock_test.id }};
+  const durationSecs = {{ duration_seconds|default:1800 }};
+  const questions = {{ questions_json|safe }};
+  const totalQ = questions.length;
+
+  let currentIndex = 0;
+  let userAnswers = {}; // { questionId: optionId }
+  let remainingSeconds = durationSecs;
+  let timerInterval = null;
+  let isSubmitting = false;
+
+  function initTest() {
+    renderQuestion(0);
+    renderPalette();
+    startTimer();
+  }
+
+  function startTimer() {
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+      remainingSeconds--;
+      updateTimerDisplay();
+      if (remainingSeconds <= 0) {
+        clearInterval(timerInterval);
+        autoSubmitTimeUp();
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay() {
+    const mins = Math.floor(Math.max(0, remainingSeconds) / 60);
+    const secs = Math.max(0, remainingSeconds) % 60;
+    const str = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    const clock = document.getElementById('timerClock');
+    const badge = document.getElementById('timerBadge');
+    if (clock) clock.innerText = str;
+
+    if (badge) {
+      if (remainingSeconds <= 120) {
+        badge.className = 'test-timer-badge danger';
+      } else if (remainingSeconds <= 300) {
+        badge.className = 'test-timer-badge warning';
+      }
+    }
+  }
+
+  function renderQuestion(index) {
+    if (index < 0 || index >= totalQ) return;
+    currentIndex = index;
+
+    const q = questions[index];
+    document.getElementById('qCounter').innerText = `Question ${index + 1} of ${totalQ}`;
+    document.getElementById('qMarks').innerText = `+${q.marks} Marks` + (q.negative_marks ? ` • -${q.negative_marks}` : '');
+    document.getElementById('qPrompt').innerText = q.prompt;
+
+    const optionsContainer = document.getElementById('optionsList');
+    optionsContainer.innerHTML = '';
+
+    const selectedOptId = userAnswers[q.id];
+
+    q.options.forEach((opt, optIdx) => {
+      const letters = ['A', 'B', 'C', 'D', 'E'];
+      const letter = letters[optIdx] || (optIdx + 1);
+      const isSelected = selectedOptId === opt.id;
+
+      const card = document.createElement('div');
+      card.className = `option-card ${isSelected ? 'selected' : ''}`;
+      card.onclick = () => selectOption(q.id, opt.id);
+
+      card.innerHTML = `
+        <div class="opt-indicator">${letter}</div>
+        <div class="opt-text">${escapeHtml(opt.text)}</div>
+      `;
+      optionsContainer.appendChild(card);
+    });
+
+    document.getElementById('btnPrev').disabled = (index === 0);
+    document.getElementById('btnNext').style.display = (index === totalQ - 1) ? 'none' : 'inline-flex';
+
+    updatePaletteSelection();
+  }
+
+  function selectOption(questionId, optionId) {
+    if (isSubmitting) return;
+    userAnswers[questionId] = optionId;
+    renderQuestion(currentIndex);
+    renderPalette();
+  }
+
+  function nextQuestion() {
+    if (currentIndex < totalQ - 1) {
+      renderQuestion(currentIndex + 1);
+    }
+  }
+
+  function prevQuestion() {
+    if (currentIndex > 0) {
+      renderQuestion(currentIndex - 1);
+    }
+  }
+
+  function goToQuestion(index) {
+    renderQuestion(index);
+  }
+
+  function renderPalette() {
+    let answeredCount = 0;
+    questions.forEach((q, idx) => {
+      const btn = document.getElementById(`pal-${idx}`);
+      if (!btn) return;
+      const isAnswered = (userAnswers[q.id] !== undefined);
+      if (isAnswered) {
+        btn.className = 'palette-btn answered';
+        answeredCount++;
+      } else {
+        btn.className = 'palette-btn';
+      }
+      if (idx === currentIndex) {
+        btn.classList.add('active');
+      }
+    });
+    document.getElementById('paletteStatus').innerText = `${answeredCount} of ${totalQ} Answered`;
+  }
+
+  function updatePaletteSelection() {
+    document.querySelectorAll('.palette-btn').forEach((b, idx) => {
+      if (idx === currentIndex) {
+        b.classList.add('active');
+      } else {
+        b.classList.remove('active');
+      }
+    });
+  }
+
+  function openSubmitModal() {
+    const answeredCount = Object.keys(userAnswers).length;
+    document.getElementById('modalAnswered').innerText = answeredCount;
+    document.getElementById('modalRemaining').innerText = totalQ - answeredCount;
+    document.getElementById('confirmModal').classList.add('show');
+  }
+
+  function closeSubmitModal() {
+    document.getElementById('confirmModal').classList.remove('show');
+  }
+
+  function autoSubmitTimeUp() {
+    alert("⏰ Time is up! Submitting your test automatically...");
+    submitTest();
+  }
+
+  async function submitTest() {
+    if (isSubmitting) return;
+    isSubmitting = true;
+
+    const submitBtn = document.getElementById('btnFinalSubmit');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Scoring Test... ⏳</span>';
+    }
+
+    clearInterval(timerInterval);
+    const timeSpent = durationSecs - Math.max(0, remainingSeconds);
+
+    try {
+      const response = await fetch(`/api/mock-tests/${testId}/submit/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCsrfToken()
+        },
+        body: JSON.stringify({
+          answers: userAnswers,
+          time_taken_seconds: timeSpent
+        })
+      });
+
+      const data = await response.json();
+      if (data.success && data.attempt_id) {
+        window.location.href = `/mock-tests/result/${data.attempt_id}/`;
+      } else {
+        alert("Error submitting test: " + (data.error || "Unknown server error"));
+        isSubmitting = false;
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Network error submitting test. Please try again.");
+      isSubmitting = false;
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  }
+
+  function getCsrfToken() {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, 10) === 'csrftoken=') {
+          cookieValue = decodeURIComponent(cookie.substring(10));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.innerText = text;
+    return div.innerHTML;
+  }
+
+  document.addEventListener('DOMContentLoaded', initTest);
+</script>
+{% endblock %}

@@ -1,0 +1,409 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Mock Test Arena — Class {{ grade.name }} — TezMindz{% endblock %}
+{% block nav_explore %}active{% endblock %}
+
+{% block extra_head %}
+<style>
+  :root {
+    --arena-primary: #4F46E5;
+    --arena-gold: #F59E0B;
+    --arena-emerald: #10B981;
+    --arena-sky: #0284C7;
+    --arena-dark: #0F172A;
+  }
+
+  .arena-page-shell {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    padding: 0 16px;
+  }
+
+  /* ── 1. HERO ARENA BANNER ── */
+  .arena-hero {
+    position: relative;
+    border-radius: 28px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    background: #0F172A;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18);
+  }
+  .arena-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url("{% static 'media/adventure/hero_math_adventure.jpg' %}");
+    background-size: cover;
+    background-position: center 25%;
+    filter: brightness(0.9);
+  }
+  .arena-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.90) 0%, rgba(30, 27, 75, 0.82) 50%, rgba(79, 70, 229, 0.72) 100%);
+    backdrop-filter: blur(2px);
+  }
+  .arena-hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 34px 38px 30px;
+    color: #FFFFFF;
+  }
+  .arena-grade-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 6px 16px;
+    border-radius: 99px;
+    font-size: 0.82rem;
+    font-weight: 900;
+    color: #FDE047;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+  .arena-hero-title {
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    font-weight: 900;
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  }
+  .arena-hero-sub {
+    font-size: 1rem;
+    color: #E0E7FF;
+    max-width: 680px;
+    line-height: 1.5;
+    margin: 0 0 20px;
+    font-weight: 500;
+  }
+
+  /* Stats strip */
+  .arena-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 768px) {
+    .arena-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .arena-stat-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 16px 20px;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  }
+  .arena-stat-val {
+    font-size: 1.7rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .arena-stat-lbl {
+    font-size: 0.74rem;
+    font-weight: 800;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── 2. FILTER PILLS ── */
+  .arena-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .arena-filters::-webkit-scrollbar { display: none; }
+  .arena-filter-btn {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 99px;
+    padding: 8px 18px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    color: #475569;
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+  }
+  .arena-filter-btn:hover {
+    background: #F8FAFC;
+    border-color: #CBD5E1;
+    color: #0F172A;
+  }
+  .arena-filter-btn.active {
+    background: #1E1B4B;
+    border-color: #1E1B4B;
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(30, 27, 75, 0.18);
+  }
+
+  /* ── 3. TEST CARDS GRID ── */
+  .arena-tests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 22px;
+  }
+  .arena-test-card {
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0;
+    border-radius: 22px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .arena-test-card:hover {
+    transform: translateY(-4px);
+    border-color: #818CF8;
+    box-shadow: 0 16px 36px rgba(79, 70, 229, 0.12);
+  }
+  .arena-test-card.passed {
+    border-color: #A7F3D0;
+  }
+
+  .arena-card-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .arena-subject-tag {
+    font-size: 0.72rem;
+    font-weight: 900;
+    padding: 4px 10px;
+    border-radius: 99px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #EDE9FE;
+    color: #6D28D9;
+  }
+  .arena-meta-chips {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .arena-chip {
+    font-size: 0.72rem;
+    font-weight: 800;
+    background: #F1F5F9;
+    color: #475569;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .arena-test-title {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0 0 6px;
+    line-height: 1.3;
+  }
+  .arena-test-desc {
+    font-size: 0.86rem;
+    color: #64748B;
+    line-height: 1.45;
+    margin: 0 0 16px;
+  }
+
+  .arena-score-status-box {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .arena-score-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #64748B;
+  }
+  .arena-score-val {
+    font-size: 0.95rem;
+    font-weight: 900;
+  }
+
+  .btn-start-test {
+    background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
+    color: #FFFFFF;
+    font-size: 0.92rem;
+    font-weight: 900;
+    padding: 12px 20px;
+    border-radius: 14px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.28);
+    transition: all 0.2s ease;
+  }
+  .btn-start-test:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(79, 70, 229, 0.42);
+    background: linear-gradient(135deg, #6366F1 0%, #4338CA 100%);
+    color: #FFFFFF;
+  }
+  .btn-retake-test {
+    background: #ECFDF5;
+    color: #065F46;
+    border: 1.5px solid #A7F3D0;
+    font-size: 0.92rem;
+    font-weight: 900;
+    padding: 11px 20px;
+    border-radius: 14px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }
+  .btn-retake-test:hover {
+    background: #D1FAE5;
+    transform: translateY(-2px);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="arena-page-shell">
+
+  <!-- 1. HERO BANNER -->
+  <div class="arena-hero">
+    <div class="arena-hero-bg"></div>
+    <div class="arena-hero-overlay"></div>
+
+    <div class="arena-hero-content">
+      <div class="arena-grade-pill">
+        <span>🎯 CLASS {{ grade.name }} MOCK TEST ARENA</span>
+      </div>
+      <h1 class="arena-hero-title">
+        Test Your Olympiad Mastery
+      </h1>
+      <p class="arena-hero-sub">
+        Simulate real competition conditions with full-length Class {{ grade.name }} Mock Tests. Experience timed challenges, earn bonus XP & coins, and review detailed answer solutions!
+      </p>
+    </div>
+  </div>
+
+  <!-- 2. QUICK STATS STRIP -->
+  <div class="arena-stats-grid">
+    <div class="arena-stat-card">
+      <div class="arena-stat-val" style="color:#4F46E5;">{{ tests_count }}</div>
+      <div class="arena-stat-lbl">Available Tests</div>
+    </div>
+    <div class="arena-stat-card">
+      <div class="arena-stat-val" style="color:#10B981;">{{ total_completed }}</div>
+      <div class="arena-stat-lbl">Completed Tests</div>
+    </div>
+    <div class="arena-stat-card">
+      <div class="arena-stat-val" style="color:#F59E0B;">{{ avg_percentage }}%</div>
+      <div class="arena-stat-lbl">Average Score</div>
+    </div>
+    <div class="arena-stat-card">
+      <div class="arena-stat-val" style="color:#EC4899;">{{ best_overall_pct }}%</div>
+      <div class="arena-stat-lbl">Best Score</div>
+    </div>
+  </div>
+
+  <!-- 3. SUBJECT FILTERS -->
+  <div class="arena-filters">
+    <a href="/mock-tests/" class="arena-filter-btn {% if active_subject == 'all' %}active{% endif %}">
+      <span>🌟 All Class {{ grade.name }} Tests</span>
+    </a>
+    {% for s in subjects %}
+    <a href="/mock-tests/?subject={{ s.slug }}" class="arena-filter-btn {% if active_subject == s.slug %}active{% endif %}">
+      <span>{{ s.name }}</span>
+    </a>
+    {% endfor %}
+  </div>
+
+  <!-- 4. MOCK TESTS GRID -->
+  <div class="arena-tests-grid">
+    {% for item in tests %}
+    <div class="arena-test-card {% if item.is_passed %}passed{% endif %}">
+      <div>
+        <!-- Top Bar -->
+        <div class="arena-card-topbar">
+          <span class="arena-subject-tag">
+            {{ item.test.subject.name|default:"General Olympiad" }}
+          </span>
+          <div class="arena-meta-chips">
+            <span class="arena-chip">📝 {{ item.test.question_count }} Qs</span>
+            <span class="arena-chip">⏱ {{ item.test.duration_minutes }} Mins</span>
+          </div>
+        </div>
+
+        <h3 class="arena-test-title">{{ item.test.title }}</h3>
+        <p class="arena-test-desc">
+          {{ item.test.description|default:"Comprehensive timed mock test designed for competitive Olympiad preparation." }}
+        </p>
+      </div>
+
+      <div>
+        <!-- Previous Performance Box -->
+        <div class="arena-score-status-box">
+          <div class="arena-score-label">
+            {% if item.is_completed %}
+              <span>Attempts: {{ item.attempts_count }}</span>
+            {% else %}
+              <span>Status: Ready</span>
+            {% endif %}
+          </div>
+          <div class="arena-score-val">
+            {% if item.is_completed %}
+              <span style="color:{% if item.is_passed %}#059669{% else %}#D97706{% endif %};">
+                Best: {{ item.best_percentage }}% {% if item.is_passed %}🏆{% endif %}
+              </span>
+            {% else %}
+              <span style="color:#64748B;">Not attempted</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        {% if item.is_completed %}
+          <a href="/mock-tests/{{ item.test.id }}/" class="btn-retake-test">
+            <span>Retake Challenge 🔄</span>
+          </a>
+        {% else %}
+          <a href="/mock-tests/{{ item.test.id }}/" class="btn-start-test">
+            <span>Take Test 🚀</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    {% empty %}
+    <div style="grid-column:1/-1; text-align:center; padding:60px 20px; background:#FFFFFF; border:2px dashed #CBD5E1; border-radius:24px;">
+      <div style="font-size:2.4rem; margin-bottom:12px;">🎯</div>
+      <h3 style="color:#0F172A; font-weight:900; margin:0 0 8px;">No Mock Tests Available Yet</h3>
+      <p style="color:#64748B; margin:0;">Mock tests for Class {{ grade.name }} are currently being published by your mentors.</p>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}
