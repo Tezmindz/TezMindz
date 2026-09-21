@@ -1,0 +1,378 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Results: {{ mock_test.title }} — TezMindz{% endblock %}
+
+{% block extra_head %}
+<style>
+  :root {
+    --res-primary: #4F46E5;
+    --res-emerald: #10B981;
+    --res-amber: #F59E0B;
+    --res-red: #EF4444;
+  }
+
+  .result-page-shell {
+    max-width: 960px;
+    margin: 0 auto 60px;
+    padding: 0 16px;
+  }
+
+  /* ── 1. CELEBRATION HERO ── */
+  .res-celebration-hero {
+    background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #4338CA 100%);
+    border-radius: 28px;
+    padding: 38px 32px;
+    color: #FFFFFF;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(49, 46, 129, 0.22);
+    margin-bottom: 28px;
+  }
+  .res-trophy-badge {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 3px solid #FDE047;
+    box-shadow: 0 0 24px rgba(253, 224, 71, 0.4);
+    display: grid;
+    place-items: center;
+    font-size: 2.6rem;
+    margin: 0 auto 16px;
+  }
+  .res-hero-title {
+    font-size: clamp(1.8rem, 3.6vw, 2.4rem);
+    font-weight: 900;
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+  }
+  .res-hero-sub {
+    font-size: 1.05rem;
+    color: #E0E7FF;
+    margin: 0 0 20px;
+  }
+
+  /* Score Pill */
+  .res-score-badge {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    border-radius: 99px;
+    padding: 10px 28px;
+    margin-bottom: 20px;
+  }
+  .res-score-num {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #FDE047;
+  }
+  .res-score-total {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #E0E7FF;
+  }
+
+  /* Rewards ribbon */
+  .res-rewards-ribbon {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 99px;
+    padding: 8px 24px;
+    font-size: 0.92rem;
+    font-weight: 900;
+    color: #FFFFFF;
+  }
+
+  /* ── 2. STATS GRID ── */
+  .res-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 640px) {
+    .res-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .res-stat-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  }
+  .res-stat-val {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 4px;
+  }
+  .res-stat-lbl {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── 3. ACTIONS ── */
+  .res-actions-bar {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+  .btn-res-action {
+    padding: 12px 26px;
+    border-radius: 14px;
+    font-size: 0.92rem;
+    font-weight: 900;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }
+  .btn-res-primary {
+    background: linear-gradient(135deg, #4F46E5, #3730A3);
+    color: #FFFFFF;
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.3);
+  }
+  .btn-res-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(79, 70, 229, 0.4);
+    color: #FFFFFF;
+  }
+  .btn-res-secondary {
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
+    color: #334155;
+  }
+  .btn-res-secondary:hover {
+    background: #F8FAFC;
+    transform: translateY(-2px);
+  }
+
+  /* ── 4. DETAILED REVIEW SECTION ── */
+  .review-headline {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #0F172A;
+    margin: 0 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .review-card {
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  }
+  .review-card.correct { border-left: 6px solid #10B981; }
+  .review-card.wrong { border-left: 6px solid #EF4444; }
+  .review-card.unanswered { border-left: 6px solid #94A3B8; }
+
+  .review-top-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .review-status-badge {
+    font-size: 0.76rem;
+    font-weight: 900;
+    padding: 4px 12px;
+    border-radius: 99px;
+  }
+  .badge-correct { background: #ECFDF5; color: #065F46; }
+  .badge-wrong { background: #FEF2F2; color: #991B1B; }
+  .badge-unanswered { background: #F1F5F9; color: #64748B; }
+
+  .review-prompt {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #0F172A;
+    line-height: 1.45;
+    margin: 0 0 16px;
+  }
+
+  /* Review options */
+  .review-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .rev-opt {
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+  }
+  .rev-opt.opt-correct {
+    background: #ECFDF5;
+    border-color: #A7F3D0;
+    color: #065F46;
+  }
+  .rev-opt.opt-wrong-choice {
+    background: #FEF2F2;
+    border-color: #FECACA;
+    color: #991B1B;
+  }
+
+  /* Explanation box */
+  .explanation-box {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 14px 18px;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #334155;
+  }
+  .exp-title {
+    font-size: 0.78rem;
+    font-weight: 900;
+    color: #4F46E5;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="result-page-shell">
+
+  <!-- 1. CELEBRATION HERO -->
+  <div class="res-celebration-hero">
+    <div class="res-trophy-badge">
+      {% if passed %}🏆{% else %}💪{% endif %}
+    </div>
+
+    <h1 class="res-hero-title">
+      {% if passed %}Awesome Job, Champion!{% else %}Test Completed! Keep Practicing!{% endif %}
+    </h1>
+    <p class="res-hero-sub">
+      Class {{ grade.name }} • {{ mock_test.title }}
+    </p>
+
+    <!-- Score Pill -->
+    <div class="res-score-badge">
+      <span class="res-score-num">{{ attempt.percentage }}%</span>
+      <span class="res-score-total">({{ attempt.score }} / {{ attempt.total_marks }} Marks)</span>
+    </div>
+
+    <div>
+      <div class="res-rewards-ribbon">
+        <span>⚡ +{{ xp_earned }} XP Earned</span>
+        <span>•</span>
+        <span>🪙 +{{ coins_earned }} Coins Earned</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. QUICK STATS STRIP -->
+  <div class="res-stats-grid">
+    <div class="res-stat-card">
+      <div class="res-stat-val" style="color:#10B981;">{{ correct_count }}</div>
+      <div class="res-stat-lbl">Correct Answers</div>
+    </div>
+    <div class="res-stat-card">
+      <div class="res-stat-val" style="color:#EF4444;">{{ wrong_count }}</div>
+      <div class="res-stat-lbl">Incorrect Answers</div>
+    </div>
+    <div class="res-stat-card">
+      <div class="res-stat-val" style="color:#64748B;">{{ unanswered_count }}</div>
+      <div class="res-stat-lbl">Unanswered</div>
+    </div>
+    <div class="res-stat-card">
+      <div class="res-stat-val" style="color:#4F46E5;">{{ time_taken_str }}</div>
+      <div class="res-stat-lbl">Time Taken</div>
+    </div>
+  </div>
+
+  <!-- 3. ACTIONS -->
+  <div class="res-actions-bar">
+    <a href="/mock-tests/" class="btn-res-action btn-res-primary">
+      <span>🎯 Try Another Mock Test</span>
+    </a>
+    <a href="/dashboard/" class="btn-res-action btn-res-secondary">
+      <span>🏠 Back to Dashboard</span>
+    </a>
+  </div>
+
+  <!-- 4. QUESTION BY QUESTION REVIEW -->
+  <div>
+    <h2 class="review-headline">
+      <span>📝 Solution &amp; Answer Review</span>
+    </h2>
+
+    {% for resp in responses %}
+    <div class="review-card {% if resp.is_correct %}correct{% elif resp.selected_options.exists %}wrong{% else %}unanswered{% endif %}">
+      <div class="review-top-meta">
+        <span style="font-size:0.84rem; font-weight:900; color:#4F46E5;">Question {{ forloop.counter }}</span>
+        {% if resp.is_correct %}
+          <span class="review-status-badge badge-correct">✔ Correct (+{{ resp.marks_awarded }})</span>
+        {% elif resp.selected_options.exists %}
+          <span class="review-status-badge badge-wrong">✖ Incorrect ({{ resp.marks_awarded }})</span>
+        {% else %}
+          <span class="review-status-badge badge-unanswered">Unanswered (0)</span>
+        {% endif %}
+      </div>
+
+      <p class="review-prompt">{{ resp.question.prompt }}</p>
+
+      <div class="review-options-list">
+        {% for opt in resp.question.options.all %}
+          {% if opt.is_correct %}
+            <div class="rev-opt opt-correct">
+              <span>✔ {{ opt.text }}</span>
+              <span style="font-size:0.75rem; font-weight:900; text-transform:uppercase;">Correct Answer</span>
+            </div>
+          {% elif opt in resp.selected_options.all %}
+            <div class="rev-opt opt-wrong-choice">
+              <span>✖ {{ opt.text }}</span>
+              <span style="font-size:0.75rem; font-weight:900; text-transform:uppercase;">Your Choice</span>
+            </div>
+          {% else %}
+            <div class="rev-opt">
+              <span>{{ opt.text }}</span>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% if resp.question.explanation %}
+      <div class="explanation-box">
+        <div class="exp-title">
+          <span>💡 Explanation &amp; Method</span>
+        </div>
+        <div>{{ resp.question.explanation }}</div>
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}

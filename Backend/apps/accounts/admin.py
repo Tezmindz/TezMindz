@@ -17,21 +17,21 @@ class UserAdmin(DjangoUserAdmin):
 	)
 	list_display = ("username", "email", "first_name", "role", "is_active", "is_staff", "date_joined")
 	list_filter = ("role", "is_active", "is_staff", "date_joined")
-	search_fields = ("username", "email", "first_name", "last_name")
+	search_fields = ("username", "email", "first_name", "last_name", "student_profile__phone_number")
 	ordering = ("-date_joined",)
 
 
 @admin.register(StudentProfile)
 class StudentProfileAdmin(admin.ModelAdmin):
 	fieldsets = (
-		("Learner identity", {"fields": ("user", "display_name", "avatar_key")}),
+		("Learner identity", {"fields": ("user", "display_name", "phone_number", "avatar_key")}),
 		("Learning placement", {"fields": ("grade", "parent", "account_status")}),
 		("System dates", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
 	)
 	readonly_fields = ("created_at", "updated_at")
-	list_display = ("display_name", "user", "grade", "account_status", "created_at")
+	list_display = ("display_name", "phone_number", "user", "grade", "account_status", "created_at")
 	list_filter = ("grade", "account_status", "avatar_key")
-	search_fields = ("display_name", "user__username", "user__email")
+	search_fields = ("display_name", "phone_number", "user__username", "user__email")
 	autocomplete_fields = ("user", "grade", "parent")
 	list_select_related = ("user", "grade", "parent")
 

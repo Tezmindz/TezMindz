@@ -472,6 +472,147 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════════
+     MOCK TEST ARENA FEATURED CARD STYLES
+     ══════════════════════════════════════════════════════════════════════════ */
+  .mock-test-arena-card {
+    background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 45%, #312E81 100%);
+    border-radius: 26px;
+    padding: 26px 30px;
+    color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 26px;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+  }
+  .mta-backdrop-glow {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(129, 140, 248, 0.25) 0%, transparent 70%);
+    top: -80px;
+    right: -60px;
+    pointer-events: none;
+  }
+  .mta-content {
+    position: relative;
+    z-index: 2;
+  }
+  .mta-header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 99px;
+    padding: 5px 14px;
+    font-size: 0.76rem;
+    font-weight: 900;
+    color: #FDE047;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .mta-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #FDE047;
+    box-shadow: 0 0 10px #FDE047;
+    animation: mtaPulse 1.5s infinite;
+  }
+  @keyframes mtaPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
+  .mta-main-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .mta-info-col {
+    flex: 1;
+    min-width: 280px;
+  }
+  .mta-title {
+    font-size: clamp(1.3rem, 2.6vw, 1.75rem);
+    font-weight: 900;
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+    color: #FFFFFF;
+  }
+  .mta-desc {
+    font-size: 0.92rem;
+    color: #E0E7FF;
+    line-height: 1.45;
+    margin: 0 0 16px;
+  }
+  .mta-chips-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .mta-chip {
+    font-size: 0.78rem;
+    font-weight: 800;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 8px;
+    padding: 4px 10px;
+    color: #FFFFFF;
+  }
+  .mta-chip.highlight {
+    background: rgba(245, 158, 11, 0.25);
+    border-color: rgba(245, 158, 11, 0.45);
+    color: #FDE68A;
+  }
+  .mta-action-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  @media (max-width: 680px) {
+    .mta-action-col { align-items: stretch; width: 100%; }
+  }
+  .btn-take-mock-test {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    color: #1E1B4B;
+    font-size: 0.95rem;
+    font-weight: 900;
+    padding: 13px 26px;
+    border-radius: 16px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 8px 22px rgba(245, 158, 11, 0.38);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .btn-take-mock-test:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(245, 158, 11, 0.55);
+    background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+    color: #1E1B4B;
+  }
+  .mta-view-all-link {
+    font-size: 0.84rem;
+    font-weight: 800;
+    color: #C7D2FE;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .mta-view-all-link:hover {
+    color: #FFFFFF;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
      4. EPIC 3D LEARNING WORLDS (COMPACT AAA GAME CARDS)
      ══════════════════════════════════════════════════════════════════════════ */
   .section-headline-3d {
@@ -1101,6 +1242,66 @@
             <polyline points="12 5 19 12 12 19"></polyline>
           </svg>
         </a>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- ── 🎯 MOCK TEST ARENA HERO CARD ── -->
+    {% if mock_test_featured %}
+    <div class="mock-test-arena-card">
+      <div class="mta-bg-art" aria-hidden="true">
+        <div class="mta-orb orb-1"></div>
+        <div class="mta-orb orb-2"></div>
+        <div class="mta-grid-pattern"></div>
+      </div>
+      <div class="mta-content">
+        <div class="mta-header-badge">
+          <span class="mta-pulse"></span>
+          <span>Target Practice • Grade {{ profile.grade.name }} Arena</span>
+        </div>
+        <div class="mta-main-row">
+          <div class="mta-info-col">
+            <h3 class="mta-title">{{ mock_test_featured.title }}</h3>
+            <p class="mta-desc">
+              {{ mock_test_featured.description|default:"Test your mastery against real exam conditions. Time-bound challenge with automated XP rewards."|truncatewords:20 }}
+            </p>
+            <div class="mta-chips-row">
+              <span class="mta-chip">⏱️ {{ mock_test_featured.duration_minutes }} Mins</span>
+              <span class="mta-chip">📝 {{ mock_test_featured.q_count }} Questions</span>
+              <span class="mta-chip">🎯 {{ mock_test_featured.total_marks }} Marks</span>
+              <span class="mta-chip highlight">⚡ +{{ mock_test_featured.total_marks|default:20 }} XP</span>
+            </div>
+          </div>
+          <div class="mta-action-col">
+            <a href="/mock-tests/{{ mock_test_featured.id }}/" class="btn-take-mock-test">
+              <span>Enter Arena</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polygon points="10 8 16 12 10 16 10 8" fill="currentColor"></polygon>
+              </svg>
+            </a>
+            <a href="/mock-tests/" class="mta-view-all-link">
+              View All ({{ mock_tests_count }}) Tests →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% elif profile.grade %}
+    <div class="mock-test-arena-card" style="padding:22px 28px;">
+      <div class="mta-content">
+        <div class="mta-main-row">
+          <div>
+            <h3 class="mta-title" style="font-size:1.25rem;margin-bottom:4px;">🎯 Mock Test Arena • Class {{ profile.grade.name }}</h3>
+            <p class="mta-desc" style="margin-bottom:0;color:#C7D2FE;">Browse timed tests, exam drills, and track your accuracy across all subjects.</p>
+          </div>
+          <div>
+            <a href="/mock-tests/" class="btn-take-mock-test" style="padding:10px 22px;font-size:0.9rem;">
+              <span>Open Arena</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
     {% endif %}

@@ -27,6 +27,7 @@ urlpatterns = [
     path("", include("common.urls")),
     path("api/curriculum/", include("apps.curriculum.urls")),
     path("api/quiz/", include("apps.assessments.api_urls")),
+    path("api/mock-tests/", include("apps.assessments.mock_test_urls")),
     path("games/", include("apps.games.urls")),
     path("api/game/", include("apps.games.api_urls")),
     path("api/games/", include("apps.games.api_urls")),

@@ -1,297 +1,822 @@
 {% extends "base.html" %}
-{% block title %}{{ subject.name }} — Tezz-Mindz{% endblock %}
+{% load static %}
+
+{% block title %}{{ adventure_title }} — TezMindz{% endblock %}
 {% block nav_subjects %}active{% endblock %}
 {% block m_nav_subjects %}active{% endblock %}
 
 {% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
 <style>
-  /* ── SUBJECT ADVENTURE HERO ── */
-  .subject-adventure-hero {
-    background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #4338CA 100%);
-    border-radius: 28px;
-    padding: 36px 40px;
-    margin-bottom: 32px;
+  :root {
+    --tm-font-display: 'Fredoka', 'Plus Jakarta Sans', -apple-system, sans-serif;
+    --tm-font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  body {
+    background-color: #F8FAFC !important;
+  }
+
+  .adventure-page-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 0 60px;
+  }
+
+  /* ── 1. BREADCRUMBS ── */
+  .adventure-crumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #64748B;
+    margin-bottom: 20px;
+  }
+  .adventure-crumbs a {
+    color: #4F46E5;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .adventure-crumbs a:hover {
+    color: #3730A3;
+  }
+
+  /* ── 2. HERO ADVENTURE BANNER ── */
+  .adventure-hero-banner {
+    background: linear-gradient(135deg, rgba(30, 27, 75, 0.95) 0%, rgba(49, 46, 129, 0.92) 50%, rgba(67, 56, 202, 0.88) 100%),
+                url('{% static "media/adventure/hero_math_adventure.jpg" %}');
+    background-size: cover;
+    background-position: center;
+    border-radius: 32px;
+    padding: 38px 44px;
+    margin-bottom: 36px;
     color: #FFFFFF;
-    box-shadow: 0 16px 40px rgba(49, 46, 129, 0.28);
+    box-shadow: 0 20px 48px rgba(49, 46, 129, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.2);
     position: relative;
     overflow: hidden;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 28px;
   }
-  @media (max-width: 600px) {
-    .subject-adventure-hero { padding: 22px 18px; border-radius: 22px; margin-bottom: 22px; }
+  @media (max-width: 900px) {
+    .adventure-hero-banner {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 28px 24px;
+      border-radius: 24px;
+    }
   }
-  .subject-hero-left {
+
+  /* Decorative glowing orb in hero background */
+  .adventure-hero-banner::before {
+    content: "";
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-main-content {
+    flex: 1;
+    z-index: 2;
+  }
+
+  .hero-top-badge-row {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 12px;
+    margin-bottom: 14px;
     flex-wrap: wrap;
   }
-  .subject-hero-icon-sphere {
-    width: 64px;
-    height: 64px;
-    border-radius: 20px;
-    background: #FFFFFF;
-    color: #4F46E5;
-    display: grid;
-    place-items: center;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  .hero-class-pill {
+    background: #F59E0B;
+    color: #78350F;
+    font-size: 0.78rem;
+    font-weight: 900;
+    padding: 5px 14px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+  }
+  .hero-subject-pill {
+    background: rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 5px 14px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-title-group h1 {
+    font-family: var(--tm-font-display);
+    font-size: clamp(2rem, 4.5vw, 2.85rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 10px;
+    color: #FFFFFF;
+    letter-spacing: 0.01em;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  }
+  .hero-title-group p {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #E0E7FF;
+    margin: 0 0 20px;
+    line-height: 1.45;
+  }
+
+  /* Gamification Stats Ribbon */
+  .hero-gamification-ribbon {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .stat-badge-chip {
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    color: #FFFFFF;
+  }
+  .stat-badge-chip .emoji { font-size: 1.15rem; }
+  .stat-badge-chip .stat-value {
+    color: #FDE047;
+    font-weight: 900;
+  }
+
+  /* Hero Mascot Companion Card */
+  .hero-mascot-card {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    border-radius: 28px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 280px;
+    z-index: 2;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
     flex-shrink: 0;
   }
-  .subject-hero-titles h1 {
-    font-size: clamp(1.4rem, 3vw, 1.85rem);
+  @media (max-width: 900px) {
+    .hero-mascot-card {
+      max-width: 100%;
+      flex-direction: row;
+      text-align: left;
+      gap: 16px;
+      padding: 16px 20px;
+    }
+  }
+  .mascot-avatar-frame {
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #FFFBEB 0%, #FEF3C7 100%);
+    border: 4px solid #FDE047;
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+    overflow: hidden;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+  }
+  @media (max-width: 900px) {
+    .mascot-avatar-frame { width: 72px; height: 72px; margin-bottom: 0; }
+  }
+  .mascot-avatar-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .mascot-speech-bubble {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #FEF08A;
+    line-height: 1.4;
+    margin-bottom: 14px;
+  }
+  .mascot-cta-btn {
+    background: #10B981;
+    color: #FFFFFF !important;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 18px;
+    font-size: 0.86rem;
     font-weight: 900;
-    color: #FFFFFF;
-    margin: 0 0 6px;
-    letter-spacing: -0.02em;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .subject-hero-titles p {
+  .mascot-cta-btn:hover {
+    background: #059669;
+    transform: translateY(-2px) scale(1.03);
+  }
+
+  /* ── 3. TODAY'S MISSION CARD ── */
+  {% if today_mission %}
+  .todays-mission-strip {
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0;
+    border-radius: 24px;
+    padding: 20px 28px;
+    margin-bottom: 36px;
+    box-shadow: 0 6px 24px rgba(15, 23, 42, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: hidden;
+  }
+  .todays-mission-strip::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    background: linear-gradient(180deg, #F59E0B 0%, #10B981 100%);
+  }
+  .mission-info-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .mission-icon-circle {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: #FEF3C7;
+    color: #D97706;
+    display: grid;
+    place-items: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.2);
+  }
+  .mission-meta-texts .mission-eyebrow {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #D97706;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+  .mission-meta-texts h3 {
+    font-family: var(--tm-font-display);
+    font-size: 1.28rem;
+    font-weight: 600;
+    color: #0F172A;
+    margin: 0 0 2px;
+  }
+  .mission-meta-texts p {
+    font-size: 0.86rem;
+    color: #64748B;
+    margin: 0;
+    font-weight: 600;
+  }
+  .mission-play-btn {
+    background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+    color: #FFFFFF !important;
+    border-radius: 14px;
+    padding: 12px 24px;
     font-size: 0.92rem;
-    color: rgba(255, 255, 255, 0.85);
-    margin: 0 0 14px;
-    font-weight: 500;
+    font-weight: 900;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .subject-hero-pills {
+  .mission-play-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 28px rgba(79, 70, 229, 0.4);
+  }
+  {% endif %}
+
+  /* ── 4. SECTION HEADING ── */
+  .section-headline-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .section-headline-bar h2 {
+    font-family: var(--tm-font-display);
+    font-size: 1.65rem;
+    font-weight: 600;
+    color: #0F172A;
+    margin: 0;
     display: flex;
     align-items: center;
     gap: 10px;
-    flex-wrap: wrap;
   }
-  .hero-glass-pill {
-    background: rgba(255, 255, 255, 0.18);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    border-radius: 100px;
-    padding: 6px 16px;
-    font-size: 0.78rem;
+  .section-headline-bar .world-counter-chip {
+    background: #EEF2FF;
+    color: #4F46E5;
+    font-size: 0.84rem;
     font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    padding: 6px 16px;
+    border-radius: 100px;
   }
 
-  /* ── CHAPTER ADVENTURE CARDS (2-COLUMN GRID) ── */
-  .chapters-adventure-grid {
+  /* ── 5. WORLD CARDS GRID ── */
+  .worlds-adventure-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 22px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 28px;
   }
-  @media (max-width: 900px) {
-    .chapters-adventure-grid { grid-template-columns: 1fr; gap: 16px; }
+  @media (max-width: 768px) {
+    .worlds-adventure-grid { grid-template-columns: 1fr; gap: 20px; }
   }
 
-  .chapter-adventure-card {
+  .world-adventure-card {
     background: #FFFFFF;
-    border: 1.5px solid #E2E8F0;
-    border-radius: 24px;
-    padding: 24px 26px;
+    border: 2px solid #E2E8F0;
+    border-radius: 28px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    box-shadow: 0 8px 28px rgba(15, 23, 42, 0.05);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
     text-decoration: none;
     color: inherit;
-    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
     position: relative;
   }
-  @media (max-width: 600px) {
-    .chapter-adventure-card { padding: 18px 16px; border-radius: 20px; }
-  }
-  .chapter-adventure-card:hover {
-    transform: translateY(-4px);
-    border-color: #A78BFA;
-    box-shadow: 0 16px 36px rgba(124, 58, 237, 0.12);
+  .world-adventure-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(15, 23, 42, 0.12);
+    border-color: #A5B4FC;
   }
 
-  .chapter-card-top-header {
+  /* Locked State Visual */
+  .world-adventure-card.card-locked {
+    filter: grayscale(40%);
+    opacity: 0.88;
+    background: #F8FAFC;
+  }
+  .world-adventure-card.card-locked:hover {
+    transform: none;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+    border-color: #E2E8F0;
+  }
+
+  /* Card Illustration Art Frame */
+  .world-art-banner {
+    width: 100%;
+    height: 190px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-bottom: 2px solid #E2E8F0;
+  }
+  .world-art-overlay-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%);
+  }
+
+  /* Floating Badges on Art */
+  .world-number-pill {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    color: #FFFFFF;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 5px 14px;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 2;
+  }
+  .world-status-pill {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    font-size: 0.76rem;
+    font-weight: 900;
+    padding: 5px 14px;
+    border-radius: 100px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+  }
+  .world-status-pill.mastered {
+    background: #ECFDF5;
+    color: #047857;
+    border: 1.5px solid #A7F3D0;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+  }
+  .world-status-pill.in-progress {
+    background: #FFFBEB;
+    color: #B45309;
+    border: 1.5px solid #FDE68A;
+  }
+  .world-status-pill.unlocked {
+    background: #EEF2FF;
+    color: #4338CA;
+    border: 1.5px solid #C7D2FE;
+  }
+  .world-status-pill.locked {
+    background: #F1F5F9;
+    color: #64748B;
+    border: 1.5px solid #CBD5E1;
+  }
+
+  .world-art-title-overlay {
+    position: absolute;
+    bottom: 12px;
+    left: 18px;
+    right: 18px;
+    z-index: 2;
+  }
+  .world-art-title-overlay .world-tag-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #FDE047;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 2px;
+  }
+  .world-art-title-overlay h3 {
+    font-family: var(--tm-font-display);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0;
+    letter-spacing: 0.01em;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  /* Card Body */
+  .world-card-body {
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .world-topic-subline {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748B;
+    margin-bottom: 8px;
+  }
+  .world-desc-text {
+    font-size: 0.88rem;
+    color: #475569;
+    line-height: 1.5;
+    margin: 0 0 16px;
+    font-weight: 500;
+  }
+
+  /* Star Rating Display */
+  .world-stars-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1.5px solid #F1F5F9;
   }
-  .chapter-badge-tag {
-    background: #EDE9FE;
-    color: #4F46E5;
-    border-radius: 100px;
-    padding: 5px 14px;
-    font-size: 0.75rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .chapter-title-heading {
-    font-size: 1.25rem;
-    font-weight: 900;
-    color: #0F172A;
-    margin: 0 0 6px;
-    letter-spacing: -0.01em;
-  }
-  .chapter-tagline-text {
-    font-size: 0.86rem;
-    color: #64748B;
-    margin: 0 0 18px;
-    line-height: 1.45;
-    font-weight: 600;
-  }
-
-  /* Progress in Card */
-  .ch-progress-wrap {
-    margin-bottom: 18px;
-  }
-  .ch-progress-meta {
+  .stars-cluster {
     display: flex;
     align-items: center;
+    gap: 4px;
+  }
+  .star-glyph {
+    font-size: 1.25rem;
+  }
+  .star-glyph.earned { color: #F59E0B; filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.4)); }
+  .star-glyph.unearned { color: #CBD5E1; }
+
+  .adventure-fraction-stat {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #64748B;
+  }
+
+  /* Progress Bar */
+  .world-progress-block {
+    margin-bottom: 18px;
+  }
+  .wp-label-row {
+    display: flex;
     justify-content: space-between;
     font-size: 0.78rem;
     font-weight: 800;
-    color: #475569;
+    color: #334155;
     margin-bottom: 6px;
   }
-  .ch-bar-container {
-    height: 7px;
+  .wp-track {
+    height: 9px;
     background: #F1F5F9;
     border-radius: 100px;
     overflow: hidden;
   }
-  .ch-bar-fill {
+  .wp-fill {
     height: 100%;
-    background: linear-gradient(90deg, #4F46E5 0%, #7C3AED 100%);
     border-radius: 100px;
     transition: width 0.4s ease;
   }
+  .wp-fill.green { background: linear-gradient(90deg, #10B981, #059669); }
+  .wp-fill.amber { background: linear-gradient(90deg, #F59E0B, #D97706); }
+  .wp-fill.indigo { background: linear-gradient(90deg, #6366F1, #4F46E5); }
 
-  /* Chapters Pill Preview */
-  .ch-topics-preview-row {
+  /* Interactive Game Chips */
+  .world-games-strip {
     display: flex;
+    align-items: center;
+    gap: 8px;
     flex-wrap: wrap;
-    gap: 6px;
     margin-bottom: 20px;
   }
-  .ch-topic-pill {
+  .game-chip-mini {
     background: #F8FAFC;
     border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 4px 10px;
     font-size: 0.74rem;
     font-weight: 700;
-    color: #334155;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
   }
 
-  /* Card Bottom Action */
-  .ch-card-action-footer {
+  /* Enter World CTA */
+  .world-card-cta {
+    width: 100%;
+    border-radius: 16px;
+    padding: 13px 20px;
+    font-family: var(--tm-font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-align: center;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding-top: 14px;
-    border-top: 1.5px solid #F1F5F9;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  }
+  .world-card-cta.active-cta {
+    background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+    color: #FFFFFF;
+  }
+  .world-adventure-card:hover .world-card-cta.active-cta {
+    transform: scale(1.02);
+    box-shadow: 0 8px 22px rgba(79, 70, 229, 0.35);
+  }
+  .world-card-cta.locked-cta {
+    background: #E2E8F0;
+    color: #64748B;
+    cursor: not-allowed;
+    box-shadow: none;
   }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Breadcrumb -->
-  <div style="font-size:0.84rem;color:#64748B;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:6px;">
-    <a href="/dashboard/" style="color:#4F46E5;text-decoration:none;">Home</a>
+<div class="adventure-page-shell">
+
+  <!-- 1. BREADCRUMBS -->
+  <div class="adventure-crumbs">
+    <a href="/dashboard/"><i class="bi bi-house-door-fill"></i> Home</a>
     <span>•</span>
-    <a href="/learn/" style="color:#4F46E5;text-decoration:none;">{{ student_class.class_label|default:"All Subjects" }}</a>
+    <a href="/learn/">{{ student_class.class_label|default:"Curriculum" }}</a>
     <span>•</span>
     <span>{{ subject.name }}</span>
   </div>
 
-<!-- SUBJECT ADVENTURE HERO -->
-<div class="subject-adventure-hero">
-  <div class="subject-hero-left">
-    <div class="subject-hero-icon-sphere">
-      {% if 'math' in subject.slug %}
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-      {% elif 'science' in subject.slug %}
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"></path><path d="M14 9.3V1.99"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></svg>
-      {% else %}
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#DB2777" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><path d="M6 6h10"></path><path d="M6 10h10"></path></svg>
+  <!-- 2. HERO ADVENTURE BANNER -->
+  <div class="adventure-hero-banner">
+    <div class="hero-main-content">
+      <div class="hero-top-badge-row">
+        <span class="hero-class-pill">
+          <i class="bi bi-award-fill"></i> {{ student_class.name|default:"Class 5" }}
+        </span>
+        <span class="hero-subject-pill">
+          <i class="bi bi-compass-fill"></i> {{ subject.name }} Learning World
+        </span>
+      </div>
+
+      <div class="hero-title-group">
+        <h1>{{ adventure_title }}</h1>
+        <p>{{ adventure_tagline }}</p>
+      </div>
+
+      <!-- Gamification Ribbon -->
+      <div class="hero-gamification-ribbon">
+        <div class="stat-badge-chip">
+          <span class="emoji">⭐</span>
+          <span>XP: <span class="stat-value">{{ xp_points }}</span></span>
+        </div>
+        <div class="stat-badge-chip">
+          <span class="emoji">💎</span>
+          <span>Coins: <span class="stat-value">{{ adventure_coins }}</span></span>
+        </div>
+        <div class="stat-badge-chip">
+          <span class="emoji">🔥</span>
+          <span>Streak: <span class="stat-value">{{ daily_streak }} Days</span></span>
+        </div>
+        <div class="stat-badge-chip">
+          <span class="emoji">🏆</span>
+          <span>Stars: <span class="stat-value">{{ total_stars_earned }}/{{ max_stars_possible }}</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mascot Card (Tezzy the Cosmic Explorer) -->
+    <div class="hero-mascot-card">
+      <div class="mascot-avatar-frame">
+        <img src="{% static 'media/adventure/mascot_tezzy_explorer.jpg' %}" alt="Tezzy the Cosmic Explorer" />
+      </div>
+      <div class="mascot-speech-bubble">
+        {% if today_mission %}
+          "Hey Champion! Ready to conquer <strong>{{ today_mission.world_name }}</strong> today?"
+        {% else %}
+          "Ready for today's math quest? Let's explore new worlds!"
+        {% endif %}
+      </div>
+      {% if today_mission %}
+      <a href="{{ today_mission.url }}" class="mascot-cta-btn">
+        <span>Play Next Mission</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
       {% endif %}
     </div>
-    <div class="subject-hero-titles">
-      <h1>{{ student_class.class_label|default:"" }} — {{ subject.name }}</h1>
-      <p>Master {{ subject.name }} concepts and prepare for Olympiad</p>
-      <div class="subject-hero-pills">
-        <span class="hero-glass-pill">{{ chapters.count }} Chapters</span>
-        <span class="hero-glass-pill">Interactive Curriculum</span>
+  </div>
+
+  <!-- 3. TODAY'S MISSION QUICK RESUME STRIP -->
+  {% if today_mission %}
+  <div class="todays-mission-strip">
+    <div class="mission-info-left">
+      <div class="mission-icon-circle">
+        <i class="bi bi-lightning-charge-fill"></i>
+      </div>
+      <div class="mission-meta-texts">
+        <div class="mission-eyebrow">
+          <i class="bi bi-compass"></i> {{ today_mission.world_name }} &bull; {{ today_mission.type }}
+        </div>
+        <h3>{{ today_mission.title }}</h3>
+        <p>Pick up right where you left off and earn adventure rewards!</p>
       </div>
     </div>
+    <a href="{{ today_mission.url }}" class="mission-play-btn">
+      <i class="bi bi-play-circle-fill"></i>
+      <span>Start Adventure Now</span>
+    </a>
   </div>
-</div>
+  {% endif %}
 
-<!-- Section Header -->
-<div class="section-title-row" style="margin-bottom:20px;">
-  <h2 style="font-size:1.25rem;font-weight:900;color:#0F172A;display:flex;align-items:center;gap:8px;">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2.2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-    <span>Choose Your Chapter</span>
-  </h2>
-</div>
+  <!-- 4. SECTION HEADING -->
+  <div class="section-headline-bar">
+    <h2>
+      <span>🗺️ Choose Your World</span>
+    </h2>
+    <span class="world-counter-chip">
+      {{ completed_worlds }} of {{ total_worlds }} Worlds Mastered
+    </span>
+  </div>
 
-<!-- ── CHAPTERS ADVENTURE GRID ── -->
-<div class="chapters-adventure-grid">
-  {% for ch in chapters %}
-  <a class="chapter-adventure-card" href="/chapter/{{ ch.id }}/">
-    <div>
-      <div class="chapter-card-top-header">
-        <span class="chapter-badge-tag">Chapter {{ ch.order }}</span>
-        {% if ch.progress_pct >= 100 %}
-          <span class="badge-pill" style="background:#ECFDF5;color:#047857;font-weight:900;"><i class="bi bi-trophy-fill"></i> Mastered</span>
-        {% elif ch.progress_pct > 0 %}
-          <span class="badge-pill" style="background:#FEF3C7;color:#D97706;font-weight:900;"><i class="bi bi-play-circle-fill"></i> In Progress</span>
-        {% else %}
-          <span class="badge-pill purple" style="font-weight:900;">New Adventure</span>
-        {% endif %}
-      </div>
+  <!-- 5. WORLDS ADVENTURE GRID -->
+  <div class="worlds-adventure-grid">
+    {% for ch in chapters %}
+    <a href="{% if ch.is_unlocked %}/chapter/{{ ch.id }}/{% else %}javascript:void(0);{% endif %}" 
+       class="world-adventure-card {% if not ch.is_unlocked %}card-locked{% endif %}"
+       {% if not ch.is_unlocked %}title="Master previous world to unlock this adventure!"{% endif %}>
+      
+      <!-- Card Banner Art -->
+      <div class="world-art-banner" style="background-image: url('{{ ch.world_meta.bg_image }}');">
+        <div class="world-art-overlay-gradient"></div>
 
-      <h3 class="chapter-title-heading">{{ ch.title }}</h3>
-      <p class="chapter-tagline-text">
-        {{ ch.description }}
-      </p>
-
-      <!-- Progress -->
-      <div class="ch-progress-wrap">
-        <div class="ch-progress-meta">
-          <span>{{ ch.done_concepts|default:0 }} of {{ ch.total_concepts|default:0 }} Concepts Mastered</span>
-          <span style="color:#4F46E5;font-weight:900;">{{ ch.progress_pct|default:0 }}%</span>
-        </div>
-        <div class="ch-bar-container">
-          <div class="ch-bar-fill" style="width: {{ ch.progress_pct|default:0 }}%;"></div>
-        </div>
-      </div>
-
-      <!-- Concepts Pills Preview -->
-      <div class="ch-topics-preview-row">
-        {% for concept in ch.concepts.all|slice:":6" %}
-        <span class="ch-topic-pill">
-          {{ concept.name }}
+        <!-- Floating Badges -->
+        <span class="world-number-pill">
+          <span>{{ ch.world_meta.icon_emoji }}</span>
+          <span>World {{ ch.world_meta.world_number }}</span>
         </span>
-        {% endfor %}
-        {% if ch.concepts.count > 6 %}
-        <span class="ch-topic-pill" style="opacity:0.7;">+{{ ch.concepts.count|add:"-6" }} more</span>
-        {% endif %}
-      </div>
-    </div>
 
-    <div class="ch-card-action-footer">
-      <span style="font-size:0.82rem;font-weight:800;color:#64748B;display:flex;align-items:center;gap:6px;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        {{ ch.concepts.count }} Concept Missions
-      </span>
-      <div class="tm-btn tm-btn-primary" style="padding:8px 18px;font-size:0.85rem;display:inline-flex;align-items:center;gap:6px;">
-        <span>{% if ch.progress_pct > 0 %}Continue{% else %}Explore Chapter{% endif %}</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        {% if ch.status_key == 'completed' %}
+          <span class="world-status-pill mastered"><i class="bi bi-trophy-fill"></i> Mastered</span>
+        {% elif ch.status_key == 'in_progress' %}
+          <span class="world-status-pill in-progress"><i class="bi bi-play-circle-fill"></i> In Progress</span>
+        {% elif ch.status_key == 'unlocked' %}
+          <span class="world-status-pill unlocked"><i class="bi bi-unlock-fill"></i> Ready</span>
+        {% else %}
+          <span class="world-status-pill locked"><i class="bi bi-lock-fill"></i> Locked</span>
+        {% endif %}
+
+        <div class="world-art-title-overlay">
+          <div class="world-tag-label">{{ ch.world_meta.theme_badge }}</div>
+          <h3>{{ ch.world_meta.world_name }}</h3>
+        </div>
       </div>
+
+      <!-- Card Body Content -->
+      <div class="world-card-body">
+        <div>
+          <div class="world-topic-subline">
+            Chapter: {{ ch.title }}
+          </div>
+          <p class="world-desc-text">
+            {{ ch.world_meta.tagline }}
+          </p>
+
+          <!-- Star Rating -->
+          <div class="world-stars-bar">
+            <div class="stars-cluster">
+              {% for s in ch.stars_display %}
+                <span class="star-glyph {% if s.earned %}earned{% else %}unearned{% endif %}">★</span>
+              {% endfor %}
+            </div>
+            <span class="adventure-fraction-stat">
+              {{ ch.adventures_done }} / {{ ch.adventures_count }} Adventures Complete
+            </span>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="world-progress-block">
+            <div class="wp-label-row">
+              <span>Mastery Progress</span>
+              <span style="font-weight: 900; color: {{ ch.world_meta.theme_color }};">{{ ch.progress_pct }}%</span>
+            </div>
+            <div class="wp-track">
+              <div class="wp-fill {% if ch.progress_pct >= 80 %}green{% elif ch.progress_pct > 0 %}amber{% else %}indigo{% endif %}"
+                   style="width: {{ ch.progress_pct }}%;"></div>
+            </div>
+          </div>
+
+          <!-- Games Available in this World -->
+          {% if ch.available_games %}
+          <div class="world-games-strip">
+            {% for g in ch.available_games %}
+            <span class="game-chip-mini">
+              <i class="bi bi-controller" style="color: #6366F1;"></i> {{ g.title|truncatechars:24 }}
+            </span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Action Button -->
+        {% if ch.is_unlocked %}
+        <div class="world-card-cta active-cta">
+          <span>ENTER WORLD</span>
+          <i class="bi bi-arrow-right-short" style="font-size: 1.3rem;"></i>
+        </div>
+        {% else %}
+        <div class="world-card-cta locked-cta">
+          <i class="bi bi-lock-fill"></i>
+          <span>Complete World {{ ch.world_meta.world_number|add:"-1" }} to Unlock</span>
+        </div>
+        {% endif %}
+
+      </div>
+    </a>
+    {% empty %}
+    <div style="grid-column: 1/-1; text-align: center; padding: 48px; background: #FFFFFF; border-radius: 24px; border: 2px solid #E2E8F0;">
+      <p style="color: #64748B; font-size: 1rem; margin: 0;">No adventure worlds published for this subject yet.</p>
     </div>
-  </a>
-  {% empty %}
-  <div class="side-card" style="grid-column:1/-1;text-align:center;padding:48px;">
-    <p style="color:#64748B;">No chapters configured yet.</p>
+    {% endfor %}
   </div>
-  {% endfor %}
+
 </div>
 {% endblock %}

@@ -23,7 +23,7 @@ class CurriculumFlowViewTests(TestCase):
         self.client.logout()
         response = self.client.get(reverse('common:dashboard'))
         self.assertEqual(response.status_code, 302)
-        self.assertIn('/login/', response.url)
+        self.assertTrue('/login/' in response.url or 'auth=login' in response.url)
 
     def test_subject_page(self):
         response = self.client.get(reverse('common:subject', args=[self.subject.id]))

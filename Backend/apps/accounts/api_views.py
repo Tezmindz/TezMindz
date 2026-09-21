@@ -2,8 +2,21 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from rest_framework_simplejwt.views import TokenObtainPairView
 from common.throttles import BurstRateThrottle, SustainedRateThrottle
-from .serializers import UserMeSerializer, StudentProfileSerializer
+from .serializers import (
+    UserMeSerializer,
+    StudentProfileSerializer,
+    EmailOrPhoneTokenObtainPairSerializer,
+)
+
+
+class EmailOrPhoneTokenObtainPairView(TokenObtainPairView):
+    """
+    POST /api/auth/jwt/create/ — Obtains JWT access and refresh tokens
+    using email, phone number, or username + password.
+    """
+    serializer_class = EmailOrPhoneTokenObtainPairSerializer
 
 
 class StudentMeView(APIView):
